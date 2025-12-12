@@ -200,26 +200,26 @@
 <p><em>As a customer, I want to choose where I purchased my item (website, retail store, Shopify, POS or third-party vendor) so that the portal can route my request appropriately.</em></p>
 <p><strong>Acceptance Criteria</strong></p>
 <ul>
-<li>The start screen lists only US and Canadian channels (SCR-01).</li>
+<li>The start screen lists only US and Canadian channels.</li>
 <li>Selecting a third-party vendor shows vendor instructions and ends the flow.</li>
-<li>Selecting a physical store or other vendor displays store-specific information (SCR-02).</li>
+<li>Selecting a physical store or other vendor displays store-specific information.</li>
 </ul>
 <h4 id="us-112-select-return-or-claim-type">US-1.1.2 – Select Return or Claim Type</h4>
 <p><em>As a customer, I want to indicate whether I'm returning a product or submitting a warranty claim so that the system applies the correct rules.</em></p>
 <p><strong>Acceptance Criteria</strong></p>
 <ul>
-<li>Return options include "Return" and "Warranty Claim" (CAT-01 through CAT-04).</li>
-<li>Changing the selection resets the workflow without retaining stale data (CAT-05).</li>
+<li>Return options include "Return" and "Warranty Claim".</li>
+<li>Changing the selection resets the workflow without retaining stale data.</li>
 </ul>
 <h3 id="feature-12-order-lookup">Feature 1.2 – Order Lookup</h3>
 <h4 id="us-121-secure-order-lookup">US-1.2.1 – Secure Order Lookup</h4>
 <p><em>As a customer, I want to find my online order by entering my email and order number so that only my order information is displayed.</em></p>
 <p><strong>Acceptance Criteria</strong></p>
 <ul>
-<li>Both email and order number are required; validation errors appear for empty or invalid fields (AUTH-03, AUTH-09).</li>
-<li>Leading/trailing spaces are trimmed (AUTH-04 to AUTH-06).</li>
-<li>If fields do not match a WooCommerce order, the system shows "order not found" without revealing details (AUTH-02, AUTH-07).</li>
-<li>Valid combinations retrieve the order and proceed to item selection (AUTH-01).</li>
+<li>Both email and order number are required; validation errors appear for empty or invalid fields.</li>
+<li>Leading/trailing spaces are trimmed.</li>
+<li>If fields do not match a WooCommerce order, the system shows "order not found" without revealing details.</li>
+<li>Valid combinations retrieve the order and proceed to item selection.</li>
 </ul>
 <h2 id="epic-2-item-display-selection">Epic 2 – Item Display &amp; Selection</h2>
 <h3 id="feature-21-display-items-eligibility">Feature 2.1 – Display Items &amp; Eligibility</h3>
@@ -227,21 +227,21 @@
 <p><em>As a customer, I want to see all items in my order with images, colours and eligibility status so that I can select what to return.</em></p>
 <p><strong>Acceptance Criteria</strong></p>
 <ul>
-<li>Items are accurately displayed with name, image, colour and quantity (ITEM-01, AC-2).</li>
-<li>Items marked as final sale (e.g., custom hybrid mattress) are clearly labelled and cannot be selected (ITEM-02).</li>
-<li>Items outside their return/trial window show an ineligible status (ITEM-06, AC-3).</li>
-<li>Soft warnings appear for mattresses returned within 30 nights and furniture returns without packaging (ITEM-03, ITEM-11, FUR-02, MAT-01).</li>
-<li>Category filtering hides non-relevant items when a specific return category is chosen (ITEM-05, AC-5, PERM-10/11).</li>
+<li>Items are accurately displayed with name, image, colour and quantity.</li>
+<li>Items marked as final sale (e.g., custom hybrid mattress) are clearly labelled and cannot be selected.</li>
+<li>Items outside their return/trial window show an ineligible status.</li>
+<li>Soft warnings appear for mattresses returned within 30 nights and furniture returns without packaging.</li>
+<li>Category filtering hides non-relevant items when a specific return category is chosen.</li>
 </ul>
 <h3 id="feature-22-item-selection-quantity">Feature 2.2 – Item Selection &amp; Quantity</h3>
 <h4 id="us-221-select-items-and-quantities">US-2.2.1 – Select Items and Quantities</h4>
 <p><em>As a customer, I want to select one or more eligible items and specify quantities so that I can return exactly what I intend.</em></p>
 <p><strong>Acceptance Criteria</strong></p>
 <ul>
-<li>The user can select multiple items or partial quantities (ITEM-07 to ITEM-10).</li>
-<li>Trying to proceed with no items selected produces a validation error (ITEM-15).</li>
-<li>Selecting more than two of the same product shows a soft warning (ITEM-11).</li>
-<li>Bundle rules apply when a bundle item is returned (ITEM-12 to ITEM-14, BND-01 to BND-08).</li>
+<li>The user can select multiple items or partial quantities.</li>
+<li>Trying to proceed with no items selected produces a validation error.</li>
+<li>Selecting more than two of the same product shows a soft warning.</li>
+<li>Bundle rules apply when a bundle item is returned.</li>
 </ul>
 <h2 id="epic-3-reason-selection-documentation">Epic 3 – Reason Selection &amp; Documentation</h2>
 <h3 id="feature-31-reason-capture">Feature 3.1 – Reason Capture</h3>
@@ -250,10 +250,10 @@
 <p><strong>Acceptance Criteria</strong></p>
 <ul>
 <li>The reason list is category-specific and matches marketing-approved options.</li>
-<li>Selecting "Other" displays a required text field (RSN-02).</li>
-<li>Selecting a damage/defective reason requires photo uploads (RSN-03).</li>
-<li>Each item stores its own reason (RSN-04).</li>
-<li>Proceeding without selecting a reason is blocked (RSN-05).</li>
+<li>Selecting "Other" displays a required text field.</li>
+<li>Selecting a damage/defective reason requires photo uploads.</li>
+<li>Each item stores its own reason.</li>
+<li>Proceeding without selecting a reason is blocked.</li>
 </ul>
 <h4 id="us-312-select-claim-reason">US-3.1.2 – Select Claim Reason</h4>
 <p><em>As a customer filing a warranty claim, I want to select a predefined claim reason appropriate to the product category so that my documentation requirements are clear.</em></p>
@@ -268,9 +268,9 @@
 <p><strong>Acceptance Criteria</strong></p>
 <ul>
 <li>The portal displays required fields based on the selected claim reason and product category.</li>
-<li>Mandatory fields must be completed before submission (RSN-03, RSN-05, AC-4).</li>
-<li>Unsupported file types or over-sized uploads are rejected with clear messages (RSN-07, RSN-08).</li>
-<li>Network errors during upload allow retry without losing form state (RSN-09).</li>
+<li>Mandatory fields must be completed before submission.</li>
+<li>Unsupported file types or over-sized uploads are rejected with clear messages.</li>
+<li>Network errors during upload allow retry without losing form state.</li>
 </ul>
 <h2 id="epic-4-logistics-label-management">Epic 4 – Logistics &amp; Label Management</h2>
 <h3 id="feature-41-label-generation">Feature 4.1 – Label Generation</h3>
@@ -278,25 +278,25 @@
 <p><em>As a customer returning items, I want to indicate how many boxes I will ship so that I receive the correct number of return labels.</em></p>
 <p><strong>Acceptance Criteria</strong></p>
 <ul>
-<li>The box count must be between 1 and 20 (LBL-01 to LBL-05, AC-6).</li>
+<li>The box count must be between 1 and 20.</li>
 <li>Entering 0 or a number above 20 triggers validation errors.</li>
 </ul>
 <h4 id="us-412-generate-labels">US-4.1.2 – Generate Labels</h4>
 <p><em>As a customer, I want the portal to generate shipping labels with accurate weights and dimensions so that I can return my items easily.</em></p>
 <p><strong>Acceptance Criteria</strong></p>
 <ul>
-<li>Each box generates a unique label and tracking number (LBL-02 to LBL-03, LOG-05).</li>
-<li>Weight and dimension logic splits, sums or uses dimensional weight as appropriate (LOG-01 to LOG-04).</li>
-<li>Missing weight triggers fallback values (LOG-07).</li>
-<li>The customer's shipping address appears correctly on all labels (LBL-09).</li>
+<li>Each box generates a unique label and tracking number.</li>
+<li>Weight and dimension logic splits, sums or uses dimensional weight as appropriate.</li>
+<li>Missing weight triggers fallback values.</li>
+<li>The customer's shipping address appears correctly on all labels.</li>
 </ul>
 <h4 id="us-413-handle-carrier-responses">US-4.1.3 – Handle Carrier Responses</h4>
 <p><em>As a customer, I want errors from the carrier service to be handled gracefully so that I know how to proceed.</em></p>
 <p><strong>Acceptance Criteria</strong></p>
 <ul>
-<li>Temporary carrier errors allow retry without duplicating labels (LBL-06 to LBL-08).</li>
+<li>Temporary carrier errors allow retry without duplicating labels.</li>
 <li>Extended outages display fallback instructions to contact support.</li>
-<li>Re-printing a label retrieves the same label string (LOG-06).</li>
+<li>Re-printing a label retrieves the same label string.</li>
 </ul>
 <h2 id="epic-5-ticketing-back-end-processing">Epic 5 – Ticketing &amp; Back-End Processing</h2>
 <h3 id="feature-51-ticket-creation-storage">Feature 5.1 – Ticket Creation &amp; Storage</h3>
@@ -304,15 +304,15 @@
 <p><em>As a customer, I want a ticket created with all my return/claim information so that customer service can track and act upon it.</em></p>
 <p><strong>Acceptance Criteria</strong></p>
 <ul>
-<li>Ticket includes contact details, selected items, quantities, documentation, labels and reasons (TK-01 to TK-04).</li>
-<li>A ticket is created immediately after submission; failures display a friendly message and notify support (TK-05, ERR-05).</li>
-<li>Duplicate tickets are prevented (TK-06).</li>
+<li>Ticket includes contact details, selected items, quantities, documentation, labels and reasons.</li>
+<li>A ticket is created immediately after submission; failures display a friendly message and notify support.</li>
+<li>Duplicate tickets are prevented.</li>
 </ul>
 <h4 id="us-512-ticket-for-physical-store-returns">US-5.1.2 – Ticket for Physical Store Returns</h4>
 <p><em>As a customer returning an item purchased in a retail store, I want a ticket created for analytics even if the refund is processed manually so that Silk &amp; Snow can track return volumes.</em></p>
 <p><strong>Acceptance Criteria</strong></p>
 <ul>
-<li>Ticket indicates external vendor and does not trigger automatic refund logic (TK-07).</li>
+<li>Ticket indicates external vendor and does not trigger automatic refund logic.</li>
 <li>Staff can view and act on the ticket in Claimlane.</li>
 </ul>
 <h3 id="feature-52-refund-processing">Feature 5.2 – Refund Processing</h3>
@@ -320,10 +320,10 @@
 <p><em>As a customer returning an item, I want my refund processed automatically where supported so that I receive my money back quickly.</em></p>
 <p><strong>Acceptance Criteria</strong></p>
 <ul>
-<li>For supported gateways (Visa, Mastercard, PayPal, integrated BNPL), the system initiates a WooCommerce refund and updates inventory appropriately (WC-01, WC-05, WC-11).</li>
-<li>Partial refunds adjust only the line item amount and not inventory (WC-06).</li>
-<li>POS orders and unsupported gateways trigger manual refund instructions (WC-02 to WC-04, WC-10 to WC-13).</li>
-<li>Duplicate or currency mismatch refunds are prevented (WC-07, WC-08).</li>
+<li>For supported gateways (Visa, Mastercard, PayPal, integrated BNPL), the system initiates a WooCommerce refund and updates inventory appropriately.</li>
+<li>Partial refunds adjust only the line item amount and not inventory.</li>
+<li>POS orders and unsupported gateways trigger manual refund instructions.</li>
+<li>Duplicate or currency mismatch refunds are prevented.</li>
 <li>Refund status and transaction IDs are stored in the ticket.</li>
 </ul>
 <h3 id="feature-53-replacement-orders">Feature 5.3 – Replacement Orders</h3>
@@ -331,33 +331,33 @@
 <p><em>As a customer with an approved warranty claim, I want the system to create a replacement order using my existing shipping details so that I receive my replacement without extra steps.</em></p>
 <p><strong>Acceptance Criteria</strong></p>
 <ul>
-<li>Replacement orders are created in WooCommerce with status "Processing" (WC-04).</li>
-<li>The customer receives an email notification from WooCommerce (AC-8).</li>
-<li>Replacement order logic follows warranty rules by product (MAT-02, MAT-03, FUR-03, BED-02).</li>
+<li>Replacement orders are created in WooCommerce with status "Processing".</li>
+<li>The customer receives an email notification from WooCommerce.</li>
+<li>Replacement order logic follows warranty rules by product.</li>
 </ul>
 <h2 id="epic-6-exception-edge-cases">Epic 6 – Exception &amp; Edge Cases</h2>
 <h4 id="us-61-vendor-approval">US-6.1 – Vendor Approval</h4>
 <p><em>As a customer returning an unboxed mattress or large furniture item, I want the system to request vendor approval before generating a label so that oversized or unpackaged returns are handled properly.</em></p>
 <p><strong>Acceptance Criteria</strong></p>
 <ul>
-<li>Unboxed mattresses prompt the customer for additional photos and the ticket is flagged for vendor review (MAT-05).</li>
-<li>Furniture without packaging triggers a warning to the customer and an admin flag (FUR-02).</li>
+<li>Unboxed mattresses prompt the customer for additional photos and the ticket is flagged for vendor review.</li>
+<li>Furniture without packaging triggers a warning to the customer and an admin flag.</li>
 <li>Approval decisions are recorded in the ticket and update the flow.</li>
 </ul>
 <h4 id="us-62-donation-path">US-6.2 – Donation Path</h4>
 <p><em>As a customer with an open-box mattress return, I want to donate my mattress through an approved partner so that I can complete my return via donation.</em></p>
 <p><strong>Acceptance Criteria</strong></p>
 <ul>
-<li>The portal displays donation partner details where available (MAT-05).</li>
-<li>If the customer's address is outside the service area, instructions to contact support are provided (MAT-06).</li>
+<li>The portal displays donation partner details where available.</li>
+<li>If the customer's address is outside the service area, instructions to contact support are provided.</li>
 </ul>
 <h4 id="us-63-timeouts-re-entries">US-6.3 – Timeouts &amp; Re-Entries</h4>
 <p><em>As a customer, I want to resume my return if my session times out or I need to re-enter the portal so that I do not lose progress.</em></p>
 <p><strong>Acceptance Criteria</strong></p>
 <ul>
-<li>Session timeouts after label generation but before final confirmation still preserve tickets and labels (PERM-26, PERM-27).</li>
-<li>If the user restarts the process, only items not yet returned are shown (UX-06, UX-07).</li>
-<li>Refreshing or double-submitting does not create duplicate tickets or refunds (UX-03, PERM-28).</li>
+<li>Session timeouts after label generation but before final confirmation still preserve tickets and labels.</li>
+<li>If the user restarts the process, only items not yet returned are shown.</li>
+<li>Refreshing or double-submitting does not create duplicate tickets or refunds.</li>
 </ul>
 <h2 id="epic-7-user-experience-accessibility">Epic 7 – User Experience &amp; Accessibility</h2>
 <h4 id="us-71-ux-messages">US-7.1 – UX Messages</h4>
@@ -365,15 +365,15 @@
 <p><strong>Acceptance Criteria</strong></p>
 <ul>
 <li>Eligibility messages specify the product and rule (e.g., "Furniture must be returned within 30 days; this item is past the return window").</li>
-<li>Error messages cover invalid input, missing documentation, API failures, carrier errors and gateway errors (ERR-01 to ERR-05, AC-10).</li>
+<li>Error messages cover invalid input, missing documentation, API failures, carrier errors and gateway errors.</li>
 <li>Marketing-approved copy is used across all screens and for all languages.</li>
 </ul>
 <h4 id="us-72-accessibility-responsiveness">US-7.2 – Accessibility &amp; Responsiveness</h4>
 <p><em>As any user, I want to navigate the portal using only a keyboard and have the pages render correctly on mobile devices so that the portal is accessible.</em></p>
 <p><strong>Acceptance Criteria</strong></p>
 <ul>
-<li>All interactive elements are reachable via keyboard and labelled appropriately (UX-08).</li>
-<li>Screens adapt to smaller screen sizes while maintaining functionality (UX-09).</li>
+<li>All interactive elements are reachable via keyboard and labelled appropriately.</li>
+<li>Screens adapt to smaller screen sizes while maintaining functionality.</li>
 </ul>
 <hr />
 <h2 id="discussion">Discussion</h2>
