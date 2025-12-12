@@ -3,6 +3,16 @@ docs_dir: brd
 site_url: https://charanbobby.github.io/ClaimLaneRequirementsRepo/
 use_directory_urls: false
 
+theme:
+  name: material
+
+markdown_extensions:
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
 nav:
   - Home: 01-README.md
 
