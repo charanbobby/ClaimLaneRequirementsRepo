@@ -157,6 +157,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-bs-level="2"><a href="#visual-process-flow" class="nav-link">Visual Process Flow</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-bs-level="2"><a href="#discussion" class="nav-link">Discussion</a>
               <ul class="nav flex-column">
               </ul>
@@ -202,6 +206,71 @@
 <p><strong>Backend Actions</strong> – Upon submission the system triggers automatic refunds via WooCommerce (where supported) and/or creates replacement orders for approved warranty claims. Exception flows handle POS returns, vendor review requirements, manual refunds and customer service overrides.</p>
 </li>
 </ol>
+<hr />
+<h2 id="visual-process-flow">Visual Process Flow</h2>
+<pre><code class="language-mermaid">flowchart TB
+
+    A([&quot;Where did you purchase?&quot;]) --&gt; B[&quot;Silkandsnow.com&quot;] &amp; C[&quot;Retail store&quot;] &amp; D[&quot;Third-party vendor&quot;]
+    D --&gt; D1[&quot;Follow vendor specific return / warranty process&quot;]
+    B --&gt; B0[&quot;How can we help you?&quot;]
+    B0 --&gt; B1[&quot;Warranty claim&quot;] &amp; B2[&quot;Mattress return&quot;] &amp; B3[&quot;Furniture / Accessory / Bedding return&quot;] &amp; B4[&quot;Other returns&quot;]
+    B2 --&gt; M1[&quot;Select the product&quot;]
+    M1 --&gt; M2{&quot;Is it boxed?&quot;}
+    M2 -- Yes --&gt; M3[&quot;Confirm customer details: name, email, phone, address, pickup date&quot;]
+    M3 --&gt; M4[&quot;Collect photos of mattress and law tag&quot;]
+    M4 --&gt; M5[&quot;Provide customer with return label and confirmation email&quot;]
+    M5 --&gt; M6[&quot;Vendor picks up product&quot;]
+    M6 --&gt; M7[&quot;Notify internal team and submit order for refund&quot;]
+    M2 -- No --&gt; M8[&quot;Confirm customer details and reason for unboxed return&quot;]
+    M8 --&gt; M9[&quot;Collect photos of product and law tag for review&quot;]
+    M9 --&gt; M10[&quot;Send details to vendor for condition review&quot;]
+    M10 --&gt; M11[&quot;Vendor approves pickup&quot;]
+    M11 --&gt; M6
+    B3 --&gt; F1[&quot;Select the product&quot;]
+    F1 --&gt; F2[&quot;Collect customer details and photos of product&quot;]
+    F2 --&gt; F3[&quot;Provide customer with return label and instructions&quot;]
+    F3 --&gt; F4[&quot;Product received by vendor&quot;]
+    F4 --&gt; F5[&quot;Notify internal team and process refund / exchange&quot;]
+    B4 --&gt; O1[&quot;Select the product&quot;]
+    O1 --&gt; O2[&quot;Collect details and photos as needed&quot;]
+    O2 --&gt; O3[&quot;Provide customer with return label or next steps&quot;]
+    O3 --&gt; O4[&quot;Item received and reviewed&quot;]
+    O4 --&gt; O5[&quot;Process refund / replacement&quot;]
+    B1 --&gt; W1[&quot;Collect order details, photos and description of issue&quot;]
+    W1 --&gt; W2[&quot;Send case to vendor / warranty team for review&quot;]
+    W2 --&gt; W3{&quot;Approved?&quot;}
+    W3 -- Yes --&gt; W4[&quot;Arrange replacement / repair or refund&quot;]
+    W3 -- No --&gt; W5[&quot;Communicate decision and options to customer&quot;]
+    C --&gt; C1[&quot;Shopify store order&quot;] &amp; C2[&quot;In-store POS purchase&quot;]
+    C1 --&gt; CS0[&quot;How can we help you?&quot;]
+    CS0 --&gt; CS1[&quot;Mattress / product return&quot;] &amp; CS2[&quot;Warranty claim&quot;]
+    CS1 --&gt; CS3[&quot;Select product and verify original order&quot;]
+    CS3 --&gt; CS4{&quot;Is it boxed?&quot;}
+    CS4 -- Yes --&gt; CS5[&quot;Collect customer details and photos if needed&quot;]
+    CS4 -- No --&gt; CS6[&quot;Collect details and photos including law tag&quot;]
+    CS5 --&gt; CS7[&quot;Provide return label or store instructions&quot;]
+    CS6 --&gt; CS7
+    CS7 --&gt; CS8[&quot;Vendor / warehouse receives product&quot;]
+    CS8 --&gt; CS9[&quot;Notify internal team and process refund&quot;]
+    CS2 --&gt; CS10[&quot;Collect order details and photos for warranty&quot;]
+    CS10 --&gt; CS11[&quot;Submit claim to vendor / warranty team&quot;]
+    CS11 --&gt; CS12{&quot;Approved?&quot;}
+    CS12 -- Yes --&gt; CS13[&quot;Arrange replacement / repair or refund&quot;]
+    CS12 -- No --&gt; CS14[&quot;Communicate decision and options to customer&quot;]
+    C2 --&gt; S0[&quot;How can we help you?&quot;]
+    S0 --&gt; S1[&quot;Mattress / product return&quot;] &amp; S2[&quot;Warranty claim&quot;]
+    S1 --&gt; S3[&quot;Verify receipt and purchase details&quot;]
+    S3 --&gt; S4{&quot;Within store return rules?&quot;}
+    S4 -- Yes --&gt; S5[&quot;Accept item in store and create return in POS&quot;]
+    S5 --&gt; S6[&quot;Ship item to vendor / warehouse if required&quot;]
+    S6 --&gt; S7[&quot;Refund or exchange completed in store&quot;]
+    S4 -- No --&gt; S8[&quot;Escalate to customer service for exception handling&quot;]
+    S2 --&gt; S9[&quot;Collect receipt, photos and issue description&quot;]
+    S9 --&gt; S10[&quot;Submit warranty case to vendor / internal team&quot;]
+    S10 --&gt; S11{&quot;Approved?&quot;}
+    S11 -- Yes --&gt; S12[&quot;Provide replacement / repair or refund&quot;]
+    S11 -- No --&gt; S13[&quot;Communicate decision and options to customer&quot;]
+</code></pre>
 <hr />
 <h2 id="discussion">Discussion</h2>
 <blockquote>
