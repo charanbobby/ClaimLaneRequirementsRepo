@@ -45,3 +45,5 @@ extra_css:
 
 extra_javascript:
   - js/giscus.js
+  - js/svg-pan-zoom.min.js
+  - js/mermaid-zoom.js
