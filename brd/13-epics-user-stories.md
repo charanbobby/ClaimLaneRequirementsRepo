@@ -12,9 +12,9 @@ _As a customer, I want to choose where I purchased my item (website, retail stor
 
 **Acceptance Criteria**
 
-- The start screen lists only US and Canadian channels (SCR-01).
+- The start screen lists only US and Canadian channels.
 - Selecting a third-party vendor shows vendor instructions and ends the flow.
-- Selecting a physical store or other vendor displays store-specific information (SCR-02).
+- Selecting a physical store or other vendor displays store-specific information.
 
 #### US-1.1.2 – Select Return or Claim Type
 
@@ -22,8 +22,8 @@ _As a customer, I want to indicate whether I'm returning a product or submitting
 
 **Acceptance Criteria**
 
-- Return options include "Return" and "Warranty Claim" (CAT-01 through CAT-04).
-- Changing the selection resets the workflow without retaining stale data (CAT-05).
+- Return options include "Return" and "Warranty Claim".
+- Changing the selection resets the workflow without retaining stale data.
 
 ### Feature 1.2 – Order Lookup
 
@@ -33,10 +33,10 @@ _As a customer, I want to find my online order by entering my email and order nu
 
 **Acceptance Criteria**
 
-- Both email and order number are required; validation errors appear for empty or invalid fields (AUTH-03, AUTH-09).
-- Leading/trailing spaces are trimmed (AUTH-04 to AUTH-06).
-- If fields do not match a WooCommerce order, the system shows "order not found" without revealing details (AUTH-02, AUTH-07).
-- Valid combinations retrieve the order and proceed to item selection (AUTH-01).
+- Both email and order number are required; validation errors appear for empty or invalid fields.
+- Leading/trailing spaces are trimmed.
+- If fields do not match a WooCommerce order, the system shows "order not found" without revealing details.
+- Valid combinations retrieve the order and proceed to item selection.
 
 ## Epic 2 – Item Display & Selection
 
@@ -48,11 +48,11 @@ _As a customer, I want to see all items in my order with images, colours and eli
 
 **Acceptance Criteria**
 
-- Items are accurately displayed with name, image, colour and quantity (ITEM-01, AC-2).
-- Items marked as final sale (e.g., custom hybrid mattress) are clearly labelled and cannot be selected (ITEM-02).
-- Items outside their return/trial window show an ineligible status (ITEM-06, AC-3).
-- Soft warnings appear for mattresses returned within 30 nights and furniture returns without packaging (ITEM-03, ITEM-11, FUR-02, MAT-01).
-- Category filtering hides non-relevant items when a specific return category is chosen (ITEM-05, AC-5, PERM-10/11).
+- Items are accurately displayed with name, image, colour and quantity.
+- Items marked as final sale (e.g., custom hybrid mattress) are clearly labelled and cannot be selected.
+- Items outside their return/trial window show an ineligible status.
+- Soft warnings appear for mattresses returned within 30 nights and furniture returns without packaging.
+- Category filtering hides non-relevant items when a specific return category is chosen.
 
 ### Feature 2.2 – Item Selection & Quantity
 
@@ -62,10 +62,10 @@ _As a customer, I want to select one or more eligible items and specify quantiti
 
 **Acceptance Criteria**
 
-- The user can select multiple items or partial quantities (ITEM-07 to ITEM-10).
-- Trying to proceed with no items selected produces a validation error (ITEM-15).
-- Selecting more than two of the same product shows a soft warning (ITEM-11).
-- Bundle rules apply when a bundle item is returned (ITEM-12 to ITEM-14, BND-01 to BND-08).
+- The user can select multiple items or partial quantities.
+- Trying to proceed with no items selected produces a validation error.
+- Selecting more than two of the same product shows a soft warning.
+- Bundle rules apply when a bundle item is returned.
 
 ## Epic 3 – Reason Selection & Documentation
 
@@ -78,10 +78,10 @@ _As a customer returning an item, I want to choose a reason from a list so that 
 **Acceptance Criteria**
 
 - The reason list is category-specific and matches marketing-approved options.
-- Selecting "Other" displays a required text field (RSN-02).
-- Selecting a damage/defective reason requires photo uploads (RSN-03).
-- Each item stores its own reason (RSN-04).
-- Proceeding without selecting a reason is blocked (RSN-05).
+- Selecting "Other" displays a required text field.
+- Selecting a damage/defective reason requires photo uploads.
+- Each item stores its own reason.
+- Proceeding without selecting a reason is blocked.
 
 #### US-3.1.2 – Select Claim Reason
 
@@ -101,9 +101,9 @@ _As a customer with a claim or damage return, I want to upload photos, measureme
 **Acceptance Criteria**
 
 - The portal displays required fields based on the selected claim reason and product category.
-- Mandatory fields must be completed before submission (RSN-03, RSN-05, AC-4).
-- Unsupported file types or over-sized uploads are rejected with clear messages (RSN-07, RSN-08).
-- Network errors during upload allow retry without losing form state (RSN-09).
+- Mandatory fields must be completed before submission.
+- Unsupported file types or over-sized uploads are rejected with clear messages.
+- Network errors during upload allow retry without losing form state.
 
 ## Epic 4 – Logistics & Label Management
 
@@ -115,7 +115,7 @@ _As a customer returning items, I want to indicate how many boxes I will ship so
 
 **Acceptance Criteria**
 
-- The box count must be between 1 and 20 (LBL-01 to LBL-05, AC-6).
+- The box count must be between 1 and 20.
 - Entering 0 or a number above 20 triggers validation errors.
 
 #### US-4.1.2 – Generate Labels
@@ -124,10 +124,10 @@ _As a customer, I want the portal to generate shipping labels with accurate weig
 
 **Acceptance Criteria**
 
-- Each box generates a unique label and tracking number (LBL-02 to LBL-03, LOG-05).
-- Weight and dimension logic splits, sums or uses dimensional weight as appropriate (LOG-01 to LOG-04).
-- Missing weight triggers fallback values (LOG-07).
-- The customer's shipping address appears correctly on all labels (LBL-09).
+- Each box generates a unique label and tracking number.
+- Weight and dimension logic splits, sums or uses dimensional weight as appropriate.
+- Missing weight triggers fallback values.
+- The customer's shipping address appears correctly on all labels.
 
 #### US-4.1.3 – Handle Carrier Responses
 
@@ -135,9 +135,9 @@ _As a customer, I want errors from the carrier service to be handled gracefully 
 
 **Acceptance Criteria**
 
-- Temporary carrier errors allow retry without duplicating labels (LBL-06 to LBL-08).
+- Temporary carrier errors allow retry without duplicating labels.
 - Extended outages display fallback instructions to contact support.
-- Re-printing a label retrieves the same label string (LOG-06).
+- Re-printing a label retrieves the same label string.
 
 ## Epic 5 – Ticketing & Back-End Processing
 
@@ -149,9 +149,9 @@ _As a customer, I want a ticket created with all my return/claim information so 
 
 **Acceptance Criteria**
 
-- Ticket includes contact details, selected items, quantities, documentation, labels and reasons (TK-01 to TK-04).
-- A ticket is created immediately after submission; failures display a friendly message and notify support (TK-05, ERR-05).
-- Duplicate tickets are prevented (TK-06).
+- Ticket includes contact details, selected items, quantities, documentation, labels and reasons.
+- A ticket is created immediately after submission; failures display a friendly message and notify support.
+- Duplicate tickets are prevented.
 
 #### US-5.1.2 – Ticket for Physical Store Returns
 
@@ -159,7 +159,7 @@ _As a customer returning an item purchased in a retail store, I want a ticket cr
 
 **Acceptance Criteria**
 
-- Ticket indicates external vendor and does not trigger automatic refund logic (TK-07).
+- Ticket indicates external vendor and does not trigger automatic refund logic.
 - Staff can view and act on the ticket in Claimlane.
 
 ### Feature 5.2 – Refund Processing
@@ -170,10 +170,10 @@ _As a customer returning an item, I want my refund processed automatically where
 
 **Acceptance Criteria**
 
-- For supported gateways (Visa, Mastercard, PayPal, integrated BNPL), the system initiates a WooCommerce refund and updates inventory appropriately (WC-01, WC-05, WC-11).
-- Partial refunds adjust only the line item amount and not inventory (WC-06).
-- POS orders and unsupported gateways trigger manual refund instructions (WC-02 to WC-04, WC-10 to WC-13).
-- Duplicate or currency mismatch refunds are prevented (WC-07, WC-08).
+- For supported gateways (Visa, Mastercard, PayPal, integrated BNPL), the system initiates a WooCommerce refund and updates inventory appropriately.
+- Partial refunds adjust only the line item amount and not inventory.
+- POS orders and unsupported gateways trigger manual refund instructions.
+- Duplicate or currency mismatch refunds are prevented.
 - Refund status and transaction IDs are stored in the ticket.
 
 ### Feature 5.3 – Replacement Orders
@@ -184,9 +184,9 @@ _As a customer with an approved warranty claim, I want the system to create a re
 
 **Acceptance Criteria**
 
-- Replacement orders are created in WooCommerce with status "Processing" (WC-04).
-- The customer receives an email notification from WooCommerce (AC-8).
-- Replacement order logic follows warranty rules by product (MAT-02, MAT-03, FUR-03, BED-02).
+- Replacement orders are created in WooCommerce with status "Processing".
+- The customer receives an email notification from WooCommerce.
+- Replacement order logic follows warranty rules by product.
 
 ## Epic 6 – Exception & Edge Cases
 
@@ -196,8 +196,8 @@ _As a customer returning an unboxed mattress or large furniture item, I want the
 
 **Acceptance Criteria**
 
-- Unboxed mattresses prompt the customer for additional photos and the ticket is flagged for vendor review (MAT-05).
-- Furniture without packaging triggers a warning to the customer and an admin flag (FUR-02).
+- Unboxed mattresses prompt the customer for additional photos and the ticket is flagged for vendor review.
+- Furniture without packaging triggers a warning to the customer and an admin flag.
 - Approval decisions are recorded in the ticket and update the flow.
 
 #### US-6.2 – Donation Path
@@ -206,8 +206,8 @@ _As a customer with an open-box mattress return, I want to donate my mattress th
 
 **Acceptance Criteria**
 
-- The portal displays donation partner details where available (MAT-05).
-- If the customer's address is outside the service area, instructions to contact support are provided (MAT-06).
+- The portal displays donation partner details where available.
+- If the customer's address is outside the service area, instructions to contact support are provided.
 
 #### US-6.3 – Timeouts & Re-Entries
 
@@ -215,9 +215,9 @@ _As a customer, I want to resume my return if my session times out or I need to 
 
 **Acceptance Criteria**
 
-- Session timeouts after label generation but before final confirmation still preserve tickets and labels (PERM-26, PERM-27).
-- If the user restarts the process, only items not yet returned are shown (UX-06, UX-07).
-- Refreshing or double-submitting does not create duplicate tickets or refunds (UX-03, PERM-28).
+- Session timeouts after label generation but before final confirmation still preserve tickets and labels.
+- If the user restarts the process, only items not yet returned are shown.
+- Refreshing or double-submitting does not create duplicate tickets or refunds.
 
 ## Epic 7 – User Experience & Accessibility
 
@@ -228,7 +228,7 @@ _As a customer, I want clear and contextual messages during each step of the ret
 **Acceptance Criteria**
 
 - Eligibility messages specify the product and rule (e.g., "Furniture must be returned within 30 days; this item is past the return window").
-- Error messages cover invalid input, missing documentation, API failures, carrier errors and gateway errors (ERR-01 to ERR-05, AC-10).
+- Error messages cover invalid input, missing documentation, API failures, carrier errors and gateway errors.
 - Marketing-approved copy is used across all screens and for all languages.
 
 #### US-7.2 – Accessibility & Responsiveness
@@ -237,8 +237,8 @@ _As any user, I want to navigate the portal using only a keyboard and have the p
 
 **Acceptance Criteria**
 
-- All interactive elements are reachable via keyboard and labelled appropriately (UX-08).
-- Screens adapt to smaller screen sizes while maintaining functionality (UX-09).
+- All interactive elements are reachable via keyboard and labelled appropriately.
+- Screens adapt to smaller screen sizes while maintaining functionality.
 
 ---
 

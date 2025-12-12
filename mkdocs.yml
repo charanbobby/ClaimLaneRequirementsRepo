@@ -1,5 +1,7 @@
 site_name: Claimlane Returns, Refunds & Warranty Portal BRD
 docs_dir: brd
+site_url: https://charanbobby.github.io/ClaimLaneRequirementsRepo/
+use_directory_urls: false
 
 nav:
   - Home: 01-README.md

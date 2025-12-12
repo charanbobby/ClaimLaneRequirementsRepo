@@ -1,4 +1,4 @@
-﻿<meta http-equiv="refresh" content="0; url='/01-README/'" />
+﻿<meta http-equiv="refresh" content="0; url=01-README.html" />
 
 ---
 
