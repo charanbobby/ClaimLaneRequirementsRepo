@@ -1,37 +1,55 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Wait for a short period to ensure mermaid has rendered
+    // Configuration
+    var MAX_ATTEMPTS = 50; // 5 seconds total
+    var CHECK_INTERVAL = 100; // 100ms
     var attemptCount = 0;
-    var maxAttempts = 20; // Try for 2 seconds (20 * 100ms)
+
+    console.log("[Mermaid-Zoom] Script loaded.");
 
     var initZoom = setInterval(function () {
-        var svgElement = document.querySelector(".mermaid svg");
+        var diagrams = document.querySelectorAll(".mermaid svg");
 
-        if (svgElement) {
+        if (diagrams.length > 0) {
+            console.log("[Mermaid-Zoom] Found " + diagrams.length + " diagrams.");
+
+            diagrams.forEach(function (svgElement, index) {
+                // Check if already initialized to prevent double-init (though we clear interval, just safety)
+                if (svgElement.getAttribute('data-pan-zoom-initialized')) return;
+
+                try {
+                    // Set styles to ensure visibility and proper behavior
+                    svgElement.style.maxWidth = 'none';
+                    // We don't force height here to let the diagram aspect ratio dictate, 
+                    // but we ensure the container allows overflow if needed
+
+                    svgPanZoom(svgElement, {
+                        zoomEnabled: true,
+                        controlIconsEnabled: true,
+                        fit: true,
+                        center: true,
+                        minZoom: 0.1,
+                        maxZoom: 10
+                    });
+
+                    svgElement.setAttribute('data-pan-zoom-initialized', 'true');
+                    console.log("[Mermaid-Zoom] Initialized zoom on diagram " + index);
+
+                } catch (e) {
+                    console.error("[Mermaid-Zoom] Failed to initialize on diagram " + index, e);
+                }
+            });
+
+            // Once we found and tried to init diagrams, we can stop? 
+            // Better to check if all expected diagrams are handled. 
+            // For now, clearing interval once we find *any* is a decent heuristic for this page 
+            // assuming all load at once.
             clearInterval(initZoom);
-
-            // Ensure the SVG has an ID for svg-pan-zoom explicitly if needed, but usually passing the element works.
-            // Adjust styles to ensure the container handles the zoom object correctly
-            svgElement.style.maxWidth = 'none';
-            svgElement.style.height = '600px'; // Give it a fixed height frame or let it be flexible?
-            // Usually 100% width and a fixed/min height is good for pan/zoom
-
-            try {
-                svgPanZoom(svgElement, {
-                    zoomEnabled: true,
-                    controlIconsEnabled: true,
-                    fit: true,
-                    center: true,
-                    minZoom: 0.5,
-                    maxZoom: 10
-                });
-            } catch (e) {
-                console.error("Failed to initialize svg-pan-zoom:", e);
+        } else {
+            attemptCount++;
+            if (attemptCount >= MAX_ATTEMPTS) {
+                console.warn("[Mermaid-Zoom] No mermaid diagrams found after timeout.");
+                clearInterval(initZoom);
             }
         }
-
-        attemptCount++;
-        if (attemptCount >= maxAttempts) {
-            clearInterval(initZoom);
-        }
-    }, 100);
+    }, CHECK_INTERVAL);
 });
