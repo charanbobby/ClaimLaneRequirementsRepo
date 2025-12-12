@@ -1,4 +1,4 @@
-# Overview and Purpose
+﻿# Overview and Purpose
 
 Silk & Snow aims to replace an ad-hoc email-based return and warranty process with Claimlane, a guided self-service portal covering returns, replacements and warranty claims.
 
@@ -13,3 +13,13 @@ This document consolidates the requirements extracted from the provided BRD, ret
 - Reduce label and documentation errors and prevent incorrect returns.
 - Deliver structured data for defect analytics, lot tracking, vendor and customer-service reporting.
 - Ensure a consistent, policy-driven customer experience across Canada and the United States.
+
+---
+
+## Discussion
+
+> 💬 **Comments for this page are available in Giscus.**  
+> Once Giscus is configured, the discussion thread for this page will appear here.
+
+<div class="giscus-placeholder"></div>
+

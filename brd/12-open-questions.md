@@ -1,4 +1,4 @@
-# Open Questions
+﻿# Open Questions
 
 These issues require clarification from Silk & Snow before implementation:
 
@@ -11,3 +11,13 @@ These issues require clarification from Silk & Snow before implementation:
 4. **Donation Automation** – Will open-box mattress donation programs be integrated or require manual handling?
 
 5. **POS Ticketing** – Should POS returns create Claimlane tickets for analytics even if refunds are processed manually in store?
+
+---
+
+## Discussion
+
+> 💬 **Comments for this page are available in Giscus.**  
+> Once Giscus is configured, the discussion thread for this page will appear here.
+
+<div class="giscus-placeholder"></div>
+

@@ -1,4 +1,4 @@
-# Actors
+﻿# Actors
 
 | Actor               | Description                                                                                               |
 |---------------------|-----------------------------------------------------------------------------------------------------------|
@@ -11,3 +11,13 @@
 | Retail/POS Systems  | External systems for physical store purchases; used for manual returns or policy guidance.              |
 | Marketing Team      | Stakeholders providing approved copy for portal messaging.                                                |
 | Quality Assurance (QA) Testers | Validate that portal functionality and rules behave according to requirements.               |
+
+---
+
+## Discussion
+
+> 💬 **Comments for this page are available in Giscus.**  
+> Once Giscus is configured, the discussion thread for this page will appear here.
+
+<div class="giscus-placeholder"></div>
+

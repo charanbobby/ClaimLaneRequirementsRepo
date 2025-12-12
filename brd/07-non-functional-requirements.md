@@ -1,4 +1,4 @@
-# Non Functional Requirements
+﻿# Non Functional Requirements
 
 - **NFR-1 – Security:** Enforce strict order lookup security so that a customer cannot access order details unless both email and order number match exactly. Sanitize all user inputs and store documentation securely.
 
@@ -13,3 +13,13 @@
 - **NFR-6 – Audit & Logging:** Record all key actions (order lookup, item selection, documentation uploads, label generation, refunds) with timestamps for auditability. Capture error messages and API responses for troubleshooting.
 
 - **NFR-7 – Scalability:** Design the portal and integrations to handle peak return volumes (e.g., seasonal spikes) without degradation of service.
+
+---
+
+## Discussion
+
+> 💬 **Comments for this page are available in Giscus.**  
+> Once Giscus is configured, the discussion thread for this page will appear here.
+
+<div class="giscus-placeholder"></div>
+

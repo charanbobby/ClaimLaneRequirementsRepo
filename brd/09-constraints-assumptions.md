@@ -1,4 +1,4 @@
-# Constraints and Assumptions
+﻿# Constraints and Assumptions
 
 ## Constraints
 
@@ -13,3 +13,13 @@
 - Delivered dates are available for 100% of orders via Trackship or a similar service.
 - Customers provide clear uploads for documentation, and policies for retail/POS returns are communicated to customer service.
 - API credentials for WooCommerce and shipping providers are available and valid.
+
+---
+
+## Discussion
+
+> 💬 **Comments for this page are available in Giscus.**  
+> Once Giscus is configured, the discussion thread for this page will appear here.
+
+<div class="giscus-placeholder"></div>
+

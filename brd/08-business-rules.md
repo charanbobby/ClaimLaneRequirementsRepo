@@ -1,4 +1,4 @@
-# Business Rules
+﻿# Business Rules
 
 The portal must enforce the following rules (numbered BR-1 through BR-12 plus appendix rules).
 
@@ -31,3 +31,13 @@ The portal must enforce the following rules (numbered BR-1 through BR-12 plus ap
 - **A-1 – 100% Documentation:** A claim cannot be submitted unless 100% of required documentation is provided (except for manual overrides).
 
 - **B-1 – Reason Inheritance:** Each subcategory inherits the return reasons and mappings exactly as provided in the source tables.
+
+---
+
+## Discussion
+
+> 💬 **Comments for this page are available in Giscus.**  
+> Once Giscus is configured, the discussion thread for this page will appear here.
+
+<div class="giscus-placeholder"></div>
+

@@ -1,4 +1,4 @@
-# Scope
+﻿# Scope
 
 ## In Scope
 
@@ -43,3 +43,13 @@
 - Multi-language capability (English only at launch).
 - Fraud or abuse detection systems.
 - Enhanced chatbot functionality beyond linking.
+
+---
+
+## Discussion
+
+> 💬 **Comments for this page are available in Giscus.**  
+> Once Giscus is configured, the discussion thread for this page will appear here.
+
+<div class="giscus-placeholder"></div>
+

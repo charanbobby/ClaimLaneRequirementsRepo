@@ -27,3 +27,9 @@ nav:
   - Stories:
       - Epics & User Stories: 13-epics-user-stories.md
 
+
+extra_css:
+  - css/giscus.css
+
+extra_javascript:
+  - js/giscus.js

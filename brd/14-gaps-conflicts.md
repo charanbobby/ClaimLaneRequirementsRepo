@@ -1,4 +1,4 @@
-# Identified Gaps and Potential Conflicts
+﻿# Identified Gaps and Potential Conflicts
 
 | ID | Gap or Conflict                | Resolution Required |
 |----|--------------------------------|----------------------|
@@ -12,3 +12,13 @@
 | 8  | Shipping Provider Decision     | The choice of carrier API must be finalized immediately, as it impacts several requirements related to box limits, label format and pickup options. |
 | 9  | POS Integration Scope          | Clarity is needed on the extent of Point-of-Sale (POS) integration at launch. The current scope excludes full automation but mentions POS-dependent features like order lookup and label generation. |
 | 10 | Donation Path Automation       | The process for offering and processing the mattress donation path must be defined, including requirements for donation partners, geographic availability and confirmation steps. |
+
+---
+
+## Discussion
+
+> 💬 **Comments for this page are available in Giscus.**  
+> Once Giscus is configured, the discussion thread for this page will appear here.
+
+<div class="giscus-placeholder"></div>
+

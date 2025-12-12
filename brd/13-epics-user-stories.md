@@ -1,4 +1,4 @@
-# Epics, Features and User Stories
+﻿# Epics, Features and User Stories
 
 The requirements are organized into epics and features. User stories are expressed in the format: As a [role], I want [goal] so that [benefit]. Each story includes acceptance criteria derived from the testing worksheet.
 
@@ -18,11 +18,11 @@ _As a customer, I want to choose where I purchased my item (website, retail stor
 
 #### US-1.1.2 – Select Return or Claim Type
 
-_As a customer, I want to indicate whether I’m returning a product or submitting a warranty claim so that the system applies the correct rules._
+_As a customer, I want to indicate whether I'm returning a product or submitting a warranty claim so that the system applies the correct rules._
 
 **Acceptance Criteria**
 
-- Return options include “Return” and “Warranty Claim” (CAT-01 through CAT-04).
+- Return options include "Return" and "Warranty Claim" (CAT-01 through CAT-04).
 - Changing the selection resets the workflow without retaining stale data (CAT-05).
 
 ### Feature 1.2 – Order Lookup
@@ -35,7 +35,7 @@ _As a customer, I want to find my online order by entering my email and order nu
 
 - Both email and order number are required; validation errors appear for empty or invalid fields (AUTH-03, AUTH-09).
 - Leading/trailing spaces are trimmed (AUTH-04 to AUTH-06).
-- If fields do not match a WooCommerce order, the system shows “order not found” without revealing details (AUTH-02, AUTH-07).
+- If fields do not match a WooCommerce order, the system shows "order not found" without revealing details (AUTH-02, AUTH-07).
 - Valid combinations retrieve the order and proceed to item selection (AUTH-01).
 
 ## Epic 2 – Item Display & Selection
@@ -78,7 +78,7 @@ _As a customer returning an item, I want to choose a reason from a list so that 
 **Acceptance Criteria**
 
 - The reason list is category-specific and matches marketing-approved options.
-- Selecting “Other” displays a required text field (RSN-02).
+- Selecting "Other" displays a required text field (RSN-02).
 - Selecting a damage/defective reason requires photo uploads (RSN-03).
 - Each item stores its own reason (RSN-04).
 - Proceeding without selecting a reason is blocked (RSN-05).
@@ -89,7 +89,7 @@ _As a customer filing a warranty claim, I want to select a predefined claim reas
 
 **Acceptance Criteria**
 
-- Only claim reasons approved by Silk & Snow are presented; “Other/Change of Mind” is not offered.
+- Only claim reasons approved by Silk & Snow are presented; "Other/Change of Mind" is not offered.
 - Each claim reason triggers specific documentation fields per the claim documentation table (Appendix A).
 
 ### Feature 3.2 – Documentation Upload
@@ -127,7 +127,7 @@ _As a customer, I want the portal to generate shipping labels with accurate weig
 - Each box generates a unique label and tracking number (LBL-02 to LBL-03, LOG-05).
 - Weight and dimension logic splits, sums or uses dimensional weight as appropriate (LOG-01 to LOG-04).
 - Missing weight triggers fallback values (LOG-07).
-- The customer’s shipping address appears correctly on all labels (LBL-09).
+- The customer's shipping address appears correctly on all labels (LBL-09).
 
 #### US-4.1.3 – Handle Carrier Responses
 
@@ -184,7 +184,7 @@ _As a customer with an approved warranty claim, I want the system to create a re
 
 **Acceptance Criteria**
 
-- Replacement orders are created in WooCommerce with status “Processing” (WC-04).
+- Replacement orders are created in WooCommerce with status "Processing" (WC-04).
 - The customer receives an email notification from WooCommerce (AC-8).
 - Replacement order logic follows warranty rules by product (MAT-02, MAT-03, FUR-03, BED-02).
 
@@ -207,7 +207,7 @@ _As a customer with an open-box mattress return, I want to donate my mattress th
 **Acceptance Criteria**
 
 - The portal displays donation partner details where available (MAT-05).
-- If the customer’s address is outside the service area, instructions to contact support are provided (MAT-06).
+- If the customer's address is outside the service area, instructions to contact support are provided (MAT-06).
 
 #### US-6.3 – Timeouts & Re-Entries
 
@@ -227,7 +227,7 @@ _As a customer, I want clear and contextual messages during each step of the ret
 
 **Acceptance Criteria**
 
-- Eligibility messages specify the product and rule (e.g., “Furniture must be returned within 30 days; this item is past the return window”).
+- Eligibility messages specify the product and rule (e.g., "Furniture must be returned within 30 days; this item is past the return window").
 - Error messages cover invalid input, missing documentation, API failures, carrier errors and gateway errors (ERR-01 to ERR-05, AC-10).
 - Marketing-approved copy is used across all screens and for all languages.
 
@@ -239,3 +239,12 @@ _As any user, I want to navigate the portal using only a keyboard and have the p
 
 - All interactive elements are reachable via keyboard and labelled appropriately (UX-08).
 - Screens adapt to smaller screen sizes while maintaining functionality (UX-09).
+
+---
+
+## Discussion
+
+> 💬 **Comments for this page are available in Giscus.**  
+> Once Giscus is configured, the discussion thread for this page will appear here.
+
+<div class="giscus-placeholder"></div>

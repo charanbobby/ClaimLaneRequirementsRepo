@@ -1,4 +1,4 @@
-# High Level Process Flow
+﻿# High Level Process Flow
 
 ## Narrative Steps
 
@@ -12,7 +12,7 @@
 
 5. **Item Selection** – The customer selects one or more eligible items (partial quantities allowed). Category filtering hides items not applicable to the selected return type. A minimum of one item is required; a soft warning is triggered if more than two units of the same product type are selected.
 
-6. **Reason Selection** – The customer chooses a reason for each selected item from pre-configured lists. Return reasons map to WooCommerce refund reasons; warranty claim reasons are category-specific and do not allow “Other/Change of Mind”. Selecting a damage or defective reason triggers documentation upload requirements.
+6. **Reason Selection** – The customer chooses a reason for each selected item from pre-configured lists. Return reasons map to WooCommerce refund reasons; warranty claim reasons are category-specific and do not allow "Other/Change of Mind". Selecting a damage or defective reason triggers documentation upload requirements.
 
 7. **Documentation Upload** – For claims and damage returns, customers must provide required documentation (e.g., photos of base, measurements, visible tags, invoice copy, lot number). The required documentation depends on the claim reason and product category.
 
@@ -21,3 +21,12 @@
 9. **Ticket Creation** – The Claimlane ticket stores order details, customer details, selected items and quantities, documentation, labels, return or claim reason, eligibility status and tags (product category, issue type). Duplicate tickets for the same items within a short window are prevented.
 
 10. **Backend Actions** – Upon submission the system triggers automatic refunds via WooCommerce (where supported) and/or creates replacement orders for approved warranty claims. Exception flows handle POS returns, vendor review requirements, manual refunds and customer service overrides.
+
+---
+
+## Discussion
+
+> 💬 **Comments for this page are available in Giscus.**  
+> Once Giscus is configured, the discussion thread for this page will appear here.
+
+<div class="giscus-placeholder"></div>
