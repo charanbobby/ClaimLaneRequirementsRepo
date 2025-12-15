@@ -485,17 +485,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#narrative-steps_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Narrative Steps
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#visual-process-flow" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -901,17 +890,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#narrative-steps_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Narrative Steps
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#visual-process-flow" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -952,7 +930,6 @@
 
 <h1 id="high-level-process-flow">High Level Process Flow</h1>
 <h2 id="narrative-steps">Narrative Steps</h2>
-<h2 id="narrative-steps_1">Narrative Steps</h2>
 <ol>
 <li>
 <p><strong>Purchase Channel Selection</strong> – Customer selects:</p>
@@ -1008,143 +985,13 @@
 <ul>
 <li><strong>Automatic Refund for Low-Value Returns:</strong> When "Received" and net refund value &lt; <strong>600</strong>, auto-initiate refund (if gateway supported).</li>
 <li><strong>Manual Refund for High-Value Returns:</strong> When "Received" and net refund value &gt;= <strong>600</strong>, route to CX for manual processing.</li>
-<li><strong>Caledonia Workflow:</strong> For Caledonia returns, the team updates status <strong>Delivered -&gt; Processing / Inspection Completed</strong>. Store Ops runs report for inventory.</li>
+<li><strong>Caledonia Workflow:</strong> For Caledonia returns, the team updates status <strong>Delivered → Processing / Inspection Completed</strong>. Store Ops runs report for inventory.</li>
 </ul>
 </li>
 </ol>
 <hr />
 <h2 id="visual-process-flow">Visual Process Flow</h2>
-<pre class="mermaid"><code>flowchart TB
-
-    %% ---------------------------------------------------------------------
-    %% CALEDONIA – BACK-OFFICE RETURNS HANDLING
-    %% ---------------------------------------------------------------------
-    subgraph CALEDONIA["Canada returns routed to Caledonia"]
-        R1["Return delivered to Caledonia"]
-        R2["Caledonia team updates return status in portal (limited access role)"]
-        R4["Update status: Delivered → Processing / Inspection Completed"]
-        R5["Store Ops run 'Returned items' report for inventory update"]
-    end
-
-    %% ---------------------------------------------------------------------
-    %% ENTRY POINT – PURCHASE CHANNEL SELECTION
-    %% ---------------------------------------------------------------------
-    A["Where did you purchase?"] 
-      --&gt; Online["Silk &amp; Snow Online – CA / US (Shopify)"] &amp; Retail["Silk &amp; Snow Retail Store (in-person)"] &amp; D["Third-party vendor"]
-
-    %% Third-party vendors
-    D --&gt; D1["Follow vendor-specific return / warranty process"]
-
-    %% Retail store selector – system decides Shopify POS vs STORIS
-    Retail --&gt; RS1["Select the store you purchased from"]
-    RS1 --&gt; RS2{"Store backend (system lookup)"}
-    RS2 -- "Shopify POS store" --&gt; B["Orders in Shopify (Online + Shopify POS)"]
-    RS2 -- "STORIS (non-Shopify) store" --&gt; RS3["Show message: this store handles returns in person only (no online processing)"]
-    RS3 --&gt; RSEnd["End – customer must visit store to complete return"]
-
-    %% Online orders – also go into Shopify-based flow
-    Online --&gt; B
-
-    %% ---------------------------------------------------------------------
-    %% MAIN SHOPIFY FLOW – DTC + SHOPIFY POS
-    %% ---------------------------------------------------------------------
-    B --&gt; B0["What do you need help with?"]
-    B0 --&gt; BR["Return"] &amp; BW["Warranty claim"]
-
-    %% DTC / POS Return – order validation and item selection
-    BR --&gt; OR1["Enter order number and email"]
-    OR1 --&gt; OR2{"Order validated?"}
-    OR2 -- No --&gt; OR2N["Show error and allow retry or contact support"]
-    OR2 -- Yes --&gt; OR3["Display all items in order"]
-    OR3 --&gt; OR4["Customer selects one or more items to return"]
-
-    %% Bundle / free item rule – applies to mattress &amp; accessory bundles
-    OR4 --&gt; BND1{"Part of bundle / free item promotion?"}
-    BND1 -- Yes --&gt; BND2["Prompt: customer can keep bundled / free items at 50% of full website price; adjust refund"]
-    BND2 --&gt; OR5{"Item type selected"}
-    BND1 -- No --&gt; OR5{"Item type selected"}
-
-    %% Mattress path (bundle logic handled above)
-    OR5 -- Mattress --&gt; M2{"Is mattress boxed?"}
-
-    %% Furniture path – two-step (photos then logistics)
-    OR5 -- Furniture --&gt; F1["Furniture return"]
-
-    %% Accessory / Bedding path – mail-in (bundle logic handled above)
-    OR5 -- Accessory/Bedding --&gt; A1["Accessory / Bedding return"]
-
-    %% Warranty claim entry
-    BW --&gt; OW1["Enter order number and email"]
-    OW1 --&gt; OW2{"Order validated?"}
-    OW2 -- No --&gt; OR2N
-    OW2 -- Yes --&gt; OW3["Display all items in order"]
-    OW3 --&gt; OW4["Customer selects one or more items for warranty"]
-    OW4 --&gt; WEntry["Proceed to warranty questionnaire and review"]
-
-    %% ---------------------------------------------------------------------
-    %% MATTRESS LOGISTICS – BOXED vs UNBOXED
-    %% ---------------------------------------------------------------------
-    M2 -- Yes --&gt; MInfo["Collect extra info: photos, law tag, preferred pickup dates"]
-    MInfo --&gt; MInstr["Provide return label / pickup details and instructions"]
-    MInstr --&gt; M3@{ label: "Vendor picks up mattress and updates status to 'Picked'" }
-
-    M2 -- No --&gt; MUInfo["Collect extra info: condition, donation eligibility (no photos sent to vendor)"]
-    MUInfo --&gt; U1["Return Logistics selects donation / pickup vendor"]
-    U1 --&gt; U6["Trigger emails: vendor + customer"]
-    U6 --&gt; U8{"Change vendor?"}
-    U8 -- Yes --&gt; U9["Select new vendor → trigger updated emails"]
-    U9 --&gt; M3
-    U8 -- No --&gt; M3
-
-    M3 --&gt; Received@{ label: "Item marked 'Received' in portal" }
-
-    %% ---------------------------------------------------------------------
-    %% FURNITURE RETURNS – CX REVIEW THEN LOGISTICS
-    %% ---------------------------------------------------------------------
-    F1 --&gt; FInfoPhotos["Step 1: Customer uploads photos + issue details"]
-    FInfoPhotos --&gt; FCXReview["CX reviews photos / info"]
-    FCXReview --&gt; FCXApprove{"CX approves return?"}
-    FCXApprove -- No --&gt; FCXDecline["Communicate decline or alternative options"]
-    FCXApprove -- Yes --&gt; FInfoDetails["Step 2: Collect access constraints, pickup dates, contact info"]
-    FInfoDetails --&gt; FLabelPickup["Generate carrier label + pickup instructions"]
-    FLabelPickup --&gt; F3["Arrange pickup"]
-    F3 --&gt; Received
-
-    %% ---------------------------------------------------------------------
-    %% ACCESSORY / BEDDING RETURNS – MAIL-IN
-    %% ---------------------------------------------------------------------
-    A1 --&gt; AInfo["Collect extra info: reason, photos if needed"]
-    AInfo --&gt; AInstr["Provide label + return-by-mail instructions"]
-    AInstr --&gt; A2["Customer ships item"]
-    A2 --&gt; Received
-
-    %% ---------------------------------------------------------------------
-    %% WARRANTY FLOW
-    %% ---------------------------------------------------------------------
-    WEntry --&gt; WInfo["Collect issue description, photos, documentation"]
-    WInfo --&gt; W2["Submit warranty case to vendor / CX"]
-    W2 --&gt; W3{"Approved?"}
-    W3 -- Yes --&gt; W4["Arrange replacement / refund / repair"]
-    W4 --&gt; FinalProcess["Close case / completion"]
-    W3 -- No --&gt; W5["Communicate decision + options"]
-
-    %% ---------------------------------------------------------------------
-    %% CALEDONIA PROCESS &amp; REFUND LOGIC
-    %% ---------------------------------------------------------------------
-    R1 --&gt; R2
-    R2 --&gt; R4
-    R4 --&gt; R5
-
-    Received --&gt; RV1{"Return order value &lt; 600?"} &amp; R1
-    RV1 -- Yes --&gt; AutoRefund["Portal automatically initiates refund"]
-    RV1 -- No --&gt; ManualRefund["CX manually processes refund"]
-    AutoRefund --&gt; FinalProcess
-    ManualRefund --&gt; FinalProcess
-    R5 --&gt; FinalProcess
-
-    %% Shape hints for key system states
-    M3@{ shape: rect}
-    Received@{ shape: rect}</code></pre>
+<p><img alt="Process Flow" src="assets/customer-return-v2.png" /></p>
 <hr />
 <h2 id="discussion">Discussion</h2>
 <blockquote>
