@@ -1935,7 +1935,7 @@
 <li>Retail selection shows a list of stores.</li>
 <li>System looks up each store as <strong>Shopify POS</strong> or <strong>STORIS (non-Shopify)</strong>.</li>
 <li>Shopify POS stores continue into the standard Shopify flow (order lookup etc.).</li>
-<li>STORIS stores show a message: returns must be completed in store; portal flow ends.</li>
+<li>Sales from STORIS stores show a message: "Returns must be completed in-store." The portal flow ends (no ticket or label is generated).</li>
 </ol>
 <hr />
 <h3 id="us-13-select-return-vs-warranty">US-1.3 Select Return vs Warranty</h3>
@@ -2067,7 +2067,7 @@
 <li>Prompts the customer with the keep-option (e.g., keep item at 50% of list price).</li>
 </ul>
 </li>
-<li>If customer chooses to keep the item, its discounted value is deducted from the refund.</li>
+<li>If customer chooses to keep the item, its discounted value is deducted from the refund and the decision is recorded on the ticket.</li>
 <li>If customer chooses to return, normal bundle rules apply (no extra deduction).</li>
 </ol>
 <hr />

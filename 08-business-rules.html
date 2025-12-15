@@ -953,16 +953,16 @@
 </ul>
 </li>
 <li>
-<p><strong>BR-14 – STORIS Store Returns:</strong> For STORIS stores, no tickets, labels, or refunds are generated in the portal.</p>
+<p><strong>BR-14 – STORIS Store Returns:</strong> For STORIS stores, the portal displays an "In-store return only" message and does not allow online returns. No tickets, labels, or refunds are generated in the portal.</p>
 </li>
 <li>
-<p><strong>BR-15 – Bundle / Free Item 50% Keep Rule:</strong> When a bundle item is returned and the customer keeps the bundled/free item, the customer pays <strong>50% of the full website price</strong> for the kept item. The refund is adjusted (prorated) to reflect this charge.</p>
+<p><strong>BR-15 – Bundle / Free Item 50% Keep Rule:</strong> When a bundle item is returned and the customer keeps the bundled/free item, the customer pays <strong>50% of the full website price</strong> for the kept item. The refund is adjusted (prorated) to reflect this charge and the decision is recorded on the ticket.</p>
 </li>
 <li>
 <p><strong>BR-16 – Vendor Pickup and Status Updates:</strong> Vendors (or Logistics team) must update mattress status to "Picked" in the portal. This status update must transition the item to <strong>"Received"</strong> to trigger refund logic.</p>
 </li>
 <li>
-<p><strong>BR-17 – Furniture Return Pre-Approval:</strong> All furniture returns require <strong>CX Approval</strong> (based on photos) before logistics can be arranged. If declined, no label is generated.</p>
+<p><strong>BR-17 – Furniture Return Pre-Approval:</strong> All furniture returns require <strong>CX Approval</strong> (based on photos) before logistics can be arranged. On approval, the system calls the <strong>WooCommerce service</strong> (same as original purchase) to calculate return rates. The client must pay for the return (or have it deducted). Once settled, the portal generates labels/pickup instructions.</p>
 </li>
 <li>
 <p><strong>BR-18 – Accessory and Bedding Mail-In Flow:</strong> These items follow a single-step logistics flow: Reason/Photos -&gt; Label Generation -&gt; Mail-in.</p>
