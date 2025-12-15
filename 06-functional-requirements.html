@@ -655,6 +655,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#new-functionality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New Functionality
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#discussion" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -730,6 +741,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="15-changelog.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -762,7 +801,7 @@
   <span class="md-ellipsis">
     
   
-    Governance
+    Stories
   
 
     
@@ -778,7 +817,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Governance
+    Stories
   
 
           </label>
@@ -791,126 +830,14 @@
   
   
     <li class="md-nav__item">
-      <a href="09-constraints-assumptions.html" class="md-nav__link">
+      <a href="13-epics-user-stories.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Constraints & Assumptions
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="10-dependencies.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Dependencies
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="11-risks-mitigation.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Risks & Mitigation
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="12-open-questions.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Open Questions
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="14-gaps-conflicts.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Gaps & Conflicts
+    Epics & User Stories
   
 
     
@@ -956,7 +883,7 @@
   <span class="md-ellipsis">
     
   
-    Stories
+    Reference
   
 
     
@@ -972,7 +899,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Stories
+    Reference
   
 
           </label>
@@ -985,14 +912,14 @@
   
   
     <li class="md-nav__item">
-      <a href="13-epics-user-stories.html" class="md-nav__link">
+      <a href="16-appendices.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Epics & User Stories
+    Appendices
   
 
     
@@ -1139,6 +1066,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#new-functionality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New Functionality
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#discussion" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1170,8 +1108,12 @@
 <p>The following requirements describe what the portal must do. Each requirement is assigned a reference number (FR-x) and grouped by functional area.</p>
 <h2 id="purchase-channel-and-intent-selection">Purchase Channel and Intent Selection</h2>
 <ul>
+<li><strong>FR-1 – Channel Selection UI:</strong> Provide a start screen where the customer selects:</li>
+<li>Silk &amp; Snow Online – CA / US (Shopify)</li>
+<li>Silk &amp; Snow Retail Store (in-person)</li>
 <li>
-<p><strong>FR-1 – Channel Selection UI:</strong> Provide a start screen where the customer chooses their purchase channel (silkandsnow.com/.ca, retail store, Shopify order, POS purchase, third-party vendor). When "Third-Party Vendor" is selected, the portal must show vendor instructions and block further portal steps. Only US and Canadian channels are available.</p>
+<p>Third-Party Vendor
+  When "Retail Store" is selected, the portal must perform a <strong>store lookup</strong>. If the store is <strong>Shopify POS</strong>, route to the standard Shopify order flow. If the store is <strong>STORIS (non-Shopify)</strong>, display a "returns must be handled in-person" message and block further steps. When "Third-Party Vendor" is selected, show vendor instructions and block steps.</p>
 </li>
 <li>
 <p><strong>FR-2 – Intent Selection:</strong> After channel selection, present options for "Return", "Warranty Claim", or other return type (configurable). The selection determines which subsequent screens and logic apply.</p>
@@ -1201,7 +1143,7 @@
 <p><strong>FR-8 – Category Filtering:</strong> Hide items that do not belong to the selected return type (e.g., returning accessories should not show mattresses).</p>
 </li>
 <li>
-<p><strong>FR-9 – Bundles Handling:</strong> Identify bundle items and apply bundle rules (full bundle return vs. partial return with prorated refund). When a gift with purchase is returned, require the gift to be returned or deduct its value.</p>
+<p><strong>FR-9 – Bundles Handling:</strong> Identify bundle items. When a main item is returned but the customer keeps a bundled/free item, the portal must offer the option to <strong>keep the bundled/free item at 50% of the full website price</strong> (not the bundle price) and adjust the refund amount accordingly. This applies to mattress + free accessory bundles and other configured bundles.</p>
 </li>
 </ul>
 <h2 id="item-selection">Item Selection</h2>
@@ -1246,7 +1188,12 @@
 <p><strong>FR-19 – Label Generation:</strong> Integrate with the selected shipping carrier API to generate one label per box using the customer's shipping address, item weight and dimensions. Use fallback weights when master data is missing. Store tracking numbers and prevent duplicate labels on reprints.</p>
 </li>
 <li>
-<p><strong>FR-20 – Pickup &amp; Freight Rules:</strong> For boxed mattresses, provide drop-off instructions. For unboxed mattresses or oversized furniture, trigger a vendor approval flow and use freight or special services based on weight and dimensions. Show warnings when original packaging is missing and flag the ticket for “Missing Packaging”.</p>
+<p><strong>FR-20 – Pickup &amp; Freight Rules:</strong></p>
+</li>
+<li><strong>Mattress (Boxed):</strong> Provide drop-off instructions/labels.</li>
+<li><strong>Mattress (Unboxed):</strong> Collect condition and donation eligibility. <strong>Do not send photos to the vendor.</strong> The <strong>Return Logistics Manager</strong> must manually select a donation or pickup vendor. Supporting <strong>Vendor Change</strong> functionality is required, which must trigger updated emails to the new vendor and customer.</li>
+<li>
+<p><strong>Furniture:</strong> Implement a two-step flow. Step 1: Customer uploads photos/details. <strong>CX must review and approve</strong> via the portal. Step 2 (if approved): Collect <strong>access constraints</strong> and pickup dates, then generate label/instructions.</p>
 </li>
 <li>
 <p><strong>FR-21 – Label Display &amp; Reprints:</strong> Show generated labels and tracking information to the customer. Allow re-printing without creating new labels or incurring extra charges.</p>
@@ -1258,7 +1205,12 @@
 <p><strong>FR-22 – Ticket Creation:</strong> Upon submission, create a Claimlane ticket capturing customer and order details, selected items, reasons, documentation, eligibility status, labels, tags (product category and issue type) and notes. Prevent duplicate tickets for the same items within a short timeframe.</p>
 </li>
 <li>
-<p><strong>FR-23 – Refund Processing:</strong> For eligible returns with supported payment gateways, automatically initiate a WooCommerce refund adjusting quantities and inventory. For partial refunds, adjust only the line item amount and leave inventory unchanged. If the gateway or currency does not support automated refunds, mark the ticket for manual refund and notify customer service.</p>
+<p><strong>FR-23 – Refund Processing:</strong></p>
+</li>
+<li><strong>Auto-Refund:</strong> When items are marked "Received" and the <strong>net refund value is less than 600</strong> (store currency), automatically initiate the refund in WooCommerce (if gateway supported).</li>
+<li><strong>Manual Refund:</strong> When items are marked "Received" and the <strong>net refund value is 600 or greater</strong>, route the ticket to CX for manual refund processing.</li>
+<li>
+<p>For partial refunds, adjust only the line item amount and leave inventory unchanged. If the gateway or currency does not support automated refunds, mark the ticket for manual refund.</p>
 </li>
 <li>
 <p><strong>FR-24 – Replacement Order Creation:</strong> For approved warranty claims, create a WooCommerce order for replacement items using the customer's billing/shipping details, set the order status to "Processing" and notify the customer via WooCommerce.</p>
@@ -1281,6 +1233,21 @@
 <li>
 <p><strong>FR-29 – Accessibility &amp; Responsiveness:</strong> Ensure that all key actions are accessible via keyboard only and that pages display correctly on mobile browsers.</p>
 </li>
+</ul>
+<h2 id="new-functionality">New Functionality</h2>
+<ul>
+<li>
+<p><strong>FR-30 – Caledonia Portal:</strong> Provide a limited access role/view for the <strong>Caledonia Warehouse Team</strong> to allow updating return status from <strong>Delivered → Processing / Inspection Completed</strong>. This status update must feed into the "Received" logic for refunds.</p>
+</li>
+<li>
+<p><strong>FR-31 – Reporting:</strong> Provide <strong>Store Operations</strong> with the ability to generate a "Returned items" report listing items that have reached "Inspection Completed" status for inventory updates.</p>
+</li>
+<li>
+<p><strong>FR-32 – Email Triggers:</strong> Configure specific email triggers for:</p>
+</li>
+<li>Unboxed Mattress Vendor Assignment.</li>
+<li>Unboxed Mattress Vendor Change (notify new vendor and customer).</li>
+<li>Furniture Return Approval/Decline by CX.</li>
 </ul>
 <hr />
 <h2 id="discussion">Discussion</h2>
@@ -1344,10 +1311,6 @@ Once Giscus is configured, the discussion thread for this page will appear here.
       <script src="assets/javascripts/bundle.e71a0d61.min.js"></script>
       
         <script src="js/giscus.js"></script>
-      
-        <script src="js/svg-pan-zoom.min.js"></script>
-      
-        <script src="js/mermaid-zoom.js"></script>
       
     
   </body>
