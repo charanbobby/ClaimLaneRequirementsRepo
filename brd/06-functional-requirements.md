@@ -4,7 +4,11 @@ The following requirements describe what the portal must do. Each requirement is
 
 ## Purchase Channel and Intent Selection
 
-- **FR-1 – Channel Selection UI:** Provide a start screen where the customer chooses their purchase channel (silkandsnow.com/.ca, retail store, Shopify order, POS purchase, third-party vendor). When "Third-Party Vendor" is selected, the portal must show vendor instructions and block further portal steps. Only US and Canadian channels are available.
+- **FR-1 – Channel Selection UI:** Provide a start screen where the customer selects:
+  - Silk & Snow Online – CA / US (Shopify)
+  - Silk & Snow Retail Store (in-person)
+  - Third-Party Vendor
+  When "Retail Store" is selected, the portal must perform a **store lookup**. If the store is **Shopify POS**, route to the standard Shopify order flow. If the store is **STORIS (non-Shopify)**, display a "returns must be handled in-person" message and block further steps. When "Third-Party Vendor" is selected, show vendor instructions and block steps.
 
 - **FR-2 – Intent Selection:** After channel selection, present options for "Return", "Warranty Claim", or other return type (configurable). The selection determines which subsequent screens and logic apply.
 
@@ -24,7 +28,7 @@ The following requirements describe what the portal must do. Each requirement is
 
 - **FR-8 – Category Filtering:** Hide items that do not belong to the selected return type (e.g., returning accessories should not show mattresses).
 
-- **FR-9 – Bundles Handling:** Identify bundle items and apply bundle rules (full bundle return vs. partial return with prorated refund). When a gift with purchase is returned, require the gift to be returned or deduct its value.
+- **FR-9 – Bundles Handling:** Identify bundle items. When a main item is returned but the customer keeps a bundled/free item, the portal must offer the option to **keep the bundled/free item at 50% of the full website price** (not the bundle price) and adjust the refund amount accordingly. This applies to mattress + free accessory bundles and other configured bundles.
 
 ## Item Selection
 
@@ -54,7 +58,10 @@ The following requirements describe what the portal must do. Each requirement is
 
 - **FR-19 – Label Generation:** Integrate with the selected shipping carrier API to generate one label per box using the customer's shipping address, item weight and dimensions. Use fallback weights when master data is missing. Store tracking numbers and prevent duplicate labels on reprints.
 
-- **FR-20 – Pickup & Freight Rules:** For boxed mattresses, provide drop-off instructions. For unboxed mattresses or oversized furniture, trigger a vendor approval flow and use freight or special services based on weight and dimensions. Show warnings when original packaging is missing and flag the ticket for “Missing Packaging”.
+- **FR-20 – Pickup & Freight Rules:**
+  - **Mattress (Boxed):** Provide drop-off instructions/labels.
+  - **Mattress (Unboxed):** Collect condition and donation eligibility. **Do not send photos to the vendor.** The **Return Logistics Manager** must manually select a donation or pickup vendor. Supporting **Vendor Change** functionality is required, which must trigger updated emails to the new vendor and customer.
+  - **Furniture:** Implement a two-step flow. Step 1: Customer uploads photos/details. **CX must review and approve** via the portal. Step 2 (if approved): Collect **access constraints** and pickup dates, then generate label/instructions.
 
 - **FR-21 – Label Display & Reprints:** Show generated labels and tracking information to the customer. Allow re-printing without creating new labels or incurring extra charges.
 
@@ -62,7 +69,10 @@ The following requirements describe what the portal must do. Each requirement is
 
 - **FR-22 – Ticket Creation:** Upon submission, create a Claimlane ticket capturing customer and order details, selected items, reasons, documentation, eligibility status, labels, tags (product category and issue type) and notes. Prevent duplicate tickets for the same items within a short timeframe.
 
-- **FR-23 – Refund Processing:** For eligible returns with supported payment gateways, automatically initiate a WooCommerce refund adjusting quantities and inventory. For partial refunds, adjust only the line item amount and leave inventory unchanged. If the gateway or currency does not support automated refunds, mark the ticket for manual refund and notify customer service.
+- **FR-23 – Refund Processing:**
+  - **Auto-Refund:** When items are marked "Received" and the **net refund value is less than 600** (store currency), automatically initiate the refund in WooCommerce (if gateway supported).
+  - **Manual Refund:** When items are marked "Received" and the **net refund value is 600 or greater**, route the ticket to CX for manual refund processing.
+  - For partial refunds, adjust only the line item amount and leave inventory unchanged. If the gateway or currency does not support automated refunds, mark the ticket for manual refund.
 
 - **FR-24 – Replacement Order Creation:** For approved warranty claims, create a WooCommerce order for replacement items using the customer's billing/shipping details, set the order status to "Processing" and notify the customer via WooCommerce.
 
@@ -77,6 +87,17 @@ The following requirements describe what the portal must do. Each requirement is
 - **FR-28 – Localization:** At launch the portal operates in English only; French copy is supported via translation tables but must be marketing-approved. Copy must be consistent across screens and reasons.
 
 - **FR-29 – Accessibility & Responsiveness:** Ensure that all key actions are accessible via keyboard only and that pages display correctly on mobile browsers.
+
+## New Functionality
+
+- **FR-30 – Caledonia Portal:** Provide a limited access role/view for the **Caledonia Warehouse Team** to allow updating return status from **Delivered → Processing / Inspection Completed**. This status update must feed into the "Received" logic for refunds.
+
+- **FR-31 – Reporting:** Provide **Store Operations** with the ability to generate a "Returned items" report listing items that have reached "Inspection Completed" status for inventory updates.
+
+- **FR-32 – Email Triggers:** Configure specific email triggers for:
+  - Unboxed Mattress Vendor Assignment.
+  - Unboxed Mattress Vendor Change (notify new vendor and customer).
+  - Furniture Return Approval/Decline by CX.
 
 ---
 

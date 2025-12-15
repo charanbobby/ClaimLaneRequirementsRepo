@@ -242,6 +242,42 @@ _As any user, I want to navigate the portal using only a keyboard and have the p
 
 ---
 
+## New Acceptance Criteria (AC-11 to AC-17)
+
+- **AC-11 — Retail Store Backend Detection**
+  - Selecting a Shopify POS store routes the customer into the Shopify order lookup and return flow.
+  - Selecting a STORIS store displays an "in-store only" returns message and does not allow online returns, label generation, or ticket creation.
+
+- **AC-12 — Bundle / Free Item 50% Keep Rule**
+  - When returning an order containing bundled or free items, the portal offers the customer the option to keep those items at **50% of the full website price**.
+  - If the customer chooses to keep the item, the refund amount is reduced accordingly and the decision is recorded on the ticket.
+
+- **AC-13 — Mattress Vendor Pickup & Status**
+  - Vendors can update mattress pickup status to **"Picked"** in the portal.
+  - Setting status to "Picked" moves the item to **"Received"** and triggers refund evaluation logic.
+
+- **AC-14 — Furniture Two-Step Process**
+  - Furniture returns cannot proceed to label generation or pickup scheduling until CX has approved the request based on photos and description.
+  - On CX approval, the portal collects access constraints and dates, then generates labels/pickup instructions.
+
+- **AC-15 — Accessory/Bedding Mail-In Flow**
+  - For accessory/bedding returns, once items and reasons are selected, the portal generates a label and mail-in instructions in a single step.
+  - Items follow standard "Received -> refund" logic when returned.
+
+- **AC-16 — Caledonia Status Updates & Store Ops Report**
+  - Caledonia team can update statuses from **Delivered -> Processing / Inspection Completed** using a limited access role.
+  - Store Ops can run a "Returned items" report that lists items ready for inventory update.
+
+- **AC-17 — Refund Threshold for < 600**
+  - For returns with **net refund value < 600**, once items are marked "Received," an automatic refund is initiated in WooCommerce if supported by the gateway.
+  - For returns with **net refund value >= 600**, no automatic refund is initiated; the ticket is flagged for manual CX handling.
+
+## Testing Worksheet
+
+*(Placeholder: Testing Worksheet to be created/updated with PERM-xx IDs correspondng to the above acceptance criteria)*
+
+---
+
 ## Discussion
 
 > 💬 **Comments for this page are available in Giscus.**  

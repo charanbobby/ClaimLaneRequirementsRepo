@@ -12,7 +12,7 @@ The portal must enforce the following rules (numbered BR-1 through BR-12 plus ap
 
 - **BR-5 – Complete Documentation:** A claim cannot be submitted until all required documentation (photos, measurements, lot number, description and invoice where applicable) is provided, except when customer service manually overrides.
 
-- **BR-6 – Freight & Oversize:** Freight or oversize rules apply for furniture, adjustable beds and oversized items; the system must handle these separately from standard label generation.
+- **BR-6 – Freight & Oversize:** Freight or oversize rules apply for furniture, adjustable beds and oversized items; the system must enforce a **CX Pre-Approval** step before any labels are generated or pickups arranged.
 
 - **BR-7 – Duplicate Ticket Prevention:** The system must prevent the creation of multiple tickets for the same items within a short window (specific timeframe configurable).
 
@@ -25,6 +25,28 @@ The portal must enforce the following rules (numbered BR-1 through BR-12 plus ap
 - **BR-11 – Return Reason Mapping:** Refunds must use the mapped WooCommerce reason for reporting and processing.
 
 - **BR-12 – Duplicate Refunds:** No duplicate refund attempts are allowed; the system must detect prior refunds before initiating a new one.
+
+- **BR-13 – Retail Store Backend Detection:** When a customer selects "Silk & Snow Retail Store," the portal must lookup the backend:
+    - **Shopify POS:** Route to standard Shopify flow.
+    - **STORIS:** Block online return; show "In-store return only" message.
+
+- **BR-14 – STORIS Store Returns:** For STORIS stores, no tickets, labels, or refunds are generated in the portal.
+
+- **BR-15 – Bundle / Free Item 50% Keep Rule:** When a bundle item is returned and the customer keeps the bundled/free item, the customer pays **50% of the full website price** for the kept item. The refund is adjusted (prorated) to reflect this charge.
+
+- **BR-16 – Vendor Pickup and Status Updates:** Vendors (or Logistics team) must update mattress status to "Picked" in the portal. This status update must transition the item to **"Received"** to trigger refund logic.
+
+- **BR-17 – Furniture Return Pre-Approval:** All furniture returns require **CX Approval** (based on photos) before logistics can be arranged. If declined, no label is generated.
+
+- **BR-18 – Accessory and Bedding Mail-In Flow:** These items follow a single-step logistics flow: Reason/Photos -> Label Generation -> Mail-in.
+
+- **BR-19 – Caledonia Limited Access Role:** Caledonia team uses a limited role to update status: **Delivered -> Processing / Inspection Completed**.
+
+- **BR-20 – Store Ops Returned Items Report:** Store Ops must be able to generate a report of items in "Inspection Completed" status for inventory updates.
+
+- **BR-21 – Automatic Refund Threshold (< 600):**
+    - Net Refund Value < 600: **Auto-Refund** initiated (if gateway supported).
+    - Net Refund Value >= 600: **Manual Refund** (routed to CX).
 
 ## Appendix Rules
 

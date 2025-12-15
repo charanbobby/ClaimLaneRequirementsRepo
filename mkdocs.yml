@@ -28,16 +28,13 @@ nav:
       - Functional: 06-functional-requirements.md
       - Non-Functional: 07-non-functional-requirements.md
       - Business Rules: 08-business-rules.md
-
-  - Governance:
-      - Constraints & Assumptions: 09-constraints-assumptions.md
-      - Dependencies: 10-dependencies.md
-      - Risks & Mitigation: 11-risks-mitigation.md
-      - Open Questions: 12-open-questions.md
-      - Gaps & Conflicts: 14-gaps-conflicts.md
+      - Changelog: 15-changelog.md
 
   - Stories:
       - Epics & User Stories: 13-epics-user-stories.md
+
+  - Reference:
+      - Appendices: 16-appendices.md
 
 
 extra_css:
@@ -45,5 +42,3 @@ extra_css:
 
 extra_javascript:
   - js/giscus.js
-  - js/svg-pan-zoom.min.js
-  - js/mermaid-zoom.js

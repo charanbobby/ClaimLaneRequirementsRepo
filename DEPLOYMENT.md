@@ -35,6 +35,21 @@ mkdocs serve
 ```
 Then open [http://127.0.0.1:8000](http://127.0.0.1:8000) in your browser.
 
+
+## Static Site Build
+
+To generate a static version of the site (HTML/CSS/JS files) without running a server:
+
+```sh
+mkdocs build
+```
+This creates a `site/` directory containing the full static website.
+
+**When is this necessary?**
+1.  **Debugging:** If you suspect an issue is due to the live reload server, the build output shows exactly what will be deployed.
+2.  **Hosting Elsewhere:** if you want to host the files on a standard web server (Apache/Nginx) instead of GitHub Pages.
+3.  **Verification:** To confirm that all files and navigation links are generated correctly before pushing code.
+
 ## Deployment
 
 To deploy changes to the live site:

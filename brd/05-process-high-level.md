@@ -2,25 +2,46 @@
 
 ## Narrative Steps
 
-1. **Purchase Channel Selection** – The customer selects the purchase source (silkandsnow.com/.ca, retail store, Shopify order, POS purchase, third-party vendor). Third-party vendor orders do not proceed through Claimlane; vendor instructions are shown instead.
+## Narrative Steps
+
+1. **Purchase Channel Selection** – Customer selects:
+    *   Silk & Snow Online – CA / US (Shopify)
+    *   Silk & Snow Retail Store (in-person)
+    *   Third-Party Vendor
+    
+    For Retail Store selections, the portal uses a **store lookup** to determine whether the store backend is **Shopify POS** or **STORIS (non-Shopify)**.
+
+    **Retail Store Backend Handling**
+    *   If the selected store is a **Shopify POS store**, the portal routes the customer into the **same Shopify order flow** used for online orders (orders in Shopify Online + Shopify POS).
+    *   If the selected store is a **STORIS (non-Shopify) store**, the portal displays a message that **returns for this store must be handled in person** and the flow ends (no online processing, no label generation, no ticket).
 
 2. **Customer Intent Selection** – The customer chooses to start a return, warranty claim or another return type (if configured). The flow branches accordingly.
 
 3. **Order Lookup** – For online orders the customer must enter their email and order number. Both fields must match exactly with the WooCommerce record; otherwise no order details are displayed.
 
-4. **Display Order Items & Eligibility** – All items on the order are shown with variant image, colour, category and eligibility status (e.g., Eligible, Trial Ended, Final Sale, Already Returned). Eligibility is computed using product category, return window, trial length, final sale rules, channel and delivered date.
+4. **Display Order Items & Eligibility** – All items on the order are shown with variant image, colour, category and eligibility status. Eligibility is computed using product category, return window, trial length, final sale rules, channel and delivered date.
 
-5. **Item Selection** – The customer selects one or more eligible items (partial quantities allowed). Category filtering hides items not applicable to the selected return type. A minimum of one item is required; a soft warning is triggered if more than two units of the same product type are selected.
+5. **Item Selection** – The customer selects one or more eligible items. A minimum of one item is required.
+    *   **Bundle / Free Item Promotion:** If the item is part of a bundle or free item promotion, the customer can keep bundled/free items at **50% of full website price**; the refund is adjusted accordingly.
 
-6. **Reason Selection** – The customer chooses a reason for each selected item from pre-configured lists. Return reasons map to WooCommerce refund reasons; warranty claim reasons are category-specific and do not allow "Other/Change of Mind". Selecting a damage or defective reason triggers documentation upload requirements.
+6. **Reason Selection** – The customer chooses a reason for each selected item. Return reasons map to WooCommerce refund reasons.
 
-7. **Documentation Upload** – For claims and damage returns, customers must provide required documentation (e.g., photos of base, measurements, visible tags, invoice copy, lot number). The required documentation depends on the claim reason and product category.
+7. **Documentation Upload** – For claims and damage returns, customers must provide required documentation (photos, measurements, etc.).
 
-8. **Logistics & Labels** – If the product is eligible for a label, the customer enters the number of boxes (1–20) and a label is generated per box. For boxed mattresses, pickup instructions and photo requirements are shown. For unboxed mattresses or oversized furniture, vendor approval and freight rules apply. Tracking numbers are stored in the ticket.
+8. **Logistics & Labels** – The flow splits based on product type:
+    *   **Mattress (Boxed):** Collect photos/law tag. Provide return label/pickup instructions. Vendor picks up and updates status to 'Picked'.
+    *   **Mattress (Unboxed):** Collect condition and donation eligibility. **No photos sent to vendor.** Return Logistics Manager selects donation/pickup vendor. Vendor change triggers update emails. Vendor picks up and updates status to 'Picked'.
+    *   **Furniture:** Two-step process:
+        1.  **Pre-approval:** Customer uploads photos/issue details. **CX reviews and approves/declines.**
+        2.  **Logistics:** On approval, collect **access constraints** and pickup dates. Generate label/instructions.
+    *   **Accessory/Bedding:** Single step. Collect reason/photos -> Generate label & mail-in instructions.
 
-9. **Ticket Creation** – The Claimlane ticket stores order details, customer details, selected items and quantities, documentation, labels, return or claim reason, eligibility status and tags (product category, issue type). Duplicate tickets for the same items within a short window are prevented.
+9. **Ticket Creation** – The Claimlane ticket stores all details. Duplicate tickets are prevented.
 
-10. **Backend Actions** – Upon submission the system triggers automatic refunds via WooCommerce (where supported) and/or creates replacement orders for approved warranty claims. Exception flows handle POS returns, vendor review requirements, manual refunds and customer service overrides.
+10. **Backend Actions** – Upon submission:
+    *   **Automatic Refund for Low-Value Returns:** When "Received" and net refund value < **600**, auto-initiate refund (if gateway supported).
+    *   **Manual Refund for High-Value Returns:** When "Received" and net refund value >= **600**, route to CX for manual processing.
+    *   **Caledonia Workflow:** For Caledonia returns, the team updates status **Delivered -> Processing / Inspection Completed**. Store Ops runs report for inventory.
 
 ---
 
@@ -29,66 +50,135 @@
 ```mermaid
 flowchart TB
 
-    A(["Where did you purchase?"]) --> B["Silkandsnow.com"] & C["Retail store"] & D["Third-party vendor"]
-    D --> D1["Follow vendor specific return / warranty process"]
-    B --> B0["How can we help you?"]
-    B0 --> B1["Warranty claim"] & B2["Mattress return"] & B3["Furniture / Accessory / Bedding return"] & B4["Other returns"]
-    B2 --> M1["Select the product"]
-    M1 --> M2{"Is it boxed?"}
-    M2 -- Yes --> M3["Confirm customer details: name, email, phone, address, pickup date"]
-    M3 --> M4["Collect photos of mattress and law tag"]
-    M4 --> M5["Provide customer with return label and confirmation email"]
-    M5 --> M6["Vendor picks up product"]
-    M6 --> M7["Notify internal team and submit order for refund"]
-    M2 -- No --> M8["Confirm customer details and reason for unboxed return"]
-    M8 --> M9["Collect photos of product and law tag for review"]
-    M9 --> M10["Send details to vendor for condition review"]
-    M10 --> M11["Vendor approves pickup"]
-    M11 --> M6
-    B3 --> F1["Select the product"]
-    F1 --> F2["Collect customer details and photos of product"]
-    F2 --> F3["Provide customer with return label and instructions"]
-    F3 --> F4["Product received by vendor"]
-    F4 --> F5["Notify internal team and process refund / exchange"]
-    B4 --> O1["Select the product"]
-    O1 --> O2["Collect details and photos as needed"]
-    O2 --> O3["Provide customer with return label or next steps"]
-    O3 --> O4["Item received and reviewed"]
-    O4 --> O5["Process refund / replacement"]
-    B1 --> W1["Collect order details, photos and description of issue"]
-    W1 --> W2["Send case to vendor / warranty team for review"]
+    %% ---------------------------------------------------------------------
+    %% CALEDONIA – BACK-OFFICE RETURNS HANDLING
+    %% ---------------------------------------------------------------------
+    subgraph CALEDONIA["Canada returns routed to Caledonia"]
+        R1["Return delivered to Caledonia"]
+        R2["Caledonia team updates return status in portal (limited access role)"]
+        R4["Update status: Delivered → Processing / Inspection Completed"]
+        R5["Store Ops run 'Returned items' report for inventory update"]
+    end
+
+    %% ---------------------------------------------------------------------
+    %% ENTRY POINT – PURCHASE CHANNEL SELECTION
+    %% ---------------------------------------------------------------------
+    A["Where did you purchase?"] 
+      --> Online["Silk & Snow Online – CA / US (Shopify)"] & Retail["Silk & Snow Retail Store (in-person)"] & D["Third-party vendor"]
+
+    %% Third-party vendors
+    D --> D1["Follow vendor-specific return / warranty process"]
+
+    %% Retail store selector – system decides Shopify POS vs STORIS
+    Retail --> RS1["Select the store you purchased from"]
+    RS1 --> RS2{"Store backend (system lookup)"}
+    RS2 -- "Shopify POS store" --> B["Orders in Shopify (Online + Shopify POS)"]
+    RS2 -- "STORIS (non-Shopify) store" --> RS3["Show message: this store handles returns in person only (no online processing)"]
+    RS3 --> RSEnd["End – customer must visit store to complete return"]
+
+    %% Online orders – also go into Shopify-based flow
+    Online --> B
+
+    %% ---------------------------------------------------------------------
+    %% MAIN SHOPIFY FLOW – DTC + SHOPIFY POS
+    %% ---------------------------------------------------------------------
+    B --> B0["What do you need help with?"]
+    B0 --> BR["Return"] & BW["Warranty claim"]
+
+    %% DTC / POS Return – order validation and item selection
+    BR --> OR1["Enter order number and email"]
+    OR1 --> OR2{"Order validated?"}
+    OR2 -- No --> OR2N["Show error and allow retry or contact support"]
+    OR2 -- Yes --> OR3["Display all items in order"]
+    OR3 --> OR4["Customer selects one or more items to return"]
+
+    %% Bundle / free item rule – applies to mattress & accessory bundles
+    OR4 --> BND1{"Part of bundle / free item promotion?"}
+    BND1 -- Yes --> BND2["Prompt: customer can keep bundled / free items at 50% of full website price; adjust refund"]
+    BND2 --> OR5{"Item type selected"}
+    BND1 -- No --> OR5{"Item type selected"}
+
+    %% Mattress path (bundle logic handled above)
+    OR5 -- Mattress --> M2{"Is mattress boxed?"}
+
+    %% Furniture path – two-step (photos then logistics)
+    OR5 -- Furniture --> F1["Furniture return"]
+
+    %% Accessory / Bedding path – mail-in (bundle logic handled above)
+    OR5 -- Accessory/Bedding --> A1["Accessory / Bedding return"]
+
+    %% Warranty claim entry
+    BW --> OW1["Enter order number and email"]
+    OW1 --> OW2{"Order validated?"}
+    OW2 -- No --> OR2N
+    OW2 -- Yes --> OW3["Display all items in order"]
+    OW3 --> OW4["Customer selects one or more items for warranty"]
+    OW4 --> WEntry["Proceed to warranty questionnaire and review"]
+
+    %% ---------------------------------------------------------------------
+    %% MATTRESS LOGISTICS – BOXED vs UNBOXED
+    %% ---------------------------------------------------------------------
+    M2 -- Yes --> MInfo["Collect extra info: photos, law tag, preferred pickup dates"]
+    MInfo --> MInstr["Provide return label / pickup details and instructions"]
+    MInstr --> M3@{ label: "Vendor picks up mattress and updates status to 'Picked'" }
+
+    M2 -- No --> MUInfo["Collect extra info: condition, donation eligibility (no photos sent to vendor)"]
+    MUInfo --> U1["Return Logistics selects donation / pickup vendor"]
+    U1 --> U6["Trigger emails: vendor + customer"]
+    U6 --> U8{"Change vendor?"}
+    U8 -- Yes --> U9["Select new vendor → trigger updated emails"]
+    U9 --> M3
+    U8 -- No --> M3
+
+    M3 --> Received@{ label: "Item marked 'Received' in portal" }
+
+    %% ---------------------------------------------------------------------
+    %% FURNITURE RETURNS – CX REVIEW THEN LOGISTICS
+    %% ---------------------------------------------------------------------
+    F1 --> FInfoPhotos["Step 1: Customer uploads photos + issue details"]
+    FInfoPhotos --> FCXReview["CX reviews photos / info"]
+    FCXReview --> FCXApprove{"CX approves return?"}
+    FCXApprove -- No --> FCXDecline["Communicate decline or alternative options"]
+    FCXApprove -- Yes --> FInfoDetails["Step 2: Collect access constraints, pickup dates, contact info"]
+    FInfoDetails --> FLabelPickup["Generate carrier label + pickup instructions"]
+    FLabelPickup --> F3["Arrange pickup"]
+    F3 --> Received
+
+    %% ---------------------------------------------------------------------
+    %% ACCESSORY / BEDDING RETURNS – MAIL-IN
+    %% ---------------------------------------------------------------------
+    A1 --> AInfo["Collect extra info: reason, photos if needed"]
+    AInfo --> AInstr["Provide label + return-by-mail instructions"]
+    AInstr --> A2["Customer ships item"]
+    A2 --> Received
+
+    %% ---------------------------------------------------------------------
+    %% WARRANTY FLOW
+    %% ---------------------------------------------------------------------
+    WEntry --> WInfo["Collect issue description, photos, documentation"]
+    WInfo --> W2["Submit warranty case to vendor / CX"]
     W2 --> W3{"Approved?"}
-    W3 -- Yes --> W4["Arrange replacement / repair or refund"]
-    W3 -- No --> W5["Communicate decision and options to customer"]
-    C --> C1["Shopify store order"] & C2["In-store POS purchase"]
-    C1 --> CS0["How can we help you?"]
-    CS0 --> CS1["Mattress / product return"] & CS2["Warranty claim"]
-    CS1 --> CS3["Select product and verify original order"]
-    CS3 --> CS4{"Is it boxed?"}
-    CS4 -- Yes --> CS5["Collect customer details and photos if needed"]
-    CS4 -- No --> CS6["Collect details and photos including law tag"]
-    CS5 --> CS7["Provide return label or store instructions"]
-    CS6 --> CS7
-    CS7 --> CS8["Vendor / warehouse receives product"]
-    CS8 --> CS9["Notify internal team and process refund"]
-    CS2 --> CS10["Collect order details and photos for warranty"]
-    CS10 --> CS11["Submit claim to vendor / warranty team"]
-    CS11 --> CS12{"Approved?"}
-    CS12 -- Yes --> CS13["Arrange replacement / repair or refund"]
-    CS12 -- No --> CS14["Communicate decision and options to customer"]
-    C2 --> S0["How can we help you?"]
-    S0 --> S1["Mattress / product return"] & S2["Warranty claim"]
-    S1 --> S3["Verify receipt and purchase details"]
-    S3 --> S4{"Within store return rules?"}
-    S4 -- Yes --> S5["Accept item in store and create return in POS"]
-    S5 --> S6["Ship item to vendor / warehouse if required"]
-    S6 --> S7["Refund or exchange completed in store"]
-    S4 -- No --> S8["Escalate to customer service for exception handling"]
-    S2 --> S9["Collect receipt, photos and issue description"]
-    S9 --> S10["Submit warranty case to vendor / internal team"]
-    S10 --> S11{"Approved?"}
-    S11 -- Yes --> S12["Provide replacement / repair or refund"]
-    S11 -- No --> S13["Communicate decision and options to customer"]
+    W3 -- Yes --> W4["Arrange replacement / refund / repair"]
+    W4 --> FinalProcess["Close case / completion"]
+    W3 -- No --> W5["Communicate decision + options"]
+
+    %% ---------------------------------------------------------------------
+    %% CALEDONIA PROCESS & REFUND LOGIC
+    %% ---------------------------------------------------------------------
+    R1 --> R2
+    R2 --> R4
+    R4 --> R5
+
+    Received --> RV1{"Return order value < 600?"} & R1
+    RV1 -- Yes --> AutoRefund["Portal automatically initiates refund"]
+    RV1 -- No --> ManualRefund["CX manually processes refund"]
+    AutoRefund --> FinalProcess
+    ManualRefund --> FinalProcess
+    R5 --> FinalProcess
+
+    %% Shape hints for key system states
+    M3@{ shape: rect}
+    Received@{ shape: rect}
 ```
 
 ---
