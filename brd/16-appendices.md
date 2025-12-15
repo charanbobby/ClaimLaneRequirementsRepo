@@ -305,3 +305,12 @@ This table is essential for QA test case coverage.
 | Returning single pillow (from bundle) | Eligible | Prorated refund |
 | Returning duvet only | Eligible | Prorated refund |
 | Free sleep bundle gift | Must return gift | Or deduct gift value |
+
+---
+
+## Discussion
+
+> 💬 **Comments for this page are available in Giscus.**  
+> Once Giscus is configured, the discussion thread for this page will appear here.
+
+<div class="giscus-placeholder"></div>

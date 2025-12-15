@@ -17,3 +17,13 @@ All notable changes to this project will be documented in this file.
 - Updated Process Flow Diagram to align with new logic.
 - Updated Actors list.
 - Updated Business Rules and Functional Requirements to reflect new flows.
+
+---
+
+## Discussion
+
+> 💬 **Comments for this page are available in Giscus.**  
+> Once Giscus is configured, the discussion thread for this page will appear here.
+
+<div class="giscus-placeholder"></div>
+

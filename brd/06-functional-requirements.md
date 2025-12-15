@@ -5,10 +5,12 @@ The following requirements describe what the portal must do. Each requirement is
 ## Purchase Channel and Intent Selection
 
 - **FR-1 – Channel Selection UI:** Provide a start screen where the customer selects:
-  - Silk & Snow Online – CA / US (Shopify)
-  - Silk & Snow Retail Store (in-person)
-  - Third-Party Vendor
-  When "Retail Store" is selected, the portal must perform a **store lookup**. If the store is **Shopify POS**, route to the standard Shopify order flow. If the store is **STORIS (non-Shopify)**, display a "returns must be handled in-person" message and block further steps. When "Third-Party Vendor" is selected, show vendor instructions and block steps.
+
+    - Silk & Snow Online – CA / US (Shopify)
+    - Silk & Snow Retail Store (in-person)
+    - Third-Party Vendor
+
+    When "Retail Store" is selected, the portal must perform a **store lookup**. If the store is **Shopify POS**, route to the standard Shopify order flow. If the store is **STORIS (non-Shopify)**, display a "returns must be handled in-person" message and block further steps. When "Third-Party Vendor" is selected, show vendor instructions and block steps.
 
 - **FR-2 – Intent Selection:** After channel selection, present options for "Return", "Warranty Claim", or other return type (configurable). The selection determines which subsequent screens and logic apply.
 
@@ -54,14 +56,15 @@ The following requirements describe what the portal must do. Each requirement is
 
 ## Logistics and Label Generation
 
-- **FR-18 – Box Count Input:** When generating return labels, prompt the customer to enter the number of boxes (1–20) and validate the value. If no boxes are entered, require at least one box.
+- **FR-18 – Box Count Input:** When generating return labels, prompt the customer to enter the number of boxes (1–20) and validate the value. If no boxes are entered, require at least one box. **The input must be a valid, non-zero number and cannot exceed the total box count of the original shipment.**
 
 - **FR-19 – Label Generation:** Integrate with the selected shipping carrier API to generate one label per box using the customer's shipping address, item weight and dimensions. Use fallback weights when master data is missing. Store tracking numbers and prevent duplicate labels on reprints.
 
 - **FR-20 – Pickup & Freight Rules:**
-  - **Mattress (Boxed):** Provide drop-off instructions/labels.
-  - **Mattress (Unboxed):** Collect condition and donation eligibility. **Do not send photos to the vendor.** The **Return Logistics Manager** must manually select a donation or pickup vendor. Supporting **Vendor Change** functionality is required, which must trigger updated emails to the new vendor and customer.
-  - **Furniture:** Implement a two-step flow. Step 1: Customer uploads photos/details. **CX must review and approve** via the portal. Step 2 (if approved): Collect **access constraints** and pickup dates, then generate label/instructions.
+
+    - **Mattress (Boxed):** Provide drop-off instructions/labels.
+    - **Mattress (Unboxed):** Collect condition and donation eligibility. **Do not send photos to the vendor.** The **Return Logistics Manager** must manually select a donation or pickup vendor. Supporting **Vendor Change** functionality is required, which must trigger updated emails to the new vendor and customer.
+    - **Furniture:** Implement a two-step flow. Step 1: Customer uploads photos/details. **CX must review and approve** via the portal. Step 2 (if approved): Collect **access constraints** and pickup dates, then generate label/instructions.
 
 - **FR-21 – Label Display & Reprints:** Show generated labels and tracking information to the customer. Allow re-printing without creating new labels or incurring extra charges.
 
@@ -70,9 +73,10 @@ The following requirements describe what the portal must do. Each requirement is
 - **FR-22 – Ticket Creation:** Upon submission, create a Claimlane ticket capturing customer and order details, selected items, reasons, documentation, eligibility status, labels, tags (product category and issue type) and notes. Prevent duplicate tickets for the same items within a short timeframe.
 
 - **FR-23 – Refund Processing:**
-  - **Auto-Refund:** When items are marked "Received" and the **net refund value is less than 600** (store currency), automatically initiate the refund in WooCommerce (if gateway supported).
-  - **Manual Refund:** When items are marked "Received" and the **net refund value is 600 or greater**, route the ticket to CX for manual refund processing.
-  - For partial refunds, adjust only the line item amount and leave inventory unchanged. If the gateway or currency does not support automated refunds, mark the ticket for manual refund.
+
+    - **Auto-Refund:** When items are marked "Received" and the **net refund value is less than 600** (store currency), automatically initiate the refund in WooCommerce (if gateway supported).
+    - **Manual Refund:** When items are marked "Received" and the **net refund value is 600 or greater**, route the ticket to CX for manual refund processing.
+    - For partial refunds, adjust only the line item amount and leave inventory unchanged. If the gateway or currency does not support automated refunds, mark the ticket for manual refund.
 
 - **FR-24 – Replacement Order Creation:** For approved warranty claims, create a WooCommerce order for replacement items using the customer's billing/shipping details, set the order status to "Processing" and notify the customer via WooCommerce.
 
@@ -95,9 +99,10 @@ The following requirements describe what the portal must do. Each requirement is
 - **FR-31 – Reporting:** Provide **Store Operations** with the ability to generate a "Returned items" report listing items that have reached "Inspection Completed" status for inventory updates.
 
 - **FR-32 – Email Triggers:** Configure specific email triggers for:
-  - Unboxed Mattress Vendor Assignment.
-  - Unboxed Mattress Vendor Change (notify new vendor and customer).
-  - Furniture Return Approval/Decline by CX.
+
+    - Unboxed Mattress Vendor Assignment.
+    - Unboxed Mattress Vendor Change (notify new vendor and customer).
+    - Furniture Return Approval/Decline by CX.
 
 ---
 

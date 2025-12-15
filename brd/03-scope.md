@@ -11,17 +11,20 @@
 - Automated refunds (where supported).
 - Claimlane ticket creation and tagging.
 - Customer communications.
+- Return Logisitcs Vendor Communication.
+- Report Generation.
+- Multi-language capability (French and English).
 
 ### Product Categories
 
 - Mattresses.
-- Toppers.
-- Bed frames and furniture.
-- Bedding (duvets, sheets, pillowcases, pillows).
-- Bath items (towels, robes, bath mats).
-- Weighted blankets.
-- Accessories.
-- Custom products as specified.
+- Furniture
+     - Bed frames and furniture.
+- Accessories
+     - Bedding (duvets, sheets, pillowcases, pillows).
+     - Bath items (towels, robes, bath mats).
+     - Weighted blankets.
+     - Toppers.
 
 ### Regions
 
@@ -31,18 +34,12 @@
 ### Channels
 
 - Web (.com and .ca).
-- Shopify store orders.
-- POS orders.
-- Third-party vendor purchases (guidance only).
+- Shopify POS store orders.
+- Storis POS store orders (notifications only) .
+- Third-party channel orders.
 
 ## Out of Scope
 
-- Full automation of POS returns (manual for now).
-- Integration with marketplaces such as Amazon or Wayfair.
-- Support for markets beyond Canada and the United States.
-- Multi-language capability (English only at launch).
-- Fraud or abuse detection systems.
-- Enhanced chatbot functionality beyond linking.
 
 ---
 

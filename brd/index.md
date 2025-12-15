@@ -1,4 +1,4 @@
-﻿<meta http-equiv="refresh" content="0; url=01-README.html" />
+<meta http-equiv="refresh" content="0; url=01-README.html" />
 
 ---
 
@@ -8,4 +8,3 @@
 > Once Giscus is configured, the discussion thread for this page will appear here.
 
 <div class="giscus-placeholder"></div>
-

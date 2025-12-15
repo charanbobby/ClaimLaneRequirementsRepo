@@ -70,3 +70,36 @@ To deploy changes to the live site:
 3.  **Verify**:
     Visit [https://charanbobby.github.io/ClaimLaneRequirementsRepo/](https://charanbobby.github.io/ClaimLaneRequirementsRepo/).
     *Note: It may take a minute for updates to appear.*
+
+## Troubleshooting
+
+### 1. PowerShell Security Error (UnauthorizedAccess)
+If you see `...cannot be loaded because running scripts is disabled on this system`, run this command in PowerShell to allow the script:
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+Or, skip activation and run `mkdocs` directly:
+```powershell
+.\venv\Scripts\mkdocs serve
+```
+
+### 2. "MkDocs not recognized"
+If `mkdocs` command fails, try running it via the full path:
+```powershell
+.\venv\Scripts\mkdocs build
+```
+
+### 3. Missing Pages / Content Not Updating
+If you edit files (e.g., adding `15-changelog.md`) but `mkdocs serve` is not showing them (or showing "404 Not Found" for new pages):
+1. **Check for stale processes**: You might have an old `mkdocs` running in the background listening on port 8000.
+    ```powershell
+    netstat -ano | findstr :8000 | findstr LISTENING
+    ```
+2. **Kill the process**: Take the PID (number on the far right) and kill it.
+    ```powershell
+    taskkill /PID <PID> /F
+    ```
+3. **Restart Serve**:
+    ```powershell
+    mkdocs serve
+    ```

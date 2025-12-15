@@ -48,6 +48,8 @@ The portal must enforce the following rules (numbered BR-1 through BR-12 plus ap
     - Net Refund Value < 600: **Auto-Refund** initiated (if gateway supported).
     - Net Refund Value >= 600: **Manual Refund** (routed to CX).
 
+- **BR-22 – Return Label Limitation:** The number of return labels generated cannot exceed the number of boxes/labels in the original order.
+
 ## Appendix Rules
 
 - **A-1 – 100% Documentation:** A claim cannot be submitted unless 100% of required documentation is provided (except for manual overrides).
