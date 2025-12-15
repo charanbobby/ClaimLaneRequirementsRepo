@@ -30,7 +30,7 @@ This document outlines the high-level epics and user stories supporting the Clai
 1. Retail selection shows a list of stores.
 2. System looks up each store as **Shopify POS** or **STORIS (non-Shopify)**.
 3. Shopify POS stores continue into the standard Shopify flow (order lookup etc.).
-4. STORIS stores show a message: returns must be completed in store; portal flow ends.
+4. Sales from STORIS stores show a message: "Returns must be completed in-store." The portal flow ends (no ticket or label is generated).
 
 ---
 
@@ -167,7 +167,7 @@ This document outlines the high-level epics and user stories supporting the Clai
 1. When returning a mattress or applicable accessory bundle with free items, the portal:
     * Detects associated free/bundled items.
     * Prompts the customer with the keep-option (e.g., keep item at 50% of list price).
-2. If customer chooses to keep the item, its discounted value is deducted from the refund.
+2. If customer chooses to keep the item, its discounted value is deducted from the refund and the decision is recorded on the ticket.
 3. If customer chooses to return, normal bundle rules apply (no extra deduction).
 
 ---

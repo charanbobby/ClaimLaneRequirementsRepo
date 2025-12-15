@@ -1108,12 +1108,14 @@
 <p>The following requirements describe what the portal must do. Each requirement is assigned a reference number (FR-x) and grouped by functional area.</p>
 <h2 id="purchase-channel-and-intent-selection">Purchase Channel and Intent Selection</h2>
 <ul>
-<li><strong>FR-1 – Channel Selection UI:</strong> Provide a start screen where the customer selects:</li>
+<li>
+<p><strong>FR-1 – Channel Selection UI:</strong> Provide a start screen where the customer selects:</p>
+<ul>
 <li>Silk &amp; Snow Online – CA / US (Shopify)</li>
 <li>Silk &amp; Snow Retail Store (in-person)</li>
-<li>
-<p>Third-Party Vendor
-  When "Retail Store" is selected, the portal must perform a <strong>store lookup</strong>. If the store is <strong>Shopify POS</strong>, route to the standard Shopify order flow. If the store is <strong>STORIS (non-Shopify)</strong>, display a "returns must be handled in-person" message and block further steps. When "Third-Party Vendor" is selected, show vendor instructions and block steps.</p>
+<li>Third-Party Vendor</li>
+</ul>
+<p>When "Retail Store" is selected, the portal must perform a <strong>store lookup</strong>. If the store is <strong>Shopify POS</strong>, route to the standard Shopify order flow. If the store is <strong>STORIS (non-Shopify)</strong>, display a "returns must be handled in-person" message and block further steps. When "Third-Party Vendor" is selected, show vendor instructions and block steps.</p>
 </li>
 <li>
 <p><strong>FR-2 – Intent Selection:</strong> After channel selection, present options for "Return", "Warranty Claim", or other return type (configurable). The selection determines which subsequent screens and logic apply.</p>
@@ -1182,18 +1184,18 @@
 <h2 id="logistics-and-label-generation">Logistics and Label Generation</h2>
 <ul>
 <li>
-<p><strong>FR-18 – Box Count Input:</strong> When generating return labels, prompt the customer to enter the number of boxes (1–20) and validate the value. If no boxes are entered, require at least one box.</p>
+<p><strong>FR-18 – Box Count Input:</strong> When generating return labels, prompt the customer to enter the number of boxes (1–20) and validate the value. If no boxes are entered, require at least one box. <strong>The input must be a valid, non-zero number and cannot exceed the total box count of the original shipment.</strong></p>
 </li>
 <li>
 <p><strong>FR-19 – Label Generation:</strong> Integrate with the selected shipping carrier API to generate one label per box using the customer's shipping address, item weight and dimensions. Use fallback weights when master data is missing. Store tracking numbers and prevent duplicate labels on reprints.</p>
 </li>
 <li>
 <p><strong>FR-20 – Pickup &amp; Freight Rules:</strong></p>
-</li>
+<ul>
 <li><strong>Mattress (Boxed):</strong> Provide drop-off instructions/labels.</li>
 <li><strong>Mattress (Unboxed):</strong> Collect condition and donation eligibility. <strong>Do not send photos to the vendor.</strong> The <strong>Return Logistics Manager</strong> must manually select a donation or pickup vendor. Supporting <strong>Vendor Change</strong> functionality is required, which must trigger updated emails to the new vendor and customer.</li>
-<li>
-<p><strong>Furniture:</strong> Implement a two-step flow. Step 1: Customer uploads photos/details. <strong>CX must review and approve</strong> via the portal. Step 2 (if approved): Collect <strong>access constraints</strong> and pickup dates, then generate label/instructions.</p>
+<li><strong>Furniture:</strong> Implement a two-step flow. Step 1: Customer uploads photos/details. <strong>CX must review and approve</strong> via the portal. Step 2 (if approved): Collect <strong>access constraints</strong> and pickup dates, then generate label/instructions.</li>
+</ul>
 </li>
 <li>
 <p><strong>FR-21 – Label Display &amp; Reprints:</strong> Show generated labels and tracking information to the customer. Allow re-printing without creating new labels or incurring extra charges.</p>
@@ -1206,11 +1208,11 @@
 </li>
 <li>
 <p><strong>FR-23 – Refund Processing:</strong></p>
-</li>
+<ul>
 <li><strong>Auto-Refund:</strong> When items are marked "Received" and the <strong>net refund value is less than 600</strong> (store currency), automatically initiate the refund in WooCommerce (if gateway supported).</li>
 <li><strong>Manual Refund:</strong> When items are marked "Received" and the <strong>net refund value is 600 or greater</strong>, route the ticket to CX for manual refund processing.</li>
-<li>
-<p>For partial refunds, adjust only the line item amount and leave inventory unchanged. If the gateway or currency does not support automated refunds, mark the ticket for manual refund.</p>
+<li>For partial refunds, adjust only the line item amount and leave inventory unchanged. If the gateway or currency does not support automated refunds, mark the ticket for manual refund.</li>
+</ul>
 </li>
 <li>
 <p><strong>FR-24 – Replacement Order Creation:</strong> For approved warranty claims, create a WooCommerce order for replacement items using the customer's billing/shipping details, set the order status to "Processing" and notify the customer via WooCommerce.</p>
@@ -1244,10 +1246,12 @@
 </li>
 <li>
 <p><strong>FR-32 – Email Triggers:</strong> Configure specific email triggers for:</p>
-</li>
+<ul>
 <li>Unboxed Mattress Vendor Assignment.</li>
 <li>Unboxed Mattress Vendor Change (notify new vendor and customer).</li>
 <li>Furniture Return Approval/Decline by CX.</li>
+</ul>
+</li>
 </ul>
 <hr />
 <h2 id="discussion">Discussion</h2>

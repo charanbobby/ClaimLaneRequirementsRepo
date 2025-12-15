@@ -30,13 +30,13 @@ The portal must enforce the following rules (numbered BR-1 through BR-12 plus ap
     - **Shopify POS:** Route to standard Shopify flow.
     - **STORIS:** Block online return; show "In-store return only" message.
 
-- **BR-14 – STORIS Store Returns:** For STORIS stores, no tickets, labels, or refunds are generated in the portal.
+- **BR-14 – STORIS Store Returns:** For STORIS stores, the portal displays an "In-store return only" message and does not allow online returns. No tickets, labels, or refunds are generated in the portal.
 
-- **BR-15 – Bundle / Free Item 50% Keep Rule:** When a bundle item is returned and the customer keeps the bundled/free item, the customer pays **50% of the full website price** for the kept item. The refund is adjusted (prorated) to reflect this charge.
+- **BR-15 – Bundle / Free Item 50% Keep Rule:** When a bundle item is returned and the customer keeps the bundled/free item, the customer pays **50% of the full website price** for the kept item. The refund is adjusted (prorated) to reflect this charge and the decision is recorded on the ticket.
 
 - **BR-16 – Vendor Pickup and Status Updates:** Vendors (or Logistics team) must update mattress status to "Picked" in the portal. This status update must transition the item to **"Received"** to trigger refund logic.
 
-- **BR-17 – Furniture Return Pre-Approval:** All furniture returns require **CX Approval** (based on photos) before logistics can be arranged. If declined, no label is generated.
+- **BR-17 – Furniture Return Pre-Approval:** All furniture returns require **CX Approval** (based on photos) before logistics can be arranged. On approval, the system calls the **WooCommerce service** (same as original purchase) to calculate return rates. The client must pay for the return (or have it deducted). Once settled, the portal generates labels/pickup instructions.
 
 - **BR-18 – Accessory and Bedding Mail-In Flow:** These items follow a single-step logistics flow: Reason/Photos -> Label Generation -> Mail-in.
 

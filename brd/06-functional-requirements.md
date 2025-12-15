@@ -64,7 +64,7 @@ The following requirements describe what the portal must do. Each requirement is
 
     - **Mattress (Boxed):** Provide drop-off instructions/labels.
     - **Mattress (Unboxed):** Collect condition and donation eligibility. **Do not send photos to the vendor.** The **Return Logistics Manager** must manually select a donation or pickup vendor. Supporting **Vendor Change** functionality is required, which must trigger updated emails to the new vendor and customer.
-    - **Furniture:** Implement a two-step flow. Step 1: Customer uploads photos/details. **CX must review and approve** via the portal. Step 2 (if approved): Collect **access constraints** and pickup dates, then generate label/instructions.
+    - **Furniture:** Implement a two-step flow. Step 1: Customer uploads photos/details. **CX must review and approve** via the portal. Step 2 (if approved): Call **WooCommerce service** for live rates. Charge the client (or deduct from refund) for the return shipping. Collect **access constraints** and pickup dates, then generate label/instructions.
 
 - **FR-21 – Label Display & Reprints:** Show generated labels and tracking information to the customer. Allow re-printing without creating new labels or incurring extra charges.
 

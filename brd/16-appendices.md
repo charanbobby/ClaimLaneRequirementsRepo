@@ -238,7 +238,7 @@ This is the definitive single source for testers and business users validating e
 | Product Category | Return Period | Conditions |
 | :--- | :--- | :--- |
 | Mattresses | 365 nights | Full refund; boxed preferred; unboxed requires approval |
-| Furniture | 30 days | Return shipping deducted unless escalated |
+| Furniture | 30 days | Client pays return shipping (calculated via Woo service) |
 | Toppers | 100 nights | Soft goods rules |
 | Bedding | 100 nights | Must confirm donatable condition |
 | Bath | 100 nights | N/A |
