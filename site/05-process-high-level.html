@@ -939,9 +939,11 @@
 <li>Third-Party Vendor</li>
 </ul>
 <p>For Retail Store selections, the portal uses a <strong>store lookup</strong> to determine whether the store backend is <strong>Shopify POS</strong> or <strong>STORIS (non-Shopify)</strong>.</p>
-<p><strong>Retail Store Backend Handling</strong>
-*   If the selected store is a <strong>Shopify POS store</strong>, the portal routes the customer into the <strong>same Shopify order flow</strong> used for online orders (orders in Shopify Online + Shopify POS).
-*   If the selected store is a <strong>STORIS (non-Shopify) store</strong>, the portal displays a message that <strong>returns for this store must be handled in person</strong> and the flow ends (no online processing, no label generation, no ticket).</p>
+<p><strong>Retail Store Backend Handling</strong></p>
+<ul>
+<li>If the selected store is a <strong>Shopify POS store</strong>, the portal routes the customer into the <strong>same Shopify order flow</strong> used for online orders (orders in Shopify Online + Shopify POS).</li>
+<li>If the selected store is a <strong>STORIS (non-Shopify) store</strong>, the portal displays a message that <strong>returns for this store must be handled in person</strong> and the flow ends (no online processing, no label generation, no ticket).</li>
+</ul>
 </li>
 <li>
 <p><strong>Customer Intent Selection</strong> – The customer chooses to start a return, warranty claim or another return type (if configured). The flow branches accordingly.</p>
