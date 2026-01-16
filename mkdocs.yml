@@ -35,6 +35,7 @@ nav:
 
   - Reference:
       - Appendices: 16-appendices.md
+      - Test Cases: 17-test-cases.md
 
 
 extra_css:
