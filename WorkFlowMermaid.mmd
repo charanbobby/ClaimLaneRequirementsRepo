@@ -1,0 +1,366 @@
+---
+config:
+  layout: elk
+  theme: neutral
+---
+flowchart TB
+  subgraph LEGEND["Legend"]
+        direction TB
+        L_UX1["Phase 1"]:::phase1_ux
+        L_UX2["Phase 2"]:::phase2_ux
+        L_SYS["Phase 1 - System / Backend Logic"]:::phase1_dim
+  end
+
+  subgraph CALEDONIA["Canada returns routed to Caledonia"]
+        R1["WF-090 | Return delivered to Caledonia"]
+        R2["WF-091 | Caledonia team updates return status in portal (limited access role)"]
+        R4["WF-092 | Update status: Delivered → Processing / Inspection Completed"]
+        R5@{ label: "WF-093 | Store Ops run 'Returned items' report for inventory update" }
+  end
+
+    %% ---------------------------------------------------------
+    %% ENTRY POINT – PURCHASE CHANNEL SELECTION
+    %% WF-002, WF-003, WF-004 are parallel workstreams
+    %% ---------------------------------------------------------
+    A["WF-001 | Where did you purchase?"] --> OnlineCA["WF-002 | Silk & Snow Online – CA (WooCommerce)"] & OnlineUS["WF-094 | Silk & Snow Online – US (WooCommerce)"] & Retail["WF-003 | Silk & Snow Retail Store (in-person)"] & D["WF-004 | Third-party vendor: TSC, EQ3, Costco"]
+
+    %% Online workstream
+    OnlineCA --> B["WF-020 | Orders in Shopify (Online + Shopify POS)"]
+
+    %% US Online workstream
+    OnlineUS --> US_B["WF-095 | Orders in Shopify (US)"]
+    US_B --> US_B0["WF-096 | What do you need help with?"]
+    US_B0 --> US_BR["WF-097 | Return"] & US_BW["WF-098 | Warranty claim (Shared Flow)"]
+    US_BW --> OW1
+
+    %% US Return Flow
+    US_BR --> US_OR1["WF-099 | Enter order number and email"]
+    US_OR1 --> US_OR2{"WF-100 | Order validated?"}
+    US_OR2 -- No --> US_OR2N["WF-101 | Show error"]
+    US_OR2 -- Yes --> US_OR3["WF-102 | Display all items"]
+    US_OR3 --> US_OR4["WF-103 | Select items to return"]
+    
+    %% Promo Checks (US Clone)
+    US_OR4 --> US_PROMO["WF-104 | Run promotion checks"]
+    US_PROMO --> US_OR5["WF-105 | Item type selected"]
+
+    %% US Negotiation Blocker
+    US_OR5 --> US_NegStart["WF-106 | Negotiation Strategy: Submit Return Request<br>(Ticket lands in ClaimLane portal)"]
+    US_NegStart --> US_NegRev["WF-107 | CX Review / Talks to Client Offline"]
+    US_NegRev --> US_NegApp{"WF-108 | Approve Return?"}
+
+    US_NegApp -- No --> US_Decline["WF-109 | Return Declined / Negotiated Offline"]
+    US_Decline --> FinalProcess
+
+    US_NegApp -- Yes --> US_Approved["WF-110 | Proceed to Return Logistics"]
+    US_Approved --> US_Logistics["WF-111 | Generate Label / Schedule Pickup"]
+    US_Logistics --> Received
+
+
+    %% Retail workstream
+    Retail --> RS1["WF-018 | Select the store you purchased from"]
+
+    %% Third-party vendor workstream
+    D --> TP0["WF-005 | Select third-party vendor (TSC, EQ3, Costco)"]
+    TP0 --> TP1["WF-006 | Collect required evidence (receipt, photos, law tags, other)"]
+    TP1 --> TP2["WF-007 | Log action item in ClaimLane: Third-party vendor review required"]
+    TP2 --> TP3["WF-008 | Send email notification to vendor (ticket created)"]
+    TP3 --> TP4{"WF-009 | Vendor approves to proceed?"}
+    TP4 -- No --> TP5["WF-010 | Vendor declines: Communicate decision + next steps to customer"]
+    TP5 --> FinalProcess["WF-060 | Close case / completion"]
+    TP4 -- Yes --> TP6{"WF-011 | Does customer need pickup assistance?"}
+    TP6 -- Yes --> TP7["WF-012 | CX provides pickup assistance (coordination + guidance)"]
+    TP6 -- No --> TP8["WF-013 | Customer proceeds with vendor instructions (no CX pickup coordination)"]
+    TP7 --> TP9["WF-014 | Pickup confirmed / scheduled"]
+    TP8 --> TP9
+    TP9 --> TP10["WF-015 | Item received (confirm receipt)"]
+    TP10 --> R1 & TP11["WF-016 | Email vendor: Proceed with return / refund"]
+    TP11 --> FinalProcess
+    TP1 -.-> TP_NOTE["WF-017 | Note: Exact evidence requirements to be confirmed per vendor (TSC/EQ3)."]
+
+    RS1 --> RS2{"WF-019 | Store backend (system lookup)"}
+    RS2 -- Shopify POS store --> B
+    RS2 -- "STORIS (non-Shopify) store" --> RS3["WF-021 | Message: This store handles returns in person only (no online processing)"]
+    RS3 --> RSEnd["WF-022 | End – customer must visit store to complete return"]
+
+    B --> B0["WF-023 | What do you need help with?"]
+    B0 --> BR["WF-024 | Return"] & BW["WF-025 | Warranty claim"]
+
+    %% ---------------------------------------------------------
+    %% RETURN FLOW
+    %% ---------------------------------------------------------
+    BR --> OR1["WF-026 | Enter order number and email"]
+    OR1 --> OR2{"WF-027 | Order validated?"}
+    OR2 -- No --> OR2N["WF-028 | Show error and allow retry or contact support"]
+    OR2 -- Yes --> OR3["WF-029 | Display all items in order"]
+    OR3 --> OR4["WF-030 | Customer selects one or more items to return"]
+    OR4 --> SPLIT_PROMO["WF-031 | Run promotion checks (in parallel)"]
+    SPLIT_PROMO --> BND10{"WF-032 | Free item included with selected items?"} & BND12{"WF-033 | Selected items part of a discounted bundle?"}
+    BND10 -- Yes --> BND11["WF-034 | Prompt: Free item can be kept at 50% of original price"]
+    BND10 -- No --> JOIN_PROMO["WF-036 | Promotion checks complete"]
+    BND12 -- Yes --> BND13["WF-035 | Prompt: Returning items may remove the bundle discount applied to the order"]
+    BND12 -- No --> JOIN_PROMO
+    BND11 --> JOIN_PROMO
+    BND13 --> JOIN_PROMO
+    BND11 -.-> BND_NOTE["WF-037 | Note: Prompts are required because refund amounts are not shown during the journey. Messaging sets expectations for pricing and discount impacts before proceeding."]
+    BND13 -.-> BND_NOTE
+    JOIN_PROMO --> OR5{"WF-038 | Item type selected"}
+
+    OR5 -- Mattress --> M2{"WF-039 | Is mattress boxed?"}
+    OR5 -- Furniture --> F1["WF-040 | Furniture return"]
+    OR5 -- Accessory/Bedding --> A1["WF-041 | Accessory / Bedding return"]
+
+    %% ---------------------------------------------------------
+    %% WARRANTY FLOW (WF-052 MOVED TO PHASE 1)
+    %% Added: CX review + approval, and CX can adjust selected part
+    %% ---------------------------------------------------------
+    BW --> OW1["WF-042 | Enter order number and email"]
+    OW1 --> OW2{"WF-043 | Order validated?"}
+    OW2 -- No --> OW2N["WF-044 | Show error and allow retry or contact support"]
+
+    OW2 -- Yes --> OW3["WF-052 | Display all items in the order (include replacement parts where applicable)"]
+    OW3 -.-> WRP_NOTE@{ label: "WF-052A | Note: Replacement parts should be shown with product context<br><br><p data-start=\"186\" data-end=\"272\"><strong data-start=\"186\" data-end=\"239\">Example – Nara Wooden Dresser (5-Drawer, Cortado)</strong><br data-start=\"239\" data-end=\"242\"><br>Parent SKU: <strong data-start=\"254\" data-end=\"270\">SNSFNDR5005T</strong></p><ul data-start=\"273\" data-end=\"488\"><li data-start=\"273\" data-end=\"313\"><p data-start=\"275\" data-end=\"313\">Drawer – Top Left | SNSFNDR5005TDRSL</p></li><li data-start=\"314\" data-end=\"355\"><p data-start=\"316\" data-end=\"355\">Drawer – Top Right | SNSFNDR5005TDRSR</p></li><li data-start=\"356\" data-end=\"392\"><p data-start=\"358\" data-end=\"392\">Drawer – Large | SNSFNDR5005TDRB</p></li><li data-start=\"393\" data-end=\"418\"><p data-start=\"395\" data-end=\"418\">Screw | SNSFNS5000TSW</p></li><li data-start=\"419\" data-end=\"454\"><p data-start=\"421\" data-end=\"454\">Stain &amp; Brush | SNSFNWO5000ACST</p></li><li data-start=\"455\" data-end=\"488\"><p data-start=\"457\" data-end=\"488\">Stain &amp; Brush | SNSFNS5000TST</p></li></ul>" }
+
+    OW3 --> OW4["WF-053 | Customer selects an item or replacement part (sub-part)"]
+    OW4 --> WInfo["WF-054 | Collect additional info: issue description, photos, pickup assistance needed, pickup date, address confirmation"]
+    WInfo --> WCL["WF-055 | Submit warranty case to ClaimLane (selected part SKUs + evidence + notes)"]
+
+    %% New Phase 1 steps (WF-052 workstream additions)
+    WCL --> WCXReview["WF-052B | CX reviews photos + validates selection"]
+    WCXReview --> WCXApprove{"WF-052C | CX approves to proceed?"}
+    WCXApprove -- No --> WDecline["WF-052D | Communicate decline / next steps"]
+    WDecline --> FinalProcess
+    WCXApprove -- Yes --> WTweak["WF-052E | CX may adjust selected replacement part (if required)"]
+
+    WTweak --> WCX["WF-056 | CX places replacement order in WooCommerce (based on approved replacement part SKUs)"]
+
+    %% --- New logic inserted here ---
+    WCX --> WRemReq{"WF-056.5 | Is there a removal request for defective item?"}
+    
+    WRemReq -- No --> WClose["WF-058 | Close case after replacement order is placed"]
+    WRemReq -- Yes --> WPUQ{"WF-057 | Does customer need pickup assistance?"}
+    %% -------------------------------
+
+    WPUQ -- No --> WClose
+    WClose --> FinalProcess
+    
+    WPUQ -- Yes --> WPU1["WF-059 | Log action item: Return Logistics to select donation / pickup vendor"]
+    WPU1 --> WPU2["WF-061 | Trigger emails: vendor + customer"]
+    WPU2 --> WPU3{"WF-062 | Change vendor?"}
+    WPU3 -- Yes --> WPU4["WF-063 | Select new vendor → trigger updated emails"]
+    WPU3 -- No --> WPU5["WF-064 | Vendor picks up item and marks Picked"]
+    WPU4 --> WPU5
+    WPU5 --> Received["WF-089 | Item marked Received in portal"]
+
+    %% ---------------------------------------------------------
+    %% MATTRESS / FURNITURE / ACCESSORY RETURN SUBFLOWS
+    %% ---------------------------------------------------------
+    M2 -- Yes --> MInfo["WF-061A | Collect extra info: tags, lot number, photos, pickup dates"]
+    MInfo --> MInstr["WF-062A | Provide return label / pickup details"]
+    MInstr --> M3["WF-063A | Vendor picks up mattress and marks Picked"]
+    M3 --> Received
+
+    M2 -- No --> MUInfo["WF-064A | Collect extra info: photos, law tag, condition"]
+    MUInfo --> U1["WF-065A | Return Logistics: Select donation / pickup vendor"]
+    U1 --> U6["WF-066 | Trigger emails: vendor + customer"]
+    U6 --> U8{"WF-067A | Change vendor on Claimlane portal?"}
+    U8 -- Yes --> U9["WF-068A | Select new vendor → trigger updated emails"]
+    U8 -- No --> M3
+    U9 --> M3
+
+    F1 --> FInfoPhotos["WF-069A | Customer uploads photos + issue details"]
+    FInfoPhotos --> FCXReview["WF-070A | CX reviews"]
+    FCXReview --> FCXApprove{"WF-071A | CX approves?"}
+    FCXApprove -- No --> FCXDecline["WF-072A | Communicate decline"]
+    FCXDecline --> FinalProcess
+    FCXApprove -- Yes --> FInfoDetails["WF-073A | Notify charges and Collect pickup details"]
+    FInfoDetails --> FLabelPickup["WF-074A | Generate label + instructions"]
+    FLabelPickup --> F3["WF-075A | Arrange pickup"]
+    F3 --> Received
+
+    A1 --> AInfo["WF-076A | Collect info"]
+    AInfo --> AInstr["WF-077A | Provide mail-in instructions"]
+    AInstr --> A2["WF-078A | Customer ships item"]
+    A2 --> Received
+
+    %% ---------------------------------------------------------
+    %% RECEIVED → REFUND LOGIC
+    %% Phase 2 items under WF-072 remain
+    %% ---------------------------------------------------------
+    Received --> PH1Q{"WF-066B | Is this Phase 1?"}
+
+    PH1Q -- Yes --> RV1{"WF-067 | Return order value < 600 AND order does not contain bundles?"} & R1
+    RV1 -- Yes --> AutoRefund["WF-068 | Auto refund"]
+    RV1 -- No --> ManualRefund["WF-069 | Manual refund"]
+    AutoRefund --> FinalProcess
+    ManualRefund --> FinalProcess
+
+    PH1Q -- No --> P2BND["WF-070 | Phase 2: Calculate bundle impacts and adjusted refundable amounts"]
+    P2BND --> P2RF{"WF-071 | Auto refund eligible after bundle calculation?"}
+    P2RF -- Yes --> P2AutoRefund["WF-072 | Auto refund if order value < 600 (post-bundle calc)"]
+    P2RF -- No --> P2ManualRefund["WF-073 | Manual refund (post-bundle calc)"]
+    P2AutoRefund --> FinalProcess
+    P2ManualRefund --> FinalProcess
+
+    RV1 -.-> CL_BND_NOTE["WF-074 | Note: Due to ClaimLane limitations, Silk & Snow bundle calculations are handled in Phase 2."]
+    P2BND -.-> CL_BND_NOTE
+
+    %% Caledonia routing
+    R1 --> R2
+    R2 --> R4
+    R4 --> R5
+    R5 --> FinalProcess
+
+    %% Shapes
+    R5@{ shape: rect}
+    WRP_NOTE@{ shape: rect}
+
+      %% ---------------------------------------------------------
+      %% PHASE TAGGING (UPDATED for UX Focus)
+      %% ---------------------------------------------------------
+
+      %% Backend / Internal / Logistics (Dimmed)
+      R1:::phase1_dim
+      R2:::phase1_dim
+      R4:::phase1_dim
+      R5:::phase1_dim
+      OnlineCA:::phase1_ux
+      Retail:::phase1_dim
+      B:::phase1_dim
+      D:::phase1_dim
+      TP2:::phase1_dim
+      TP3:::phase1_dim
+      TP4:::phase1_dim
+      TP6:::phase1_dim
+      TP8:::phase1_dim
+      TP9:::phase1_dim
+      TP10:::phase1_dim
+      TP11:::phase1_dim
+      RS2:::phase1_dim
+      BR:::phase1_dim
+      BW:::phase1_dim
+      OR2:::phase1_dim
+      SPLIT_PROMO:::phase1_dim
+      BND10:::phase1_dim
+      BND12:::phase1_dim
+      JOIN_PROMO:::phase1_dim
+      OR5:::phase1_dim
+      M2:::phase1_dim
+      F1:::phase1_dim
+      A1:::phase1_dim
+      OW2:::phase1_dim
+      WCL:::phase1_dim
+      WRemReq:::phase1_dim
+      WCXReview:::phase1_dim
+      WCXApprove:::phase1_dim
+      WTweak:::phase1_dim
+      WCX:::phase1_dim
+      WPUQ:::phase1_dim
+      WClose:::phase1_dim
+      WPU1:::phase1_dim
+      WPU3:::phase1_dim
+      WPU5:::phase1_dim
+      Received:::phase1_dim
+      M3:::phase1_dim
+      U1:::phase1_dim
+      U8:::phase1_dim
+      FCXReview:::phase1_dim
+      FCXApprove:::phase1_dim
+      F3:::phase1_dim
+      A2:::phase1_dim
+      PH1Q:::phase1_dim
+      RV1:::phase1_dim
+      AutoRefund:::phase1_dim
+      ManualRefund:::phase1_dim
+      
+      %% Phase 2 Backend (Dimmed)
+      P2BND:::phase2_dim
+      P2RF:::phase2_dim
+      P2AutoRefund:::phase2_dim
+      P2ManualRefund:::phase2_dim
+
+      %% Client Touchpoints (Screens & Customer Emails) - Highlighted
+      A:::phase1_ux
+      TP0:::phase1_ux
+      TP1:::phase1_ux
+      TP5:::phase1_ux
+      TP7:::phase1_ux
+      RS1:::phase1_ux
+      RS3:::phase1_ux
+      B0:::phase1_ux
+      OR1:::phase1_ux
+      OR2N:::phase1_ux
+      OR3:::phase1_ux
+      OR4:::phase1_ux
+      BND11:::phase1_ux
+      BND13:::phase1_ux
+      OW1:::phase1_ux
+      OW2N:::phase1_ux
+      OW3:::phase1_ux
+      OW4:::phase1_ux
+      WInfo:::phase1_ux
+      WDecline:::phase1_ux
+      WPU2:::phase1_ux
+      WPU4:::phase1_ux
+      MInfo:::phase1_ux
+      MInstr:::phase1_ux
+      MUInfo:::phase1_ux
+      U6:::phase1_ux
+      U9:::phase1_ux
+      FInfoPhotos:::phase1_ux
+      FCXDecline:::phase1_ux
+      FInfoDetails:::phase1_ux
+      FLabelPickup:::phase1_ux
+      AInfo:::phase1_ux
+      AInstr:::phase1_ux
+
+      %% US UX/Touchpoints (New)
+      US_B0:::phase1_ux
+      US_BR:::phase1_ux
+      US_OR1:::phase1_ux
+      US_OR2N:::phase1_ux
+      US_OR3:::phase1_ux
+      US_OR4:::phase1_ux
+      US_NegStart:::phase1_ux
+      US_Decline:::phase1_ux
+      US_Approved:::phase1_ux
+      
+      %% US System/Backend (New)
+      OnlineUS:::phase1_ux
+      US_B:::phase1_dim
+      US_BW:::phase1_dim
+      US_OR2:::phase1_dim
+      US_PROMO:::phase1_dim
+      US_OR5:::phase1_dim
+      US_NegRev:::phase1_dim
+      US_NegApp:::phase1_dim
+      US_Logistics:::phase1_dim
+      
+      %% UX END POINTS (Choice A)
+      RSEnd:::phase1_ux
+      FinalProcess:::phase2_ux
+
+      %% Notes
+      TP_NOTE:::note
+      BND_NOTE:::note
+      WRP_NOTE:::note
+      CL_BND_NOTE:::note
+
+    %% ---------------------------------------------------------
+    %% CLASS DEFINITIONS
+    %% ---------------------------------------------------------
+    
+    %% UX HIGHLIGHTS: Solid, Bold Colors (UX Team Focus)
+    classDef phase1_ux fill:#FFEB3B,stroke:#111,stroke-width:2px,color:#111
+    classDef phase2_ux fill:#FF9800,stroke:#111,stroke-width:2px,color:#111
+
+    %% DIMMED WORKFLOWS: Desaturated, Dashed, Lighter (Irrelevant to UX)
+    classDef phase1_dim fill:#FFFDE7,stroke:#FBC02D,stroke-width:1px,stroke-dasharray: 5 5,color:#888
+    classDef phase2_dim fill:#FFF3E0,stroke:#FFB74D,stroke-width:1px,stroke-dasharray: 5 5,color:#888
+    
+    %% Other
+    classDef tbd fill:#E0E0E0,stroke:#757575,stroke-width:2px,color:#111
+    classDef note fill:#E3F2FD,stroke:#64B5F6,stroke-width:2px,color:#0D47A1
+
+    style CALEDONIA fill:#FFFDE7,stroke:#B38F00,stroke-width:2px
+    style LEGEND fill:#FFFFFF,stroke:#999999,stroke-width:1px
