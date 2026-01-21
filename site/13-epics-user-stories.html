@@ -1,0 +1,2359 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://charanbobby.github.io/ClaimLaneRequirementsRepo/13-epics-user-stories.html">
+      
+      
+        <link rel="prev" href="15-changelog.html">
+      
+      
+        <link rel="next" href="16-appendices.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Epics & User Stories - Claimlane Returns, Refunds & Warranty Portal BRD</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.618322db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="css/giscus.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#claimlane-returns-refunds-warranty-portal-epics-features-user-stories" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="Claimlane Returns, Refunds &amp; Warranty Portal BRD" class="md-header__button md-logo" aria-label="Claimlane Returns, Refunds & Warranty Portal BRD" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Claimlane Returns, Refunds & Warranty Portal BRD
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Epics & User Stories
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="Claimlane Returns, Refunds &amp; Warranty Portal BRD" class="md-nav__button md-logo" aria-label="Claimlane Returns, Refunds & Warranty Portal BRD" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Claimlane Returns, Refunds & Warranty Portal BRD
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="01-README.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    About
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="02-overview-purpose.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview & Purpose
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="03-scope.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scope
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="04-actors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Actors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Process
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Process
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-process-high-level.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    High-Level Process Flow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requirements
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Requirements
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06-functional-requirements.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Functional
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-non-functional-requirements.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Non-Functional
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="08-business-rules.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Business Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="15-changelog.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Stories
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Stories
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Epics & User Stories
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="13-epics-user-stories.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Epics & User Stories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#epic-1-customer-entry-channel-intent-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Epic 1 — Customer Entry, Channel &amp; Intent Routing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Epic 1 — Customer Entry, Channel &amp; Intent Routing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#us-11-select-purchase-channel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-1.1 Select Purchase Channel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-12-store-selector-for-retail-purchases-shopify-vs-storis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-1.2 Store Selector for Retail Purchases (Shopify vs STORIS)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-13-select-return-vs-warranty" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-1.3 Select Return vs Warranty
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#epic-2-order-lookup-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Epic 2 — Order Lookup &amp; Validation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Epic 2 — Order Lookup &amp; Validation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#us-21-capture-order-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-2.1 Capture Order Details
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-22-validate-order-identity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-2.2 Validate Order &amp; Identity
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#epic-3-item-display-eligibility-reasons" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Epic 3 — Item Display, Eligibility &amp; Reasons
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Epic 3 — Item Display, Eligibility &amp; Reasons">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#us-31-display-items-with-eligibility-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-3.1 Display Items with Eligibility State
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-32-enforce-return-windows-by-category" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-3.2 Enforce Return Windows by Category
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-33-enforce-eligibility-by-channel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-3.3 Enforce Eligibility by Channel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-34-map-customer-return-reasons-to-woocommerce-reasons" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-3.4 Map Customer Return Reasons to WooCommerce Reasons
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-35-select-items-quantities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-3.5 Select Items &amp; Quantities
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#epic-4-bundle-gift-condition-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Epic 4 — Bundle, Gift &amp; Condition Rules
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Epic 4 — Bundle, Gift &amp; Condition Rules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#us-41-apply-bundle-eligibility-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-4.1 Apply Bundle Eligibility Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-42-free-bundled-item-keep-at-discount-option" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-4.2 Free / Bundled Item “Keep at Discount” Option
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-43-enforce-condition-based-eligibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-4.3 Enforce Condition-Based Eligibility
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#epic-5-documentation-capture-per-appendix-a" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Epic 5 — Documentation Capture (Per Appendix A)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Epic 5 — Documentation Capture (Per Appendix A)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#us-51-enforce-category-specific-documentation-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-5.1 Enforce Category-Specific Documentation Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-52-capture-global-documentation-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-5.2 Capture Global Documentation Fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-53-upload-manage-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-5.3 Upload &amp; Manage Files
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#epic-6-item-specific-return-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Epic 6 — Item-Specific Return Flows
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Epic 6 — Item-Specific Return Flows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#us-61-mattress-boxed-vs-unboxed-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-6.1 Mattress: Boxed vs Unboxed Routing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-62-furniture-two-step-cx-approval" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-6.2 Furniture: Two-Step CX Approval
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-63-accessories-bedding-bath-mail-in-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-6.3 Accessories, Bedding &amp; Bath: Mail-In Flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-64-label-generation-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-6.4 Label Generation Limits
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#epic-7-warranty-claims" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Epic 7 — Warranty Claims
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Epic 7 — Warranty Claims">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#us-71-enforce-warranty-periods-by-category" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-7.1 Enforce Warranty Periods by Category
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-72-warranty-questionnaire-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-7.2 Warranty Questionnaire &amp; Documentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-73-warranty-review-outcome" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-7.3 Warranty Review &amp; Outcome
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#epic-8-vendor-logistics-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Epic 8 — Vendor &amp; Logistics Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Epic 8 — Vendor &amp; Logistics Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#us-81-vendor-selection-for-unboxed-donation-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-8.1 Vendor Selection for Unboxed / Donation Flows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-82-vendor-change-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-8.2 Vendor Change Handling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-83-vendor-pickup-confirmation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-8.3 Vendor Pickup Confirmation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#epic-9-caledonia-warehouse-inventory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Epic 9 — Caledonia Warehouse &amp; Inventory
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Epic 9 — Caledonia Warehouse &amp; Inventory">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#us-91-caledonia-status-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-9.1 Caledonia Status Updates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-92-inventory-update-reporting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-9.2 Inventory Update Reporting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#epic-10-refund-case-finalization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Epic 10 — Refund &amp; Case Finalization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Epic 10 — Refund &amp; Case Finalization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#us-101-auto-vs-manual-refund-thresholds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-10.1 Auto vs Manual Refund Thresholds
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-102-apply-category-specific-refund-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-10.2 Apply Category-Specific Refund Notes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-103-close-case-maintain-audit-trail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-10.3 Close Case &amp; Maintain Audit Trail
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#discussion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discussion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="16-appendices.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#epic-1-customer-entry-channel-intent-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Epic 1 — Customer Entry, Channel &amp; Intent Routing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Epic 1 — Customer Entry, Channel &amp; Intent Routing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#us-11-select-purchase-channel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-1.1 Select Purchase Channel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-12-store-selector-for-retail-purchases-shopify-vs-storis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-1.2 Store Selector for Retail Purchases (Shopify vs STORIS)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-13-select-return-vs-warranty" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-1.3 Select Return vs Warranty
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#epic-2-order-lookup-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Epic 2 — Order Lookup &amp; Validation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Epic 2 — Order Lookup &amp; Validation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#us-21-capture-order-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-2.1 Capture Order Details
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-22-validate-order-identity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-2.2 Validate Order &amp; Identity
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#epic-3-item-display-eligibility-reasons" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Epic 3 — Item Display, Eligibility &amp; Reasons
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Epic 3 — Item Display, Eligibility &amp; Reasons">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#us-31-display-items-with-eligibility-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-3.1 Display Items with Eligibility State
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-32-enforce-return-windows-by-category" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-3.2 Enforce Return Windows by Category
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-33-enforce-eligibility-by-channel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-3.3 Enforce Eligibility by Channel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-34-map-customer-return-reasons-to-woocommerce-reasons" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-3.4 Map Customer Return Reasons to WooCommerce Reasons
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-35-select-items-quantities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-3.5 Select Items &amp; Quantities
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#epic-4-bundle-gift-condition-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Epic 4 — Bundle, Gift &amp; Condition Rules
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Epic 4 — Bundle, Gift &amp; Condition Rules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#us-41-apply-bundle-eligibility-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-4.1 Apply Bundle Eligibility Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-42-free-bundled-item-keep-at-discount-option" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-4.2 Free / Bundled Item “Keep at Discount” Option
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-43-enforce-condition-based-eligibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-4.3 Enforce Condition-Based Eligibility
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#epic-5-documentation-capture-per-appendix-a" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Epic 5 — Documentation Capture (Per Appendix A)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Epic 5 — Documentation Capture (Per Appendix A)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#us-51-enforce-category-specific-documentation-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-5.1 Enforce Category-Specific Documentation Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-52-capture-global-documentation-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-5.2 Capture Global Documentation Fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-53-upload-manage-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-5.3 Upload &amp; Manage Files
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#epic-6-item-specific-return-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Epic 6 — Item-Specific Return Flows
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Epic 6 — Item-Specific Return Flows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#us-61-mattress-boxed-vs-unboxed-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-6.1 Mattress: Boxed vs Unboxed Routing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-62-furniture-two-step-cx-approval" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-6.2 Furniture: Two-Step CX Approval
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-63-accessories-bedding-bath-mail-in-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-6.3 Accessories, Bedding &amp; Bath: Mail-In Flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-64-label-generation-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-6.4 Label Generation Limits
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#epic-7-warranty-claims" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Epic 7 — Warranty Claims
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Epic 7 — Warranty Claims">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#us-71-enforce-warranty-periods-by-category" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-7.1 Enforce Warranty Periods by Category
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-72-warranty-questionnaire-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-7.2 Warranty Questionnaire &amp; Documentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-73-warranty-review-outcome" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-7.3 Warranty Review &amp; Outcome
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#epic-8-vendor-logistics-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Epic 8 — Vendor &amp; Logistics Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Epic 8 — Vendor &amp; Logistics Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#us-81-vendor-selection-for-unboxed-donation-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-8.1 Vendor Selection for Unboxed / Donation Flows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-82-vendor-change-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-8.2 Vendor Change Handling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-83-vendor-pickup-confirmation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-8.3 Vendor Pickup Confirmation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#epic-9-caledonia-warehouse-inventory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Epic 9 — Caledonia Warehouse &amp; Inventory
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Epic 9 — Caledonia Warehouse &amp; Inventory">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#us-91-caledonia-status-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-9.1 Caledonia Status Updates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-92-inventory-update-reporting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-9.2 Inventory Update Reporting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#epic-10-refund-case-finalization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Epic 10 — Refund &amp; Case Finalization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Epic 10 — Refund &amp; Case Finalization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#us-101-auto-vs-manual-refund-thresholds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-10.1 Auto vs Manual Refund Thresholds
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-102-apply-category-specific-refund-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-10.2 Apply Category-Specific Refund Notes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-103-close-case-maintain-audit-trail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-10.3 Close Case &amp; Maintain Audit Trail
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#discussion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discussion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="claimlane-returns-refunds-warranty-portal-epics-features-user-stories">Claimlane Returns, Refunds &amp; Warranty Portal — Epics, Features &amp; User Stories</h1>
+<p>This document outlines the high-level epics and user stories supporting the Claimlane returns and warranty experience. User stories express business intent and customer value. Detailed functional rules, workflows, validations, and technical considerations remain documented separately in the BRD and Functional Requirements.</p>
+<hr />
+<h2 id="epic-1-customer-entry-channel-intent-routing">Epic 1 — Customer Entry, Channel &amp; Intent Routing</h2>
+<h3 id="us-11-select-purchase-channel">US-1.1 Select Purchase Channel</h3>
+<blockquote>
+<p><em>As a customer, I want to choose where I purchased so I am routed correctly.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>Customer can pick from:<ul>
+<li>Silk &amp; Snow Online (CA / US)</li>
+<li>Retail Store (in-person)</li>
+<li>Third-Party Vendor.</li>
+</ul>
+</li>
+<li>Selecting Third-Party Vendor is a Work-in-Progress (TDB).</li>
+<li>Online and Retail selections proceed to store / order validation steps.</li>
+</ol>
+<hr />
+<h3 id="us-12-store-selector-for-retail-purchases-shopify-vs-storis">US-1.2 Store Selector for Retail Purchases (Shopify vs STORIS)</h3>
+<blockquote>
+<p><em>As a customer who bought in store, I want the system to know whether my store supports online returns.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>Retail selection shows a list of stores.</li>
+<li>System looks up each store as <strong>Shopify POS</strong> or <strong>STORIS (non-Shopify)</strong>.</li>
+<li>Shopify POS stores continue into the standard Shopify flow (order lookup etc.).</li>
+<li>Sales from STORIS stores show a message: "Returns must be completed in-store." The portal flow ends (no ticket or label is generated).</li>
+</ol>
+<hr />
+<h3 id="us-13-select-return-vs-warranty">US-1.3 Select Return vs Warranty</h3>
+<blockquote>
+<p><em>As a customer, I want to indicate whether I am doing a return or warranty claim so the correct rules apply.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>Customer must choose “Return” or “Warranty Claim.”</li>
+<li>The chosen intent determines:<ul>
+<li>Which items are eligible.</li>
+<li>Which questions / documentation are requested.</li>
+<li>Which policy tables (return period vs warranty period) are checked.</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2 id="epic-2-order-lookup-validation">Epic 2 — Order Lookup &amp; Validation</h2>
+<h3 id="us-21-capture-order-details">US-2.1 Capture Order Details</h3>
+<blockquote>
+<p><em>As a customer, I want to provide my order details so my order can be found.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>Email and order number fields are mandatory.</li>
+<li>Basic format validation runs before lookup (e.g., non-empty, valid email pattern).</li>
+</ol>
+<hr />
+<h3 id="us-22-validate-order-identity">US-2.2 Validate Order &amp; Identity</h3>
+<blockquote>
+<p><em>As a system, I want to show order information only when the customer data matches.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>Order is returned only when <strong>email and order number match</strong> a valid record.</li>
+<li>On success, order items and relevant channels (web, Shopify POS) become available.</li>
+<li>On failure, a generic “We could not find your order” message is shown, with retry or contact-support options.</li>
+<li>No detailed reason is disclosed that could leak security information.</li>
+</ol>
+<hr />
+<h2 id="epic-3-item-display-eligibility-reasons">Epic 3 — Item Display, Eligibility &amp; Reasons</h2>
+<h3 id="us-31-display-items-with-eligibility-state">US-3.1 Display Items with Eligibility State</h3>
+<blockquote>
+<p><em>As a customer, I want to see all items from my order and whether they are eligible.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>All items in the order are displayed with: name, type, quantity, and category.</li>
+<li>Each item shows an eligibility state derived from:<ul>
+<li>Product category and time since purchase.</li>
+<li>Channel (web, retail, POS, third-party).</li>
+<li>Condition flags (final sale, already returned).</li>
+</ul>
+</li>
+<li>Items that are not eligible are clearly marked and cannot be selected.</li>
+</ol>
+<hr />
+<h3 id="us-32-enforce-return-windows-by-category">US-3.2 Enforce Return Windows by Category</h3>
+<blockquote>
+<p><em>As a system, I want return eligibility to follow the correct period per category.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>Mattresses:<ul>
+<li>Eligible up to 365 nights; show “early return” warning if under configured trial nights (e.g., &lt;30).</li>
+<li>Not eligible beyond 365 nights; portal blocks the return.</li>
+</ul>
+</li>
+<li>Furniture: eligible up to 30 days; not eligible afterwards.</li>
+<li>Bedding, Bath, Accessories, Toppers: eligible up to 100 nights; not eligible afterwards.</li>
+<li>Custom Hybrid Mattress: never eligible for return (warranty only).</li>
+</ol>
+<hr />
+<h3 id="us-33-enforce-eligibility-by-channel">US-3.3 Enforce Eligibility by Channel</h3>
+<blockquote>
+<p><em>As a system, I want eligibility to respect how and where the item was purchased.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>Web orders: fully supported in the portal.</li>
+<li>Retail orders fulfilled via Shopify: accepted in the portal if order ID matches.</li>
+<li>POS-only purchases: portal may provide guidance, but must force returns to be completed in store.</li>
+<li>Amazon / third-party vendors: portal blocks returns and directs the customer to the seller.</li>
+</ol>
+<hr />
+<h3 id="us-34-map-customer-return-reasons-to-woocommerce-reasons">US-3.4 Map Customer Return Reasons to WooCommerce Reasons</h3>
+<blockquote>
+<p><em>As a system, I want all customer-facing return reasons mapped to the correct WooCommerce reason so reporting and refunds are consistent.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>For each category (Bath, Bedding, Furniture, Mattress), the customer sees the configured reason list for that category/subcategory.</li>
+<li>When a reason is selected, the correct internal Woo reason code is attached (e.g., “Too Thin”, “Colour”, “Shipping Damage”, “Too Firm”, etc.).</li>
+<li>The same mapping is reused across subcategories where the appendix specifies inheritance.</li>
+<li>The Woo reason code is included in any refund API call or export.</li>
+</ol>
+<hr />
+<h3 id="us-35-select-items-quantities">US-3.5 Select Items &amp; Quantities</h3>
+<blockquote>
+<p><em>As a customer, I want to select one or more items and quantities for return or warranty.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>Customer can select multiple eligible items and quantities up to the purchased amount.</li>
+<li>The portal blocks progression if no eligible items are selected.</li>
+<li>Items already returned or refunded in full cannot be selected again.</li>
+</ol>
+<hr />
+<h2 id="epic-4-bundle-gift-condition-rules">Epic 4 — Bundle, Gift &amp; Condition Rules</h2>
+<h3 id="us-41-apply-bundle-eligibility-rules">US-4.1 Apply Bundle Eligibility Rules</h3>
+<blockquote>
+<p><em>As a system, I want bundled items to follow bundle-specific refund rules.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>Full bundle returned → full bundle price can be refunded.</li>
+<li>Single components (e.g., pillow or duvet from a bundle) → refund is prorated based on configured value.</li>
+<li>Free gift / gift-with-purchase must either be returned or have its value deducted from the refund.</li>
+</ol>
+<hr />
+<h3 id="us-42-free-bundled-item-keep-at-discount-option">US-4.2 Free / Bundled Item “Keep at Discount” Option</h3>
+<blockquote>
+<p><em>As a customer with a bundle or free item, I want the option to keep certain items at a discounted price when returning the main item.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>When returning a mattress or applicable accessory bundle with free items, the portal:<ul>
+<li>Detects associated free/bundled items.</li>
+<li>Prompts the customer with the keep-option (e.g., keep item at 50% of list price).</li>
+</ul>
+</li>
+<li>If customer chooses to keep the item, its discounted value is deducted from the refund and the decision is recorded on the ticket.</li>
+<li>If customer chooses to return, normal bundle rules apply (no extra deduction).</li>
+</ol>
+<hr />
+<h3 id="us-43-enforce-condition-based-eligibility">US-4.3 Enforce Condition-Based Eligibility</h3>
+<blockquote>
+<p><em>As a system, I want condition rules to be applied to eligibility and internal flags.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>Unboxed mattress returns are marked as “requires approval” and require photos.</li>
+<li>Furniture missing packaging is marked “conditionally eligible” and sets an internal “Missing Packaging” flag.</li>
+<li>Final-sale items are always blocked from return.</li>
+</ol>
+<hr />
+<h2 id="epic-5-documentation-capture-per-appendix-a">Epic 5 — Documentation Capture (Per Appendix A)</h2>
+<h3 id="us-51-enforce-category-specific-documentation-requirements">US-5.1 Enforce Category-Specific Documentation Requirements</h3>
+<blockquote>
+<p><em>As a system, I want each claim reason and category to require the correct documentation before submission.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>For mattresses, furniture, bedding, bath, the portal enforces the documentation sets from Appendix A for each claim reason (e.g., base photo, measurements, tag photos, marked assembly guide).</li>
+<li>Required documentation changes dynamically when the customer changes reason or item category.</li>
+<li>The claim cannot be submitted if required documentation for that combination is missing, unless an internal CS override is applied.</li>
+</ol>
+<hr />
+<h3 id="us-52-capture-global-documentation-fields">US-5.2 Capture Global Documentation Fields</h3>
+<blockquote>
+<p><em>As a system, I want global documentation requirements to be applied to all claims.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>Lot number, issue description and invoice (for retail/third-party purchases) are required according to the global rules.</li>
+<li>Measurements are required whenever the issue relates to size or fit.</li>
+<li>Tag photos are requested for all categories where specified as standard.</li>
+</ol>
+<hr />
+<h3 id="us-53-upload-manage-files">US-5.3 Upload &amp; Manage Files</h3>
+<blockquote>
+<p><em>As a customer, I want to upload and manage my documentation easily.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>Customers can upload photos and documents from mobile and desktop.</li>
+<li>Each file shows a preview or filename.</li>
+<li>Customers can remove and re-upload files before submission.</li>
+<li>Errors are surfaced with clear retry guidance.</li>
+</ol>
+<hr />
+<h2 id="epic-6-item-specific-return-flows">Epic 6 — Item-Specific Return Flows</h2>
+<h3 id="us-61-mattress-boxed-vs-unboxed-routing">US-6.1 Mattress: Boxed vs Unboxed Routing</h3>
+<blockquote>
+<p><em>As a customer returning a mattress, I want the system to guide me correctly based on whether it is boxed.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>After selecting a mattress, customer is asked whether it is still boxed.</li>
+<li>Boxed → photo + tag + measurement flow, then label/pickup instructions.</li>
+<li>Unboxed → additional questions about condition / donation and vendor-selection flow.</li>
+</ol>
+<hr />
+<h3 id="us-62-furniture-two-step-cx-approval">US-6.2 Furniture: Two-Step CX Approval</h3>
+<blockquote>
+<p><em>As a customer returning furniture, I want CX to review my photos before I organize pickup.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>Step 1: Customer uploads required photos and description; request is sent to CX queue.</li>
+<li>CX can approve, decline, or request more info.</li>
+<li>Approved → Step 2: customer provides access constraints, pickup dates, and contact info; portal generates carrier / pickup instructions.</li>
+<li>Declined → customer sees clear messaging and available alternatives (if any).</li>
+</ol>
+<hr />
+<h3 id="us-63-accessories-bedding-bath-mail-in-flow">US-6.3 Accessories, Bedding &amp; Bath: Mail-In Flow</h3>
+<blockquote>
+<p><em>As a customer returning smaller items, I want a simple label-based process.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>For Bedding / Bath / Accessories within their return window, portal collects reason and any required photos/measurements.</li>
+<li>System generates a return label and mail-in instructions.</li>
+<li>Shipment status is recorded and later linked to “Received” status in the portal.</li>
+</ol>
+<hr />
+<h3 id="us-64-label-generation-limits">US-6.4 Label Generation Limits</h3>
+<blockquote>
+<p><em>As a system, I want to limit return labels to the original box count to prevent shipping waste.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>The portal validates that the requested number of return labels does not exceed the number of labels/boxes in the original shipment.</li>
+<li>If the user requests more labels than the original order had, the system blocks generation and shows an error message explaining the limit.</li>
+</ol>
+<hr />
+<h2 id="epic-7-warranty-claims">Epic 7 — Warranty Claims</h2>
+<h3 id="us-71-enforce-warranty-periods-by-category">US-7.1 Enforce Warranty Periods by Category</h3>
+<blockquote>
+<p><em>As a system, I want warranty eligibility to follow the correct duration for each category.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>Warranty eligibility is checked against warranty periods (e.g., mattresses 15 years, adjustable beds 10, furniture/sofa 5, pillows/toppers 3, bedding/bath/accessories 1).</li>
+<li>Claims beyond the warranty period are blocked with a clear message.</li>
+</ol>
+<hr />
+<h3 id="us-72-warranty-questionnaire-documentation">US-7.2 Warranty Questionnaire &amp; Documentation</h3>
+<blockquote>
+<p><em>As a customer, I want to provide the information needed for my warranty claim.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>The portal presents a questionnaire tailored to product category and claim reason, using Appendix A documentation rules.</li>
+<li>Required fields (photos, measurements, tags, lot number, invoice where relevant) must be provided before submission.</li>
+<li>Claim is not sent for review until all required inputs are complete.</li>
+</ol>
+<hr />
+<h3 id="us-73-warranty-review-outcome">US-7.3 Warranty Review &amp; Outcome</h3>
+<blockquote>
+<p><em>As CX or vendor, I want to review warranty claims and decide the outcome.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>Reviewer can set the decision: approve, decline, or request more info.</li>
+<li>Approved → triggers replacement / refund / repair workflow according to product category and internal rules.</li>
+<li>Declined → portal sends clear explanation to customer.</li>
+</ol>
+<hr />
+<h2 id="epic-8-vendor-logistics-management">Epic 8 — Vendor &amp; Logistics Management</h2>
+<h3 id="us-81-vendor-selection-for-unboxed-donation-flows">US-8.1 Vendor Selection for Unboxed / Donation Flows</h3>
+<blockquote>
+<p><em>As an internal logistics user, I want to select the vendor who will pick up or receive the item.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>System shows allowed vendors for the item type and location.</li>
+<li>Selection triggers emails to vendor and customer with instructions.</li>
+<li>Vendor receives portal access to mark items as “Picked.”</li>
+</ol>
+<hr />
+<h3 id="us-82-vendor-change-handling">US-8.2 Vendor Change Handling</h3>
+<blockquote>
+<p><em>As an internal user, I want to change vendors when needed without losing context.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>User can change from one vendor to another before pickup is completed.</li>
+<li>New vendor receives updated notification; previous vendor is informed the job was reassigned.</li>
+<li>Customer receives updated email with new vendor details.</li>
+</ol>
+<hr />
+<h3 id="us-83-vendor-pickup-confirmation">US-8.3 Vendor Pickup Confirmation</h3>
+<blockquote>
+<p><em>As a vendor, I want to confirm pickup in the portal so downstream processing can continue.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>Vendor can update status to “Picked” for assigned items.</li>
+<li>Status change triggers transition to “Received” once warehouse confirms arrival, or to “In Transit” as configured.</li>
+</ol>
+<hr />
+<h2 id="epic-9-caledonia-warehouse-inventory">Epic 9 — Caledonia Warehouse &amp; Inventory</h2>
+<h3 id="us-91-caledonia-status-updates">US-9.1 Caledonia Status Updates</h3>
+<blockquote>
+<p><em>As Caledonia staff, I want to update the status of returned items in the portal.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>Caledonia users have limited-access roles restricting them to:<ul>
+<li>Mark “Delivered,” “Processing,” “Inspection Completed.”</li>
+</ul>
+</li>
+<li>Status changes are timestamped and visible in the case history.</li>
+</ol>
+<hr />
+<h3 id="us-92-inventory-update-reporting">US-9.2 Inventory Update Reporting</h3>
+<blockquote>
+<p><em>As Store Ops, I want a report of all items ready for inventory updates.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>Report includes items marked “Inspection Completed,” with SKU, condition, and disposition (resale / donate / scrap).</li>
+<li>Report can be exported for ERP or inventory tools.</li>
+<li>Running the report does not change any status by itself.</li>
+</ol>
+<hr />
+<h2 id="epic-10-refund-case-finalization">Epic 10 — Refund &amp; Case Finalization</h2>
+<h3 id="us-101-auto-vs-manual-refund-thresholds">US-10.1 Auto vs Manual Refund Thresholds</h3>
+<blockquote>
+<p><em>As a system, I want refunds to be automated when safe and routed for manual review when required.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>Once an item is marked “Received,” the system calculates the <strong>net return value</strong> after:<ul>
+<li>Bundle proration</li>
+<li>Gift-with-purchase deductions</li>
+<li>Any fees or shipping deductions.</li>
+</ul>
+</li>
+<li>If net value is below the configured auto-refund threshold (e.g., &lt;600), the portal triggers an automatic refund.</li>
+<li>If net value is at or above threshold, or flagged as exception, case goes to manual refund queue.</li>
+<li>Customer is notified whether refund is automatic or under review.</li>
+</ol>
+<hr />
+<h3 id="us-102-apply-category-specific-refund-notes">US-10.2 Apply Category-Specific Refund Notes</h3>
+<blockquote>
+<p><em>As a system, I want category rules about refunds to be reflected correctly (e.g., furniture shipping deductions).</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>Furniture returns show messaging that return shipping costs may be deducted unless escalated, and the deduction is shown in the refund breakdown.</li>
+<li>Other categories follow standard full-refund rules unless configured otherwise in the policy tables.</li>
+</ol>
+<hr />
+<h3 id="us-103-close-case-maintain-audit-trail">US-10.3 Close Case &amp; Maintain Audit Trail</h3>
+<blockquote>
+<p><em>As an internal user, I want each case to have a complete history and close cleanly.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>When refund or replacement is completed, the case moves to “Closed.”</li>
+<li>The case history shows key events: eligibility checks, documentation submissions, vendor selections, status changes, and refund decisions.</li>
+<li>Audit log is accessible to authorised internal users only.</li>
+</ol>
+<hr />
+<h2 id="discussion">Discussion</h2>
+<blockquote>
+<p>💬 <strong>Comments for this page are available in Giscus.</strong><br />
+Once Giscus is configured, the discussion thread for this page will appear here.</p>
+</blockquote>
+<div class="giscus-placeholder"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": [], "search": "assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="js/giscus.js"></script>
+      
+    
+  </body>
+</html>

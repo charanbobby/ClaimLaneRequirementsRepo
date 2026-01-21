@@ -1,0 +1,44 @@
+site_name: Claimlane Returns, Refunds & Warranty Portal BRD
+docs_dir: brd
+site_url: https://charanbobby.github.io/ClaimLaneRequirementsRepo/
+use_directory_urls: false
+
+theme:
+  name: material
+
+markdown_extensions:
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+nav:
+  - Home: 01-README.md
+
+  - About:
+      - Overview & Purpose: 02-overview-purpose.md
+      - Scope: 03-scope.md
+      - Actors: 04-actors.md
+
+  - Process:
+      - High-Level Process Flow: 05-process-high-level.md
+
+  - Requirements:
+      - Functional: 06-functional-requirements.md
+      - Non-Functional: 07-non-functional-requirements.md
+      - Business Rules: 08-business-rules.md
+      - Changelog: 15-changelog.md
+
+  - Stories:
+      - Epics & User Stories: 13-epics-user-stories.md
+
+  - Reference:
+      - Appendices: 16-appendices.md
+
+
+extra_css:
+  - css/giscus.css
+
+extra_javascript:
+  - js/giscus.js
