@@ -42,19 +42,44 @@ flowchart TB
     
     %% Promo Checks (US Clone)
     US_OR4 --> US_PROMO["WF-104 | Run promotion checks"]
-    US_PROMO --> US_OR5["WF-105 | Item type selected"]
+    US_PROMO --> US_OR5{"WF-105 | Item type selected"}
 
-    %% US Negotiation Blocker
-    US_OR5 --> US_NegStart["WF-106 | Negotiation Strategy: Submit Return Request<br>(Ticket lands in ClaimLane portal)"]
-    US_NegStart --> US_NegRev["WF-107 | CX Review / Talks to Client Offline"]
-    US_NegRev --> US_NegApp{"WF-108 | Approve Return?"}
+    %% US Mattress & Furniture (Routed to Canada Logic)
+    US_OR5 -- Mattress --> M2
+    US_OR5 -- Furniture --> F1
+    
+    %% Shared US Endpoints (referenced by Accessory flow)
+    US_Decline["WF-109 | Return Declined / Negotiated Offline"] --> FinalProcess
+    US_Logistics["WF-111 | Generate Label / Schedule Pickup"] --> Received
 
-    US_NegApp -- No --> US_Decline["WF-109 | Return Declined / Negotiated Offline"]
-    US_Decline --> FinalProcess
+    %% US Accessories & Bedding New Logic (Abuse Check -> Options)
+    subgraph ABUSE_REMOVAL["⚠️ FLAGGED FOR REMOVAL: High Effort / Recommendation: Use OOTB ClaimLane Logic"]
+        direction TB
+        US_OR5 -- Accessory/Bedding --> US_AbuseCheck{"WF-112 | Abuse Check:<br>Used > 1x in past year?"}
+        
+        US_AbuseCheck -- Yes --> US_AbuseReview["WF-113 | Log for CX Review (Abuse Check)"]
+        US_AbuseReview --> US_AbuseDec{"WF-114 | Approve return?"}
+        US_AbuseDec -- No --> US_Decline
+        US_AbuseDec -- Yes --> US_OpenCheck
+    end
 
-    US_NegApp -- Yes --> US_Approved["WF-110 | Proceed to Return Logistics"]
-    US_Approved --> US_Logistics["WF-111 | Generate Label / Schedule Pickup"]
-    US_Logistics --> Received
+    US_AbuseCheck -- No --> US_OpenCheck{"WF-115 | Is item opened?"}
+    
+    US_OpenCheck -- Unopened --> US_ShipCalc{"WF-116 | Shipping Cost > 1/3 Item Value?"}
+    US_ShipCalc -- Low Cost --> US_Logistics
+    US_ShipCalc -- High Cost --> US_Offer1
+
+    US_OpenCheck -- Opened --> US_Offer1{"WF-117 | Option 1: Keep for 50% Refund<br>(No proof required)"}
+    
+    US_Offer1 -- Accepted --> US_Ref50["WF-118 | Process 50% Refund"]
+    US_Ref50 --> FinalProcess
+    
+    US_Offer1 -- Rejected --> US_Offer2{"WF-119 | Option 2: Donate for 100% Refund<br>(Proof required)"}
+    
+    US_Offer2 -- Accepted --> US_DonateStep["WF-120 | Client agrees to 100% Option, donates item, takes picture, and contacts CX (Call/Email)"]
+    US_DonateStep --> US_CXProcess["WF-121 | CX team processes return in ClaimLane portal"]
+    US_CXProcess --> FinalProcess
+    US_Offer2 -- Rejected --> US_Logistics
 
 
     %% Retail workstream
@@ -91,20 +116,25 @@ flowchart TB
     %% ---------------------------------------------------------
     BR --> OR1["WF-026 | Enter order number and email"]
     OR1 --> OR2{"WF-027 | Order validated?"}
-    OR2 -- No --> OR2N["WF-028 | Show error and allow retry or contact support"]
+    OR2 -- No --> OR2N["WF-028 | Show error and allow retry or contact support <br> Display error message: "For orders purchased in store, an email may not have been provided. Please reach out to customer care for assistance.""]
     OR2 -- Yes --> OR3["WF-029 | Display all items in order"]
     OR3 --> OR4["WF-030 | Customer selects one or more items to return"]
-    OR4 --> SPLIT_PROMO["WF-031 | Run promotion checks (in parallel)"]
-    SPLIT_PROMO --> BND10{"WF-032 | Free item included with selected items?"} & BND12{"WF-033 | Selected items part of a discounted bundle?"}
-    BND10 -- Yes --> BND11["WF-034 | Prompt: Free item can be kept at 50% of original price"]
-    BND10 -- No --> JOIN_PROMO["WF-036 | Promotion checks complete"]
-    BND12 -- Yes --> BND13["WF-035 | Prompt: Returning items may remove the bundle discount applied to the order"]
-    BND12 -- No --> JOIN_PROMO
-    BND11 --> JOIN_PROMO
-    BND13 --> JOIN_PROMO
-    BND11 -.-> BND_NOTE["WF-037 | Note: Prompts are required because refund amounts are not shown during the journey. Messaging sets expectations for pricing and discount impacts before proceeding."]
-    BND13 -.-> BND_NOTE
-    JOIN_PROMO --> OR5{"WF-038 | Item type selected"}
+    subgraph PROMO_REMOVAL["⚠️ FLAGGED FOR REMOVAL: High Effort / partial edge case coverage"]
+        direction TB
+        OR4 --> SPLIT_PROMO["WF-031 | Run promotion checks (in parallel)"]
+        SPLIT_PROMO --> BND10{"WF-032 | Free item included with selected items?"} & BND12{"WF-033 | Selected items part of a discounted bundle?"}
+        BND10 -- Yes --> BND11["WF-034 | Prompt: Free item can be kept at 50% of original price"]
+        BND10 -- No --> JOIN_PROMO["WF-036 | Promotion checks complete"]
+        BND12 -- Yes --> BND13["WF-035 | Prompt: Returning items may remove the bundle discount applied to the order"]
+        BND12 -- No --> JOIN_PROMO
+        BND11 --> JOIN_PROMO
+        BND13 --> JOIN_PROMO
+        BND11 -.-> BND_NOTE["WF-037 | Note: Prompts are required because refund amounts are not shown during the journey. Messaging sets expectations for pricing and discount impacts before proceeding."]
+        BND13 -.-> BND_NOTE
+        JOIN_PROMO --> OR5
+    end
+
+    OR5{"WF-038 | Item type selected"}
 
     OR5 -- Mattress --> M2{"WF-039 | Is mattress boxed?"}
     OR5 -- Furniture --> F1["WF-040 | Furniture return"]
@@ -144,29 +174,27 @@ flowchart TB
     WPUQ -- No --> WClose
     WClose --> FinalProcess
     
-    WPUQ -- Yes --> WPU1["WF-059 | Log action item: Return Logistics to select donation / pickup vendor"]
-    WPU1 --> WPU2["WF-061 | Trigger emails: vendor + customer"]
-    WPU2 --> WPU3{"WF-062 | Change vendor?"}
-    WPU3 -- Yes --> WPU4["WF-063 | Select new vendor → trigger updated emails"]
-    WPU3 -- No --> WPU5["WF-064 | Vendor picks up item and marks Picked"]
-    WPU4 --> WPU5
-    WPU5 --> Received["WF-089 | Item marked Received in portal"]
+    WPUQ -- Yes --> RL1
+
+    %% ---------------------------------------------------------
+    %% SHARED RETURN LOGISTICS (Combines WF-059 & WF-065A)
+    %% ---------------------------------------------------------
+    RL1["WF-059/065A | Return Logistics: Select donation / pickup vendor"] --> RL2["WF-061/066 | Trigger emails: vendor + customer"]
+    RL2 --> RL3{"WF-062/067A | Change vendor?"}
+    RL3 -- Yes --> RL4["WF-063/068A | Select new vendor → trigger updated emails"]
+    RL3 -- No --> RL5
+    RL4 --> RL5["WF-064/063A | Vendor picks up item and marks Picked"]
+    RL5 --> Received["WF-089 | Item marked Received in portal"]
 
     %% ---------------------------------------------------------
     %% MATTRESS / FURNITURE / ACCESSORY RETURN SUBFLOWS
     %% ---------------------------------------------------------
-    M2 -- Yes --> MInfo["WF-061A | Collect extra info: tags, lot number, photos, pickup dates"]
+    M2 -- Yes --> MInfo["WF-061A | Collect extra info: lot number, photos, pickup dates"]
     MInfo --> MInstr["WF-062A | Provide return label / pickup details"]
-    MInstr --> M3["WF-063A | Vendor picks up mattress and marks Picked"]
-    M3 --> Received
+    MInstr --> RL5
 
     M2 -- No --> MUInfo["WF-064A | Collect extra info: photos, law tag, condition"]
-    MUInfo --> U1["WF-065A | Return Logistics: Select donation / pickup vendor"]
-    U1 --> U6["WF-066 | Trigger emails: vendor + customer"]
-    U6 --> U8{"WF-067A | Change vendor on Claimlane portal?"}
-    U8 -- Yes --> U9["WF-068A | Select new vendor → trigger updated emails"]
-    U8 -- No --> M3
-    U9 --> M3
+    MUInfo --> RL1
 
     F1 --> FInfoPhotos["WF-069A | Customer uploads photos + issue details"]
     FInfoPhotos --> FCXReview["WF-070A | CX reviews"]
@@ -257,13 +285,10 @@ flowchart TB
       WCX:::phase1_dim
       WPUQ:::phase1_dim
       WClose:::phase1_dim
-      WPU1:::phase1_dim
-      WPU3:::phase1_dim
-      WPU5:::phase1_dim
+      RL1:::phase1_dim
+      RL3:::phase1_dim
+      RL5:::phase1_dim
       Received:::phase1_dim
-      M3:::phase1_dim
-      U1:::phase1_dim
-      U8:::phase1_dim
       FCXReview:::phase1_dim
       FCXApprove:::phase1_dim
       F3:::phase1_dim
@@ -300,13 +325,11 @@ flowchart TB
       OW4:::phase1_ux
       WInfo:::phase1_ux
       WDecline:::phase1_ux
-      WPU2:::phase1_ux
-      WPU4:::phase1_ux
+      RL2:::phase1_ux
+      RL4:::phase1_ux
       MInfo:::phase1_ux
       MInstr:::phase1_ux
       MUInfo:::phase1_ux
-      U6:::phase1_ux
-      U9:::phase1_ux
       FInfoPhotos:::phase1_ux
       FCXDecline:::phase1_ux
       FInfoDetails:::phase1_ux
@@ -321,9 +344,14 @@ flowchart TB
       US_OR2N:::phase1_ux
       US_OR3:::phase1_ux
       US_OR4:::phase1_ux
-      US_NegStart:::phase1_ux
+
       US_Decline:::phase1_ux
-      US_Approved:::phase1_ux
+
+
+      US_OpenCheck:::phase1_ux
+      US_Offer1:::phase1_ux
+      US_Offer2:::phase1_ux
+      US_DonateStep:::phase1_ux
       
       %% US System/Backend (New)
       OnlineUS:::phase1_ux
@@ -332,9 +360,14 @@ flowchart TB
       US_OR2:::phase1_dim
       US_PROMO:::phase1_dim
       US_OR5:::phase1_dim
-      US_NegRev:::phase1_dim
-      US_NegApp:::phase1_dim
+
       US_Logistics:::phase1_dim
+      US_AbuseCheck:::phase1_dim
+      US_AbuseReview:::phase1_dim
+      US_AbuseDec:::phase1_dim
+      US_ShipCalc:::phase1_dim
+      US_CXProcess:::phase1_dim
+      US_Ref50:::phase1_dim
       
       %% UX END POINTS (Choice A)
       RSEnd:::phase1_ux
@@ -344,6 +377,7 @@ flowchart TB
       TP_NOTE:::note
       BND_NOTE:::note
       WRP_NOTE:::note
+
       CL_BND_NOTE:::note
 
     %% ---------------------------------------------------------
@@ -361,6 +395,8 @@ flowchart TB
     %% Other
     classDef tbd fill:#E0E0E0,stroke:#757575,stroke-width:2px,color:#111
     classDef note fill:#E3F2FD,stroke:#64B5F6,stroke-width:2px,color:#0D47A1
+    classDef removal_flag fill:#FFEBEE,stroke:#D32F2F,stroke-width:3px,color:#C62828,stroke-dasharray: 5 5
 
     style CALEDONIA fill:#FFFDE7,stroke:#B38F00,stroke-width:2px
-    style LEGEND fill:#FFFFFF,stroke:#999999,stroke-width:1px
+    style PROMO_REMOVAL fill:#FFEBEE,stroke:#D32F2F,stroke-width:2px,stroke-dasharray: 5 5
+    style ABUSE_REMOVAL fill:#FFEBEE,stroke:#D32F2F,stroke-width:2px,stroke-dasharray: 5 5

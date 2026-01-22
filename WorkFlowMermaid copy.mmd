@@ -22,10 +22,40 @@ flowchart TB
     %% ENTRY POINT – PURCHASE CHANNEL SELECTION
     %% WF-002, WF-003, WF-004 are parallel workstreams
     %% ---------------------------------------------------------
-    A["WF-001 | Where did you purchase?"] --> Online["WF-002 | Silk & Snow Online – CA / US (WooCommerce)"] & Retail["WF-003 | Silk & Snow Retail Store (in-person)"] & D["WF-004 | Third-party vendor: TSC, EQ3, Costco"]
+    A["WF-001 | Where did you purchase?"] --> OnlineCA["WF-002 | Silk & Snow Online – CA (WooCommerce)"] & OnlineUS["WF-094 | Silk & Snow Online – US (WooCommerce)"] & Retail["WF-003 | Silk & Snow Retail Store (in-person)"] & D["WF-004 | Third-party vendor: TSC, EQ3, Costco"]
 
     %% Online workstream
-    Online --> B["WF-020 | Orders in Shopify (Online + Shopify POS)"]
+    OnlineCA --> B["WF-020 | Orders in Shopify (Online + Shopify POS)"]
+
+    %% US Online workstream
+    OnlineUS --> US_B["WF-095 | Orders in Shopify (US)"]
+    US_B --> US_B0["WF-096 | What do you need help with?"]
+    US_B0 --> US_BR["WF-097 | Return"] & US_BW["WF-098 | Warranty claim (Shared Flow)"]
+    US_BW --> OW1
+
+    %% US Return Flow
+    US_BR --> US_OR1["WF-099 | Enter order number and email"]
+    US_OR1 --> US_OR2{"WF-100 | Order validated?"}
+    US_OR2 -- No --> US_OR2N["WF-101 | Show error"]
+    US_OR2 -- Yes --> US_OR3["WF-102 | Display all items"]
+    US_OR3 --> US_OR4["WF-103 | Select items to return"]
+    
+    %% Promo Checks (US Clone)
+    US_OR4 --> US_PROMO["WF-104 | Run promotion checks"]
+    US_PROMO --> US_OR5["WF-105 | Item type selected"]
+
+    %% US Negotiation Blocker
+    US_OR5 --> US_NegStart["WF-106 | Negotiation Strategy: Submit Return Request<br>(Ticket lands in ClaimLane portal)"]
+    US_NegStart --> US_NegRev["WF-107 | CX Review / Talks to Client Offline"]
+    US_NegRev --> US_NegApp{"WF-108 | Approve Return?"}
+
+    US_NegApp -- No --> US_Decline["WF-109 | Return Declined / Negotiated Offline"]
+    US_Decline --> FinalProcess
+
+    US_NegApp -- Yes --> US_Approved["WF-110 | Proceed to Return Logistics"]
+    US_Approved --> US_Logistics["WF-111 | Generate Label / Schedule Pickup"]
+    US_Logistics --> Received
+
 
     %% Retail workstream
     Retail --> RS1["WF-018 | Select the store you purchased from"]
@@ -194,7 +224,7 @@ flowchart TB
       R2:::phase1_dim
       R4:::phase1_dim
       R5:::phase1_dim
-      Online:::phase1_dim
+      OnlineCA:::phase1_ux
       Retail:::phase1_dim
       B:::phase1_dim
       D:::phase1_dim
@@ -283,6 +313,28 @@ flowchart TB
       FLabelPickup:::phase1_ux
       AInfo:::phase1_ux
       AInstr:::phase1_ux
+
+      %% US UX/Touchpoints (New)
+      US_B0:::phase1_ux
+      US_BR:::phase1_ux
+      US_OR1:::phase1_ux
+      US_OR2N:::phase1_ux
+      US_OR3:::phase1_ux
+      US_OR4:::phase1_ux
+      US_NegStart:::phase1_ux
+      US_Decline:::phase1_ux
+      US_Approved:::phase1_ux
+      
+      %% US System/Backend (New)
+      OnlineUS:::phase1_ux
+      US_B:::phase1_dim
+      US_BW:::phase1_dim
+      US_OR2:::phase1_dim
+      US_PROMO:::phase1_dim
+      US_OR5:::phase1_dim
+      US_NegRev:::phase1_dim
+      US_NegApp:::phase1_dim
+      US_Logistics:::phase1_dim
       
       %% UX END POINTS (Choice A)
       RSEnd:::phase1_ux
