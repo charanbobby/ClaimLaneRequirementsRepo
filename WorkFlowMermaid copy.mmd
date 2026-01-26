@@ -25,28 +25,36 @@ flowchart TB
     A["WF-001 | Where did you purchase?"] --> OnlineCA["WF-002 | Silk & Snow Online – CA (WooCommerce)"] & OnlineUS["WF-094 | Silk & Snow Online – US (WooCommerce)"] & Retail["WF-003 | Silk & Snow Retail Store (in-person)"] & D["WF-004 | Third-party vendor: TSC, EQ3, Costco"]
 
     %% Online workstream
-    OnlineCA --> B["WF-020 | Orders in Shopify (Online + Shopify POS)"]
+    OnlineCA --> B0["WF-023 | What do you need help with?"]
 
     %% US Online workstream
-    %%OnlineUS --> US_B["WF-095 | Orders in Shopify (US)"]
     OnlineUS --> US_B0["WF-096 | What do you need help with?"]
-    US_B0 --> US_BR["WF-097 | Return"] & US_BW["WF-098 | Warranty claim (Shared Flow)"]
-    US_BW --> OW1
+    US_B0 --> SHARED_BR & SHARED_BW
 
-    %% US Return Flow
-    US_BR --> US_OR1["WF-099 | Enter order number and email"]
-    US_OR1 --> US_OR2{"WF-100 | Order validated?"}
-    US_OR2 -- No --> US_OR2N["WF-101 | Show error"]
-    US_OR2 -- Yes --> US_OR3["WF-102 | Display all items"]
-    US_OR3 --> US_OR4["WF-103 | Select items to return"]
+
+    %% SHARED LOGIN & VALIDATION (Return + Warranty)
+    SHARED_BR & SHARED_BW --> SHARED_LOGIN["WF-026/099/042 | Enter order number and email"]
+    SHARED_LOGIN --> SHARED_VALIDATE{"WF-027/100/043 | Order validated?"}
     
-    %% Promo Checks (US Clone)
-    US_OR4 --> US_PROMO["WF-104 | Run promotion checks"]
-    US_PROMO --> US_OR5{"WF-105 | Item type selected"}
+    SHARED_VALIDATE -- No --> SHARED_LOGIN_ERR["WF-028/101/044 | Show error & allow retry or contact support <br> Display error message: 'For orders purchased in store, an email may not have been provided.'</br>"]
+    SHARED_VALIDATE -- Yes --> FLOW_ROUTER{"Flow Type?"}
+    
+    FLOW_ROUTER -- Return --> SHARED_OR3["WF-029/102 | Display all items in order"]
 
-    %% US Mattress & Furniture (Routed to Canada Logic)
-    US_OR5 -- Mattress --> M2
-    US_OR5 -- Furniture --> F1
+    
+    SHARED_OR3 --> SHARED_OR4["WF-030/103 | Select items to return"]
+
+    
+    %% Bypass Promo Checks (Removed per plan)
+    SHARED_OR4 --> SHARED_OR5{"WF-038/105 | Item type selected"}
+    
+    %% Shared Output Logic
+    SHARED_OR5 -- Mattress --> M2{"WF-039 | Is mattress boxed?"}
+    SHARED_OR5 -- Furniture --> F1["WF-040 | Furniture return"]
+    SHARED_OR5 -- Accessory/Bedding --> REGION_CHECK{"Region?"}
+    
+    REGION_CHECK -- US --> US_AbuseCheck
+    REGION_CHECK -- CA --> A1["WF-041 | Accessory / Bedding return"]
     
     %% Shared US Endpoints (referenced by Accessory flow)
     US_Decline["WF-109 | Return Declined / Negotiated Offline"] --> FinalProcess
@@ -55,7 +63,7 @@ flowchart TB
     %% US Accessories & Bedding New Logic (Abuse Check -> Options)
     subgraph ABUSE_REMOVAL["⚠️ FLAGGED FOR REMOVAL: High Effort / Recommendation: Use OOTB ClaimLane Logic"]
         direction TB
-        US_OR5 -- Accessory/Bedding --> US_AbuseCheck{"WF-112 | Abuse Check:<br>Used > 1x in past year?"}
+        US_AbuseCheck{"WF-112 | Abuse Check:<br>Used > 1x in past year?"}
         
         US_AbuseCheck -- Yes --> US_AbuseReview["WF-113 | Log for CX Review (Abuse Check)"]
         US_AbuseReview --> US_AbuseDec{"WF-114 | Approve return?"}
@@ -104,51 +112,34 @@ flowchart TB
     TP1 -.-> TP_NOTE["WF-017 | Note: Exact evidence requirements to be confirmed per vendor (TSC/EQ3)."]
 
     RS1 --> RS2{"WF-019 | Store backend (system lookup)"}
-    RS2 -- Shopify POS store --> B
+    RS2 -- Shopify POS store --> B0
     RS2 -- "STORIS (non-Shopify) store" --> RS3["WF-021 | Message: This store handles returns in person only (no online processing)"]
     RS3 --> RSEnd["WF-022 | End – customer must visit store to complete return"]
 
-    B --> B0["WF-023 | What do you need help with?"]
-    B0 --> BR["WF-024 | Return"] & BW["WF-025 | Warranty claim"]
+    B0 --> SHARED_BR["WF-024/097 | Return"] & SHARED_BW["WF-025/098 | Warranty claim"]
+
+    
+    %% SHARED_BW flows into SHARED_LOGIN (see above)
+
 
     %% ---------------------------------------------------------
-    %% RETURN FLOW
+    %% RETURN FLOW (Now merged above with US)
     %% ---------------------------------------------------------
-    BR --> OR1["WF-026 | Enter order number and email"]
-    OR1 --> OR2{"WF-027 | Order validated?"}
-    OR2 -- No --> OR2N["WF-028 | Show error and allow retry or contact support <br> Display error message: "For orders purchased in store, an email may not have been provided. Please reach out to customer care for assistance.""]
-    OR2 -- Yes --> OR3["WF-029 | Display all items in order"]
-    OR3 --> OR4["WF-030 | Customer selects one or more items to return"]
-    subgraph PROMO_REMOVAL["⚠️ FLAGGED FOR REMOVAL: High Effort / partial edge case coverage"]
-        direction TB
-        OR4 --> SPLIT_PROMO["WF-031 | Run promotion checks (in parallel)"]
-        SPLIT_PROMO --> BND10{"WF-032 | Free item included with selected items?"} & BND12{"WF-033 | Selected items part of a discounted bundle?"}
-        BND10 -- Yes --> BND11["WF-034 | Prompt: Free item can be kept at 50% of original price"]
-        BND10 -- No --> JOIN_PROMO["WF-036 | Promotion checks complete"]
-        BND12 -- Yes --> BND13["WF-035 | Prompt: Returning items may remove the bundle discount applied to the order"]
-        BND12 -- No --> JOIN_PROMO
-        BND11 --> JOIN_PROMO
-        BND13 --> JOIN_PROMO
-        BND11 -.-> BND_NOTE["WF-037 | Note: Prompts are required because refund amounts are not shown during the journey. Messaging sets expectations for pricing and discount impacts before proceeding."]
-        BND13 -.-> BND_NOTE
-        JOIN_PROMO --> OR5
-    end
-
-    OR5{"WF-038 | Item type selected"}
-
-    OR5 -- Mattress --> M2{"WF-039 | Is mattress boxed?"}
-    OR5 -- Furniture --> F1["WF-040 | Furniture return"]
-    OR5 -- Accessory/Bedding --> A1["WF-041 | Accessory / Bedding return"]
+    %% Handled by SHARED_OR nodes defined in US section blocks
+    
+    %% Old connections removed (OR1..OR5) merged into SHARED_* path
+    %% Mattress/Furniture/Accessory routing handled at SHARED_OR5
 
     %% ---------------------------------------------------------
     %% WARRANTY FLOW (WF-052 MOVED TO PHASE 1)
     %% Added: CX review + approval, and CX can adjust selected part
     %% ---------------------------------------------------------
-    BW --> OW1["WF-042 | Enter order number and email"]
-    OW1 --> OW2{"WF-043 | Order validated?"}
-    OW2 -- No --> OW2N["WF-044 | Show error and allow retry or contact support"]
 
-    OW2 -- Yes --> OW3["WF-052 | Display all items in the order (include replacement parts where applicable)"]
+    %% SHARED_BW flows here (Merged into SHARED_LOGIN above)
+    %% OW1/OW2 removed
+
+
+    FLOW_ROUTER -- Warranty --> OW3["WF-052 | Display all items in the order (include replacement parts & product guide based on products selected)"]
     OW3 -.-> WRP_NOTE@{ label: "WF-052A | Note: Replacement parts should be shown with product context<br><br><p data-start=\"186\" data-end=\"272\"><strong data-start=\"186\" data-end=\"239\">Example – Nara Wooden Dresser (5-Drawer, Cortado)</strong><br data-start=\"239\" data-end=\"242\"><br>Parent SKU: <strong data-start=\"254\" data-end=\"270\">SNSFNDR5005T</strong></p><ul data-start=\"273\" data-end=\"488\"><li data-start=\"273\" data-end=\"313\"><p data-start=\"275\" data-end=\"313\">Drawer – Top Left | SNSFNDR5005TDRSL</p></li><li data-start=\"314\" data-end=\"355\"><p data-start=\"316\" data-end=\"355\">Drawer – Top Right | SNSFNDR5005TDRSR</p></li><li data-start=\"356\" data-end=\"392\"><p data-start=\"358\" data-end=\"392\">Drawer – Large | SNSFNDR5005TDRB</p></li><li data-start=\"393\" data-end=\"418\"><p data-start=\"395\" data-end=\"418\">Screw | SNSFNS5000TSW</p></li><li data-start=\"419\" data-end=\"454\"><p data-start=\"421\" data-end=\"454\">Stain &amp; Brush | SNSFNWO5000ACST</p></li><li data-start=\"455\" data-end=\"488\"><p data-start=\"457\" data-end=\"488\">Stain &amp; Brush | SNSFNS5000TST</p></li></ul>" }
 
     OW3 --> OW4["WF-053 | Customer selects an item or replacement part (sub-part)"]
@@ -160,7 +151,11 @@ flowchart TB
     WCXReview --> WCXApprove{"WF-052C | CX approves to proceed?"}
     WCXApprove -- No --> WDecline["WF-052D | Communicate decline / next steps"]
     WDecline --> FinalProcess
-    WCXApprove -- Yes --> WTweak["WF-052E | CX may adjust selected replacement part (if required)"]
+    WCXApprove -- Yes --> WPickupCheck{"WF-052F | Pickup assistance needed?"}
+    
+    WPickupCheck -- Yes --> WPickupAction["WF-052G | CX provides pickup assistance (coordination + guidance)"]
+    WPickupAction --> WTweak["WF-052E | CX may adjust selected replacement part (if required)"]
+    WPickupCheck -- No --> WTweak
 
     WTweak --> WCX["WF-056 | CX places replacement order in WooCommerce (based on approved replacement part SKUs)"]
 
@@ -239,13 +234,14 @@ flowchart TB
       %% ---------------------------------------------------------
 
       %% Backend / Internal / Logistics (Dimmed)
+      OnlineUS:::phase1_dim
+      OnlineCA:::phase1_dim
+      
       R1:::phase1_dim
       R2:::phase1_dim
       R4:::phase1_dim
       R5:::phase1_dim
-      OnlineCA:::phase1_dim
       Retail:::phase1_dim
-      B:::phase1_dim
       D:::phase1_dim
       TP2:::phase1_dim
       TP3:::phase1_dim
@@ -256,21 +252,21 @@ flowchart TB
       TP10:::phase1_dim
       TP11:::phase1_dim
       RS2:::phase1_dim
-      BR:::phase1_dim
-      BW:::phase1_dim
-      OR2:::phase1_dim
-      SPLIT_PROMO:::phase1_dim
-      BND10:::phase1_dim
-      BND12:::phase1_dim
-      JOIN_PROMO:::phase1_dim
-      OR5:::phase1_dim
+      SHARED_BR:::phase1_dim
+      SHARED_BW:::phase1_dim
+      SHARED_LOGIN:::phase1_ux
+      SHARED_VALIDATE:::phase1_dim
+      FLOW_ROUTER:::phase1_dim
+      SHARED_OR5:::phase1_dim
+      REGION_CHECK:::phase1_dim
       M2:::phase1_dim
       F1:::phase1_dim
       A1:::phase1_dim
-      OW2:::phase1_dim
+
       WCL:::phase1_dim
       WCXReview:::phase1_dim
       WCXApprove:::phase1_dim
+      WPickupCheck:::phase1_dim
       WTweak:::phase1_dim
       WCX:::phase1_dim
       WClose:::phase1_dim
@@ -302,17 +298,15 @@ flowchart TB
       RS1:::phase1_ux
       RS3:::phase1_ux
       B0:::phase1_ux
-      OR1:::phase1_ux
-      OR2N:::phase1_ux
-      OR3:::phase1_ux
-      OR4:::phase1_ux
-      BND11:::phase1_ux
-      BND13:::phase1_ux
-      OW1:::phase1_ux
-      OW2N:::phase1_ux
+
+      SHARED_LOGIN_ERR:::phase1_ux
+      SHARED_OR3:::phase1_ux
+      SHARED_OR4:::phase1_ux
+
       OW3:::phase1_ux
       OW4:::phase1_ux
       WInfo:::phase1_ux
+      WPickupAction:::phase1_ux
       WDecline:::phase1_ux
       RL2:::phase1_ux
       RL4:::phase1_ux
@@ -328,11 +322,8 @@ flowchart TB
 
       %% US UX/Touchpoints (New)
       US_B0:::phase1_ux
-      US_BR:::phase1_dim
-      US_OR1:::phase1_ux
-      US_OR2N:::phase1_ux
-      US_OR3:::phase1_ux
-      US_OR4:::phase1_ux
+
+
 
       US_Decline:::phase1_ux
 
@@ -343,12 +334,9 @@ flowchart TB
       US_DonateStep:::phase1_ux
       
       %% US System/Backend (New)
-      OnlineUS:::phase1_dim
-      US_B:::phase1_dim
-      US_BW:::phase1_dim
-      US_OR2:::phase1_dim
-      US_PROMO:::phase1_dim
-      US_OR5:::phase1_dim
+      %%US_B:::phase1_dim
+
+
 
       US_Logistics:::phase1_dim
       US_AbuseCheck:::phase1_dim
@@ -364,7 +352,7 @@ flowchart TB
 
       %% Notes
       TP_NOTE:::note
-      BND_NOTE:::note
+      %%BND_NOTE:::note
       WRP_NOTE:::note
 
       CL_BND_NOTE:::note
@@ -387,5 +375,4 @@ flowchart TB
     classDef removal_flag fill:#FFEBEE,stroke:#D32F2F,stroke-width:3px,color:#C62828,stroke-dasharray: 5 5
 
     style CALEDONIA fill:#FFFDE7,stroke:#B38F00,stroke-width:2px
-    style PROMO_REMOVAL fill:#FFEBEE,stroke:#D32F2F,stroke-width:2px,stroke-dasharray: 5 5
     style ABUSE_REMOVAL fill:#FFEBEE,stroke:#D32F2F,stroke-width:2px,stroke-dasharray: 5 5

@@ -46,7 +46,11 @@ flowchart TB
 
     
     %% Bypass Promo Checks (Removed per plan)
-    SHARED_OR4 --> SHARED_OR5{"WF-038/105 | Item type selected"}
+    %% Bypass Promo Checks (Removed per plan)
+    SHARED_OR4 --> REASON_CHECK{"Return Reason = Defective?"}
+    
+    REASON_CHECK -- Yes --> OW3
+    REASON_CHECK -- No --> SHARED_OR5{"WF-038/105 | Item type selected"}
     
     %% Shared Output Logic
     SHARED_OR5 -- Mattress --> M2{"WF-039 | Is mattress boxed?"}
@@ -271,6 +275,7 @@ flowchart TB
       SHARED_LOGIN:::phase1_ux
       SHARED_VALIDATE:::phase1_dim
       FLOW_ROUTER:::phase1_dim
+      REASON_CHECK:::phase1_dim
       SHARED_OR5:::phase1_dim
       REGION_CHECK:::phase1_dim
       M2:::phase1_dim
