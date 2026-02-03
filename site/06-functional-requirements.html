@@ -769,6 +769,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="15-phase-2-backlog.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 2 Backlog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1145,7 +1173,7 @@
 <p><strong>FR-8 – Category Filtering:</strong> Hide items that do not belong to the selected return type (e.g., returning accessories should not show mattresses).</p>
 </li>
 <li>
-<p><strong>FR-9 – Bundles Handling:</strong> Identify bundle items. When a main item is returned but the customer keeps a bundled/free item, the portal must offer the option to <strong>keep the bundled/free item at 50% of the full website price</strong> (not the bundle price) and adjust the refund amount accordingly. This applies to mattress + free accessory bundles and other configured bundles.</p>
+<p><strong>FR-9 – Bundles Handling:</strong> Identify bundle items. When a main item is returned but the customer keeps a bundled/free item, the portal must offer the option to <strong>keep the bundled/free item at 50% of the full website price</strong> (not the bundle price) and adjust the refund amount accordingly. <strong>Technical Requirement:</strong> This functionality requires custom implementation to parse WooCommerce bundle data and calculate proration via the API.</p>
 </li>
 </ul>
 <h2 id="item-selection">Item Selection</h2>
@@ -1194,7 +1222,11 @@
 <ul>
 <li><strong>Mattress (Boxed):</strong> Provide drop-off instructions/labels.</li>
 <li><strong>Mattress (Unboxed):</strong> Collect condition and donation eligibility. <strong>Do not send photos to the vendor.</strong> The <strong>Return Logistics Manager</strong> must manually select a donation or pickup vendor. Supporting <strong>Vendor Change</strong> functionality is required, which must trigger updated emails to the new vendor and customer. If no vendor is available, offer the customer a self-donation option (see FR-38).</li>
-<li><strong>Furniture:</strong> Implement a two-step flow. Step 1: Customer uploads photos/details. <strong>CX must review and approve</strong> via the portal. Step 2 (if approved): Call <strong>WooCommerce API</strong> for live carrier rates with region-specific destinations: <strong>CA returns → Caledonia warehouse; US returns → original shipping warehouse (LA or NJ)</strong>. Charge the client (or deduct from refund) for the return shipping. Collect <strong>access constraints</strong> and pickup dates, then generate label/instructions.</li>
+<li><strong>Furniture:</strong> Implement a two-step flow. Step 1: Customer uploads photos/details. <strong>CX must review and approve</strong> via the portal. Step 2 (if approved): Call <strong>WooCommerce API</strong> for live carrier rates with region-specific destinations: <strong>CA returns → Caledonia warehouse; US returns → original shipping warehouse (LA or NJ)</strong>. Charge the client (or deduct from refund) for the return shipping.<ul>
+<li><strong>Charge Logic:</strong> If the pickup is for disposal, the system must apply the same charge as the courier rate (since disposal costs vary, this is a standardized business decision).</li>
+</ul>
+</li>
+<li>Collect <strong>access constraints</strong> and pickup dates, then generate label/instructions.</li>
 </ul>
 </li>
 <li>
@@ -1210,7 +1242,7 @@
 <p><strong>FR-23 – Refund Processing:</strong></p>
 <ul>
 <li><strong>Auto-Refund:</strong> When items are marked "Received" and the <strong>net refund value is less than 600</strong> (store currency) <strong>AND the order does NOT contain bundles or free items</strong>, automatically initiate the refund in WooCommerce (if gateway supported). This is a Phase 1 constraint.</li>
-<li><strong>Manual Refund:</strong> When items are marked "Received" and the <strong>net refund value is 600 or greater</strong>, OR the <strong>order contains bundles/free items</strong>, route the ticket to CX for manual refund processing.</li>
+<li><strong>Manual Refund:</strong> When items are marked "Received" and the <strong>net refund value is 600 or greater</strong>, OR the <strong>order contains bundles/free items</strong>, route the ticket to CX for manual refund processing. This is required because bundle proration logic is a <strong>custom implementation</strong> not standard to the platform.</li>
 <li>For partial refunds, adjust only the line item amount and leave inventory unchanged. If the gateway or currency does not support automated refunds, mark the ticket for manual refund.</li>
 <li><strong>Phase 2 Future:</strong> Bundle impact calculations (WF-070→073) will enable adjusted auto-refunds for qualifying bundled orders. Until then, all orders with bundles require manual processing.</li>
 </ul>
