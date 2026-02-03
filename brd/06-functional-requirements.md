@@ -40,9 +40,9 @@ The following requirements describe what the portal must do. Each requirement is
 
 ## Reason Selection and Mapping
 
-- **FR-12 – Return Reasons:** Present a dropdown of customer-facing return reasons based on the product category and language. Include "Other/Change of Mind" for returns where permitted and hide it for warranty claims. If "Other" is selected, provide a text field for additional details.
+- **FR-12 – Return Reasons:** Present a dropdown of customer-facing return reasons based on the product category and language. Include "Other/Change of Mind" for returns where permitted and hide it for warranty claims. If "Other" is selected, provide a text field for additional details. When "Defective" is selected as a return reason, trigger the defective routing logic (see FR-33).
 
-- **FR-13 – Claim Reasons:** Provide a category-specific list of warranty claim reasons with business-approved wording. Do not allow "Other" or change-of-mind reasons for claims.
+- **FR-13 – Claim Reasons:** Provide a category-specific list of warranty claim reasons with business-approved wording. Do not allow "Other" or change-of-mind reasons for claims. Provide an opt-out mechanism for customers who selected "Defective" but prefer a return instead of warranty replacement.
 
 - **FR-14 – Reason Mapping:** Map each selected customer reason to the corresponding WooCommerce refund reason for reporting and refund processing.
 
@@ -63,8 +63,8 @@ The following requirements describe what the portal must do. Each requirement is
 - **FR-20 – Pickup & Freight Rules:**
 
     - **Mattress (Boxed):** Provide drop-off instructions/labels.
-    - **Mattress (Unboxed):** Collect condition and donation eligibility. **Do not send photos to the vendor.** The **Return Logistics Manager** must manually select a donation or pickup vendor. Supporting **Vendor Change** functionality is required, which must trigger updated emails to the new vendor and customer.
-    - **Furniture:** Implement a two-step flow. Step 1: Customer uploads photos/details. **CX must review and approve** via the portal. Step 2 (if approved): Call **WooCommerce service** for live rates. Charge the client (or deduct from refund) for the return shipping. Collect **access constraints** and pickup dates, then generate label/instructions.
+    - **Mattress (Unboxed):** Collect condition and donation eligibility. **Do not send photos to the vendor.** The **Return Logistics Manager** must manually select a donation or pickup vendor. Supporting **Vendor Change** functionality is required, which must trigger updated emails to the new vendor and customer. If no vendor is available, offer the customer a self-donation option (see FR-38).
+    - **Furniture:** Implement a two-step flow. Step 1: Customer uploads photos/details. **CX must review and approve** via the portal. Step 2 (if approved): Call **WooCommerce API** for live carrier rates with region-specific destinations: **CA returns → Caledonia warehouse; US returns → original shipping warehouse (LA or NJ)**. Charge the client (or deduct from refund) for the return shipping. Collect **access constraints** and pickup dates, then generate label/instructions.
 
 - **FR-21 – Label Display & Reprints:** Show generated labels and tracking information to the customer. Allow re-printing without creating new labels or incurring extra charges.
 
@@ -74,9 +74,10 @@ The following requirements describe what the portal must do. Each requirement is
 
 - **FR-23 – Refund Processing:**
 
-    - **Auto-Refund:** When items are marked "Received" and the **net refund value is less than 600** (store currency), automatically initiate the refund in WooCommerce (if gateway supported).
-    - **Manual Refund:** When items are marked "Received" and the **net refund value is 600 or greater**, route the ticket to CX for manual refund processing.
+    - **Auto-Refund:** When items are marked "Received" and the **net refund value is less than 600** (store currency) **AND the order does NOT contain bundles or free items**, automatically initiate the refund in WooCommerce (if gateway supported). This is a Phase 1 constraint.
+    - **Manual Refund:** When items are marked "Received" and the **net refund value is 600 or greater**, OR the **order contains bundles/free items**, route the ticket to CX for manual refund processing.
     - For partial refunds, adjust only the line item amount and leave inventory unchanged. If the gateway or currency does not support automated refunds, mark the ticket for manual refund.
+    - **Phase 2 Future:** Bundle impact calculations (WF-070→073) will enable adjusted auto-refunds for qualifying bundled orders. Until then, all orders with bundles require manual processing.
 
 - **FR-24 – Replacement Order Creation:** For approved warranty claims, create a WooCommerce order for replacement items using the customer's billing/shipping details, set the order status to "Processing" and notify the customer via WooCommerce.
 
@@ -103,6 +104,55 @@ The following requirements describe what the portal must do. Each requirement is
     - Unboxed Mattress Vendor Assignment.
     - Unboxed Mattress Vendor Change (notify new vendor and customer).
     - Furniture Return Approval/Decline by CX.
+    - Third-Party Vendor Ticket Created (WF-008).
+    - Third-Party Refund Approval to Vendor (WF-016).
+    - Warranty Claim Declined by CX (WF-052D).
+
+- **FR-33 – Defective Reason Routing:** When a customer selects items to return and chooses "Defective" as the reason, the system must check if the customer opted out of product replacement. If the customer did NOT opt out, redirect the flow to the Warranty claim process (WF-052) instead of standard return logistics. Provide a clear opt-out checkbox during reason selection.
+
+- **FR-34 – US Accessory Abuse Prevention:** For US Accessories and Bedding returns, implement a multi-tier logic to prevent return abuse:
+    
+    - **Unopened Items:** Calculate shipping cost via carrier API. If shipping cost > 1/3 of item value, skip label generation and present Option 1 (Keep Offer). Otherwise, generate return label (WF-111).
+    - **Opened Items:** Present Option 1 first (Keep item for 50% refund, no proof required). If customer rejects, present Option 2 (Donate item for 100% refund with proof via CX contact). If both options are rejected, decline the return (WF-109).
+    - All decisions and customer responses must be logged in the ticket.
+
+- **FR-35 – Warranty Pickup Logistics:** After CX approves a warranty claim (WF-052C), check if the customer needs pickup assistance (WF-052F). If yes, determine pickup type:
+    
+    - **Courier Pickup:** CX provides coordination and guidance. Generate a return label that includes the text **(Defective - this will help warehouse to avoid inspection of that piece)** to signal the warehouse team to bypass inspection (WF-052G).
+    - **Disposal Pickup:** Log the case for the Return Logistics Team to assign a disposal vendor (WF-052I connects to shared return logistics WF-059/065A).
+
+- **FR-36 – Third-Party Logistics Split:** When a third-party vendor approves a claim and the customer needs pickup assistance (WF-011), offer two pickup types:
+    
+    - **Courier Pickup:** CX provides pickup coordination and generates a return label (WF-012).
+    - **Disposal Pickup:** Log the case for the Return Logistics Team (WF-011B connects to shared return logistics).
+
+- **FR-37 – US Warehouse Offline Process:** For returns shipped to US warehouses (LA or NJ), implement an offline status update workflow:
+    
+    - US Warehouse team receives the return (WF-133).
+    - US Warehouse team emails return status to Internal Ops team (WF-134) - this communication is offline to ClaimLane.
+    - Internal Ops team manually updates the return status in ClaimLane portal: Delivered → Processing / Inspection Completed (WF-135).
+    - Internal Ops team runs the "Returned items" report for inventory reconciliation (WF-136).
+
+- **FR-38 – Unboxed Mattress Self-Donate Fallback:** When the Return Logistics Team cannot find an available vendor for unboxed mattress pickup (WF-059/065A "No Vendor Available" path), offer the customer a self-donation option:
+    
+    - Customer agrees to donate the item themselves, takes a photo of the donation, and contacts CX via call or email (WF-130).
+    - CX team processes the return manually in the ClaimLane portal (WF-132).
+    - Close the case after CX confirms donation proof.
+
+- **FR-39 – Flow Context Routing:** Implement two critical routing decision points:
+    
+    - **FLOW_ROUTER (after validation):** After customer login and order validation (WF-027/100/043), route to either Return flow (WF-029/102) or Warranty flow (WF-052) based on the customer's intent selection.
+    - **RecRouter (after item received):** After an item is marked "Received" (WF-089), route the refund logic based on the flow context: Return (apply auto/manual refund rules), Warranty (place replacement order), or Third-Party (email vendor for refund).
+
+- **FR-40 – Region-Specific Furniture Destinations:** For furniture returns requiring shipping rate calculation, call the WooCommerce API with region-specific destination addresses:
+    
+    - **Canada (CA):** Always use Caledonia warehouse address as destination (WF-137).
+    - **United States (US):** Use the original order's shipping warehouse address (LA or NJ) as destination, determined from order metadata (WF-138).
+
+- **FR-41 – Destination-Based Warehouse Routing:** After refund processing is complete, route the item to the appropriate warehouse workflow based on destination:
+    
+    - **CA Destinations:** Route to Caledonia warehouse workflow (WF-090→091→092→093).
+    - **US Destinations:** Route to US warehouse offline workflow (WF-133→134→135→136).
 
 ---
 

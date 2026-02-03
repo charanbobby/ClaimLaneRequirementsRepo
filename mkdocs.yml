@@ -36,9 +36,9 @@ nav:
   - Reference:
       - Appendices: 16-appendices.md
 
-
 extra_css:
   - css/giscus.css
 
 extra_javascript:
   - js/giscus.js
+ 

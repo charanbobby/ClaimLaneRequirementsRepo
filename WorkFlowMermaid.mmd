@@ -91,7 +91,7 @@ flowchart TB
     US_Offer2 -- Accepted --> US_DonateStep["WF-120 | Client agrees to 100% Option, donates item, takes picture, and contacts CX (Call/Email)"]
     US_DonateStep --> US_CXProcess["WF-121 | CX team processes return in ClaimLane portal"]
     US_CXProcess --> FinalProcess
-    US_Offer2 -- Rejected --> US_Logistics
+    US_Offer2 -- Rejected --> US_Decline
 
 
     %% Retail workstream
@@ -179,7 +179,9 @@ flowchart TB
     %% ---------------------------------------------------------
     %% SHARED RETURN LOGISTICS (Combines WF-059 & WF-065A)
     %% ---------------------------------------------------------
-    RL1["WF-059/065A | Return Logistics: Select donation / pickup vendor"] --> RL2["WF-061/066 | Trigger emails: vendor + customer"]
+    RL1{"WF-059/065A | Return Logistics: Select donation / pickup vendor"}
+    RL1 -- Vendor Selected --> RL2["WF-061/066 | Trigger emails: vendor + customer"]
+    RL1 -- No Vendor Available --> M_SelfDonate
     RL2 --> RL3{"WF-062/067A | Change vendor?"}
     RL3 -- Yes --> RL4["WF-063/068A | Select new vendor → trigger updated emails"]
     RL3 -- No --> RL5
@@ -194,22 +196,19 @@ flowchart TB
     MInstr --> RL5
 
     M2 -- No --> MUInfo["WF-064A | Collect extra info: photos, law tag, condition"]
-    MUInfo --> M_DonateOpt{"WF-130 | Choose: Self-Donate or Pickup (Courier or Disposal)?"}
+    MUInfo --> RL1
     
-    M_DonateOpt -- Self-Donate --> M_SelfDonate["WF-131 | Client donates item, takes picture, and contacts CX"]
-    M_DonateOpt -- Pickup --> RL1
-
-    M_SelfDonate --> M_CXProcess["WF-132 | CX team processes return in ClaimLane portal"]
+    M_SelfDonate["WF-130 | Client donates item, takes picture, and contacts CX"] --> M_CXProcess["WF-132 | CX team processes return in ClaimLane portal"]
     M_CXProcess --> FinalProcess
 
     F1 --> FInfoPhotos["WF-069A | Customer uploads photos + issue details"]
     
     FInfoPhotos --> F_RegionCheck{"Region?"}
 
-    F_RegionCheck -- CA --> F_Easypost["WF-137 | ClaimLane calls Easypost API for carrier quotes (CA) - Destination is always Caledonia location"]
-    F_Easypost --> FInfoDetails["WF-073A | Notify charges and Collect pickup details"]
+    F_RegionCheck -- CA --> F_WooCommerce_CA["WF-137 | ClaimLane calls WooCommerce API for carrier quotes (CA) - Destination is always Caledonia location"]
+    F_WooCommerce_CA --> FInfoDetails["WF-073A | Notify charges and Collect pickup details"]
 
-    F_RegionCheck -- US --> F_US_Calc["WF-138 | ClaimLane calls Easypost API for carrier quotes (US) - Destination is Order Origin location (LA or NJ location)"]
+    F_RegionCheck -- US --> F_US_Calc["WF-138 | ClaimLane calls WooCommerce API for carrier quotes (US) - Destination is Order Origin location (LA or NJ location)"]
     F_US_Calc --> FInfoDetails
 
     FInfoDetails --> FCXReview["WF-070A | CX reviews"]
@@ -401,12 +400,11 @@ flowchart TB
       R5_US:::phase1_dim
       
       F_RegionCheck:::phase1_dim
-      F_Easypost:::phase1_dim
+      F_WooCommerce_CA:::phase1_dim
       F_US_Calc:::phase1_dim
       Dest_Check:::phase1_dim
 
       %% Unboxed Mattress Self-Donate
-      M_DonateOpt:::phase1_ux
       M_SelfDonate:::phase1_ux
       M_CXProcess:::phase1_dim
       

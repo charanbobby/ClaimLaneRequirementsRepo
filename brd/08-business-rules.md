@@ -50,6 +50,20 @@ The portal must enforce the following rules (numbered BR-1 through BR-12 plus ap
 
 - **BR-22 – Return Label Limitation:** The number of return labels generated cannot exceed the number of boxes/labels in the original order.
 
+- **BR-23 – US Accessory Keep Offer:** For US opened accessories, the customer MUST be offered Option 1 (keep item for 50% refund, no proof required) before declining the return. This offer applies to both opened items and high-cost unopened items (shipping > 1/3 value).
+
+- **BR-24 – US Accessory Donate Offer:** If the customer rejects Option 1 (50% keep), the system MUST present Option 2 (donate item for 100% refund with CX-verified proof via call/email). The return can only be declined if BOTH offers are rejected.
+
+- **BR-25 – Shipping Cost Threshold:** For US unopened accessories/bedding, if the calculated shipping cost exceeds 1/3 of the item value, the system MUST skip label generation and present the keep/donate offers instead.
+
+- **BR-26 – Auto-Refund Bundle Exclusion:** Automatic refunds are strictly prohibited for any order containing bundles or free items, regardless of refund value. All such orders MUST route to manual refund processing. This is a Phase 1 technical limitation pending bundle calculation implementation (WF-070→073).
+
+- **BR-27 – Warranty Label Wording:** Courier pickup labels generated for warranty claims MUST include the text "(Defective)" or "(Defective - this will help warehouse to avoid inspection of that piece)" to signal the warehouse team to bypass standard inspection procedures.
+
+- **BR-28 – US Warehouse Offline Processing:** US warehouse (LA/NJ) status updates are processed via email to Internal Ops, not through direct portal access. The portal MUST support manual status entry by Internal Ops for US returns.
+
+- **BR-29 – Self-Donate Fallback Requirement:** When the Return Logistics Team cannot secure a vendor for unboxed mattress pickup, the system MUST offer the customer a self-donation option. The customer must complete donation, provide photo proof, and contact CX for manual return processing.
+
 ## Appendix Rules
 
 - **A-1 – 100% Documentation:** A claim cannot be submitted unless 100% of required documentation is provided (except for manual overrides).

@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
       
       
 
@@ -962,38 +962,91 @@
 </li>
 <li>
 <p><strong>Reason Selection</strong> – The customer chooses a reason for each selected item. Return reasons map to WooCommerce refund reasons.</p>
+<ul>
+<li><strong>Defective Routing:</strong> If the customer selects "Defective" as the reason AND does not opt out of product replacement, the flow automatically redirects to the Warranty claim process instead of standard return logistics.</li>
+</ul>
 </li>
 <li>
 <p><strong>Documentation Upload</strong> – For claims and damage returns, customers must provide required documentation (photos, measurements, etc.).</p>
 </li>
 <li>
-<p><strong>Logistics &amp; Labels</strong> – The flow splits based on product type:</p>
-<ul>
-<li><strong>Mattress (Boxed):</strong> Collect photos/law tag. Provide return label/pickup instructions. Vendor picks up and updates status to 'Picked'.</li>
-<li><strong>Mattress (Unboxed):</strong> Collect condition and donation eligibility. <strong>No photos sent to vendor.</strong> Return Logistics Manager selects donation/pickup vendor. Vendor change triggers update emails. Vendor picks up and updates status to 'Picked'.</li>
-<li><strong>Furniture:</strong> Two-step process:<ol>
-<li><strong>Pre-approval:</strong> Customer uploads photos/issue details. <strong>CX reviews and approves/declines.</strong></li>
-<li><strong>Logistics:</strong> On approval, collect <strong>access constraints</strong> and pickup dates. Generate label/instructions.</li>
+<p><strong>Logistics &amp; Labels</strong> – The flow splits based on product type and region:</p>
+</li>
 </ol>
-</li>
-<li><strong>Accessory/Bedding:</strong> Single step. Collect reason/photos -&gt; Generate label &amp; mail-in instructions.</li>
-</ul>
-</li>
+<table>
+<thead>
+<tr>
+<th>Item Type</th>
+<th>Region</th>
+<th>Workflow</th>
+<th>Logic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Mattress (Boxed)</strong></td>
+<td>Both</td>
+<td>Collect photos/law tag → Generate label</td>
+<td>Customer receives return label and drop-off instructions. Vendor picks up and marks status as 'Picked'.</td>
+</tr>
+<tr>
+<td><strong>Mattress (Unboxed)</strong></td>
+<td>Both</td>
+<td>Collect photos/law tag/condition → RL Manager selects vendor → Vendor pickup OR Self-Donate</td>
+<td><strong>No photos sent to vendor.</strong> Return Logistics Manager manually selects donation/pickup vendor. If no vendor available, offer customer self-donation option (customer donates, takes photo, contacts CX for manual processing).</td>
+</tr>
+<tr>
+<td><strong>Furniture</strong></td>
+<td>CA</td>
+<td>Photos → CX Review/Approval → API call (Dest: Caledonia) → Notify charges → Pickup</td>
+<td>Two-step: (1) CX reviews photos and approves/declines. (2) On approval, call WooCommerce API with <strong>Caledonia warehouse</strong> as destination, notify customer of charges, collect access constraints and dates, generate label.</td>
+</tr>
+<tr>
+<td><strong>Furniture</strong></td>
+<td>US</td>
+<td>Photos → CX Review/Approval → API call (Dest: LA/NJ origin) → Notify charges → Pickup</td>
+<td>Same as CA, but WooCommerce API uses <strong>original order shipping warehouse (LA or NJ)</strong> as destination.</td>
+</tr>
+<tr>
+<td><strong>Accessory/Bedding (Unopened)</strong></td>
+<td>CA</td>
+<td>Collect reason/photos → Generate label</td>
+<td>Single-step mail-in flow with return label.</td>
+</tr>
+<tr>
+<td><strong>Accessory/Bedding (Unopened)</strong></td>
+<td>US</td>
+<td>Check shipping cost → If &lt; 1/3 value: Label, else Option 1</td>
+<td>Calculate shipping cost. If cost &gt; 1/3 item value, skip label and present keep/donate offers.</td>
+</tr>
+<tr>
+<td><strong>Accessory/Bedding (Opened)</strong></td>
+<td>US</td>
+<td>Option 1 (Keep 50%) → Option 2 (Donate 100%) → Decline</td>
+<td>Present Option 1 (keep for 50% refund, no proof). If rejected, present Option 2 (donate for 100% refund with CX-verified proof). If both rejected, decline return.</td>
+</tr>
+</tbody>
+</table>
+<pre><code>*   **Warranty Logistics:** For approved warranty claims, if customer needs pickup assistance, offer Courier pickup (label with "Defective" wording) or Disposal pickup (logged to Return Logistics Team).
+*   **Third-Party Logistics:** For approved third-party claims needing pickup, offer Courier pickup (CX provides label) or Disposal pickup (logged to Return Logistics Team).
+</code></pre>
+<ol>
 <li>
 <p><strong>Ticket Creation</strong> – The Claimlane ticket stores all details. Duplicate tickets are prevented.</p>
 </li>
 <li>
 <p><strong>Backend Actions</strong> – Upon submission:</p>
 <ul>
-<li><strong>Automatic Refund for Low-Value Returns:</strong> When "Received" and net refund value &lt; <strong>600</strong>, auto-initiate refund (if gateway supported).</li>
-<li><strong>Manual Refund for High-Value Returns:</strong> When "Received" and net refund value &gt;= <strong>600</strong>, route to CX for manual processing.</li>
-<li><strong>Caledonia Workflow:</strong> For Caledonia returns, the team updates status <strong>Delivered → Processing / Inspection Completed</strong>. Store Ops runs report for inventory.</li>
+<li><strong>Automatic Refund for Low-Value Returns:</strong> When "Received" and net refund value &lt; <strong>600</strong> AND order contains <strong>NO bundles or free items</strong>, auto-initiate refund (if gateway supported). This is a Phase 1 constraint.</li>
+<li><strong>Manual Refund for High-Value or Bundle Returns:</strong> When "Received" and net refund value &gt;= <strong>600</strong>, OR order contains bundles/free items, route to CX for manual processing.</li>
+<li><strong>Caledonia Workflow (CA Returns):</strong> Caledonia team updates status <strong>Delivered → Processing / Inspection Completed</strong> directly in portal. Store Ops runs report for inventory.</li>
+<li><strong>US Warehouse Workflow (US Returns):</strong> US warehouse (LA/NJ) emails status to Internal Ops team (offline). Internal Ops manually updates portal status <strong>Delivered → Processing / Inspection Completed</strong>. Internal Ops runs report for inventory.</li>
 </ul>
 </li>
 </ol>
 <hr />
 <h2 id="visual-process-flow">Visual Process Flow</h2>
-<p><img alt="Process Flow" src="assets/customer-return-v2.png" /></p>
+<p><img alt="Process Flow" src="assets/WorkFlow.png" /></p>
 <hr />
 <h2 id="discussion">Discussion</h2>
 <blockquote>
@@ -1050,10 +1103,10 @@ Once Giscus is configured, the discussion thread for this page will appear here.
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": [], "search": "assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": [], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
       
         <script src="js/giscus.js"></script>
       

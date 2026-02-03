@@ -14,6 +14,8 @@
 
 - **NFR-7 – Scalability:** Design the portal and integrations to handle peak return volumes (e.g., seasonal spikes) without degradation of service.
 
+- **NFR-8 – Offline Workflow Reliability:** For US warehouse operations (LA/NJ) that rely on email-based status updates, Internal Ops must process warehouse email notifications within 24 business hours to prevent customer inquiry escalation. Implement monitoring alerts for delayed US warehouse status updates (>48 hours) to ensure SLA compliance and customer experience consistency.
+
 ---
 
 ## Discussion

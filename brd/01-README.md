@@ -13,12 +13,9 @@ This Business Requirements Document - Claimlane Returns, Refunds and Warranty Po
 - `06-functional-requirements.md` - Detailed functional requirements (FR-x) by area.
 - `07-non-functional-requirements.md` - Non-functional requirements (NFR-x).
 - `08-business-rules.md` - Business rules (BR-x, A-1, B-1) enforced by the portal.
-- `09-constraints-assumptions.md` - Key constraints and assumptions.
-- `10-dependencies.md` - Upstream and downstream dependencies and integrations.
-- `11-risks-mitigation.md` - Identified risks and associated mitigation actions.
-- `12-open-questions.md` - Open questions requiring Silk & Snow decisions.
 - `13-epics-user-stories.md` - Epics, features, user stories and acceptance criteria.
-- `14-gaps-conflicts.md` - Identified gaps and potential conflicts.
+- `15-changelog.md` - History of major changes to the BRD.
+- `16-appendices.md` - Visual diagrams and supplementary data.
 
 ## Audience Hints
 
@@ -26,8 +23,8 @@ This Business Requirements Document - Claimlane Returns, Refunds and Warranty Po
 |-------------------------|-----------------------------------------------------------------------------------|
 | Business stakeholders   | 02-overview-purpose.md, 03-scope.md, 05-process-high-level.md, 08-business-rules.md          |
 | CX / CS / Ops           | 05-process-high-level.md, 06-functional-requirements.md, 08-business-rules.md, 13-epics-user-stories.md |
-| QA and testers          | 06-functional-requirements.md, 07-non-functional-requirements.md, 08-business-rules.md, 13-epics-user-stories.md, 14-gaps-conflicts.md |
-| Technical teams         | 06-functional-requirements.md, 07-non-functional-requirements.md, 09-constraints-assumptions.md, 10-dependencies.md, 11-risks-mitigation.md |
+| QA and testers          | 06-functional-requirements.md, 07-non-functional-requirements.md, 08-business-rules.md, 13-epics-user-stories.md |
+| Technical teams         | 06-functional-requirements.md, 07-non-functional-requirements.md |
 
 ---
 

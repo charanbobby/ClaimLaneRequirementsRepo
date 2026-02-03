@@ -11,7 +11,7 @@ This guide explains how to use the Mermaid CLI via Docker to visualize diagrams 
 The simplest way to render a diagram is to run the following command in your terminal. This command mounts your current directory to the container and renders `WorkFlow Mermaid` to `WorkFlow.png`.
 
 ```powershell
-docker run --rm -v ${PWD}:/data minlag/mermaid-cli -i "WorkFlow Mermaid" -o WorkFlow.png -s 4
+docker run --rm -v ${PWD}:/data minlag/mermaid-cli -i "WorkFlowMermaid.mmd" -o WorkFlow.png -s 4
 ```
 
 ### Command Breakdown

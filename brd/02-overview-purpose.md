@@ -10,6 +10,10 @@ This document consolidates the requirements extracted from the provided BRD, ret
 
 - Provide a self-service portal that guides customers through returns, warranty claims and replacements.
 - Automate eligibility checks, document collection, refund processing and replacement order creation where supported.
+- **Implement region-specific logistics flows (CA vs US) for furniture and accessories, routing returns to appropriate warehouse destinations.**
+- **Support offline warehouse operations via email-based status updates for US facilities (LA/NJ) through Internal Ops team.**
+- **Optimize return costs through multi-tier offer logic for US accessories (50% keep offer, 100% donate offer with proof).**
+- **Automatically route defective returns to warranty flow with customer opt-out mechanism.**
 - Reduce label and documentation errors and prevent incorrect returns.
 - Deliver structured data for defect analytics, lot tracking, vendor and customer-service reporting.
 - Ensure a consistent, policy-driven customer experience across Canada and the United States.

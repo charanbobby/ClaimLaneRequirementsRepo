@@ -27,30 +27,39 @@
 
 6. **Reason Selection** – The customer chooses a reason for each selected item. Return reasons map to WooCommerce refund reasons.
 
+    *   **Defective Routing:** If the customer selects "Defective" as the reason AND does not opt out of product replacement, the flow automatically redirects to the Warranty claim process instead of standard return logistics.
+
 7. **Documentation Upload** – For claims and damage returns, customers must provide required documentation (photos, measurements, etc.).
 
-8. **Logistics & Labels** – The flow splits based on product type:
+8. **Logistics & Labels** – The flow splits based on product type and region:
 
-    *   **Mattress (Boxed):** Collect photos/law tag. Provide return label/pickup instructions. Vendor picks up and updates status to 'Picked'.
-    *   **Mattress (Unboxed):** Collect condition and donation eligibility. **No photos sent to vendor.** Return Logistics Manager selects donation/pickup vendor. Vendor change triggers update emails. Vendor picks up and updates status to 'Picked'.
-    *   **Furniture:** Two-step process:
-        1.  **Pre-approval:** Customer uploads photos/issue details. **CX reviews and approves/declines.**
-        2.  **Logistics:** On approval, collect **access constraints** and pickup dates. Generate label/instructions.
-    *   **Accessory/Bedding:** Single step. Collect reason/photos -> Generate label & mail-in instructions.
+| Item Type | Region | Workflow | Logic |
+|-----------|--------|----------|-------|
+| **Mattress (Boxed)** | Both | Collect photos/law tag → Generate label | Customer receives return label and drop-off instructions. Vendor picks up and marks status as 'Picked'. |
+| **Mattress (Unboxed)** | Both | Collect photos/law tag/condition → RL Manager selects vendor → Vendor pickup OR Self-Donate | **No photos sent to vendor.** Return Logistics Manager manually selects donation/pickup vendor. If no vendor available, offer customer self-donation option (customer donates, takes photo, contacts CX for manual processing). |
+| **Furniture** | CA | Photos → CX Review/Approval → API call (Dest: Caledonia) → Notify charges → Pickup | Two-step: (1) CX reviews photos and approves/declines. (2) On approval, call WooCommerce API with **Caledonia warehouse** as destination, notify customer of charges, collect access constraints and dates, generate label. |
+| **Furniture** | US | Photos → CX Review/Approval → API call (Dest: LA/NJ origin) → Notify charges → Pickup | Same as CA, but WooCommerce API uses **original order shipping warehouse (LA or NJ)** as destination. |
+| **Accessory/Bedding (Unopened)** | CA | Collect reason/photos → Generate label | Single-step mail-in flow with return label. |
+| **Accessory/Bedding (Unopened)** | US | Check shipping cost → If < 1/3 value: Label, else Option 1 | Calculate shipping cost. If cost > 1/3 item value, skip label and present keep/donate offers. |
+| **Accessory/Bedding (Opened)** | US | Option 1 (Keep 50%) → Option 2 (Donate 100%) → Decline | Present Option 1 (keep for 50% refund, no proof). If rejected, present Option 2 (donate for 100% refund with CX-verified proof). If both rejected, decline return. |
+
+    *   **Warranty Logistics:** For approved warranty claims, if customer needs pickup assistance, offer Courier pickup (label with "Defective" wording) or Disposal pickup (logged to Return Logistics Team).
+    *   **Third-Party Logistics:** For approved third-party claims needing pickup, offer Courier pickup (CX provides label) or Disposal pickup (logged to Return Logistics Team).
 
 9. **Ticket Creation** – The Claimlane ticket stores all details. Duplicate tickets are prevented.
 
 10. **Backend Actions** – Upon submission:
 
-    *   **Automatic Refund for Low-Value Returns:** When "Received" and net refund value < **600**, auto-initiate refund (if gateway supported).
-    *   **Manual Refund for High-Value Returns:** When "Received" and net refund value >= **600**, route to CX for manual processing.
-    *   **Caledonia Workflow:** For Caledonia returns, the team updates status **Delivered → Processing / Inspection Completed**. Store Ops runs report for inventory.
+    *   **Automatic Refund for Low-Value Returns:** When "Received" and net refund value < **600** AND order contains **NO bundles or free items**, auto-initiate refund (if gateway supported). This is a Phase 1 constraint.
+    *   **Manual Refund for High-Value or Bundle Returns:** When "Received" and net refund value >= **600**, OR order contains bundles/free items, route to CX for manual processing.
+    *   **Caledonia Workflow (CA Returns):** Caledonia team updates status **Delivered → Processing / Inspection Completed** directly in portal. Store Ops runs report for inventory.
+    *   **US Warehouse Workflow (US Returns):** US warehouse (LA/NJ) emails status to Internal Ops team (offline). Internal Ops manually updates portal status **Delivered → Processing / Inspection Completed**. Internal Ops runs report for inventory.
 
 ---
 
 ## Visual Process Flow
 
-![Process Flow](assets/customer-return-v2.png)
+![Process Flow](assets/WorkFlow.png)
 
 ---
 
