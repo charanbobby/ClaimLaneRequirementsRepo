@@ -29,6 +29,7 @@ nav:
       - Non-Functional: 07-non-functional-requirements.md
       - Business Rules: 08-business-rules.md
       - Changelog: 15-changelog.md
+      - Phase 2 Backlog: 15-phase-2-backlog.md
 
   - Stories:
       - Epics & User Stories: 13-epics-user-stories.md

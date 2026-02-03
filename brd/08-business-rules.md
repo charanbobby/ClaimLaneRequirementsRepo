@@ -32,7 +32,7 @@ The portal must enforce the following rules (numbered BR-1 through BR-12 plus ap
 
 - **BR-14 – STORIS Store Returns:** For STORIS stores, the portal displays an "In-store return only" message and does not allow online returns. No tickets, labels, or refunds are generated in the portal.
 
-- **BR-15 – Bundle / Free Item 50% Keep Rule:** When a bundle item is returned and the customer keeps the bundled/free item, the customer pays **50% of the full website price** for the kept item. The refund is adjusted (prorated) to reflect this charge and the decision is recorded on the ticket.
+- **BR-15 – Bundle / Free Item 50% Keep Rule:** When a bundle item is returned and the customer keeps the bundled/free item, the customer pays **50% of the full website price** for the kept item. The refund is adjusted (prorated) to reflect this charge and the decision is recorded on the ticket. **Note:** This requires custom code integration to bridge the WooCommerce data structure with the portal.
 
 - **BR-16 – Vendor Pickup and Status Updates:** Vendors (or Logistics team) must update mattress status to "Picked" in the portal. This status update must transition the item to **"Received"** to trigger refund logic.
 
@@ -45,6 +45,9 @@ The portal must enforce the following rules (numbered BR-1 through BR-12 plus ap
 - **BR-20 – Store Ops Returned Items Report:** Store Ops must be able to generate a report of items in "Inspection Completed" status for inventory updates.
 
 - **BR-21 – Automatic Refund Threshold (< 600):**
+
+
+
     - Net Refund Value < 600: **Auto-Refund** initiated (if gateway supported).
     - Net Refund Value >= 600: **Manual Refund** (routed to CX).
 
@@ -56,13 +59,13 @@ The portal must enforce the following rules (numbered BR-1 through BR-12 plus ap
 
 - **BR-25 – Shipping Cost Threshold:** For US unopened accessories/bedding, if the calculated shipping cost exceeds 1/3 of the item value, the system MUST skip label generation and present the keep/donate offers instead.
 
-- **BR-26 – Auto-Refund Bundle Exclusion:** Automatic refunds are strictly prohibited for any order containing bundles or free items, regardless of refund value. All such orders MUST route to manual refund processing. This is a Phase 1 technical limitation pending bundle calculation implementation (WF-070→073).
+- **BR-26 – Auto-Refund Bundle Exclusion:** Automatic refunds are strictly prohibited for any order containing bundles or free items, regardless of refund value. All such orders MUST route to manual refund processing. This is a Phase 1 technical limitation due to the **custom implementation required** for bundle calculation (WF-070→073).
 
 - **BR-27 – Warranty Label Wording:** Courier pickup labels generated for warranty claims MUST include the text "(Defective)" or "(Defective - this will help warehouse to avoid inspection of that piece)" to signal the warehouse team to bypass standard inspection procedures.
 
 - **BR-28 – US Warehouse Offline Processing:** US warehouse (LA/NJ) status updates are processed via email to Internal Ops, not through direct portal access. The portal MUST support manual status entry by Internal Ops for US returns.
 
-- **BR-29 – Self-Donate Fallback Requirement:** When the Return Logistics Team cannot secure a vendor for unboxed mattress pickup, the system MUST offer the customer a self-donation option. The customer must complete donation, provide photo proof, and contact CX for manual return processing.
+- **BR-29 – Self-Donate Selection:** When the Return Logistics Team cannot secure a vendor for unboxed mattress pickup, they MUST act to select the **"Self-Donation"** option in the vendor list. This provides the customer with self-donation instructions. The customer must then complete donation, provide photo proof, and contact CX for manual return processing.
 
 ## Appendix Rules
 

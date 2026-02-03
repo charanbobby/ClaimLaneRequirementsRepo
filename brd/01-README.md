@@ -15,6 +15,7 @@ This Business Requirements Document - Claimlane Returns, Refunds and Warranty Po
 - `08-business-rules.md` - Business rules (BR-x, A-1, B-1) enforced by the portal.
 - `13-epics-user-stories.md` - Epics, features, user stories and acceptance criteria.
 - `15-changelog.md` - History of major changes to the BRD.
+- `15-phase-2-backlog.md` - Deferred Phase 2 features with complete implementation context.
 - `16-appendices.md` - Visual diagrams and supplementary data.
 
 ## Audience Hints

@@ -185,7 +185,7 @@ flowchart TB
     RL2 --> RL3{"WF-062/067A | Change vendor?"}
     RL3 -- Yes --> RL4["WF-063/068A | Select new vendor → trigger updated emails"]
     RL3 -- No --> RL5
-    RL4 --> RL5["WF-064/063A | Vendor picks up item and marks Picked"]
+    RL4 --> RL5["WF-064/063A | Vendor picks up item; status auto-updated to 'Picked' via Courier API"]
     RL5 --> Received["WF-089 | Item marked Received in portal"]
 
     %% ---------------------------------------------------------

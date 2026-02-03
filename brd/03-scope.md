@@ -14,11 +14,16 @@
 - Return Logisitcs Vendor Communication.
 - Report Generation.
 - Multi-language capability (French and English).
-- **Automatic defective reason routing to warranty flow with customer opt-out mechanism.**
-- **US accessory abuse prevention with multi-tier keep/donate offers (50% keep, 100% donate with proof).**
-- **Self-donation fallback for unboxed mattresses when vendor unavailable.**
-- **Offline US warehouse status updates via Internal Ops team (LA/NJ warehouses).**
-- **Region-specific furniture return logistics (CA?Caledonia warehouse, US?Original shipping warehouse).**
+- **Automatic defective reason routing to warranty flow with customer opt-out mechanism.**
+
+- **US accessory abuse prevention with multi-tier keep/donate offers (50% keep, 100% donate with proof).**
+
+- **Self-donation fallback for unboxed mattresses when vendor unavailable.**
+
+- **Offline US warehouse status updates via Internal Ops team (LA/NJ warehouses).**
+
+- **Region-specific furniture return logistics (CA - Caledonia warehouse, US - Original shipping warehouse).**
+
 - **Warranty and third-party pickup logistics splits (courier vs. disposal).**
 
 ### Product Categories

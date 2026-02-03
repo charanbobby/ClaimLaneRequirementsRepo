@@ -260,12 +260,13 @@ This document outlines the high-level epics and user stories supporting the Clai
 1. Step 1: Customer uploads required photos and description; request is sent to CX queue.
 2. CX can approve, decline, or request more info.
 3. Approved → Step 2:
-   - System calls **WooCommerce API** for carrier rates with region-specific destinations:
-     - **Canada:** Caledonia warehouse address (WF-137)
-     - **United States:** Original order shipping warehouse - LA or NJ (WF-138)
-   - Customer is notified of shipping charges.
-   - Customer provides access constraints, pickup dates, and contact info.
-   - Portal generates carrier/pickup instructions.
+    - System calls **WooCommerce API** for carrier rates with region-specific destinations:
+        - **Canada:** Caledonia warehouse address (WF-137)
+        - **United States:** Original order shipping warehouse - LA or NJ (WF-138)
+    - Customer is notified of shipping charges.
+    - *Note:* If the pickup type is "Disposal", the system charges the same amount as a courier pickup (standardized fee).
+    - Customer provides access constraints, pickup dates, and contact info.
+    - Portal generates carrier/pickup instructions.
 4. Declined → customer sees clear messaging and available alternatives (if any).
 
 ---
@@ -445,18 +446,18 @@ This document outlines the high-level epics and user stories supporting the Clai
 **NEW Acceptance Criteria**
 
 1. **Canada (CA):** For all accessories/bedding within return window:
-   - System collects reason and required photos/measurements.
-   - Generates return label and mail-in instructions immediately (WF-041→076A→077A).
+    - System collects reason and required photos/measurements.
+    - Generates return label and mail-in instructions immediately (WF-041→076A→077A).
 
 2. **United States (US) - Unopened Items:**
-   - System calculates shipping cost via carrier API (WF-116).
-   - If shipping cost > 1/3 of item value: Skip label, present Option 1 (keep for 50% refund).
-   - If shipping cost ≤ 1/3 of item value: Generate return label normally (WF-111).
+    - System calculates shipping cost via carrier API (WF-116).
+    - If shipping cost > 1/3 of item value: Skip label, present Option 1 (keep for 50% refund).
+    - If shipping cost ≤ 1/3 of item value: Generate return label normally (WF-111).
 
 3. **United States (US) - Opened Items:**
-   - Present Option 1: Keep item for 50% refund, no proof required (WF-117).
-   - If rejected, present Option 2: Donate item for 100% refund, customer provides proof via CX contact (WF-119).
-   - If both options rejected: Decline return with clear explanation (WF-109).
+    - Present Option 1: Keep item for 50% refund, no proof required (WF-117).
+    - If rejected, present Option 2: Donate item for 100% refund, customer provides proof via CX contact (WF-119).
+    - If both options rejected: Decline return with clear explanation (WF-109).
 
 4. All customer decisions are logged in ticket.
 
@@ -470,9 +471,10 @@ This document outlines the high-level epics and user stories supporting the Clai
 
 1. After CX approval (Step 1), system determines customer region from order metadata.
 2. System calls WooCommerce API for live carrier rates:
-   - **Canada (CA):** API destination is always Caledonia warehouse address (WF-137).
-   - **United States (US):** API destination is the original order's shipping warehouse (LA or NJ) (WF-138).
+    - **Canada (CA):** API destination is always Caledonia warehouse address (WF-137).
+    - **United States (US):** API destination is the original order's shipping warehouse (LA or NJ) (WF-138).
 3. Customer is notified of shipping charges based on region-specific calculation.
+    - *Note:* For disposal pickups, the charge is set to match the courier pickup rate.
 4. Access constraints and pickup dates are collected.
 5. Label/instructions are generated with correct destination address.
 6. This ensures US returns go back to origin, not to Canadian warehouse.
@@ -488,15 +490,15 @@ This document outlines the high-level epics and user stories supporting the Clai
 1. After CX approves warranty claim (WF-052C), system asks: "Do you need pickup assistance?" (WF-052F).
 2. If NO: Standard customer-initiated return flow proceeds.
 3. If YES: System presents two pickup options (WF-052H):
-   - **Courier Pickup:** CX provides coordination and guidance. System generates return label with text **(Defective)** or **(Defective - this will help warehouse to avoid inspection of that piece)** to signal warehouse to skip inspection (WF-052G).
-   - **Disposal Pickup:** Case is logged for Return Logistics Team to assign disposal vendor (WF-052I connects to shared logistics WF-059/065A).
+    - **Courier Pickup:** CX provides coordination and guidance. System generates return label with text **(Defective)** or **(Defective - this will help warehouse to avoid inspection of that piece)** to signal warehouse to skip inspection (WF-052G).
+    - **Disposal Pickup:** Case is logged for Return Logistics Team to assign disposal vendor (WF-052I connects to shared logistics WF-059/065A).
 4. Pickup type selection is recorded in ticket.
 
 ---
 
 ### UPDATED: US-8.1 Vendor Selection for Unboxed / Donation Flows
 
-> *Note: This story was updated to include self-donate fallback when no vendor is available.*
+> *Note: This story was updated to include manual "Self-Donation" selection by Logistics Team.*
 
 **UPDATED Acceptance Criteria**
 
@@ -504,13 +506,12 @@ This document outlines the high-level epics and user stories supporting the Clai
 2. Internal user (Return Logistics Team) can select a vendor.
 3. Selection triggers emails to vendor and customer with instructions.
 4. Vendor receives portal access to mark items as "Picked."
-5. **Self-Donate Fallback (WF-130):** If no vendor is available for unboxed mattress pickup:
-   - System offers customer a self-donation option.
-   - Customer agrees to self-donate (checkbox).
-   - Customer donates item, takes photo of donation, and contacts CX (call/email).
-   - CX processes return manually in ClaimLane portal (WF-132).
-   - Case closes after CX confirms donation proof.
-6. Fallback decision is logged in ticket history.
+5. **Self-Donate Option (WF-130):**
+    - If no vendor is available, the Return Logistics Team manually selects **"Self-Donation"** as the vendor/outcome.
+    - Customer receives instructions to donate item, take photo of donation, and contact CX (call/email).
+    - CX processes return manually in ClaimLane portal (WF-132).
+    - Case closes after CX confirms donation proof.
+6. The selection (Vendor vs. Self-Donate) is logged in ticket history.
 
 ---
 
@@ -521,8 +522,8 @@ This document outlines the high-level epics and user stories supporting the Clai
 **Acceptance Criteria**
 
 1. After vendor approves claim (WF-009) and customer indicates need for pickup assistance (WF-011), system presents two options (WF-011A):
-   - **Courier Pickup:** CX provides coordination and guidance. System generates return label (WF-012).
-   - **Disposal Pickup:** Case is logged for Return Logistics Team (WF-011B, connects to shared logistics flow).
+    - **Courier Pickup:** CX provides coordination and guidance. System generates return label (WF-012).
+    - **Disposal Pickup:** Case is logged for Return Logistics Team (WF-011B, connects to shared logistics flow).
 2. Pickup type is recorded in ticket.
 3. For courier: Pickup confirmation triggers item received status (WF-014→015).
 4. For disposal: Follows same vendor selection flow as unboxed mattresses (WF-059/065A).
@@ -538,8 +539,8 @@ This document outlines the high-level epics and user stories supporting the Clai
 
 1. US warehouses (LA/NJ) do NOT have direct portal access.
 2. When return is delivered to US warehouse (WF-133):
-   - US warehouse emails status update to Internal Ops team (WF-134).
-   - Email communication is offline (not integrated with portal).
+    - US warehouse emails status update to Internal Ops team (WF-134).
+    - Email communication is offline (not integrated with portal).
 3. Internal Ops team manually updates portal status: Delivered → Processing / Inspection Completed (WF-135).
 4. Internal Ops runs "Returned items" report for US inventory reconciliation (WF-136).
 5. Status transitions are timestamped and visible in case history.
@@ -554,25 +555,25 @@ This document outlines the high-level epics and user stories supporting the Clai
 **UPDATED Acceptance Criteria**
 
 1. Once an item is marked "Received," system uses **RecRouter** decision point to determine flow context (line 233 in diagram):
-   - **Return:** Apply auto/manual refund logic below (WF-067→068/069).
-   - **Warranty:** Trigger replacement order creation (WCX flow).
-   - **Third-Party:** Email vendor for refund processing (WF-016).
+    - **Return:** Apply auto/manual refund logic below (WF-067→068/069).
+    - **Warranty:** Trigger replacement order creation (WCX flow).
+    - **Third-Party:** Email vendor for refund processing (WF-016).
 
 2. For **Return flow**, system calculates **net return value** after:
-   - Bundle proration.
-   - Gift-with-purchase deductions.
-   - Any fees or shipping deductions.
+    - Bundle proration.
+    - Gift-with-purchase deductions.
+    - Any fees or shipping deductions.
 
 3. **Auto-refund criteria (Phase 1):**
-   - Net value < 600 (store currency) AND
-   - Order does NOT contain bundles or free items (WF-067).
+    - Net value < 600 (store currency) AND
+    - Order does NOT contain bundles or free items (WF-067).
 
 4. If auto-refund criteria are met AND gateway supports automated refunds: trigger automatic refund (WF-068).
 
 5. **Manual refund criteria:**
-   - Net value >= 600, OR
-   - Order contains bundles/free items, OR
-   - Flagged as exception (WF-069).
+    - Net value >= 600, OR
+    - Order contains bundles/free items, OR
+    - Flagged as exception (WF-069).
 
 6. Manual cases route to CX refund queue.
 
@@ -581,8 +582,8 @@ This document outlines the high-level epics and user stories supporting the Clai
 8. **Phase 2 Note:** Bundle impact calculations (WF-070→073) will enable adjusted auto-refunds for qualifying bundled orders.
 
 9. **Warehouse Routing (Dest_Check):** After refund processing, system routes to appropriate warehouse using destination check (WF-239):
-   - **CA Destinations:** Route to Caledonia workflow (R1→R2→R4→R5).
-   - **US Destinations:** Route to US warehouse offline workflow (R_US→R2_US→R4_US→R5_US).
+    - **CA Destinations:** Route to Caledonia workflow (R1→R2→R4→R5).
+    - **US Destinations:** Route to US warehouse offline workflow (R_US→R2_US→R4_US→R5_US).
 
 ---
 

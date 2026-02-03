@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2026-02-03 - Vendor Pickup Workflow Automation
+
+### Changed
+- **05-process-high-level.md**: Updated WF-064/063A "Vendor picks up" step to reflect automated status update via Courier API (replacing manual status update).
+- **WorkFlowMermaid.mmd**: Updated RL5 node text to "Vendor picks up item; status auto-updated to 'Picked' via Courier API".
+
+## 2026-02-03 - Batch 3: Deep Scope Refinement (Phase 2 Move)
+
+### Added
+- **15-phase-2-backlog.md** — New comprehensive Phase 2 backlog document containing all deferred features with complete context
+
+### Moved to Phase 2 Backlog
+- **Vendors (Donation / Pickup Partners):** Vendor portal access and pickup status update capabilities (vendor physical logistics remain in Phase 1 via manual workaround)
+- **Third-Party Vendor Integration:** Complete TSC/EQ3/Costco workflow (WF-004→017) — architecture lacks necessary logic for support
+- **Phase 2 Refund Logic:** Bundle impact calculations (WF-070→073) — WooCommerce limitations prevent automated bundle proration
+
+### Changed
+- **04-actors.md:** Updated Vendors actor description with Phase 1/Phase 2 split clarification
+- **05-process-high-level.md:** Added Phase 2 deferral warning to Third-Party Vendor Flow section
+- **06-functional-requirements.md:** (No placeholders added — requirements remain documented for future reference)
+- **08-business-rules.md:** (No changes — BR-26 bundle exclusion kept as Phase 1 constraint)
+- **13-epics-user-stories.md:** (No changes — user stories remain for future implementation)
+
+### Extraction Method
+- **Functional Items:** Complete requirements, user stories, and business rules copied to backlog with full context
+- **Narrative & Actors:** Added inline deferral notes and warning boxes (content not deleted to preserve flow)
+- **Supporting Artifacts:** No scope changes (manual workarounds remain in Phase 1)
+
+### Coverage
+- **Features Extracted:** 3 major features
+- **User Stories Moved:** 7 user stories (Epic 8 components, Epic 4 components, Epic 11 components)
+- **Business Rules Documented:** 4 business rules (BR-1, BR-15, BR-16, BR-26)
+- **Functional Requirements:** 13 deferred requirements (FR-9, FR-VENDOR-1 through FR-VENDOR-5, FR-TP-1 through FR-TP-5)
+
 ## 2026-02-02 - Core Logic Update
 
 ### Added

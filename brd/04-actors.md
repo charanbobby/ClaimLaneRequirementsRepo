@@ -15,7 +15,7 @@
 |--------------------|--------------------------------------------------------------------------------------------------------------------------|
 | Claimlane Portal   | Web-based interface guiding the customer through each step, applying eligibility rules, documentation requirements, and triggering backend actions. |
 | WooCommerce System | Backend e-commerce system for orders, item details, inventory adjustments, refunds, and replacement order creation.      |
-| Shipping Carrier API | External shipping providers (e.g., FedEx, WooCommerce, freight services) used to generate return labels or arrange pickups. |
+| Shipping Carrier API | External shipping providers (e.g., FedEx, Freight services) used to generate return labels or arrange pickups. |
 
 ## Customer Service and Operations
 
@@ -32,14 +32,14 @@
 
 | Actor                           | Description                                                                                                  |
 |---------------------------------|--------------------------------------------------------------------------------------------------------------|
-| Vendors (Donation / Pickup Partners) | External partners that collect unboxed mattresses, oversized items, or donations and update pickup status within the portal where applicable. |
+| Vendors (Donation / Pickup Partners) | External partners that collect unboxed mattresses, oversized items, or donations. **Phase 1:** Vendors handle physical logistics; Return Logistics Team updates status manually. **Phase 2:** Vendors will have portal access to update pickup status directly. *(Vendor portal access deferred to Phase 2)* |
 
 ## Governance and Quality
 
 | Actor               | Description                                                                                          |
 |---------------------|------------------------------------------------------------------------------------------------------|
-| UX Team      | Provides business-approved messaging and copy for reasons, instructions, and customer-facing content.|
-| Quality Assurance (QA) Testers | Validate portal functionality, eligibility logic, documentation rules, and end-to-end flows against the defined requirements and acceptance criteria. |
+| UX Team      | Provides business-approved customer-facing UI.|
+| Quality Assurance (QA) Testers | Business Ops and CX Team  |
 
 ---
 

@@ -30,7 +30,7 @@ The following requirements describe what the portal must do. Each requirement is
 
 - **FR-8 – Category Filtering:** Hide items that do not belong to the selected return type (e.g., returning accessories should not show mattresses).
 
-- **FR-9 – Bundles Handling:** Identify bundle items. When a main item is returned but the customer keeps a bundled/free item, the portal must offer the option to **keep the bundled/free item at 50% of the full website price** (not the bundle price) and adjust the refund amount accordingly. This applies to mattress + free accessory bundles and other configured bundles.
+- **FR-9 – Bundles Handling:** Identify bundle items. When a main item is returned but the customer keeps a bundled/free item, the portal must offer the option to **keep the bundled/free item at 50% of the full website price** (not the bundle price) and adjust the refund amount accordingly. **Technical Requirement:** This functionality requires custom implementation to parse WooCommerce bundle data and calculate proration via the API.
 
 ## Item Selection
 
@@ -64,7 +64,9 @@ The following requirements describe what the portal must do. Each requirement is
 
     - **Mattress (Boxed):** Provide drop-off instructions/labels.
     - **Mattress (Unboxed):** Collect condition and donation eligibility. **Do not send photos to the vendor.** The **Return Logistics Manager** must manually select a donation or pickup vendor. Supporting **Vendor Change** functionality is required, which must trigger updated emails to the new vendor and customer. If no vendor is available, offer the customer a self-donation option (see FR-38).
-    - **Furniture:** Implement a two-step flow. Step 1: Customer uploads photos/details. **CX must review and approve** via the portal. Step 2 (if approved): Call **WooCommerce API** for live carrier rates with region-specific destinations: **CA returns → Caledonia warehouse; US returns → original shipping warehouse (LA or NJ)**. Charge the client (or deduct from refund) for the return shipping. Collect **access constraints** and pickup dates, then generate label/instructions.
+    - **Furniture:** Implement a two-step flow. Step 1: Customer uploads photos/details. **CX must review and approve** via the portal. Step 2 (if approved): Call **WooCommerce API** for live carrier rates with region-specific destinations: **CA returns → Caledonia warehouse; US returns → original shipping warehouse (LA or NJ)**. Charge the client (or deduct from refund) for the return shipping.
+        - **Charge Logic:** If the pickup is for disposal, the system must apply the same charge as the courier rate (since disposal costs vary, this is a standardized business decision).
+    - Collect **access constraints** and pickup dates, then generate label/instructions.
 
 - **FR-21 – Label Display & Reprints:** Show generated labels and tracking information to the customer. Allow re-printing without creating new labels or incurring extra charges.
 
@@ -75,7 +77,7 @@ The following requirements describe what the portal must do. Each requirement is
 - **FR-23 – Refund Processing:**
 
     - **Auto-Refund:** When items are marked "Received" and the **net refund value is less than 600** (store currency) **AND the order does NOT contain bundles or free items**, automatically initiate the refund in WooCommerce (if gateway supported). This is a Phase 1 constraint.
-    - **Manual Refund:** When items are marked "Received" and the **net refund value is 600 or greater**, OR the **order contains bundles/free items**, route the ticket to CX for manual refund processing.
+    - **Manual Refund:** When items are marked "Received" and the **net refund value is 600 or greater**, OR the **order contains bundles/free items**, route the ticket to CX for manual refund processing. This is required because bundle proration logic is a **custom implementation** not standard to the platform.
     - For partial refunds, adjust only the line item amount and leave inventory unchanged. If the gateway or currency does not support automated refunds, mark the ticket for manual refund.
     - **Phase 2 Future:** Bundle impact calculations (WF-070→073) will enable adjusted auto-refunds for qualifying bundled orders. Until then, all orders with bundles require manual processing.
 
