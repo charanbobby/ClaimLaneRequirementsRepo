@@ -2292,7 +2292,7 @@
 <ol>
 <li>All items in the order are displayed with: name, type, quantity, and category.</li>
 <li>Each item shows an eligibility state derived from:<ul>
-<li>Product category and time since purchase.</li>
+<li>Product category and time since delivery.</li>
 <li>Channel (web, retail, POS, third-party).</li>
 <li>Condition flags (final sale, already returned).</li>
 </ul>
@@ -2307,12 +2307,12 @@
 <p><strong>Acceptance Criteria</strong></p>
 <ol>
 <li>Mattresses:<ul>
-<li>Eligible up to 365 nights; show “early return” warning if under configured trial nights (e.g., &lt;30).</li>
+<li>Eligible up to 365 nights from delivery date; show “early return” warning if under configured trial nights (e.g., &lt;30).</li>
 <li>Not eligible beyond 365 nights; portal blocks the return.</li>
 </ul>
 </li>
-<li>Furniture: eligible up to 30 days; not eligible afterwards.</li>
-<li>Bedding, Bath, Accessories, Toppers: eligible up to 100 nights; not eligible afterwards.</li>
+<li>Furniture: eligible up to 30 days from delivery date; not eligible afterwards.</li>
+<li>Bedding, Bath, Accessories, Toppers: eligible up to 100 nights from delivery date; not eligible afterwards.</li>
 <li>Custom Hybrid Mattress: never eligible for return (warranty only).</li>
 </ol>
 <hr />
@@ -2365,7 +2365,7 @@
 <hr />
 <h3 id="us-42-free-bundled-item-keep-at-discount-option">US-4.2 Free / Bundled Item “Keep at Discount” Option</h3>
 <blockquote>
-<p><em>As a customer with a bundle or free item, I want the option to keep certain items at a discounted price when returning the main item.</em></p>
+<p><em>As a customer with a bundle or free item, I want the option to keep certain items at a discounted price when returning the main item. (Future Phase)</em></p>
 </blockquote>
 <p><strong>Acceptance Criteria</strong></p>
 <ol>
@@ -2442,21 +2442,34 @@
 </blockquote>
 <p><strong>Acceptance Criteria</strong></p>
 <ol>
-<li>Step 1: Customer uploads required photos and description; request is sent to CX queue.</li>
-<li>CX can approve, decline, or request more info.</li>
-<li>Approved → Step 2:<ul>
+<li><strong>Quote &amp; Acceptance (Step 1):</strong><ul>
+<li>Customer uploads required photos and description.</li>
 <li>System calls <strong>WooCommerce API</strong> for carrier rates with region-specific destinations:<ul>
 <li><strong>Canada:</strong> Caledonia warehouse address (WF-137)</li>
 <li><strong>United States:</strong> Original order shipping warehouse - LA or NJ (WF-138)</li>
 </ul>
 </li>
-<li>Customer is notified of shipping charges.</li>
-<li><em>Note:</em> If the pickup type is "Disposal", the system charges the same amount as a courier pickup (standardized fee).</li>
-<li>Customer provides access constraints, pickup dates, and contact info.</li>
-<li>Portal generates carrier/pickup instructions.</li>
+<li>Customer is notified of shipping charges.<ul>
+<li><em>Note:</em> If the pickup is for "Disposal", the system charges the same amount as a courier pickup.</li>
 </ul>
 </li>
-<li>Declined → customer sees clear messaging and available alternatives (if any).</li>
+<li>Customer <strong>accepts charges</strong> and provides access constraints/pickup dates.</li>
+<li>Customer submits ticket.</li>
+</ul>
+</li>
+<li><strong>CX Review &amp; Auto-Label (Step 2):</strong><ul>
+<li>Request is sent to CX queue (WF-070A).</li>
+<li>CX can approve, decline, or request more info.</li>
+<li><strong>Approved:</strong><ul>
+<li>System <strong>automatically generates</strong> carrier/pickup instructions and label.</li>
+</ul>
+</li>
+<li><strong>Declined:</strong><ul>
+<li>Customer sees clear messaging and available alternatives.</li>
+</ul>
+</li>
+</ul>
+</li>
 </ol>
 <hr />
 <h3 id="us-63-accessories-bedding-bath-mail-in-flow">US-6.3 Accessories, Bedding &amp; Bath: Mail-In Flow</h3>
@@ -2487,7 +2500,7 @@
 </blockquote>
 <p><strong>Acceptance Criteria</strong></p>
 <ol>
-<li>Warranty eligibility is checked against warranty periods (e.g., mattresses 15 years, adjustable beds 10, furniture/sofa 5, pillows/toppers 3, bedding/bath/accessories 1).</li>
+<li>Warranty eligibility is checked against warranty periods starting from the delivery date (e.g., mattresses 15 years, adjustable beds 10, furniture/sofa 5, pillows/toppers 3, bedding/bath/accessories 1).</li>
 <li>Claims beyond the warranty period are blocked with a clear message.</li>
 </ol>
 <hr />
@@ -2614,7 +2627,7 @@
 <h2 id="batch-2-updates-supporting-documentation-alignment">Batch 2 Updates — Supporting Documentation Alignment</h2>
 <h3 id="updated-us-63-accessories-bedding-bath-region-specific-flow">UPDATED: US-6.3 Accessories, Bedding &amp; Bath: Region-Specific Flow</h3>
 <blockquote>
-<p><em>Note: This story was updated to include region-specific US accessory abuse prevention logic.</em></p>
+<p><em>Note: This story was updated to include region-specific US accessory return cost optimization logic.</em></p>
 </blockquote>
 <p><strong>NEW Acceptance Criteria</strong></p>
 <ol>
@@ -2652,18 +2665,19 @@
 </blockquote>
 <p><strong>Acceptance Criteria</strong></p>
 <ol>
-<li>After CX approval (Step 1), system determines customer region from order metadata.</li>
+<li>After customer uploads items (Step 1), system determines customer region from order metadata.</li>
 <li>System calls WooCommerce API for live carrier rates:<ul>
 <li><strong>Canada (CA):</strong> API destination is always Caledonia warehouse address (WF-137).</li>
 <li><strong>United States (US):</strong> API destination is the original order's shipping warehouse (LA or NJ) (WF-138).</li>
 </ul>
 </li>
-<li>Customer is notified of shipping charges based on region-specific calculation.<ul>
+<li>Customer is notified of shipping charges.<ul>
 <li><em>Note:</em> For disposal pickups, the charge is set to match the courier pickup rate.</li>
 </ul>
 </li>
-<li>Access constraints and pickup dates are collected.</li>
-<li>Label/instructions are generated with correct destination address.</li>
+<li>Customer <strong>accepts charges</strong> and provides pickup details.</li>
+<li>Customer submits ticket for <strong>CX Review</strong>.</li>
+<li>Upon CX Approval, label/instructions are <strong>automatically generated</strong>.</li>
 <li>This ensures US returns go back to origin, not to Canadian warehouse.</li>
 </ol>
 <hr />
@@ -2745,7 +2759,7 @@
 <p><strong>UPDATED Acceptance Criteria</strong></p>
 <ol>
 <li>
-<p>Once an item is marked "Received," system uses <strong>RecRouter</strong> decision point to determine flow context (line 233 in diagram):</p>
+<p>Once an item is marked "Received," system uses <strong>Refund Context Routing</strong> decision point to determine flow context (line 233 in diagram):</p>
 <ul>
 <li><strong>Return:</strong> Apply auto/manual refund logic below (WF-067→068/069).</li>
 <li><strong>Warranty:</strong> Trigger replacement order creation (WCX flow).</li>
@@ -2785,7 +2799,7 @@
 <p>Customer is notified whether refund is automatic or under review.</p>
 </li>
 <li>
-<p><strong>Phase 2 Note:</strong> Bundle impact calculations (WF-070→073) will enable adjusted auto-refunds for qualifying bundled orders.</p>
+<p><strong>Future Phase Note:</strong> Bundle impact calculations (WF-070→073) will enable adjusted auto-refunds for qualifying bundled orders.</p>
 </li>
 <li>
 <p><strong>Warehouse Routing (Dest_Check):</strong> After refund processing, system routes to appropriate warehouse using destination check (WF-239):</p>
