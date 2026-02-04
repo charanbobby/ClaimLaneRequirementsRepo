@@ -793,10 +793,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#phase-2-refund-logic-future-state" class="md-nav__link">
+  <a href="#future-phase-refund-logic-future-state" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Phase 2 Refund Logic (Future State)
+        Future Phase Refund Logic (Future State)
       
     </span>
   </a>
@@ -1594,10 +1594,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#phase-2-refund-logic-future-state" class="md-nav__link">
+  <a href="#future-phase-refund-logic-future-state" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Phase 2 Refund Logic (Future State)
+        Future Phase Refund Logic (Future State)
       
     </span>
   </a>
@@ -1749,7 +1749,7 @@
 <p>Customer selects one or more eligible items to return. Minimum of <strong>one item required</strong>.</p>
 <blockquote>
 <p>[!WARNING]
-<strong>Bundle / Free Item Promotion (Phase 2):</strong> If the item is part of a bundle or free item promotion, the customer can keep bundled/free items at <strong>50% of full website price</strong>; the refund is adjusted accordingly.</p>
+<strong>Bundle / Free Item Promotion (Future Phase):</strong> If the item is part of a bundle or free item promotion, the customer can keep bundled/free items at <strong>50% of full website price</strong>; the refund is adjusted accordingly.</p>
 <p><strong>Technical Implementation Note:</strong> Due to WooCommerce core limitations regarding bundle structures, this step requires <strong>custom logic</strong> to correctly identify bundled items and apply the 50% proration logic. Standard Claimlane/WooCommerce plugins do not support this out-of-the-box.</p>
 </blockquote>
 </li>
@@ -1799,12 +1799,6 @@
 <p><strong>CA Furniture (WF-040 → WF-137):</strong></p>
 <ol>
 <li>Customer uploads photos and issue details (WF-069A)</li>
-<li><strong>CX Review &amp; Approval</strong> (WF-070A → WF-071A):<ul>
-<li>CX reviews photos and determines eligibility</li>
-<li>If <strong>declined</strong> (WF-072A): Communicate decision to customer → End</li>
-<li>If <strong>approved</strong>: Proceed to step 3</li>
-</ul>
-</li>
 <li>ClaimLane calls <strong>WooCommerce API</strong> for carrier quotes (WF-137)<ul>
 <li><strong>Destination</strong>: Always <strong>Caledonia warehouse</strong> (CA)</li>
 </ul>
@@ -1813,10 +1807,23 @@
 <li><strong>Note:</strong> For disposal pickups, the charge displayed is equal to the courier pickup charge (business decision to standardize costs).</li>
 </ul>
 </li>
-<li>Collect pickup details: access constraints, dates, address confirmation (WF-073A)</li>
-<li>Generate label and pickup instructions (WF-074A)</li>
-<li>Arrange pickup (WF-075A)</li>
-<li>Item marked as <strong>"Received"</strong> (WF-089)</li>
+<li><strong>Customer Accepts Charges &amp; Submits Ticket</strong> (WF-074A):<ul>
+<li>Customer provides pickup details / access constraints</li>
+<li>Customer agrees to shipping costs</li>
+<li>Ticket created in <strong>CX Review Queue</strong></li>
+</ul>
+</li>
+<li><strong>CX Review &amp; Approval</strong> (WF-070A → WF-071A):<ul>
+<li>CX reviews photos and eligibility</li>
+<li>If <strong>declined</strong> (WF-072A): Communicate decision to customer → End</li>
+<li>If <strong>approved</strong>:<ul>
+<li>System <strong>auto-generates label</strong> and pickup instructions</li>
+<li>Charge is finalized/processed</li>
+<li>Item marked as <strong>"Received"</strong> (WF-089) once picked up</li>
+</ul>
+</li>
+</ul>
+</li>
 </ol>
 <p><strong>US Furniture (WF-040 → WF-138):</strong></p>
 <ul>
@@ -2169,7 +2176,7 @@
 <p>[!WARNING]
 <strong>WF-074 Technical Limitation:</strong> We cannot implement auto-refunds when bundles or free items are involved until we fix WooCommerce, which is currently restricting ClaimLane's data access to bundle structures.</p>
 </blockquote>
-<h4 id="phase-2-refund-logic-future-state"><strong>Phase 2 Refund Logic (Future State)</strong></h4>
+<h4 id="future-phase-refund-logic-future-state"><strong>Future Phase Refund Logic (Future State)</strong></h4>
 <p><strong>Bundle Impact Calculation (WF-070):</strong></p>
 <ul>
 <li>System calculates bundle impacts and adjusted refundable amounts</li>

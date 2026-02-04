@@ -1173,13 +1173,13 @@
 <p><strong>FR-8 – Category Filtering:</strong> Hide items that do not belong to the selected return type (e.g., returning accessories should not show mattresses).</p>
 </li>
 <li>
-<p><strong>FR-9 – Bundles Handling:</strong> Identify bundle items. When a main item is returned but the customer keeps a bundled/free item, the portal must offer the option to <strong>keep the bundled/free item at 50% of the full website price</strong> (not the bundle price) and adjust the refund amount accordingly. <strong>Technical Requirement:</strong> This functionality requires custom implementation to parse WooCommerce bundle data and calculate proration via the API.</p>
+<p><strong>FR-9 – Bundles Handling:</strong> Identify bundle items. When a main item is returned but the customer keeps a bundled/free item, the portal must offer the option to <strong>keep the bundled/free item at 50% of the full website price</strong> (not the bundle price) and adjust the refund amount accordingly. <strong>[DEFERRED TO FUTURE PHASE]</strong> <strong>Technical Requirement:</strong> This functionality requires custom implementation to parse WooCommerce bundle data and calculate proration via the API.</p>
 </li>
 </ul>
 <h2 id="item-selection">Item Selection</h2>
 <ul>
 <li>
-<p><strong>FR-10 – Item Selection:</strong> Allow the customer to select one or more eligible items and specify quantities (up to the purchased quantity). Prevent selection of more than two units of the same product type with a soft warning and flag the ticket for "Quantity Limit Exceeded" if over the limit.</p>
+<p><strong>FR-10 – Item Selection:</strong> Allow the customer to select one or more eligible items and specify quantities (up to the purchased quantity). <strong>[RESTRICTION DEFERRED TO FUTURE PHASE]</strong> <em>The constraint preventing selection of more than two units has been moved to the backlog.</em></p>
 </li>
 <li>
 <p><strong>FR-11 – Validate Selection:</strong> Require at least one item to be selected before proceeding. If no item is selected, display a validation message.</p>
@@ -1222,9 +1222,14 @@
 <ul>
 <li><strong>Mattress (Boxed):</strong> Provide drop-off instructions/labels.</li>
 <li><strong>Mattress (Unboxed):</strong> Collect condition and donation eligibility. <strong>Do not send photos to the vendor.</strong> The <strong>Return Logistics Manager</strong> must manually select a donation or pickup vendor. Supporting <strong>Vendor Change</strong> functionality is required, which must trigger updated emails to the new vendor and customer. If no vendor is available, offer the customer a self-donation option (see FR-38).</li>
-<li><strong>Furniture:</strong> Implement a two-step flow. Step 1: Customer uploads photos/details. <strong>CX must review and approve</strong> via the portal. Step 2 (if approved): Call <strong>WooCommerce API</strong> for live carrier rates with region-specific destinations: <strong>CA returns → Caledonia warehouse; US returns → original shipping warehouse (LA or NJ)</strong>. Charge the client (or deduct from refund) for the return shipping.<ul>
-<li><strong>Charge Logic:</strong> If the pickup is for disposal, the system must apply the same charge as the courier rate (since disposal costs vary, this is a standardized business decision).</li>
-</ul>
+<li><strong>Furniture:</strong> Implement a flow where:<ol>
+<li>Customer uploads photos/details.</li>
+<li>System calls <strong>WooCommerce API</strong> for live carrier rates (Destination: <strong>CA → Caledonia</strong>, <strong>US → Original Warehouse</strong>).</li>
+<li><strong>Charge Logic:</strong> If the pickup is for disposal, apply the courier rate charge (standardized business decision).</li>
+<li>Customer <strong>accepts charges</strong> and provides pickup details to submit the ticket.</li>
+<li><strong>CX Review &amp; Approval:</strong> CX reviews the submitted ticket (photos + agreed charge).</li>
+<li><strong>Approval Action:</strong> If approved, the system <strong>automatically generates shipping labels</strong> and pickup instructions.</li>
+</ol>
 </li>
 <li>Collect <strong>access constraints</strong> and pickup dates, then generate label/instructions.</li>
 </ul>
@@ -1244,7 +1249,7 @@
 <li><strong>Auto-Refund:</strong> When items are marked "Received" and the <strong>net refund value is less than 600</strong> (store currency) <strong>AND the order does NOT contain bundles or free items</strong>, automatically initiate the refund in WooCommerce (if gateway supported). This is a Phase 1 constraint.</li>
 <li><strong>Manual Refund:</strong> When items are marked "Received" and the <strong>net refund value is 600 or greater</strong>, OR the <strong>order contains bundles/free items</strong>, route the ticket to CX for manual refund processing. This is required because bundle proration logic is a <strong>custom implementation</strong> not standard to the platform.</li>
 <li>For partial refunds, adjust only the line item amount and leave inventory unchanged. If the gateway or currency does not support automated refunds, mark the ticket for manual refund.</li>
-<li><strong>Phase 2 Future:</strong> Bundle impact calculations (WF-070→073) will enable adjusted auto-refunds for qualifying bundled orders. Until then, all orders with bundles require manual processing.</li>
+<li><strong>Future Phase:</strong> Bundle impact calculations (WF-070→073) will enable adjusted auto-refunds for qualifying bundled orders. Until then, all orders with bundles require manual processing.</li>
 </ul>
 </li>
 <li>
@@ -1292,7 +1297,7 @@
 <p><strong>FR-33 – Defective Reason Routing:</strong> When a customer selects items to return and chooses "Defective" as the reason, the system must check if the customer opted out of product replacement. If the customer did NOT opt out, redirect the flow to the Warranty claim process (WF-052) instead of standard return logistics. Provide a clear opt-out checkbox during reason selection.</p>
 </li>
 <li>
-<p><strong>FR-34 – US Accessory Abuse Prevention:</strong> For US Accessories and Bedding returns, implement a multi-tier logic to prevent return abuse:</p>
+<p><strong>FR-34 – US Accessory Return Cost Optimization:</strong> For US Accessories and Bedding returns, implement a multi-tier logic to optimize return costs where shipping exceeds the value of the return:</p>
 <ul>
 <li><strong>Unopened Items:</strong> Calculate shipping cost via carrier API. If shipping cost &gt; 1/3 of item value, skip label generation and present Option 1 (Keep Offer). Otherwise, generate return label (WF-111).</li>
 <li><strong>Opened Items:</strong> Present Option 1 first (Keep item for 50% refund, no proof required). If customer rejects, present Option 2 (Donate item for 100% refund with proof via CX contact). If both options are rejected, decline the return (WF-109).</li>
@@ -1333,8 +1338,8 @@
 <li>
 <p><strong>FR-39 – Flow Context Routing:</strong> Implement two critical routing decision points:</p>
 <ul>
-<li><strong>FLOW_ROUTER (after validation):</strong> After customer login and order validation (WF-027/100/043), route to either Return flow (WF-029/102) or Warranty flow (WF-052) based on the customer's intent selection.</li>
-<li><strong>RecRouter (after item received):</strong> After an item is marked "Received" (WF-089), route the refund logic based on the flow context: Return (apply auto/manual refund rules), Warranty (place replacement order), or Third-Party (email vendor for refund).</li>
+<li><strong>Intent-Based Routing (after validation):</strong> After customer login and order validation (WF-027/100/043), route to either Return flow (WF-029/102) or Warranty flow (WF-052) based on the customer's intent selection.</li>
+<li><strong>Refund Context Routing (after item received):</strong> After an item is marked "Received" (WF-089), route the refund logic based on the flow context: Return (apply auto/manual refund rules), Warranty (place replacement order), or Third-Party (email vendor for refund).</li>
 </ul>
 </li>
 <li>
