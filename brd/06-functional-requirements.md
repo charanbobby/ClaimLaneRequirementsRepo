@@ -30,11 +30,11 @@ The following requirements describe what the portal must do. Each requirement is
 
 - **FR-8 – Category Filtering:** Hide items that do not belong to the selected return type (e.g., returning accessories should not show mattresses).
 
-- **FR-9 – Bundles Handling:** Identify bundle items. When a main item is returned but the customer keeps a bundled/free item, the portal must offer the option to **keep the bundled/free item at 50% of the full website price** (not the bundle price) and adjust the refund amount accordingly. **Technical Requirement:** This functionality requires custom implementation to parse WooCommerce bundle data and calculate proration via the API.
+- **FR-9 – Bundles Handling:** Identify bundle items. When a main item is returned but the customer keeps a bundled/free item, the portal must offer the option to **keep the bundled/free item at 50% of the full website price** (not the bundle price) and adjust the refund amount accordingly. **[DEFERRED TO FUTURE PHASE]** **Technical Requirement:** This functionality requires custom implementation to parse WooCommerce bundle data and calculate proration via the API.
 
 ## Item Selection
 
-- **FR-10 – Item Selection:** Allow the customer to select one or more eligible items and specify quantities (up to the purchased quantity). Prevent selection of more than two units of the same product type with a soft warning and flag the ticket for "Quantity Limit Exceeded" if over the limit.
+- **FR-10 – Item Selection:** Allow the customer to select one or more eligible items and specify quantities (up to the purchased quantity). **[RESTRICTION DEFERRED TO FUTURE PHASE]** *The constraint preventing selection of more than two units has been moved to the backlog.*
 
 - **FR-11 – Validate Selection:** Require at least one item to be selected before proceeding. If no item is selected, display a validation message.
 
@@ -64,8 +64,13 @@ The following requirements describe what the portal must do. Each requirement is
 
     - **Mattress (Boxed):** Provide drop-off instructions/labels.
     - **Mattress (Unboxed):** Collect condition and donation eligibility. **Do not send photos to the vendor.** The **Return Logistics Manager** must manually select a donation or pickup vendor. Supporting **Vendor Change** functionality is required, which must trigger updated emails to the new vendor and customer. If no vendor is available, offer the customer a self-donation option (see FR-38).
-    - **Furniture:** Implement a two-step flow. Step 1: Customer uploads photos/details. **CX must review and approve** via the portal. Step 2 (if approved): Call **WooCommerce API** for live carrier rates with region-specific destinations: **CA returns → Caledonia warehouse; US returns → original shipping warehouse (LA or NJ)**. Charge the client (or deduct from refund) for the return shipping.
-        - **Charge Logic:** If the pickup is for disposal, the system must apply the same charge as the courier rate (since disposal costs vary, this is a standardized business decision).
+    - **Furniture:** Implement a flow where:
+        1. Customer uploads photos/details.
+        2. System calls **WooCommerce API** for live carrier rates (Destination: **CA → Caledonia**, **US → Original Warehouse**).
+        3. **Charge Logic:** If the pickup is for disposal, apply the courier rate charge (standardized business decision).
+        4. Customer **accepts charges** and provides pickup details to submit the ticket.
+        5. **CX Review & Approval:** CX reviews the submitted ticket (photos + agreed charge).
+        6. **Approval Action:** If approved, the system **automatically generates shipping labels** and pickup instructions.
     - Collect **access constraints** and pickup dates, then generate label/instructions.
 
 - **FR-21 – Label Display & Reprints:** Show generated labels and tracking information to the customer. Allow re-printing without creating new labels or incurring extra charges.
@@ -79,7 +84,7 @@ The following requirements describe what the portal must do. Each requirement is
     - **Auto-Refund:** When items are marked "Received" and the **net refund value is less than 600** (store currency) **AND the order does NOT contain bundles or free items**, automatically initiate the refund in WooCommerce (if gateway supported). This is a Phase 1 constraint.
     - **Manual Refund:** When items are marked "Received" and the **net refund value is 600 or greater**, OR the **order contains bundles/free items**, route the ticket to CX for manual refund processing. This is required because bundle proration logic is a **custom implementation** not standard to the platform.
     - For partial refunds, adjust only the line item amount and leave inventory unchanged. If the gateway or currency does not support automated refunds, mark the ticket for manual refund.
-    - **Phase 2 Future:** Bundle impact calculations (WF-070→073) will enable adjusted auto-refunds for qualifying bundled orders. Until then, all orders with bundles require manual processing.
+    - **Future Phase:** Bundle impact calculations (WF-070→073) will enable adjusted auto-refunds for qualifying bundled orders. Until then, all orders with bundles require manual processing.
 
 - **FR-24 – Replacement Order Creation:** For approved warranty claims, create a WooCommerce order for replacement items using the customer's billing/shipping details, set the order status to "Processing" and notify the customer via WooCommerce.
 
@@ -112,7 +117,7 @@ The following requirements describe what the portal must do. Each requirement is
 
 - **FR-33 – Defective Reason Routing:** When a customer selects items to return and chooses "Defective" as the reason, the system must check if the customer opted out of product replacement. If the customer did NOT opt out, redirect the flow to the Warranty claim process (WF-052) instead of standard return logistics. Provide a clear opt-out checkbox during reason selection.
 
-- **FR-34 – US Accessory Abuse Prevention:** For US Accessories and Bedding returns, implement a multi-tier logic to prevent return abuse:
+- **FR-34 – US Accessory Return Cost Optimization:** For US Accessories and Bedding returns, implement a multi-tier logic to optimize return costs where shipping exceeds the value of the return:
     
     - **Unopened Items:** Calculate shipping cost via carrier API. If shipping cost > 1/3 of item value, skip label generation and present Option 1 (Keep Offer). Otherwise, generate return label (WF-111).
     - **Opened Items:** Present Option 1 first (Keep item for 50% refund, no proof required). If customer rejects, present Option 2 (Donate item for 100% refund with proof via CX contact). If both options are rejected, decline the return (WF-109).
@@ -143,8 +148,8 @@ The following requirements describe what the portal must do. Each requirement is
 
 - **FR-39 – Flow Context Routing:** Implement two critical routing decision points:
     
-    - **FLOW_ROUTER (after validation):** After customer login and order validation (WF-027/100/043), route to either Return flow (WF-029/102) or Warranty flow (WF-052) based on the customer's intent selection.
-    - **RecRouter (after item received):** After an item is marked "Received" (WF-089), route the refund logic based on the flow context: Return (apply auto/manual refund rules), Warranty (place replacement order), or Third-Party (email vendor for refund).
+    - **Intent-Based Routing (after validation):** After customer login and order validation (WF-027/100/043), route to either Return flow (WF-029/102) or Warranty flow (WF-052) based on the customer's intent selection.
+    - **Refund Context Routing (after item received):** After an item is marked "Received" (WF-089), route the refund logic based on the flow context: Return (apply auto/manual refund rules), Warranty (place replacement order), or Third-Party (email vendor for refund).
 
 - **FR-40 – Region-Specific Furniture Destinations:** For furniture returns requiring shipping rate calculation, call the WooCommerce API with region-specific destination addresses:
     

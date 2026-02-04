@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2026-02-04 - Return Quantity Logic Deferral
+
+### Moved to Phase 2 Backlog
+- **Return Quantity Limits:** The restriction preventing selection of more than 2 units (FR-10) and the historical limit rule (BR-4) have been moved to Phase 2 to allow broader returns in Phase 1.
+
+### Changed
+- **06-functional-requirements.md:** Updated FR-10 to remove the 2-unit limit restriction.
+- **08-business-rules.md:** Marked BR-4 as deferred.
+- **15-phase-2-backlog.md:** Added new section "4. Return Quantity Limits" with valid context.
+
+## 2026-02-04 - Furniture Workflow Correction
+
+### Changed
+- **Workflow Order Update:** Corrected Furniture Return workflow.
+    - **Previous Logic:** Upload -> CX Approve -> Quote -> Label.
+    - **New Logic:** Upload -> Quote & Accept Charge -> Submit Ticket -> CX Approve -> Auto-Generate Label.
+- **Affected Files:**
+    - `05-process-high-level.md` (Node sequence updated)
+    - `06-functional-requirements.md` (FR-20 updated)
+    - `08-business-rules.md` (BR-17 updated)
+    - `13-epics-user-stories.md` (US-6.2 & US-6.5 updated)
+- **Clarification:** Disposal pickups continue to use the same charge as courier rates.
+
 ## 2026-02-03 - Vendor Pickup Workflow Automation
 
 ### Changed
@@ -60,7 +83,7 @@ All notable changes to this project will be documented in this file.
 
 #### Changed
 - **03-scope.md**: Added 6 in-scope processes (defective routing, US accessory abuse prevention, self-donation fallback, offline US warehouse, region-specific furniture logistics, warranty/third-party pickup splits), added WooCommerce API to systems
-- **13-epics-user-stories.md**: Added 5 new user stories (US-1.4 defective routing, US-6.5 furniture destinations, US-7.4 warranty logistics, US-8.4 third-party logistics, US-9.3 US warehouse), added Epic 11 for email notifications (US-11.1), updated 4 existing stories (US-6.2 WooCommerce API, US-6.3 US accessory logic, US-8.1 self-donate fallback, US-10.1 RecRouter & bundle exclusion)
+- **13-epics-user-stories.md**: Added 5 new user stories (US-1.4 defective routing, US-6.5 furniture destinations, US-7.4 warranty logistics, US-8.4 third-party logistics, US-9.3 US warehouse), added Epic 11 for email notifications (US-11.1), updated 4 existing stories (US-6.2 WooCommerce API, US-6.3 US accessory logic, US-8.1 self-donate fallback, US-10.1 Refund Context Routing & bundle exclusion)
 - **07-non-functional-requirements.md**: Added NFR-8 for offline workflow reliability with 24-hour SLA for Internal Ops processing
 - **02-overview-purpose.md**: Updated objectives to include region-specific logistics, offline operations, abuse prevention, and defective routing
 - **Batch 2 Updates section added**: Comprehensive user story updates documented in separate section for clarity

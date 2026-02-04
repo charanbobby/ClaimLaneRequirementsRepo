@@ -233,7 +233,7 @@ Each subcategory inherits the list and mapping exactly as provided in the source
 
 This is the definitive single source for testers and business users validating eligibility.
 
-### C.1 Return Periods
+### C.1 Return Periods (Calculated from Delivery Date)
 
 | Product Category | Return Period | Conditions |
 | :--- | :--- | :--- |
@@ -245,7 +245,7 @@ This is the definitive single source for testers and business users validating e
 | Accessories | 100 nights | N/A |
 | Custom Hybrid Mattress | Not returnable | Warranty only |
 
-### C.2 Warranty Periods
+### C.2 Warranty Periods (Calculated from Delivery Date)
 
 | Product Category | Warranty |
 | :--- | :--- |

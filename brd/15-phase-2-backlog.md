@@ -1,10 +1,10 @@
-# Phase 2 Backlog — Deferred Features
+# Deferred Features Backlog (Phase 2 & Future Phase)
 
 ## Executive Summary
 
 ### Overview
 
-During **Batch 3: Deep Scope Refinement**, three major feature sets were systematically extracted from the Phase 1 BRD and moved to this Phase 2 backlog. This strategic deferral allows the team to focus Phase 1 delivery on core return and warranty flows while preserving complete context for future implementation.
+During **Discussions with ClaimLane & Internal Stakeholders**, three major feature sets were systematically extracted from the Phase 1 BRD and moved to this Phase 2 backlog. This strategic deferral allows the team to focus Phase 1 delivery on core return and warranty flows while preserving complete context for future implementation.
 
 ### Deferred Features at a Glance
 
@@ -12,7 +12,7 @@ During **Batch 3: Deep Scope Refinement**, three major feature sets were systema
 |---------|-------|-----------------|---------------------|
 | **Vendors (Donation/Pickup Partners)** | Portal access for external vendors to update pickup status | 🟡 Medium - Vendors handle logistics in Phase 1 via manual workaround | 🔴 High - Requires multi-tenant auth, RBAC, data partitioning |
 | **Third-Party Vendor Integration** | Complete workflow for TSC, EQ3, Costco returns | 🔴 High - No third-party returns supported in Phase 1 | 🔴 High - Fundamental architecture gap, requires core rebuild |
-| **Bundle Refund Logic** | Automated bundle impact calculations and 50% keep option | 🟡 Medium - Manual processing workaround in Phase 1 | 🔴 High - WooCommerce limitations, custom API integration needed |
+| **Bundle Refund Logic (Future Phase)** | Automated bundle impact calculations and 50% keep option | 🟡 Medium - Manual processing workaround in Phase 1 | 🔴 High - WooCommerce limitations, custom API integration needed |
 
 ### Why These Features Were Deferred
 
@@ -59,7 +59,7 @@ All deferred features have **Phase 1 manual workarounds** to ensure zero disrupt
 
 ### Quick Reference
 
-- **Total Features Deferred:** 3
+- **Total Features Deferred:** 4 (Phase 2: Vendors, Third-Party | Future Phase: Bundles, Limits)
 - **Functional Requirements:** 13 (FR-9, FR-VENDOR-1–5, FR-TP-1–5)
 - **User Stories:** 7 (from Epics 4, 8, 11)
 - **Business Rules:** 4 (BR-1, BR-15, BR-16, BR-26)
@@ -67,11 +67,10 @@ All deferred features have **Phase 1 manual workarounds** to ensure zero disrupt
 
 ---
 
-This document contains all features, requirements, business rules, actors, and supporting artifacts that have been **deferred to Phase 2** during the deep scope refinement process.
+This document contains all features, requirements, business rules, actors, and supporting artifacts that have been **deferred to Phase 2 or a Future Phase** during the deep scope refinement process.
 
 > [!IMPORTANT]
 > **Last Updated:** 2026-02-03  
-> **Extraction Method:** Batch 3 Deep Scope Refinement  
 > All items below were systematically extracted from active BRD documents to focus Phase 1 delivery.
 
 ---
@@ -84,7 +83,8 @@ The following features have been moved to Phase 2 due to technical complexity, a
 
 1. **Vendors (Donation / Pickup Partners)** — External vendor portal access and pickup status updates
 2. **Third-Party Vendor Integration (TCS, EQ3, Costco)** — Complete workflow for third-party vendor returns
-3. **Phase 2 Refund Logic (Bundle Impact Calculations)** — Automated refund processing for orders with bundles/free items
+3. **Future Phase Refund Logic (Bundle Impact Calculations)** — Automated bundle refund processing (Future Phase)
+4. **Return Quantity Limits (Future Phase)** — Historical and per-request limits (Future Phase)
 
 ---
 
@@ -468,7 +468,7 @@ For items purchased from third-party vendors, the workflow requires vendor appro
 
 ---
 
-## 3. Phase 2 Refund Logic (Bundle Impact Calculations)
+## 3. Future Phase Refund Logic (Bundle Impact Calculations)
 
 ### Rationale for Deferral
 
@@ -496,7 +496,7 @@ When items are marked "Received" and the **net refund value is less than 600** (
 **Manual Refund (Phase 1 Constraint):**
 When items are marked "Received" and the **net refund value is 600 or greater**, OR the **order contains bundles/free items**, route the ticket to CX for manual refund processing. This is required because bundle proration logic is a **custom implementation** not standard to the platform.
 
-**Phase 2 Future:**
+**Future Phase:**
 Bundle impact calculations (WF-070→073) will enable adjusted auto-refunds for qualifying bundled orders. Until then, all orders with bundles require manual processing.
 
 **STATUS:** 🔄 Bundle auto-refund capability deferred to Phase 2. Manual processing remains in Phase 1.
@@ -594,7 +594,7 @@ Automatic refunds are strictly prohibited for any order containing bundles or fr
 **Manual Refund After Bundle Calculation (WF-071 → WF-073):**
 - If post-bundle calculation value **≥ $600**: Manual CX processing
 
-**STATUS:** 🔄 Entire Phase 2 refund logic section (WF-070→073) deferred
+**STATUS:** 🔄 Entire Future Phase refund logic section (WF-070→073) deferred
 
 ---
 
@@ -606,7 +606,7 @@ Automatic refunds are strictly prohibited for any order containing bundles or fr
 >
 > **Technical Implementation Note:** Due to WooCommerce core limitations regarding bundle structures, this step requires **custom logic** to correctly identify bundled items and apply the 50% proration logic. Standard Claimlane/WooCommerce plugins do not support this out-of-the-box.
 
-**STATUS:** 🔄 Bundle keep-option deferred to Phase 2
+**STATUS:** 🔄 Bundle keep-option deferred to Future Phase
 
 ---
 
@@ -642,6 +642,34 @@ Automatic refunds are strictly prohibited for any order containing bundles or fr
 
 ---
 
+## 4. Return Quantity Limits (Historical & Per-Request)
+
+### Rationale for Deferral
+
+The original requirement included a limit on the number of returns a customer could make for the same product type—both within a single request (max 2 units) and historically (lifetime limit). To reduce Phase 1 complexity and allow for broader return policies initially, this restriction has been moved to Future Phase. The system will currently allow customers to select items up to the purchased quantity without these specific blocks.
+
+### Functional Requirements
+
+#### FR-10 (Restriction Component) – Quantity Limit Exceeded
+- **ID:** *(Extracted from FR-10)*
+- **Description:** Prevent selection of more than two units of the same product type with a soft warning and flag the ticket for "Quantity Limit Exceeded" if over the limit.
+- **Priority:** Phase 2
+- **Dependencies:** Order history checks, logic to sum quantity across current and past returns
+
+#### FR-HIST-1 – Historical Return Limit
+- **ID:** *(New Requirement derived from business rule discussions)*
+- **Description:** "Do not allow more than 1 return of the same product type throughout the client's history."
+- **Priority:** Phase 2
+- **Dependencies:** Customer profile history, global return aggregation
+
+### Business Rules
+
+#### BR-4 – Maximum Quantity
+- **Rule:** A maximum of two units per product type may be returned in a single request; selecting more triggers a soft warning and admin flag.
+- **STATUS:** 🔄 Deferred to Phase 2
+
+---
+
 ## Appendices — Deferred Content
 
 ### Appendix D.4 — Bundles Eligibility Rules
@@ -654,7 +682,7 @@ Automatic refunds are strictly prohibited for any order containing bundles or fr
 | Returning duvet only | Eligible | Prorated refund |
 | Free sleep bundle gift | Must return gift | Or deduct gift value |
 
-**STATUS:** 🔄 Deferred to Phase 2
+**STATUS:** 🔄 Deferred to Future Phase
 
 ---
 

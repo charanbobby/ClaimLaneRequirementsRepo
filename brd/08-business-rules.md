@@ -8,7 +8,7 @@ The portal must enforce the following rules (numbered BR-1 through BR-12 plus ap
 
 - **BR-3 – Item Selection Requirement:** At least one item must be selected to proceed with a return or claim.
 
-- **BR-4 – Maximum Quantity:** A maximum of two units per product type may be returned in a single request; selecting more triggers a soft warning and admin flag.
+- **BR-4 – Maximum Quantity:** **[MOVED to Phase 2 Backlog]** *The rule limiting returns to a maximum of two units per product type has been deferred.*
 
 - **BR-5 – Complete Documentation:** A claim cannot be submitted until all required documentation (photos, measurements, lot number, description and invoice where applicable) is provided, except when customer service manually overrides.
 
@@ -36,7 +36,7 @@ The portal must enforce the following rules (numbered BR-1 through BR-12 plus ap
 
 - **BR-16 – Vendor Pickup and Status Updates:** Vendors (or Logistics team) must update mattress status to "Picked" in the portal. This status update must transition the item to **"Received"** to trigger refund logic.
 
-- **BR-17 – Furniture Return Pre-Approval:** All furniture returns require **CX Approval** (based on photos) before logistics can be arranged. On approval, the system calls the **WooCommerce service** (same as original purchase) to calculate return rates. The client must pay for the return (or have it deducted). Once settled, the portal generates labels/pickup instructions.
+- **BR-17 – Furniture Return Process:** The system must calculate and present return shipping charges (via WooCommerce service) **before** ticket submission. The customer must agree to pay the charge (or have it deducted). **Note:** Disposal pickups use the same charge as the courier rate. Once the customer accepts and submits, the ticket enters **CX Review**. Only upon **CX Approval** (of photos + charge) does the system **automatically generate** labels and pickup instructions.
 
 - **BR-18 – Accessory and Bedding Mail-In Flow:** These items follow a single-step logistics flow: Reason/Photos -> Label Generation -> Mail-in.
 
@@ -66,6 +66,8 @@ The portal must enforce the following rules (numbered BR-1 through BR-12 plus ap
 - **BR-28 – US Warehouse Offline Processing:** US warehouse (LA/NJ) status updates are processed via email to Internal Ops, not through direct portal access. The portal MUST support manual status entry by Internal Ops for US returns.
 
 - **BR-29 – Self-Donate Selection:** When the Return Logistics Team cannot secure a vendor for unboxed mattress pickup, they MUST act to select the **"Self-Donation"** option in the vendor list. This provides the customer with self-donation instructions. The customer must then complete donation, provide photo proof, and contact CX for manual return processing.
+
+- **BR-30 – Furniture Return Destinations:** When calling the shipping API for furniture returns, the system must use region-specific destinations: **Canada (CA)** returns go to **Caledonia warehouse**; **United States (US)** returns go to the **original shipping warehouse (LA or NJ)**.
 
 ## Appendix Rules
 

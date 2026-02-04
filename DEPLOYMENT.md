@@ -31,8 +31,9 @@ This repository contains the source code for the ClaimLane Requirements MkDocs s
 To review changes locally before deploying:
 
 ```sh
-mkdocs serve
+python custom_serve.py
 ```
+*Note: We use `custom_serve.py` instead of the standard `mkdocs serve` to ensure file changes are detected correctly on Windows.*
 Then open [http://127.0.0.1:8000](http://127.0.0.1:8000) in your browser.
 
 
@@ -101,5 +102,5 @@ If you edit files (e.g., adding `15-changelog.md`) but `mkdocs serve` is not sho
     ```
 3. **Restart Serve**:
     ```powershell
-    mkdocs serve
+    python custom_serve.py
     ```

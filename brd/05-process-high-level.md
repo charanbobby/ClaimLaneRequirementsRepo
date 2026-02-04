@@ -50,7 +50,7 @@
     Customer selects one or more eligible items to return. Minimum of **one item required**.
 
     > [!WARNING]
-    > **Bundle / Free Item Promotion (Phase 2):** If the item is part of a bundle or free item promotion, the customer can keep bundled/free items at **50% of full website price**; the refund is adjusted accordingly.
+    > **Bundle / Free Item Promotion (Future Phase):** If the item is part of a bundle or free item promotion, the customer can keep bundled/free items at **50% of full website price**; the refund is adjusted accordingly.
     >
     > **Technical Implementation Note:** Due to WooCommerce core limitations regarding bundle structures, this step requires **custom logic** to correctly identify bundled items and apply the 50% proration logic. Standard Claimlane/WooCommerce plugins do not support this out-of-the-box.
 
@@ -112,25 +112,24 @@ The return flow splits based on **item type** and **region**:
 
 **CA Furniture (WF-040 → WF-137):**
 
-
-
 1. Customer uploads photos and issue details (WF-069A)
-2. **CX Review & Approval** (WF-070A → WF-071A):
-    - CX reviews photos and determines eligibility
-    - If **declined** (WF-072A): Communicate decision to customer → End
-    - If **approved**: Proceed to step 3
-3. ClaimLane calls **WooCommerce API** for carrier quotes (WF-137)
+2. ClaimLane calls **WooCommerce API** for carrier quotes (WF-137)
     - **Destination**: Always **Caledonia warehouse** (CA)
-4. Notify customer of shipping charges (WF-073A)
+3. Notify customer of shipping charges (WF-073A)
     - **Note:** For disposal pickups, the charge displayed is equal to the courier pickup charge (business decision to standardize costs).
-5. Collect pickup details: access constraints, dates, address confirmation (WF-073A)
-6. Generate label and pickup instructions (WF-074A)
-7. Arrange pickup (WF-075A)
-8. Item marked as **"Received"** (WF-089)
+4. **Customer Accepts Charges & Submits Ticket** (WF-074A):
+    - Customer provides pickup details / access constraints
+    - Customer agrees to shipping costs
+    - Ticket created in **CX Review Queue**
+5. **CX Review & Approval** (WF-070A → WF-071A):
+    - CX reviews photos and eligibility
+    - If **declined** (WF-072A): Communicate decision to customer → End
+    - If **approved**:
+        - System **auto-generates label** and pickup instructions
+        - Charge is finalized/processed
+        - Item marked as **"Received"** (WF-089) once picked up
 
 **US Furniture (WF-040 → WF-138):**
-
-
 
 - Same process as CA furniture, except:
   - **Destination**: **Original order shipping warehouse** (LA or NJ) (WF-138)
@@ -472,7 +471,7 @@ Once an item is marked as **"Received"** (WF-089), the refund logic is determine
 > [!WARNING]
 > **WF-074 Technical Limitation:** We cannot implement auto-refunds when bundles or free items are involved until we fix WooCommerce, which is currently restricting ClaimLane's data access to bundle structures.
 
-#### **Phase 2 Refund Logic (Future State)**
+#### **Future Phase Refund Logic (Future State)**
 
 **Bundle Impact Calculation (WF-070):**
 

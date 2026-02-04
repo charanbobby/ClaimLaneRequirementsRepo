@@ -98,7 +98,7 @@ This document outlines the high-level epics and user stories supporting the Clai
 
 1. All items in the order are displayed with: name, type, quantity, and category.
 2. Each item shows an eligibility state derived from:
-    * Product category and time since purchase.
+    * Product category and time since delivery.
     * Channel (web, retail, POS, third-party).
     * Condition flags (final sale, already returned).
 3. Items that are not eligible are clearly marked and cannot be selected.
@@ -112,10 +112,10 @@ This document outlines the high-level epics and user stories supporting the Clai
 **Acceptance Criteria**
 
 1. Mattresses:
-    * Eligible up to 365 nights; show “early return” warning if under configured trial nights (e.g., <30).
+    * Eligible up to 365 nights from delivery date; show “early return” warning if under configured trial nights (e.g., <30).
     * Not eligible beyond 365 nights; portal blocks the return.
-2. Furniture: eligible up to 30 days; not eligible afterwards.
-3. Bedding, Bath, Accessories, Toppers: eligible up to 100 nights; not eligible afterwards.
+2. Furniture: eligible up to 30 days from delivery date; not eligible afterwards.
+3. Bedding, Bath, Accessories, Toppers: eligible up to 100 nights from delivery date; not eligible afterwards.
 4. Custom Hybrid Mattress: never eligible for return (warranty only).
 
 ---
@@ -174,7 +174,7 @@ This document outlines the high-level epics and user stories supporting the Clai
 
 ### US-4.2 Free / Bundled Item “Keep at Discount” Option
 
-> *As a customer with a bundle or free item, I want the option to keep certain items at a discounted price when returning the main item.*
+> *As a customer with a bundle or free item, I want the option to keep certain items at a discounted price when returning the main item. (Future Phase)*
 
 **Acceptance Criteria**
 
@@ -257,17 +257,22 @@ This document outlines the high-level epics and user stories supporting the Clai
 
 **Acceptance Criteria**
 
-1. Step 1: Customer uploads required photos and description; request is sent to CX queue.
-2. CX can approve, decline, or request more info.
-3. Approved → Step 2:
+1. **Quote & Acceptance (Step 1):**
+    - Customer uploads required photos and description.
     - System calls **WooCommerce API** for carrier rates with region-specific destinations:
         - **Canada:** Caledonia warehouse address (WF-137)
         - **United States:** Original order shipping warehouse - LA or NJ (WF-138)
     - Customer is notified of shipping charges.
-    - *Note:* If the pickup type is "Disposal", the system charges the same amount as a courier pickup (standardized fee).
-    - Customer provides access constraints, pickup dates, and contact info.
-    - Portal generates carrier/pickup instructions.
-4. Declined → customer sees clear messaging and available alternatives (if any).
+        - *Note:* If the pickup is for "Disposal", the system charges the same amount as a courier pickup.
+    - Customer **accepts charges** and provides access constraints/pickup dates.
+    - Customer submits ticket.
+2. **CX Review & Auto-Label (Step 2):**
+    - Request is sent to CX queue (WF-070A).
+    - CX can approve, decline, or request more info.
+    - **Approved:**
+        - System **automatically generates** carrier/pickup instructions and label.
+    - **Declined:**
+        - Customer sees clear messaging and available alternatives.
 
 ---
 
@@ -302,7 +307,7 @@ This document outlines the high-level epics and user stories supporting the Clai
 
 **Acceptance Criteria**
 
-1. Warranty eligibility is checked against warranty periods (e.g., mattresses 15 years, adjustable beds 10, furniture/sofa 5, pillows/toppers 3, bedding/bath/accessories 1).
+1. Warranty eligibility is checked against warranty periods starting from the delivery date (e.g., mattresses 15 years, adjustable beds 10, furniture/sofa 5, pillows/toppers 3, bedding/bath/accessories 1).
 2. Claims beyond the warranty period are blocked with a clear message.
 
 ---
@@ -441,7 +446,7 @@ This document outlines the high-level epics and user stories supporting the Clai
 
 ### UPDATED: US-6.3 Accessories, Bedding & Bath: Region-Specific Flow
 
-> *Note: This story was updated to include region-specific US accessory abuse prevention logic.*
+> *Note: This story was updated to include region-specific US accessory return cost optimization logic.*
 
 **NEW Acceptance Criteria**
 
@@ -469,15 +474,16 @@ This document outlines the high-level epics and user stories supporting the Clai
 
 **Acceptance Criteria**
 
-1. After CX approval (Step 1), system determines customer region from order metadata.
+1. After customer uploads items (Step 1), system determines customer region from order metadata.
 2. System calls WooCommerce API for live carrier rates:
     - **Canada (CA):** API destination is always Caledonia warehouse address (WF-137).
     - **United States (US):** API destination is the original order's shipping warehouse (LA or NJ) (WF-138).
-3. Customer is notified of shipping charges based on region-specific calculation.
+3. Customer is notified of shipping charges.
     - *Note:* For disposal pickups, the charge is set to match the courier pickup rate.
-4. Access constraints and pickup dates are collected.
-5. Label/instructions are generated with correct destination address.
-6. This ensures US returns go back to origin, not to Canadian warehouse.
+4. Customer **accepts charges** and provides pickup details.
+5. Customer submits ticket for **CX Review**.
+6. Upon CX Approval, label/instructions are **automatically generated**.
+7. This ensures US returns go back to origin, not to Canadian warehouse.
 
 ---
 
@@ -554,7 +560,7 @@ This document outlines the high-level epics and user stories supporting the Clai
 
 **UPDATED Acceptance Criteria**
 
-1. Once an item is marked "Received," system uses **RecRouter** decision point to determine flow context (line 233 in diagram):
+1. Once an item is marked "Received," system uses **Refund Context Routing** decision point to determine flow context (line 233 in diagram):
     - **Return:** Apply auto/manual refund logic below (WF-067→068/069).
     - **Warranty:** Trigger replacement order creation (WCX flow).
     - **Third-Party:** Email vendor for refund processing (WF-016).
@@ -579,7 +585,7 @@ This document outlines the high-level epics and user stories supporting the Clai
 
 7. Customer is notified whether refund is automatic or under review.
 
-8. **Phase 2 Note:** Bundle impact calculations (WF-070→073) will enable adjusted auto-refunds for qualifying bundled orders.
+8. **Future Phase Note:** Bundle impact calculations (WF-070→073) will enable adjusted auto-refunds for qualifying bundled orders.
 
 9. **Warehouse Routing (Dest_Check):** After refund processing, system routes to appropriate warehouse using destination check (WF-239):
     - **CA Destinations:** Route to Caledonia workflow (R1→R2→R4→R5).
