@@ -666,6 +666,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#product-onboarding-removal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Product Onboarding &amp; Removal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#discussion" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1105,6 +1116,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#product-onboarding-removal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Product Onboarding &amp; Removal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#discussion" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1224,7 +1246,7 @@
 <li><strong>Mattress (Unboxed):</strong> Collect condition and donation eligibility. <strong>Do not send photos to the vendor.</strong> The <strong>Return Logistics Manager</strong> must manually select a donation or pickup vendor. Supporting <strong>Vendor Change</strong> functionality is required, which must trigger updated emails to the new vendor and customer. If no vendor is available, offer the customer a self-donation option (see FR-38).</li>
 <li><strong>Furniture:</strong> Implement a flow where:<ol>
 <li>Customer uploads photos/details.</li>
-<li>System calls <strong>WooCommerce API</strong> for live carrier rates (Destination: <strong>CA → Caledonia</strong>, <strong>US → Original Warehouse</strong>).</li>
+<li>System calls <strong>WooCommerce API</strong> for live carrier rates (Destination: <strong>CA → Caledonia</strong> (WF-137), <strong>US → Original Warehouse LA/NJ from order metadata</strong> (WF-138)).</li>
 <li><strong>Charge Logic:</strong> If the pickup is for disposal, apply the courier rate charge (standardized business decision).</li>
 <li>Customer <strong>accepts charges</strong> and provides pickup details to submit the ticket.</li>
 <li><strong>CX Review &amp; Approval:</strong> CX reviews the submitted ticket (photos + agreed charge).</li>
@@ -1343,13 +1365,6 @@
 </ul>
 </li>
 <li>
-<p><strong>FR-40 – Region-Specific Furniture Destinations:</strong> For furniture returns requiring shipping rate calculation, call the WooCommerce API with region-specific destination addresses:</p>
-<ul>
-<li><strong>Canada (CA):</strong> Always use Caledonia warehouse address as destination (WF-137).</li>
-<li><strong>United States (US):</strong> Use the original order's shipping warehouse address (LA or NJ) as destination, determined from order metadata (WF-138).</li>
-</ul>
-</li>
-<li>
 <p><strong>FR-41 – Destination-Based Warehouse Routing:</strong> After refund processing is complete, route the item to the appropriate warehouse workflow based on destination:</p>
 <ul>
 <li><strong>CA Destinations:</strong> Route to Caledonia warehouse workflow (WF-090→091→092→093).</li>
@@ -1357,12 +1372,116 @@
 </ul>
 </li>
 </ul>
+<h2 id="product-onboarding-removal">Product Onboarding &amp; Removal</h2>
+<ul>
+<li>
+<p><strong>FR-42 – Product Onboarding via Excel Upload:</strong> Provide an admin-accessible interface for onboarding new products into the ClaimLane portal via Excel file upload. The Excel file must contain one row per product (or product variant) with the following fields:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Required</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">SKU</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Unique product identifier (must match WooCommerce SKU)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Product Name</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Display name</td>
+</tr>
+<tr>
+<td style="text-align: left;">Category</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Must match an existing product category (Mattress, Furniture, Bedding, Bath, Accessories)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Subcategory</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">e.g., Adjustable Bed, Upholstered Frame, Percale Bedding</td>
+</tr>
+<tr>
+<td style="text-align: left;">Final Sale</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Yes/No — blocks returns when Yes</td>
+</tr>
+<tr>
+<td style="text-align: left;">Fallback Weight (kg)</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Used for label generation when WooCommerce master data is missing (FR-19)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Fallback Dimensions (LxWxH cm)</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Used for label generation when WooCommerce master data is missing</td>
+</tr>
+<tr>
+<td style="text-align: left;">Warranty Only</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Yes/No — if Yes, product is not eligible for returns (e.g., Custom Hybrid Mattress)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Region</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">CA / US / BOTH</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Replacement Parts Sheet (optional):</strong> For products with warranty replacement parts (e.g., furniture sub-components), a second sheet may define parent-child relationships:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Required</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Parent SKU</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">The main product SKU</td>
+</tr>
+<tr>
+<td style="text-align: left;">Part SKU</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">The replacement part SKU</td>
+</tr>
+<tr>
+<td style="text-align: left;">Part Name</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Display name (e.g., "Drawer – Top Left")</td>
+</tr>
+</tbody>
+</table>
+<p>The system must:</p>
+<ul>
+<li>Validate all rows before committing: reject unknown categories, duplicate SKUs, missing required fields.</li>
+<li>Display a preview of parsed rows with row-level errors highlighted.</li>
+<li>Require admin confirmation before saving to the product configuration store.</li>
+<li>Log the upload event (who, when, file name, row count) for audit.</li>
+</ul>
+</li>
+<li>
+<p><strong>FR-43 – Product Removal:</strong> Allow an admin to remove (deactivate) a product from the portal. In the MVP, removal may be initiated via email request to the system administrator. The administrator performs a soft-delete (marks the product inactive). Deactivated products must:</p>
+<ul>
+<li>No longer appear as eligible in customer-facing item displays.</li>
+<li>Remain visible in historical ticket data and reports.</li>
+<li>Trigger a warning showing the count of active/open tickets referencing the product before deactivation is confirmed.</li>
+</ul>
+</li>
+<li>
+<p><strong>FR-44 – Product Configuration Listing:</strong> Provide a read-only admin view listing all onboarded products with: SKU, name, category, region, final sale flag, warranty-only flag, and status (active/inactive). Support search by SKU or product name and filtering by category, region, or status.</p>
+<p><strong>Future State:</strong> Replace Excel upload and email-based removal with a direct real-time sync to WooCommerce and external product catalogue systems, eliminating manual file handling entirely.</p>
+</li>
+</ul>
 <hr />
 <h2 id="discussion">Discussion</h2>
-<blockquote>
-<p>💬 <strong>Comments for this page are available in Giscus.</strong><br />
-Once Giscus is configured, the discussion thread for this page will appear here.</p>
-</blockquote>
 <div class="giscus-placeholder"></div>
 
 

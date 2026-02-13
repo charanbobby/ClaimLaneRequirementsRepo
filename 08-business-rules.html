@@ -950,7 +950,7 @@
 <p><strong>BR-4 – Maximum Quantity:</strong> <strong>[MOVED to Phase 2 Backlog]</strong> <em>The rule limiting returns to a maximum of two units per product type has been deferred.</em></p>
 </li>
 <li>
-<p><strong>BR-5 – Complete Documentation:</strong> A claim cannot be submitted until all required documentation (photos, measurements, lot number, description and invoice where applicable) is provided, except when customer service manually overrides.</p>
+<p><strong>BR-5 – Complete Documentation:</strong> A claim cannot be submitted until 100% of required documentation (photos, measurements, lot number, description and invoice where applicable) is provided and validated at submission, except when customer service manually overrides. <em>(Consolidates former A-1 and BR-10.)</em></p>
 </li>
 <li>
 <p><strong>BR-6 – Freight &amp; Oversize:</strong> Freight or oversize rules apply for furniture, adjustable beds and oversized items; the system must enforce a <strong>CX Pre-Approval</strong> step before any labels are generated or pickups arranged.</p>
@@ -965,9 +965,6 @@
 <p><strong>BR-9 – Warranty Check:</strong> Warranty claims remain available even after the return window has closed.</p>
 </li>
 <li>
-<p><strong>BR-10 – Documentation Validation:</strong> Uploaded documentation must be validated at submission to ensure that all required fields are present.</p>
-</li>
-<li>
 <p><strong>BR-11 – Return Reason Mapping:</strong> Refunds must use the mapped WooCommerce reason for reporting and processing.</p>
 </li>
 <li>
@@ -977,11 +974,8 @@
 <p><strong>BR-13 – Retail Store Backend Detection:</strong> When a customer selects "Silk &amp; Snow Retail Store," the portal must lookup the backend:</p>
 <ul>
 <li><strong>Shopify POS:</strong> Route to standard Shopify flow.</li>
-<li><strong>STORIS:</strong> Block online return; show "In-store return only" message.</li>
+<li><strong>STORIS:</strong> Block online return; show "In-store return only" message. No tickets, labels, or refunds are generated in the portal.</li>
 </ul>
-</li>
-<li>
-<p><strong>BR-14 – STORIS Store Returns:</strong> For STORIS stores, the portal displays an "In-store return only" message and does not allow online returns. No tickets, labels, or refunds are generated in the portal.</p>
 </li>
 <li>
 <p><strong>BR-15 – Bundle / Free Item 50% Keep Rule:</strong> When a bundle item is returned and the customer keeps the bundled/free item, the customer pays <strong>50% of the full website price</strong> for the kept item. The refund is adjusted (prorated) to reflect this charge and the decision is recorded on the ticket. <strong>Note:</strong> This requires custom code integration to bridge the WooCommerce data structure with the portal.</p>
@@ -1038,12 +1032,7 @@
 </ul>
 <h2 id="appendix-rules">Appendix Rules</h2>
 <ul>
-<li>
-<p><strong>A-1 – 100% Documentation:</strong> A claim cannot be submitted unless 100% of required documentation is provided (except for manual overrides).</p>
-</li>
-<li>
-<p><strong>B-1 – Reason Inheritance:</strong> Each subcategory inherits the return reasons and mappings exactly as provided in the source tables.</p>
-</li>
+<li><strong>B-1 – Reason Inheritance:</strong> Each subcategory inherits the return reasons and mappings exactly as provided in the source tables.</li>
 </ul>
 <hr />
 <h2 id="discussion">Discussion</h2>

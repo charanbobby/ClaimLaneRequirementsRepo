@@ -1866,50 +1866,36 @@
 <h3 id="9-return-logistics-management-wf-059065a-wf-064063a">9. <strong>Return Logistics Management (WF-059/065A → WF-064/063A)</strong></h3>
 <p>For <strong>unboxed mattresses</strong>, <strong>oversized items</strong>, and items requiring <strong>disposal pickup</strong>, the <strong>Return Logistics Team</strong> manages vendor coordination:</p>
 <ol>
-<li>
-<p><strong>Vendor Selection (WF-059/065A):</strong></p>
+<li><strong>Vendor Selection (WF-059/065A):</strong><ul>
+<li>Return Logistics Manager manually selects a <strong>donation or pickup vendor</strong></li>
+<li><strong>Photos are NOT sent to vendors</strong> for unboxed mattresses</li>
+</ul>
 </li>
-<li>
-<p>Return Logistics Manager manually selects a <strong>donation or pickup vendor</strong></p>
+<li><strong>Vendor Assignment Outcomes:</strong><ul>
+<li><strong>Vendor Selected</strong>: Trigger emails to vendor and customer (WF-061/066)</li>
+<li><strong>No Vendor Available (Self-Donation)</strong>: Manger selects <strong>"Self-Donation"</strong> (WF-130)</li>
+</ul>
 </li>
-<li>
-<p><strong>Photos are NOT sent to vendors</strong> for unboxed mattresses</p>
-</li>
-<li>
-<p><strong>Vendor Assignment Outcomes:</strong></p>
-</li>
-<li>
-<p><strong>Vendor Selected</strong>: Trigger emails to vendor and customer (WF-061/066)</p>
-</li>
-<li>
-<p><strong>No Vendor Available (Self-Donation)</strong>: Manger selects <strong>"Self-Donation"</strong> (WF-130)</p>
-</li>
-<li>
-<p><strong>Vendor Change Management (WF-062/067A):</strong></p>
-</li>
-<li>
-<p>If vendor needs to be changed (WF-062/067A → WF-063/068A):</p>
-<ul>
+<li><strong>Vendor Change Management (WF-062/067A):</strong><ul>
+<li>If vendor needs to be changed (WF-062/067A → WF-063/068A):<ul>
 <li>Select new vendor</li>
 <li>Trigger updated email notifications to new vendor and customer</li>
 </ul>
 </li>
-<li>
-<p><strong>Pickup Confirmation (WF-064/063A):</strong></p>
+</ul>
 </li>
-<li>
-<p>Vendor picks up item; Status is auto-updated to <strong>"Picked"</strong> via Courier API</p>
+<li><strong>Pickup Confirmation (WF-064/063A):</strong><ul>
+<li>Vendor picks up item; Status is auto-updated to <strong>"Picked"</strong> via Courier API</li>
+</ul>
 </li>
-<li>
-<p><strong>Self-Donation Flow (WF-130 → WF-132):</strong></p>
-</li>
-<li>
-<p>When "Self-Donation" is selected:</p>
-<ul>
+<li><strong>Self-Donation Flow (WF-130 → WF-132):</strong><ul>
+<li>When "Self-Donation" is selected:<ul>
 <li>Customer receives specific email instructions</li>
 <li>Customer donates item themselves and takes photo as proof</li>
 <li>Customer contacts <strong>CX Team</strong> (call or email)</li>
 <li>CX manually processes return in ClaimLane portal (WF-132)</li>
+</ul>
+</li>
 </ul>
 </li>
 </ol>
@@ -1920,12 +1906,10 @@
 <ol>
 <li>
 <p><strong>Display Order Items with Replacement Parts (WF-052):</strong></p>
-</li>
-<li>
-<p>System displays all items in the order</p>
-</li>
+<ul>
+<li>System displays all items in the order</li>
 <li><strong>Replacement parts shown with product context</strong></li>
-</ol>
+</ul>
 <blockquote>
 <p>[!NOTE]
 <strong>Example – Nara Wooden Dresser (5-Drawer, Cortado)</strong></p>
@@ -1937,90 +1921,70 @@
 - Stain &amp; Brush | SNSFNWO5000ACST
 - Stain &amp; Brush | SNSFNS5000TST</p>
 </blockquote>
-<ol>
-<li>
-<p><strong>Customer Selects Item or Replacement Part (WF-053):</strong></p>
 </li>
 <li>
-<p>Customer chooses the defective product or specific sub-part (e.g., drawer, screw)</p>
+<p><strong>Customer Selects Item or Replacement Part (WF-053):</strong></p>
+<ul>
+<li>Customer chooses the defective product or specific sub-part (e.g., drawer, screw)</li>
+</ul>
 </li>
 </ol>
 <h4 id="10b-documentation-submission-wf-054-wf-055"><strong>10B. Documentation &amp; Submission (WF-054 → WF-055)</strong></h4>
 <ol>
-<li>
-<p><strong>Collect Additional Information (WF-054):</strong></p>
-</li>
-<li>
-<p>Issue description</p>
-</li>
+<li><strong>Collect Additional Information (WF-054):</strong><ul>
+<li>Issue description</li>
 <li>Photos of defect</li>
 <li>Pickup assistance needed (Yes/No)</li>
-<li>
-<p>Address confirmation</p>
+<li>Address confirmation</li>
+</ul>
 </li>
-<li>
-<p><strong>Submit Warranty Case (WF-055):</strong></p>
-</li>
-<li>
-<p>Case submitted to ClaimLane with selected part SKUs, evidence, and notes</p>
+<li><strong>Submit Warranty Case (WF-055):</strong><ul>
+<li>Case submitted to ClaimLane with selected part SKUs, evidence, and notes</li>
+</ul>
 </li>
 </ol>
 <h4 id="10c-cx-review-approval-wf-052b-wf-052d"><strong>10C. CX Review &amp; Approval (WF-052B → WF-052D)</strong></h4>
 <ol>
-<li>
-<p><strong>CX Reviews Submission (WF-052B):</strong></p>
+<li><strong>CX Reviews Submission (WF-052B):</strong><ul>
+<li>CX team validates photos and part selection</li>
+</ul>
 </li>
-<li>
-<p>CX team validates photos and part selection</p>
-</li>
-<li>
-<p><strong>CX Approval Decision (WF-052C):</strong></p>
-</li>
-<li>
-<p><strong>Declined (WF-052D)</strong>: Communicate decline and next steps to customer → End</p>
-</li>
+<li><strong>CX Approval Decision (WF-052C):</strong><ul>
+<li><strong>Declined (WF-052D)</strong>: Communicate decline and next steps to customer → End</li>
 <li><strong>Approved</strong>: Proceed to pickup logic</li>
+</ul>
+</li>
 </ol>
 <h4 id="10d-pickup-assistance-wf-052f-wf-052i"><strong>10D. Pickup Assistance (WF-052F → WF-052I)</strong></h4>
 <ol>
-<li>
-<p><strong>Pickup Assistance Check (WF-052F):</strong></p>
-</li>
-<li>
-<p>Does customer need pickup assistance?</p>
-<ul>
+<li><strong>Pickup Assistance Check (WF-052F):</strong><ul>
+<li>Does customer need pickup assistance?<ul>
 <li><strong>No</strong>: Skip to replacement order placement (WF-056)</li>
 <li><strong>Yes</strong>: Proceed to pickup type selection</li>
 </ul>
 </li>
-<li>
-<p><strong>Pickup Type Selection (WF-052H):</strong></p>
+</ul>
 </li>
-<li>
-<p><strong>Courier Pickup (WF-052G):</strong></p>
-<ul>
+<li><strong>Pickup Type Selection (WF-052H):</strong><ul>
+<li><strong>Courier Pickup (WF-052G):</strong><ul>
 <li>CX provides pickup assistance (coordination + guidance)</li>
 <li>Generate return label with <strong>"Defective"</strong> wording (helps warehouse avoid inspection)</li>
-<li>
-<p><strong>Disposal Pickup (WF-052I):</strong></p>
+</ul>
 </li>
-<li>
-<p>Log case for <strong>Return Logistics Team</strong> (routes to WF-059/065A vendor selection)</p>
+<li><strong>Disposal Pickup (WF-052I):</strong><ul>
+<li>Log case for <strong>Return Logistics Team</strong> (routes to WF-059/065A vendor selection)</li>
+</ul>
 </li>
 </ul>
 </li>
 </ol>
 <h4 id="10e-replacement-order-closure-wf-056-wf-058"><strong>10E. Replacement Order &amp; Closure (WF-056 → WF-058)</strong></h4>
 <ol>
-<li>
-<p><strong>CX Places Replacement Order (WF-056):</strong></p>
+<li><strong>CX Places Replacement Order (WF-056):</strong><ul>
+<li>CX creates replacement order in WooCommerce using <strong>approved replacement part SKUs</strong></li>
+</ul>
 </li>
-<li>
-<p>CX creates replacement order in WooCommerce using <strong>approved replacement part SKUs</strong></p>
-</li>
-<li>
-<p><strong>Close Case (WF-058):</strong></p>
-<ul>
+<li><strong>Close Case (WF-058):</strong><ul>
 <li>Case marked complete after replacement order is placed</li>
 </ul>
 </li>
@@ -2035,104 +1999,82 @@
 <p>For items purchased from third-party vendors, the workflow requires vendor approval and coordination:</p>
 <h4 id="11a-vendor-selection-evidence-wf-005-wf-007"><strong>11A. Vendor Selection &amp; Evidence (WF-005 → WF-007)</strong></h4>
 <ol>
-<li>
-<p><strong>Select Third-Party Vendor (WF-005):</strong></p>
-</li>
-<li>
-<p>Customer chooses vendor: TSC, EQ3, or Costco</p>
+<li><strong>Select Third-Party Vendor (WF-005):</strong><ul>
+<li>Customer chooses vendor: TSC, EQ3, or Costco</li>
+</ul>
 </li>
 <li>
 <p><strong>Collect Required Evidence (WF-006):</strong></p>
-</li>
-<li>
-<p>Receipt</p>
-</li>
+<ul>
+<li>Receipt</li>
 <li>Photos</li>
 <li>Law tags</li>
 <li>Other vendor-specific documentation</li>
-</ol>
+</ul>
 <blockquote>
 <p>[!NOTE]
 <strong>WF-017:</strong> Exact evidence requirements to be confirmed per vendor (TSC/EQ3).</p>
 </blockquote>
-<ol>
-<li>
-<p><strong>Log Action Item (WF-007):</strong></p>
 </li>
 <li>
-<p>Create ticket in ClaimLane: <em>"Third-party vendor review required"</em></p>
+<p><strong>Log Action Item (WF-007):</strong></p>
+<ul>
+<li>Create ticket in ClaimLane: <em>"Third-party vendor review required"</em></li>
+</ul>
 </li>
 </ol>
 <h4 id="11b-vendor-notification-approval-wf-008-wf-010"><strong>11B. Vendor Notification &amp; Approval (WF-008 → WF-010)</strong></h4>
 <ol>
-<li>
-<p><strong>Send Vendor Email Notification (WF-008):</strong></p>
+<li><strong>Send Vendor Email Notification (WF-008):</strong><ul>
+<li>System automatically emails vendor with ticket details</li>
+</ul>
 </li>
-<li>
-<p>System automatically emails vendor with ticket details</p>
-</li>
-<li>
-<p><strong>Vendor Approval Decision (WF-009):</strong></p>
-</li>
-<li>
-<p><strong>Vendor Declines (WF-010):</strong></p>
-<ul>
+<li><strong>Vendor Approval Decision (WF-009):</strong><ul>
+<li><strong>Vendor Declines (WF-010):</strong><ul>
 <li>Communicate vendor decision and next steps to customer → End (WF-060)</li>
-<li>
-<p><strong>Vendor Approves:</strong></p>
+</ul>
 </li>
-<li>
-<p>Proceed to pickup assistance check</p>
+<li><strong>Vendor Approves:</strong><ul>
+<li>Proceed to pickup assistance check</li>
+</ul>
 </li>
 </ul>
 </li>
 </ol>
 <h4 id="11c-pickup-assistance-wf-011-wf-011b"><strong>11C. Pickup Assistance (WF-011 → WF-011B)</strong></h4>
 <ol>
-<li>
-<p><strong>Pickup Assistance Check (WF-011):</strong></p>
-</li>
-<li>
-<p>Does customer need pickup assistance or defective item removal?</p>
-<ul>
+<li><strong>Pickup Assistance Check (WF-011):</strong><ul>
+<li>Does customer need pickup assistance or defective item removal?<ul>
 <li><strong>No (WF-013):</strong> Customer proceeds with vendor's own instructions (no CX coordination)</li>
 <li><strong>Yes (WF-011A):</strong> Determine pickup type</li>
 </ul>
 </li>
-<li>
-<p><strong>Pickup Type Selection (WF-011A):</strong></p>
+</ul>
 </li>
-<li>
-<p><strong>Courier Pickup (WF-012):</strong></p>
-<ul>
+<li><strong>Pickup Type Selection (WF-011A):</strong><ul>
+<li><strong>Courier Pickup (WF-012):</strong><ul>
 <li>CX provides pickup assistance (coordination + guidance)</li>
 <li>Generate return label</li>
-<li>
-<p><strong>Disposal Pickup (WF-011B):</strong></p>
+</ul>
 </li>
-<li>
-<p>Log for <strong>Return Logistics Team</strong> (routes to WF-059/065A)</p>
+<li><strong>Disposal Pickup (WF-011B):</strong><ul>
+<li>Log for <strong>Return Logistics Team</strong> (routes to WF-059/065A)</li>
+</ul>
 </li>
 </ul>
 </li>
 </ol>
 <h4 id="11d-confirmation-processing-wf-014-wf-016"><strong>11D. Confirmation &amp; Processing (WF-014 → WF-016)</strong></h4>
 <ol>
-<li>
-<p><strong>Pickup Confirmed/Scheduled (WF-014):</strong></p>
+<li><strong>Pickup Confirmed/Scheduled (WF-014):</strong><ul>
+<li>Pickup arranged and confirmed with customer</li>
+</ul>
 </li>
-<li>
-<p>Pickup arranged and confirmed with customer</p>
+<li><strong>Item Received (WF-015):</strong><ul>
+<li>Confirm receipt of returned item</li>
+</ul>
 </li>
-<li>
-<p><strong>Item Received (WF-015):</strong></p>
-</li>
-<li>
-<p>Confirm receipt of returned item</p>
-</li>
-<li>
-<p><strong>Vendor Refund Notification (WF-016):</strong></p>
-<ul>
+<li><strong>Vendor Refund Notification (WF-016):</strong><ul>
 <li>Email vendor: <em>"Proceed with return / refund"</em></li>
 <li>If item routed to Caledonia, warehouse team updates status (WF-090 → WF-093)</li>
 <li>Case closed (WF-060)</li>
@@ -2194,63 +2136,39 @@
 <h3 id="14-warehouse-processing-inventory-reconciliation">14. <strong>Warehouse Processing &amp; Inventory Reconciliation</strong></h3>
 <h4 id="ca-warehouse-caledonia-direct-portal-access-wf-090-wf-093"><strong>CA Warehouse (Caledonia) – Direct Portal Access (WF-090 → WF-093)</strong></h4>
 <ol>
-<li>
-<p><strong>Return Delivered to Caledonia (WF-090)</strong></p>
+<li><strong>Return Delivered to Caledonia (WF-090)</strong></li>
+<li><strong>Caledonia Team Updates Status (WF-091):</strong><ul>
+<li>Team has <strong>limited-access portal role</strong></li>
+<li>Updates status directly in ClaimLane portal (WF-092)</li>
+<li>Status transition: <strong>Delivered → Processing → Inspection Completed</strong></li>
+</ul>
 </li>
-<li>
-<p><strong>Caledonia Team Updates Status (WF-091):</strong></p>
-</li>
-<li>
-<p>Team has <strong>limited-access portal role</strong></p>
-</li>
-<li>
-<p>Updates status directly in ClaimLane portal (WF-092)</p>
-</li>
-<li>
-<p>Status transition: <strong>Delivered → Processing → Inspection Completed</strong></p>
-</li>
-<li>
-<p><strong>Store Ops Inventory Update (WF-093):</strong></p>
-</li>
-<li>
-<p>Store Ops team runs <strong>"Returned items" report</strong> from portal</p>
-</li>
+<li><strong>Store Ops Inventory Update (WF-093):</strong><ul>
+<li>Store Ops team runs <strong>"Returned items" report</strong> from portal</li>
 <li>Report used to update inventory and reconcile returned goods</li>
+</ul>
+</li>
 </ol>
 <h4 id="us-warehouse-la-nj-offline-email-based-process-wf-133-wf-136"><strong>US Warehouse (LA / NJ) – Offline Email-Based Process (WF-133 → WF-136)</strong></h4>
 <ol>
-<li>
-<p><strong>Return Delivered to US Warehouse (WF-133)</strong></p>
+<li><strong>Return Delivered to US Warehouse (WF-133)</strong><ul>
+<li>Item arrives at Los Angeles or New Jersey warehouse</li>
+</ul>
 </li>
-<li>
-<p>Item arrives at Los Angeles or New Jersey warehouse</p>
+<li><strong>US Warehouse Emails Status (WF-134):</strong><ul>
+<li>US warehouse team has <strong>NO direct portal access</strong></li>
+<li>Team emails return status updates to <strong>Internal Ops team</strong> (offline to ClaimLane)</li>
+</ul>
 </li>
-<li>
-<p><strong>US Warehouse Emails Status (WF-134):</strong></p>
+<li><strong>Internal Ops Updates Portal (WF-135):</strong><ul>
+<li>Internal Ops team manually updates ClaimLane portal</li>
+<li>Status transition: <strong>Delivered → Processing → Inspection Completed</strong></li>
+</ul>
 </li>
-<li>
-<p>US warehouse team has <strong>NO direct portal access</strong></p>
-</li>
-<li>
-<p>Team emails return status updates to <strong>Internal Ops team</strong> (offline to ClaimLane)</p>
-</li>
-<li>
-<p><strong>Internal Ops Updates Portal (WF-135):</strong></p>
-</li>
-<li>
-<p>Internal Ops team manually updates ClaimLane portal</p>
-</li>
-<li>
-<p>Status transition: <strong>Delivered → Processing → Inspection Completed</strong></p>
-</li>
-<li>
-<p><strong>Internal Ops Inventory Update (WF-136):</strong></p>
-</li>
-<li>
-<p>Internal Ops runs <strong>"Returned items" report</strong></p>
-</li>
-<li>
-<p>Report used for US inventory reconciliation</p>
+<li><strong>Internal Ops Inventory Update (WF-136):</strong><ul>
+<li>Internal Ops runs <strong>"Returned items" report</strong></li>
+<li>Report used for US inventory reconciliation</li>
+</ul>
 </li>
 </ol>
 <blockquote>
@@ -2262,10 +2180,6 @@
 <p><img alt="Process Flow" src="assets/WorkFlow.png" /></p>
 <hr />
 <h2 id="discussion">Discussion</h2>
-<blockquote>
-<p>💬 <strong>Comments for this page are available in Giscus.</strong><br />
-Once Giscus is configured, the discussion thread for this page will appear here.</p>
-</blockquote>
 <div class="giscus-placeholder"></div>
 
 
