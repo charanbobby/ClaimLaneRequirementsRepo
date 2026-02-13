@@ -16,25 +16,16 @@
 - Multi-language capability (French and English).
 - **Automatic defective reason routing to warranty flow with customer opt-out mechanism.**
 
-
-
 - **US accessory return cost optimization with multi-tier keep/donate offers (50% keep, 100% donate with proof).**
-
-
 
 - **Self-donation fallback for unboxed mattresses when vendor unavailable.**
 
-
-
 - **Offline US warehouse status updates via Internal Ops team (LA/NJ warehouses).**
-
-
 
 - **Region-specific furniture return logistics (CA - Caledonia warehouse, US - Original shipping warehouse).**
 
-
-
 - **Warranty and third-party pickup logistics splits (courier vs. disposal).**
+- **Product onboarding via Excel upload and product removal (MVP); future state: direct sync with WooCommerce and external catalogues.**
 
 ### Product Categories
 
@@ -65,21 +56,8 @@
 
 ## Out of Scope
 
-
 ---
 
 ## Discussion
 
-> ?? **Comments for this page are available in Giscus.**  
-> Once Giscus is configured, the discussion thread for this page will appear here.
-
 <div class="giscus-placeholder"></div>
-
- 
- 
- 
- 
- 
- 
- 
- 

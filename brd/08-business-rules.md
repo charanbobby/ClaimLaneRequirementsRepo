@@ -1,4 +1,4 @@
-﻿# Business Rules
+# Business Rules
 
 The portal must enforce the following rules (numbered BR-1 through BR-12 plus appendix rules).
 
@@ -10,7 +10,7 @@ The portal must enforce the following rules (numbered BR-1 through BR-12 plus ap
 
 - **BR-4 – Maximum Quantity:** **[MOVED to Phase 2 Backlog]** *The rule limiting returns to a maximum of two units per product type has been deferred.*
 
-- **BR-5 – Complete Documentation:** A claim cannot be submitted until all required documentation (photos, measurements, lot number, description and invoice where applicable) is provided, except when customer service manually overrides.
+- **BR-5 – Complete Documentation:** A claim cannot be submitted until 100% of required documentation (photos, measurements, lot number, description and invoice where applicable) is provided and validated at submission, except when customer service manually overrides. *(Consolidates former A-1 and BR-10.)*
 
 - **BR-6 – Freight & Oversize:** Freight or oversize rules apply for furniture, adjustable beds and oversized items; the system must enforce a **CX Pre-Approval** step before any labels are generated or pickups arranged.
 
@@ -20,17 +20,13 @@ The portal must enforce the following rules (numbered BR-1 through BR-12 plus ap
 
 - **BR-9 – Warranty Check:** Warranty claims remain available even after the return window has closed.
 
-- **BR-10 – Documentation Validation:** Uploaded documentation must be validated at submission to ensure that all required fields are present.
-
 - **BR-11 – Return Reason Mapping:** Refunds must use the mapped WooCommerce reason for reporting and processing.
 
 - **BR-12 – Duplicate Refunds:** No duplicate refund attempts are allowed; the system must detect prior refunds before initiating a new one.
 
 - **BR-13 – Retail Store Backend Detection:** When a customer selects "Silk & Snow Retail Store," the portal must lookup the backend:
     - **Shopify POS:** Route to standard Shopify flow.
-    - **STORIS:** Block online return; show "In-store return only" message.
-
-- **BR-14 – STORIS Store Returns:** For STORIS stores, the portal displays an "In-store return only" message and does not allow online returns. No tickets, labels, or refunds are generated in the portal.
+    - **STORIS:** Block online return; show "In-store return only" message. No tickets, labels, or refunds are generated in the portal.
 
 - **BR-15 – Bundle / Free Item 50% Keep Rule:** When a bundle item is returned and the customer keeps the bundled/free item, the customer pays **50% of the full website price** for the kept item. The refund is adjusted (prorated) to reflect this charge and the decision is recorded on the ticket. **Note:** This requires custom code integration to bridge the WooCommerce data structure with the portal.
 
@@ -45,8 +41,6 @@ The portal must enforce the following rules (numbered BR-1 through BR-12 plus ap
 - **BR-20 – Store Ops Returned Items Report:** Store Ops must be able to generate a report of items in "Inspection Completed" status for inventory updates.
 
 - **BR-21 – Automatic Refund Threshold (< 600):**
-
-
 
     - Net Refund Value < 600: **Auto-Refund** initiated (if gateway supported).
     - Net Refund Value >= 600: **Manual Refund** (routed to CX).
@@ -71,8 +65,6 @@ The portal must enforce the following rules (numbered BR-1 through BR-12 plus ap
 
 ## Appendix Rules
 
-- **A-1 – 100% Documentation:** A claim cannot be submitted unless 100% of required documentation is provided (except for manual overrides).
-
 - **B-1 – Reason Inheritance:** Each subcategory inherits the return reasons and mappings exactly as provided in the source tables.
 
 ---
@@ -83,4 +75,3 @@ The portal must enforce the following rules (numbered BR-1 through BR-12 plus ap
 > Once Giscus is configured, the discussion thread for this page will appear here.
 
 <div class="giscus-placeholder"></div>
-

@@ -66,7 +66,7 @@ The following requirements describe what the portal must do. Each requirement is
     - **Mattress (Unboxed):** Collect condition and donation eligibility. **Do not send photos to the vendor.** The **Return Logistics Manager** must manually select a donation or pickup vendor. Supporting **Vendor Change** functionality is required, which must trigger updated emails to the new vendor and customer. If no vendor is available, offer the customer a self-donation option (see FR-38).
     - **Furniture:** Implement a flow where:
         1. Customer uploads photos/details.
-        2. System calls **WooCommerce API** for live carrier rates (Destination: **CA → Caledonia**, **US → Original Warehouse**).
+        2. System calls **WooCommerce API** for live carrier rates (Destination: **CA → Caledonia** (WF-137), **US → Original Warehouse LA/NJ from order metadata** (WF-138)).
         3. **Charge Logic:** If the pickup is for disposal, apply the courier rate charge (standardized business decision).
         4. Customer **accepts charges** and provides pickup details to submit the ticket.
         5. **CX Review & Approval:** CX reviews the submitted ticket (photos + agreed charge).
@@ -151,21 +151,54 @@ The following requirements describe what the portal must do. Each requirement is
     - **Intent-Based Routing (after validation):** After customer login and order validation (WF-027/100/043), route to either Return flow (WF-029/102) or Warranty flow (WF-052) based on the customer's intent selection.
     - **Refund Context Routing (after item received):** After an item is marked "Received" (WF-089), route the refund logic based on the flow context: Return (apply auto/manual refund rules), Warranty (place replacement order), or Third-Party (email vendor for refund).
 
-- **FR-40 – Region-Specific Furniture Destinations:** For furniture returns requiring shipping rate calculation, call the WooCommerce API with region-specific destination addresses:
-    
-    - **Canada (CA):** Always use Caledonia warehouse address as destination (WF-137).
-    - **United States (US):** Use the original order's shipping warehouse address (LA or NJ) as destination, determined from order metadata (WF-138).
-
 - **FR-41 – Destination-Based Warehouse Routing:** After refund processing is complete, route the item to the appropriate warehouse workflow based on destination:
     
     - **CA Destinations:** Route to Caledonia warehouse workflow (WF-090→091→092→093).
     - **US Destinations:** Route to US warehouse offline workflow (WF-133→134→135→136).
 
+## Product Onboarding & Removal
+
+- **FR-42 – Product Onboarding via Excel Upload:** Provide an admin-accessible interface for onboarding new products into the ClaimLane portal via Excel file upload. The Excel file must contain one row per product (or product variant) with the following fields:
+
+    | Field | Required | Description |
+    | :--- | :--- | :--- |
+    | SKU | Yes | Unique product identifier (must match WooCommerce SKU) |
+    | Product Name | Yes | Display name |
+    | Category | Yes | Must match an existing product category (Mattress, Furniture, Bedding, Bath, Accessories) |
+    | Subcategory | No | e.g., Adjustable Bed, Upholstered Frame, Percale Bedding |
+    | Final Sale | Yes | Yes/No — blocks returns when Yes |
+    | Fallback Weight (kg) | No | Used for label generation when WooCommerce master data is missing (FR-19) |
+    | Fallback Dimensions (LxWxH cm) | No | Used for label generation when WooCommerce master data is missing |
+    | Warranty Only | No | Yes/No — if Yes, product is not eligible for returns (e.g., Custom Hybrid Mattress) |
+    | Region | Yes | CA / US / BOTH |
+
+    **Replacement Parts Sheet (optional):** For products with warranty replacement parts (e.g., furniture sub-components), a second sheet may define parent-child relationships:
+
+    | Field | Required | Description |
+    | :--- | :--- | :--- |
+    | Parent SKU | Yes | The main product SKU |
+    | Part SKU | Yes | The replacement part SKU |
+    | Part Name | Yes | Display name (e.g., "Drawer – Top Left") |
+
+    The system must:
+
+    - Validate all rows before committing: reject unknown categories, duplicate SKUs, missing required fields.
+    - Display a preview of parsed rows with row-level errors highlighted.
+    - Require admin confirmation before saving to the product configuration store.
+    - Log the upload event (who, when, file name, row count) for audit.
+
+- **FR-43 – Product Removal:** Allow an admin to remove (deactivate) a product from the portal. In the MVP, removal may be initiated via email request to the system administrator. The administrator performs a soft-delete (marks the product inactive). Deactivated products must:
+
+    - No longer appear as eligible in customer-facing item displays.
+    - Remain visible in historical ticket data and reports.
+    - Trigger a warning showing the count of active/open tickets referencing the product before deactivation is confirmed.
+
+- **FR-44 – Product Configuration Listing:** Provide a read-only admin view listing all onboarded products with: SKU, name, category, region, final sale flag, warranty-only flag, and status (active/inactive). Support search by SKU or product name and filtering by category, region, or status.
+
+    **Future State:** Replace Excel upload and email-based removal with a direct real-time sync to WooCommerce and external product catalogue systems, eliminating manual file handling entirely.
+
 ---
 
 ## Discussion
-
-> 💬 **Comments for this page are available in Giscus.**  
-> Once Giscus is configured, the discussion thread for this page will appear here.
 
 <div class="giscus-placeholder"></div>

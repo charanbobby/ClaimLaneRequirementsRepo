@@ -1,4 +1,4 @@
-﻿# High Level Process Flow
+# High Level Process Flow
 
 ## Narrative Steps
 
@@ -60,8 +60,6 @@
 
     **Defective Routing Logic:**
 
-
-
     *   If customer selects **"Defective"** as reason AND **does not opt out** of product replacement → **Automatically redirect to Warranty claim workflow** (bypasses standard return logistics)
 
 7. **Documentation Upload** 
@@ -91,8 +89,6 @@ The return flow splits based on **item type** and **region**:
 
 **Boxed Mattresses (WF-039 → WF-062A → WF-077A):**
 
-
-
 1. Customer confirms mattress is boxed (WF-039)
 2. Collect photos and law tag (WF-061A)
 3. Provide return label and drop-off instructions (WF-062A)
@@ -100,8 +96,6 @@ The return flow splits based on **item type** and **region**:
 5. Vendor picks up item; Status is auto-updated to **"Picked"** via Courier API (WF-064/063A)
 
 **Unboxed Mattresses (WF-039 → WF-064A → WF-059/065A):**
-
-
 
 1. Customer confirms mattress is unboxed (WF-039)
 2. Collect photos, law tag, and condition details (WF-064A)
@@ -138,16 +132,12 @@ The return flow splits based on **item type** and **region**:
 
 **CA Accessories (Opened or Unopened) (WF-041):**
 
-
-
 1. Collect return reason and photos (WF-076A)
 2. Provide mail-in return label and instructions (WF-077A)
 3. Customer ships item (WF-078A)
 4. Item marked as **"Received"** (WF-089)
 
 **US Accessories - Unopened (WF-115 → WF-116):**
-
-
 
 1. System checks if item is opened (WF-115)
 2. For **unopened** items, calculate shipping cost (WF-116)
@@ -172,45 +162,23 @@ The return flow splits based on **item type** and **region**:
 For **unboxed mattresses**, **oversized items**, and items requiring **disposal pickup**, the **Return Logistics Team** manages vendor coordination:
 
 1. **Vendor Selection (WF-059/065A):**
-
-
-
-   - Return Logistics Manager manually selects a **donation or pickup vendor**
-
-
-
-   - **Photos are NOT sent to vendors** for unboxed mattresses
-
+    - Return Logistics Manager manually selects a **donation or pickup vendor**
+    - **Photos are NOT sent to vendors** for unboxed mattresses
 2. **Vendor Assignment Outcomes:**
-
-
-
-   - **Vendor Selected**: Trigger emails to vendor and customer (WF-061/066)
-   - **No Vendor Available (Self-Donation)**: Manger selects **"Self-Donation"** (WF-130)
-
+    - **Vendor Selected**: Trigger emails to vendor and customer (WF-061/066)
+    - **No Vendor Available (Self-Donation)**: Manger selects **"Self-Donation"** (WF-130)
 3. **Vendor Change Management (WF-062/067A):**
-
-
-
-   - If vendor needs to be changed (WF-062/067A → WF-063/068A):
-     - Select new vendor
-     - Trigger updated email notifications to new vendor and customer
-
+    - If vendor needs to be changed (WF-062/067A → WF-063/068A):
+        - Select new vendor
+        - Trigger updated email notifications to new vendor and customer
 4. **Pickup Confirmation (WF-064/063A):**
-
-
-
-   - Vendor picks up item; Status is auto-updated to **"Picked"** via Courier API
-
+    - Vendor picks up item; Status is auto-updated to **"Picked"** via Courier API
 5. **Self-Donation Flow (WF-130 → WF-132):**
-
-
-
-   - When "Self-Donation" is selected:
-     - Customer receives specific email instructions
-     - Customer donates item themselves and takes photo as proof
-     - Customer contacts **CX Team** (call or email)
-     - CX manually processes return in ClaimLane portal (WF-132)
+    - When "Self-Donation" is selected:
+        - Customer receives specific email instructions
+        - Customer donates item themselves and takes photo as proof
+        - Customer contacts **CX Team** (call or email)
+        - CX manually processes return in ClaimLane portal (WF-132)
 
 ---
 
@@ -221,99 +189,59 @@ For **unboxed mattresses**, **oversized items**, and items requiring **disposal 
 #### **10A. Item & Replacement Part Selection (WF-052 → WF-053)**
 
 1. **Display Order Items with Replacement Parts (WF-052):**
+    - System displays all items in the order
+    - **Replacement parts shown with product context**
 
-
-
-   - System displays all items in the order
-   - **Replacement parts shown with product context**
-   
-   > [!NOTE]
-   > **Example – Nara Wooden Dresser (5-Drawer, Cortado)**
-   > 
-   > Parent SKU: **SNSFNDR5005T**
-   > - Drawer – Top Left | SNSFNDR5005TDRSL
-   > - Drawer – Top Right | SNSFNDR5005TDRSR
-   > - Drawer – Large | SNSFNDR5005TDRB
-   > - Screw | SNSFNS5000TSW
-   > - Stain & Brush | SNSFNWO5000ACST
-   > - Stain & Brush | SNSFNS5000TST
+    > [!NOTE]
+    > **Example – Nara Wooden Dresser (5-Drawer, Cortado)**
+    >
+    > Parent SKU: **SNSFNDR5005T**
+    > - Drawer – Top Left | SNSFNDR5005TDRSL
+    > - Drawer – Top Right | SNSFNDR5005TDRSR
+    > - Drawer – Large | SNSFNDR5005TDRB
+    > - Screw | SNSFNS5000TSW
+    > - Stain & Brush | SNSFNWO5000ACST
+    > - Stain & Brush | SNSFNS5000TST
 
 2. **Customer Selects Item or Replacement Part (WF-053):**
-
-
-
-   - Customer chooses the defective product or specific sub-part (e.g., drawer, screw)
+    - Customer chooses the defective product or specific sub-part (e.g., drawer, screw)
 
 #### **10B. Documentation & Submission (WF-054 → WF-055)**
 
 3. **Collect Additional Information (WF-054):**
-
-
-
-   - Issue description
-   - Photos of defect
-   - Pickup assistance needed (Yes/No)
-   - Address confirmation
-
+    - Issue description
+    - Photos of defect
+    - Pickup assistance needed (Yes/No)
+    - Address confirmation
 4. **Submit Warranty Case (WF-055):**
-
-
-
-   - Case submitted to ClaimLane with selected part SKUs, evidence, and notes
+    - Case submitted to ClaimLane with selected part SKUs, evidence, and notes
 
 #### **10C. CX Review & Approval (WF-052B → WF-052D)**
 
 5. **CX Reviews Submission (WF-052B):**
-
-
-
-   - CX team validates photos and part selection
-
+    - CX team validates photos and part selection
 6. **CX Approval Decision (WF-052C):**
-
-
-
-   - **Declined (WF-052D)**: Communicate decline and next steps to customer → End
-   - **Approved**: Proceed to pickup logic
+    - **Declined (WF-052D)**: Communicate decline and next steps to customer → End
+    - **Approved**: Proceed to pickup logic
 
 #### **10D. Pickup Assistance (WF-052F → WF-052I)**
 
 7. **Pickup Assistance Check (WF-052F):**
-
-
-
-   - Does customer need pickup assistance?
-     - **No**: Skip to replacement order placement (WF-056)
-     - **Yes**: Proceed to pickup type selection
-
+    - Does customer need pickup assistance?
+        - **No**: Skip to replacement order placement (WF-056)
+        - **Yes**: Proceed to pickup type selection
 8. **Pickup Type Selection (WF-052H):**
-
-
-
-   - **Courier Pickup (WF-052G):**
-
-
-
-     - CX provides pickup assistance (coordination + guidance)
-     - Generate return label with **"Defective"** wording (helps warehouse avoid inspection)
-   - **Disposal Pickup (WF-052I):**
-
-
-
-     - Log case for **Return Logistics Team** (routes to WF-059/065A vendor selection)
+    - **Courier Pickup (WF-052G):**
+        - CX provides pickup assistance (coordination + guidance)
+        - Generate return label with **"Defective"** wording (helps warehouse avoid inspection)
+    - **Disposal Pickup (WF-052I):**
+        - Log case for **Return Logistics Team** (routes to WF-059/065A vendor selection)
 
 #### **10E. Replacement Order & Closure (WF-056 → WF-058)**
 
 9. **CX Places Replacement Order (WF-056):**
-
-
-
-   - CX creates replacement order in WooCommerce using **approved replacement part SKUs**
-
+    - CX creates replacement order in WooCommerce using **approved replacement part SKUs**
 10. **Close Case (WF-058):**
-
-
-
     - Case marked complete after replacement order is placed
 
 ---
@@ -330,96 +258,49 @@ For items purchased from third-party vendors, the workflow requires vendor appro
 #### **11A. Vendor Selection & Evidence (WF-005 → WF-007)**
 
 1. **Select Third-Party Vendor (WF-005):**
-
-
-
-   - Customer chooses vendor: TSC, EQ3, or Costco
-
+    - Customer chooses vendor: TSC, EQ3, or Costco
 2. **Collect Required Evidence (WF-006):**
+    - Receipt
+    - Photos
+    - Law tags
+    - Other vendor-specific documentation
 
-
-
-   - Receipt
-   - Photos
-   - Law tags
-   - Other vendor-specific documentation
-
-   > [!NOTE]
-   > **WF-017:** Exact evidence requirements to be confirmed per vendor (TSC/EQ3).
+    > [!NOTE]
+    > **WF-017:** Exact evidence requirements to be confirmed per vendor (TSC/EQ3).
 
 3. **Log Action Item (WF-007):**
-
-
-
-   - Create ticket in ClaimLane: *"Third-party vendor review required"*
+    - Create ticket in ClaimLane: *"Third-party vendor review required"*
 
 #### **11B. Vendor Notification & Approval (WF-008 → WF-010)**
 
 4. **Send Vendor Email Notification (WF-008):**
-
-
-
-   - System automatically emails vendor with ticket details
-
+    - System automatically emails vendor with ticket details
 5. **Vendor Approval Decision (WF-009):**
-
-
-
-   - **Vendor Declines (WF-010):**
-
-
-
-     - Communicate vendor decision and next steps to customer → End (WF-060)
-   - **Vendor Approves:**
-
-
-
-     - Proceed to pickup assistance check
+    - **Vendor Declines (WF-010):**
+        - Communicate vendor decision and next steps to customer → End (WF-060)
+    - **Vendor Approves:**
+        - Proceed to pickup assistance check
 
 #### **11C. Pickup Assistance (WF-011 → WF-011B)**
 
 6. **Pickup Assistance Check (WF-011):**
-
-
-
-   - Does customer need pickup assistance or defective item removal?
-     - **No (WF-013):** Customer proceeds with vendor's own instructions (no CX coordination)
-     - **Yes (WF-011A):** Determine pickup type
-
+    - Does customer need pickup assistance or defective item removal?
+        - **No (WF-013):** Customer proceeds with vendor's own instructions (no CX coordination)
+        - **Yes (WF-011A):** Determine pickup type
 7. **Pickup Type Selection (WF-011A):**
-
-
-
-   - **Courier Pickup (WF-012):**
-
-
-
-     - CX provides pickup assistance (coordination + guidance)
-     - Generate return label
-   - **Disposal Pickup (WF-011B):**
-
-
-
-     - Log for **Return Logistics Team** (routes to WF-059/065A)
+    - **Courier Pickup (WF-012):**
+        - CX provides pickup assistance (coordination + guidance)
+        - Generate return label
+    - **Disposal Pickup (WF-011B):**
+        - Log for **Return Logistics Team** (routes to WF-059/065A)
 
 #### **11D. Confirmation & Processing (WF-014 → WF-016)**
 
 8. **Pickup Confirmed/Scheduled (WF-014):**
-
-
-
-   - Pickup arranged and confirmed with customer
-
+    - Pickup arranged and confirmed with customer
 9. **Item Received (WF-015):**
-
-
-
-   - Confirm receipt of returned item
-
+    - Confirm receipt of returned item
 10. **Vendor Refund Notification (WF-016):**
-
-
-
     - Email vendor: *"Proceed with return / refund"*
     - If item routed to Caledonia, warehouse team updates status (WF-090 → WF-093)
     - Case closed (WF-060)
@@ -450,21 +331,13 @@ Once an item is marked as **"Received"** (WF-089), the refund logic is determine
 
 **Automatic Refund Eligibility (WF-067 → WF-068):**
 
-
-
 - Conditions: Net refund value **< $600** AND order contains **NO bundles or free items**
-
-
 
 - Action: Auto-initiate refund (if payment gateway supported)
 
 **Manual Refund Triggers (WF-067 → WF-069):**
 
-
-
 - Conditions: Net refund value **≥ $600** OR order contains **bundles/free items**
-
-
 
 - Action: Route to CX for manual processing
 
@@ -475,20 +348,14 @@ Once an item is marked as **"Received"** (WF-089), the refund logic is determine
 
 **Bundle Impact Calculation (WF-070):**
 
-
-
 - System calculates bundle impacts and adjusted refundable amounts
 - Accounts for 50% proration of bundled/free items customer keeps
 
 **Auto-Refund After Bundle Calculation (WF-071 → WF-072):**
 
-
-
 - If post-bundle calculation value **< $600**: Auto-refund
 
 **Manual Refund After Bundle Calculation (WF-071 → WF-073):**
-
-
 
 - If post-bundle calculation value **≥ $600**: Manual CX processing
 
@@ -499,63 +366,27 @@ Once an item is marked as **"Received"** (WF-089), the refund logic is determine
 #### **CA Warehouse (Caledonia) – Direct Portal Access (WF-090 → WF-093)**
 
 1. **Return Delivered to Caledonia (WF-090)**
-
-
-
 2. **Caledonia Team Updates Status (WF-091):**
-
-
-
-   - Team has **limited-access portal role**
-
-
-
-   - Updates status directly in ClaimLane portal (WF-092)
-   - Status transition: **Delivered → Processing → Inspection Completed**
-
-
-
+    - Team has **limited-access portal role**
+    - Updates status directly in ClaimLane portal (WF-092)
+    - Status transition: **Delivered → Processing → Inspection Completed**
 3. **Store Ops Inventory Update (WF-093):**
-
-
-
-   - Store Ops team runs **"Returned items" report** from portal
-   - Report used to update inventory and reconcile returned goods
+    - Store Ops team runs **"Returned items" report** from portal
+    - Report used to update inventory and reconcile returned goods
 
 #### **US Warehouse (LA / NJ) – Offline Email-Based Process (WF-133 → WF-136)**
 
 1. **Return Delivered to US Warehouse (WF-133)**
-
-
-
-   - Item arrives at Los Angeles or New Jersey warehouse
+    - Item arrives at Los Angeles or New Jersey warehouse
 2. **US Warehouse Emails Status (WF-134):**
-
-
-
-   - US warehouse team has **NO direct portal access**
-
-
-
-   - Team emails return status updates to **Internal Ops team** (offline to ClaimLane)
+    - US warehouse team has **NO direct portal access**
+    - Team emails return status updates to **Internal Ops team** (offline to ClaimLane)
 3. **Internal Ops Updates Portal (WF-135):**
-
-
-
-   - Internal Ops team manually updates ClaimLane portal
-   - Status transition: **Delivered → Processing → Inspection Completed**
-
-
-
+    - Internal Ops team manually updates ClaimLane portal
+    - Status transition: **Delivered → Processing → Inspection Completed**
 4. **Internal Ops Inventory Update (WF-136):**
-
-
-
-   - Internal Ops runs **"Returned items" report**
-
-
-
-   - Report used for US inventory reconciliation
+    - Internal Ops runs **"Returned items" report**
+    - Report used for US inventory reconciliation
 
 > [!IMPORTANT]
 > **Key Difference:** US warehouse teams operate **completely offline** from the ClaimLane portal. All status updates require **Internal Ops intermediary** via email communication.
@@ -569,8 +400,5 @@ Once an item is marked as **"Received"** (WF-089), the refund logic is determine
 ---
 
 ## Discussion
-
-> 💬 **Comments for this page are available in Giscus.**  
-> Once Giscus is configured, the discussion thread for this page will appear here.
 
 <div class="giscus-placeholder"></div>

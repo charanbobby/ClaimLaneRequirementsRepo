@@ -114,8 +114,7 @@ This is essential for QA (validation of required fields) and Business (alignment
 | Measurements | Required when defect relates to size |
 | Tags | Required in almost every category |
 
-**Business Rule A-1:**
-A claim cannot be submitted unless 100% of required documentation is provided (except when CS overrides manually).
+**See BR-5** in `08-business-rules.md`: A claim cannot be submitted unless 100% of required documentation is provided and validated at submission (except when CS overrides manually).
 
 ---
 
@@ -309,8 +308,5 @@ This table is essential for QA test case coverage.
 ---
 
 ## Discussion
-
-> 💬 **Comments for this page are available in Giscus.**  
-> Once Giscus is configured, the discussion thread for this page will appear here.
 
 <div class="giscus-placeholder"></div>

@@ -12,7 +12,7 @@ This Business Requirements Document - Claimlane Returns, Refunds and Warranty Po
 - `05-process-high-level.md` - Narrative of the end-to-end high-level process.
 - `06-functional-requirements.md` - Detailed functional requirements (FR-x) by area.
 - `07-non-functional-requirements.md` - Non-functional requirements (NFR-x).
-- `08-business-rules.md` - Business rules (BR-x, A-1, B-1) enforced by the portal.
+- `08-business-rules.md` - Business rules (BR-x, B-1) enforced by the portal.
 - `13-epics-user-stories.md` - Epics, features, user stories and acceptance criteria.
 - `15-changelog.md` - History of major changes to the BRD.
 - `15-phase-2-backlog.md` - Deferred Phase 2 features with complete implementation context.
@@ -31,8 +31,4 @@ This Business Requirements Document - Claimlane Returns, Refunds and Warranty Po
 
 ## Discussion
 
-> 💬 **Comments for this page are available in Giscus.**  
-> Once Giscus is configured, the discussion thread for this page will appear here.
-
 <div class="giscus-placeholder"></div>
-

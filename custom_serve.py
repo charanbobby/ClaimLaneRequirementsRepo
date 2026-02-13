@@ -13,7 +13,9 @@ logging.basicConfig(level=logging.INFO)
 from mkdocs.commands.serve import serve
 
 if __name__ == "__main__":
-    os.chdir(r"E:\Python Applications\ClaimLane\WorkFlow")
+    # Use the directory where the script is located
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    os.chdir(script_dir)
     config_file = "mkdocs.yml"
     
     print("Starting MkDocs with PollingObserver patched...")

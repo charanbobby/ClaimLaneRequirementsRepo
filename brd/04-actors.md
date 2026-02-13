@@ -1,5 +1,4 @@
-﻿# Actors
-
+# Actors
 
 ## Customers and Retail
 
@@ -15,7 +14,7 @@
 |--------------------|--------------------------------------------------------------------------------------------------------------------------|
 | Claimlane Portal   | Web-based interface guiding the customer through each step, applying eligibility rules, documentation requirements, and triggering backend actions. |
 | WooCommerce System | Backend e-commerce system for orders, item details, inventory adjustments, refunds, and replacement order creation.      |
-| Shipping Carrier API | External shipping providers (e.g., FedEx, Freight services) used to generate return labels or arrange pickups. |
+| Shipping Carrier API | External shipping providers (e.g., FedEx, Freight services) used to generate return labels or arrange pickups achieved via EasyPost API. |
 
 ## Customer Service and Operations
 
@@ -45,16 +44,4 @@
 
 ## Discussion
 
-> 💬 **Comments for this page are available in Giscus.**  
-> Once Giscus is configured, the discussion thread for this page will appear here.
-
 <div class="giscus-placeholder"></div>
-
-
- 
-
-  
- 
- 
- 
- 

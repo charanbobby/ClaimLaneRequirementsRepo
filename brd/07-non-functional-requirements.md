@@ -1,4 +1,4 @@
-﻿# Non Functional Requirements
+# Non Functional Requirements
 
 - **NFR-1 – Security:** Enforce strict order lookup security so that a customer cannot access order details unless both email and order number match exactly. Sanitize all user inputs and store documentation securely.
 
@@ -20,8 +20,4 @@
 
 ## Discussion
 
-> 💬 **Comments for this page are available in Giscus.**  
-> Once Giscus is configured, the discussion thread for this page will appear here.
-
 <div class="giscus-placeholder"></div>
-

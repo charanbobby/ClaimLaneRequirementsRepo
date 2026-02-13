@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2026-02-13 - Product Onboarding & Removal Feature
+
+### Added
+- **06-functional-requirements.md:** Added FR-42 (Product Onboarding via Excel Upload), FR-43 (Product Removal via soft-delete), FR-44 (Product Configuration Listing). Future state noted: direct sync with WooCommerce/external systems.
+- **13-epics-user-stories.md:** Added Epic 12 — Product Onboarding & Removal with 4 user stories (US-12.1 Excel upload, US-12.2 product removal, US-12.3 product listing view, US-12.4 future direct sync).
+- **03-scope.md:** Added product onboarding/removal to in-scope processes.
+
+### Context
+- MVP: Excel upload for new products (SKU, category, fallback weight/dimensions, final sale, replacement parts). Product removal via email request (soft-delete).
+- Future State: Direct real-time sync with WooCommerce and external product catalogue systems.
+
+## 2026-02-13 - BRD Duplicate Consolidation
+
+### Changed
+- **13-epics-user-stories.md:** Merged Batch 2 Updates into their original epics. US-6.3, US-8.1, US-10.1 updated in place. US-6.5, US-7.4, US-8.4, US-9.3 moved into their proper epics. Entire "Batch 2 Updates" section removed.
+- **15-phase-2-backlog.md:** Replaced verbatim copies of user stories, business rules, FRs, and process narratives with one-line summaries and cross-references to canonical docs. Merged redundant Overview section into Executive Summary.
+- **08-business-rules.md:** Merged BR-14 into BR-13 (STORIS detection). Merged A-1 and BR-10 into BR-5 (documentation completeness). Removed A-1 from appendix rules.
+- **06-functional-requirements.md:** Removed FR-40 (region-specific furniture destinations) — already covered by FR-20 furniture bullet. Added WF-137/WF-138 references to FR-20.
+- **16-appendices.md:** Updated A-1 reference to point to consolidated BR-5.
+
+### Removed (consolidated, not deleted)
+- **BR-14** → merged into BR-13
+- **BR-10** → merged into BR-5
+- **A-1** → merged into BR-5
+- **FR-40** → merged into FR-20
+- **Batch 2 Updates section** → stories merged into original epics
+
 ## 2026-02-04 - Return Quantity Logic Deferral
 
 ### Moved to Phase 2 Backlog
@@ -108,8 +135,4 @@ All notable changes to this project will be documented in this file.
 
 ## Discussion
 
-> 💬 **Comments for this page are available in Giscus.**  
-> Once Giscus is configured, the discussion thread for this page will appear here.
-
 <div class="giscus-placeholder"></div>
-

@@ -2,17 +2,16 @@
 
 ## Executive Summary
 
-### Overview
-
 During **Discussions with ClaimLane & Internal Stakeholders**, three major feature sets were systematically extracted from the Phase 1 BRD and moved to this Phase 2 backlog. This strategic deferral allows the team to focus Phase 1 delivery on core return and warranty flows while preserving complete context for future implementation.
 
 ### Deferred Features at a Glance
 
 | Feature | Scope | Business Impact | Technical Complexity |
 |---------|-------|-----------------|---------------------|
-| **Vendors (Donation/Pickup Partners)** | Portal access for external vendors to update pickup status | 🟡 Medium - Vendors handle logistics in Phase 1 via manual workaround | 🔴 High - Requires multi-tenant auth, RBAC, data partitioning |
-| **Third-Party Vendor Integration** | Complete workflow for TSC, EQ3, Costco returns | 🔴 High - No third-party returns supported in Phase 1 | 🔴 High - Fundamental architecture gap, requires core rebuild |
-| **Bundle Refund Logic (Future Phase)** | Automated bundle impact calculations and 50% keep option | 🟡 Medium - Manual processing workaround in Phase 1 | 🔴 High - WooCommerce limitations, custom API integration needed |
+| **Vendors (Donation/Pickup Partners)** | Portal access for external vendors to update pickup status | Medium - Vendors handle logistics in Phase 1 via manual workaround | High - Requires multi-tenant auth, RBAC, data partitioning |
+| **Third-Party Vendor Integration** | Complete workflow for TSC, EQ3, Costco returns | High - No third-party returns supported in Phase 1 | High - Fundamental architecture gap, requires core rebuild |
+| **Bundle Refund Logic (Future Phase)** | Automated bundle impact calculations and 50% keep option | Medium - Manual processing workaround in Phase 1 | High - WooCommerce limitations, custom API integration needed |
+| **Return Quantity Limits (Future Phase)** | Historical and per-request return limits | Low - No limits in Phase 1 | Low - Order history checks required |
 
 ### Why These Features Were Deferred
 
@@ -37,17 +36,17 @@ During **Discussions with ClaimLane & Internal Stakeholders**, three major featu
 ### Implementation Approach
 
 **Phase 1 Foundation (Current):**
-- ✅ Core return flows (mattresses, furniture, accessories)
-- ✅ Warranty claim processing
-- ✅ Manual vendor coordination by Return Logistics Team
-- ✅ Manual bundle refund processing by CX
-- ✅ Third-party returns redirected to vendor processes
+- Core return flows (mattresses, furniture, accessories)
+- Warranty claim processing
+- Manual vendor coordination by Return Logistics Team
+- Manual bundle refund processing by CX
+- Third-party returns redirected to vendor processes
 
 **Phase 2 Enhancements (This Backlog):**
-- 🔄 Vendor portal with secure authentication
-- 🔄 Third-party vendor approval workflows
-- 🔄 WooCommerce bundle API integration
-- 🔄 Automated bundle proration engine
+- Vendor portal with secure authentication
+- Third-party vendor approval workflows
+- WooCommerce bundle API integration
+- Automated bundle proration engine
 
 ### Business Continuity
 
@@ -60,31 +59,14 @@ All deferred features have **Phase 1 manual workarounds** to ensure zero disrupt
 ### Quick Reference
 
 - **Total Features Deferred:** 4 (Phase 2: Vendors, Third-Party | Future Phase: Bundles, Limits)
-- **Functional Requirements:** 13 (FR-9, FR-VENDOR-1–5, FR-TP-1–5)
+- **Functional Requirements:** 13 (FR-9, FR-VENDOR-1-5, FR-TP-1-5)
 - **User Stories:** 7 (from Epics 4, 8, 11)
 - **Business Rules:** 4 (BR-1, BR-15, BR-16, BR-26)
-- **Workflow Nodes:** 15+ (WF-004→017, WF-059/065A, WF-070→073)
-
----
-
-This document contains all features, requirements, business rules, actors, and supporting artifacts that have been **deferred to Phase 2 or a Future Phase** during the deep scope refinement process.
+- **Workflow Nodes:** 15+ (WF-004-017, WF-059/065A, WF-070-073)
 
 > [!IMPORTANT]
-> **Last Updated:** 2026-02-03  
+> **Last Updated:** 2026-02-13
 > All items below were systematically extracted from active BRD documents to focus Phase 1 delivery.
-
----
-
-## Overview
-
-The following features have been moved to Phase 2 due to technical complexity, architectural limitations, or strategic prioritization. Each section documents the complete context including functional requirements, user stories, business rules, actors, and process narratives.
-
-### Deferred Features Summary
-
-1. **Vendors (Donation / Pickup Partners)** — External vendor portal access and pickup status updates
-2. **Third-Party Vendor Integration (TCS, EQ3, Costco)** — Complete workflow for third-party vendor returns
-3. **Future Phase Refund Logic (Bundle Impact Calculations)** — Automated bundle refund processing (Future Phase)
-4. **Return Quantity Limits (Future Phase)** — Historical and per-request limits (Future Phase)
 
 ---
 
@@ -119,7 +101,7 @@ While vendor partners will handle physical logistics in Phase 1, the ability to 
 #### FR-VENDOR-3 – Vendor Change Management
 - **ID:** *(Extracted from FR-20, FR-32)*
 - **Description:** Support vendor reassignment workflow. When vendor changes, system must:
-    
+
     - Send updated notification to new vendor
     - Inform previous vendor of reassignment
     - Notify customer with updated vendor details
@@ -135,7 +117,7 @@ While vendor partners will handle physical logistics in Phase 1, the ability to 
 #### FR-VENDOR-5 – Vendor Email Triggers
 - **ID:** *(Extracted from FR-32)*
 - **Description:** Configure specific automated email triggers for vendor workflows:
-    
+
     - Unboxed Mattress Vendor Assignment
     - Unboxed Mattress Vendor Change (notify new vendor and customer)
 - **Priority:** Phase 2
@@ -143,87 +125,25 @@ While vendor partners will handle physical logistics in Phase 1, the ability to 
 
 ### User Stories
 
-#### US-8.1 Vendor Selection for Unboxed / Donation Flows
-> *As an internal logistics user, I want to select the vendor who will pick up or receive the item.*
+> Canonical versions of these stories live in `13-epics-user-stories.md` (Epic 8). Below are Phase 2-specific status notes only.
 
-**Acceptance Criteria**
-
-1. System shows allowed vendors for the item type and location.
-2. Internal user (Return Logistics Team) can select a vendor.
-3. Selection triggers emails to vendor and customer with instructions.
-4. Vendor receives portal access to mark items as "Picked."
-5. **Self-Donate Fallback (WF-130):** If no vendor is available for unboxed mattress pickup:
-    
-    - System offers customer a self-donation option.
-    - Customer agrees to self-donate (checkbox).
-    - Customer donates item, takes photo of donation, and contacts CX (call/email).
-    - CX processes return manually in ClaimLane portal (WF-132).
-    - Case closes after CX confirms donation proof.
-6. Fallback decision is logged in ticket history.
-
-**STATUS:** ✅ Self-donate fallback kept in Phase 1. Vendor portal access deferred to Phase 2.
-
----
-
-#### US-8.2 Vendor Change Handling
-> *As an internal user, I want to change vendors when needed without losing context.*
-
-**Acceptance Criteria**
-
-1. User can change from one vendor to another before pickup is completed.
-2. New vendor receives updated notification; previous vendor is informed the job was reassigned.
-3. Customer receives updated email with new vendor details.
-
-**STATUS:** 🔄 Deferred to Phase 2
-
----
-
-#### US-8.3 Vendor Pickup Confirmation
-> *As a vendor, I want to confirm pickup in the portal so downstream processing can continue.*
-
-**Acceptance Criteria**
-
-1. Vendor can update status to "Picked" for assigned items.
-2. Status change triggers transition to "Received" once warehouse confirms arrival, or to "In Transit" as configured.
-
-**STATUS:** 🔄 Deferred to Phase 2
-
----
+- **US-8.1** — Vendor Selection for Unboxed / Donation Flows. **STATUS:** Self-donate fallback kept in Phase 1. Vendor portal access deferred to Phase 2.
+- **US-8.2** — Vendor Change Handling. **STATUS:** Deferred to Phase 2.
+- **US-8.3** — Vendor Pickup Confirmation. **STATUS:** Deferred to Phase 2.
 
 ### Business Rules
 
-#### BR-16 – Vendor Pickup and Status Updates
-Vendors (or Logistics team) must update mattress status to "Picked" in the portal. This status update must transition the item to **"Received"** to trigger refund logic.
+> Canonical rule text lives in `08-business-rules.md`. Below are Phase 2-specific status notes only.
 
-**STATUS:** 🔄 Deferred to Phase 2 — Phase 1 will use manual status updates by Return Logistics Team
-
----
+- **BR-16** — Vendor Pickup and Status Updates. **STATUS:** Deferred to Phase 2. Phase 1 uses manual status updates by Return Logistics Team.
 
 ### Process Narratives
 
-#### Return Logistics Management (WF-059/065A → WF-064/063A)
+> Full narrative for Return Logistics Management (WF-059/065A - WF-064/063A) lives in `05-process-high-level.md`, Section 9.
 
-**Phase 2 Capability:**
+**Phase 2 addition:** Vendor portal access replaces manual status updates. Vendors will mark items as "Picked" directly in portal instead of through Return Logistics Team intermediary.
 
-For **unboxed mattresses**, **oversized items**, and items requiring **disposal pickup**, the **Return Logistics Team** manages vendor coordination:
-
-1. **Vendor Selection (WF-059/065A):**
-    - Return Logistics Manager manually selects a **donation or pickup vendor**
-    - **Photos are NOT sent to vendors** for unboxed mattresses
-
-2. **Vendor Assignment Outcomes:**
-    - **Vendor Selected**: Trigger emails to vendor and customer (WF-061/066)
-    - **No Vendor Available**: Offer **Self-Donation** option (WF-130) *(kept in Phase 1)*
-
-3. **Vendor Change Management (WF-062/067A):**
-    - If vendor needs to be changed (WF-062/067A → WF-063/068A):
-        - Select new vendor
-        - Trigger updated email notifications to new vendor and customer
-
-4. **Pickup Confirmation (WF-064/063A):**
-    - Vendor picks up item and marks status as **"Picked"** in portal
-
-**Phase 1 Workaround:** Return Logistics Team manually updates pickup status on behalf of vendors. Vendor portal access introduced in Phase 2.
+**Phase 1 Workaround:** Return Logistics Team manually updates pickup status on behalf of vendors.
 
 ---
 
@@ -272,7 +192,7 @@ The existing Claimlane architecture lacks the logic necessary to support TCS and
 #### FR-TP-3 – Third-Party Evidence Collection
 - **ID:** *(Derived from Epic 11 process flow)*
 - **Description:** Collect vendor-specific evidence requirements:
-    
+
     - Receipt
     - Photos
     - Law tags
@@ -283,7 +203,7 @@ The existing Claimlane architecture lacks the logic necessary to support TCS and
 #### FR-TP-4 – Third-Party Vendor Notifications
 - **ID:** *(Extracted from FR-32)*
 - **Description:** Configure automated email triggers for third-party workflows:
-    
+
     - Third-Party Vendor Ticket Created (WF-008)
     - Third-Party Refund Approval to Vendor (WF-016)
 - **Priority:** Phase 2
@@ -292,7 +212,7 @@ The existing Claimlane architecture lacks the logic necessary to support TCS and
 #### FR-TP-5 – Third-Party Pickup Logistics Split
 - **ID:** *(Extracted from FR-36)*
 - **Description:** When a third-party vendor approves a claim and customer needs pickup assistance (WF-011), offer two pickup types:
-    
+
     - **Courier Pickup:** CX provides pickup coordination and generates return label (WF-012)
     - **Disposal Pickup:** Log case for Return Logistics Team (WF-011B connects to shared return logistics)
 - **Priority:** Phase 2
@@ -300,147 +220,24 @@ The existing Claimlane architecture lacks the logic necessary to support TCS and
 
 ### User Stories
 
-#### US-1.1 Select Purchase Channel (Third-Party Component)
-> *As a customer, I want to choose where I purchased so I am routed correctly.*
+> Canonical versions of these stories live in `13-epics-user-stories.md`. Below are Phase 2-specific status notes only.
 
-**Acceptance Criteria**
-
-1. Customer can pick from:
-    * Silk & Snow Online (CA / US)
-    * Retail Store (in-person)
-    * **Third-Party Vendor** ← *DEFERRED*
-2. Selecting Third-Party Vendor is a Work-in-Progress (TDB).
-3. Online and Retail selections proceed to store / order validation steps.
-
-**STATUS:** 🔄 Third-Party component deferred to Phase 2
-
----
-
-#### US-8.4 Third-Party Pickup Logistics Split
-> *As a customer with an approved third-party claim, I want to choose the appropriate pickup method.*
-
-**Acceptance Criteria**
-
-1. After vendor approves claim (WF-009) and customer indicates need for pickup assistance (WF-011), system presents two options (WF-011A):
-    
-    - **Courier Pickup:** CX provides coordination and guidance. System generates return label (WF-012).
-    - **Disposal Pickup:** Case is logged for Return Logistics Team (WF-011B, connects to shared logistics flow).
-2. Pickup type is recorded in ticket.
-3. For courier: Pickup confirmation triggers item received status (WF-014→015).
-4. For disposal: Follows same vendor selection flow as unboxed mattresses (WF-059/065A).
-5. Both paths eventually route to warehouse delivery (R1 or R_US).
-
-**STATUS:** 🔄 Deferred to Phase 2
-
----
-
-#### US-11.1 Automated Email Triggers (Third-Party Component)
-> *As a system, I want to send automated emails at key workflow decision points to keep customers and vendors informed.*
-
-**Acceptance Criteria**
-
-1. Email sent when third-party vendor ticket is created (WF-008). ← *DEFERRED*
-2. Email sent to vendor when third-party refund approval is granted (WF-016). ← *DEFERRED*
-3. Email sent to customer when warranty claim is declined by CX (WF-052D). *(kept in Phase 1)*
-4. Email sent when unboxed mattress vendor is assigned (existing feature). *(kept in Phase 1)*
-5. Email sent when unboxed mattress vendor is changed, notifying new vendor and customer (existing feature). *(kept in Phase 1)*
-6. Email sent when furniture return is approved/declined by CX (existing feature). *(kept in Phase 1)*
-7. All emails are logged in ticket history with timestamps.
-8. Email templates are configurable without code changes.
-9. Failed email delivery triggers retry logic and alerts internal team.
-
-**STATUS:** 🔄 Criteria 1-2 deferred to Phase 2. Criteria 3-9 kept in Phase 1.
-
----
+- **US-1.1** — Select Purchase Channel (Third-Party component). **STATUS:** Third-Party component deferred to Phase 2.
+- **US-8.4** — Third-Party Pickup Logistics Split. **STATUS:** Deferred to Phase 2.
+- **US-11.1** — Automated Email Triggers (criteria 1-2 for third-party). **STATUS:** Criteria 1-2 deferred to Phase 2. Criteria 3-9 kept in Phase 1.
 
 ### Business Rules
 
-#### BR-1 – Third-Party Orders
-Orders from third-party vendors never proceed through the Silk & Snow portal. The portal shows vendor instructions only.
-
-**STATUS:** 🔄 Deferred to Phase 2
-
----
-
-#### BR-TP-1 – Third-Party Documentation Requirements
-*(Extracted from FR-17)* Collect lot number and detailed description for all claims and require an invoice when the purchase was made through a third-party vendor.
-
-**STATUS:** 🔄 Deferred to Phase 2
-
----
+- **BR-1** — Third-Party Orders: Orders from third-party vendors never proceed through the portal. **STATUS:** Deferred to Phase 2.
+- **BR-TP-1** — Third-Party Documentation Requirements: *(Extracted from FR-17)* Collect lot number and detailed description for all claims and require an invoice when the purchase was made through a third-party vendor. **STATUS:** Deferred to Phase 2.
 
 ### Process Narratives
 
-#### C. THIRD-PARTY VENDOR FLOW (WF-004 → WF-017)
+> Full narrative for Third-Party Vendor Flow (WF-004 - WF-017) lives in `05-process-high-level.md`, Section C.
 
-**11. Third-Party Vendor Returns (TSC, EQ3, Costco)**
-
-For items purchased from third-party vendors, the workflow requires vendor approval and coordination:
-
-##### 11A. Vendor Selection & Evidence (WF-005 → WF-007)
-
-1. **Select Third-Party Vendor (WF-005):**
-    - Customer chooses vendor: TSC, EQ3, or Costco
-
-2. **Collect Required Evidence (WF-006):**
-    - Receipt
-    - Photos
-    - Law tags
-    - Other vendor-specific documentation
-    
-    > [!NOTE]
-    > **WF-017:** Exact evidence requirements to be confirmed per vendor (TSC/EQ3).
-
-3. **Log Action Item (WF-007):**
-    - Create ticket in ClaimLane: *"Third-party vendor review required"*
-
-##### 11B. Vendor Notification & Approval (WF-008 → WF-010)
-
-4. **Send Vendor Email Notification (WF-008):**
-    - System automatically emails vendor with ticket details
-
-5. **Vendor Approval Decision (WF-009):**
-    - **Vendor Declines (WF-010):**
-        - Communicate vendor decision and next steps to customer → End (WF-060)
-    - **Vendor Approves:**
-        - Proceed to pickup assistance check
-
-##### 11C. Pickup Assistance (WF-011 → WF-011B)
-
-6. **Pickup Assistance Check (WF-011):**
-    - Does customer need pickup assistance or defective item removal?
-        - **No (WF-013):** Customer proceeds with vendor's own instructions (no CX coordination)
-        - **Yes (WF-011A):** Determine pickup type
-
-7. **Pickup Type Selection (WF-011A):**
-    - **Courier Pickup (WF-012):**
-        - CX provides pickup assistance (coordination + guidance)
-        - Generate return label
-    - **Disposal Pickup (WF-011B):**
-        - Log for **Return Logistics Team** (routes to WF-059/065A)
-
-##### 11D. Confirmation & Processing (WF-014 → WF-016)
-
-8. **Pickup Confirmed/Scheduled (WF-014):**
-    - Pickup arranged and confirmed with customer
-
-9. **Item Received (WF-015):**
-    - Confirm receipt of returned item
-
-10. **Vendor Refund Notification (WF-016):**
-    - Email vendor: *"Proceed with return / refund"*
-    - If item routed to Caledonia, warehouse team updates status (WF-090 → WF-093)
-    - Case closed (WF-060)
-
-**STATUS:** 🔄 Entire Third-Party Vendor Flow (WF-004 → WF-017) deferred to Phase 2
-
----
+**STATUS:** Entire Third-Party Vendor Flow (WF-004 - WF-017) deferred to Phase 2.
 
 ### Scope Impact
-
-#### Removed from In-Scope (03-scope.md)
-
-*Third-party vendors are listed in channels but with a "Work-in-Progress" note. No explicit in-scope items removed.*
 
 #### Added to Out-of-Scope
 
@@ -451,7 +248,7 @@ For items purchased from third-party vendors, the workflow requires vendor appro
 
 ---
 
-### Dependencies 0026 Risks
+### Dependencies & Risks
 
 #### Dependencies
 - Vendor partnership agreements and SLAs
@@ -476,145 +273,37 @@ Due to WooCommerce core limitations regarding bundle structures, implementing au
 
 ### Functional Requirements
 
-#### FR-9 – Bundles Handling
-*(Moved from 06-functional-requirements.md)*
+> Canonical text for FR-9 and FR-23 lives in `06-functional-requirements.md`. Below are Phase 2-specific notes only.
 
-Identify bundle items. When a main item is returned but the customer keeps a bundled/free item, the portal must offer the option to **keep the bundled/free item at 50% of the full website price** (not the bundle price) and adjust the refund amount accordingly.
-
-**Technical Requirement:** This functionality requires custom implementation to parse WooCommerce bundle data and calculate proration via the API.
-
-**STATUS:** 🔄 Deferred to Phase 2
-
----
-
-#### FR-23 – Refund Processing (Bundle Component)
-*(Modified from 06-functional-requirements.md)*
-
-**Auto-Refund (Phase 1 Constraint):**
-When items are marked "Received" and the **net refund value is less than 600** (store currency) **AND the order does NOT contain bundles or free items**, automatically initiate the refund in WooCommerce (if gateway supported).
-
-**Manual Refund (Phase 1 Constraint):**
-When items are marked "Received" and the **net refund value is 600 or greater**, OR the **order contains bundles/free items**, route the ticket to CX for manual refund processing. This is required because bundle proration logic is a **custom implementation** not standard to the platform.
-
-**Future Phase:**
-Bundle impact calculations (WF-070→073) will enable adjusted auto-refunds for qualifying bundled orders. Until then, all orders with bundles require manual processing.
-
-**STATUS:** 🔄 Bundle auto-refund capability deferred to Phase 2. Manual processing remains in Phase 1.
-
----
+- **FR-9** — Bundles Handling: Custom implementation to parse WooCommerce bundle data and calculate 50% proration. **STATUS:** Deferred to Phase 2.
+- **FR-23** — Refund Processing (Bundle Component): Bundle auto-refund capability requires WF-070-073 implementation. **STATUS:** Manual processing remains in Phase 1. Bundle auto-refund deferred to Phase 2.
 
 ### User Stories
 
-#### US-4.1 Apply Bundle Eligibility Rules
-*(Moved from 13-epics-user-stories.md)*
+> Canonical versions of these stories live in `13-epics-user-stories.md` (Epic 4 and Epic 10). Below are Phase 2-specific status notes only.
 
-> *As a system, I want bundled items to follow bundle-specific refund rules.*
-
-**Acceptance Criteria**
-
-1. Full bundle returned → full bundle price can be refunded.
-2. Single components (e.g., pillow or duvet from a bundle) → refund is prorated based on configured value.
-3. Free gift / gift-with-purchase must either be returned or have its value deducted from the refund.
-
-**STATUS:** 🔄 Deferred to Phase 2
-
----
-
-#### US-4.2 Free / Bundled Item "Keep at Discount" Option
-*(Moved from 13-epics-user-stories.md)*
-
-> *As a customer with a bundle or free item, I want the option to keep certain items at a discounted price when returning the main item.*
-
-**Acceptance Criteria**
-
-1. When returning a mattress or applicable accessory bundle with free items, the portal:
-    
-    * Detects associated free/bundled items.
-    * Prompts the customer with the keep-option (e.g., keep item at 50% of list price).
-2. If customer chooses to keep the item, its discounted value is deducted from the refund and the decision is recorded on the ticket.
-3. If customer chooses to return, normal bundle rules apply (no extra deduction).
-
-**STATUS:** 🔄 Deferred to Phase 2
-
----
-
-#### US-10.1 Auto vs Manual Refund Thresholds (Bundle Component)
-*(Modified from 13-epics-user-stories.md)*
-
-**Auto-refund criteria (Phase 1):**
-- Net value < 600 (store currency) AND
-- Order does NOT contain bundles or free items (WF-067).
-
-**Manual refund criteria:**
-- Net value >= 600, OR
-- Order contains bundles/free items, OR
-- Flagged as exception (WF-069).
-
-**Phase 2 Note:**
-Bundle impact calculations (WF-070→073) will enable adjusted auto-refunds for qualifying bundled orders.
-
-**STATUS:** 🔄 Bundle calculation logic (WF-070→073) deferred to Phase 2
-
----
+- **US-4.1** — Apply Bundle Eligibility Rules. **STATUS:** Deferred to Phase 2.
+- **US-4.2** — Free / Bundled Item "Keep at Discount" Option. **STATUS:** Deferred to Phase 2.
+- **US-10.1** — Auto vs Manual Refund Thresholds (Bundle component: WF-070-073 calculation logic). **STATUS:** Bundle calculation logic deferred to Phase 2.
 
 ### Business Rules
 
-#### BR-15 – Bundle / Free Item 50% Keep Rule
-*(Moved from 08-business-rules.md)*
+> Canonical rule text lives in `08-business-rules.md`. Below are Phase 2-specific status notes only.
 
-When a bundle item is returned and the customer keeps the bundled/free item, the customer pays **50% of the full website price** for the kept item. The refund is adjusted (prorated) to reflect this charge and the decision is recorded on the ticket.
-
-**Note:** This requires custom code integration to bridge the WooCommerce data structure with the portal.
-
-**STATUS:** 🔄 Deferred to Phase 2
-
----
-
-#### BR-26 – Auto-Refund Bundle Exclusion
-*(Moved from 08-business-rules.md)*
-
-Automatic refunds are strictly prohibited for any order containing bundles or free items, regardless of refund value. All such orders MUST route to manual refund processing. This is a Phase 1 technical limitation due to the **custom implementation required** for bundle calculation (WF-070→073).
-
-**STATUS:** ✅ Kept in Phase 1 as a constraint. Auto-refund capability for bundles deferred to Phase 2.
-
----
+- **BR-15** — Bundle / Free Item 50% Keep Rule. Requires custom WooCommerce integration. **STATUS:** Deferred to Phase 2.
+- **BR-26** — Auto-Refund Bundle Exclusion. **STATUS:** Kept in Phase 1 as a constraint. Auto-refund capability for bundles deferred to Phase 2.
 
 ### Process Narratives
 
-#### 13. Refund Processing — Phase 2 Refund Logic (Future State)
-*(Moved from 05-process-high-level.md)*
+> Full narrative for Refund Processing lives in `05-process-high-level.md`, Section 13.
 
-**Bundle Impact Calculation (WF-070):**
+**Phase 2 addition — Bundle Impact Calculations (WF-070-073):**
 - System calculates bundle impacts and adjusted refundable amounts
 - Accounts for 50% proration of bundled/free items customer keeps
-
-**Auto-Refund After Bundle Calculation (WF-071 → WF-072):**
-- If post-bundle calculation value **< $600**: Auto-refund
-
-**Manual Refund After Bundle Calculation (WF-071 → WF-073):**
-- If post-bundle calculation value **≥ $600**: Manual CX processing
-
-**STATUS:** 🔄 Entire Future Phase refund logic section (WF-070→073) deferred
-
----
-
-#### Item Selection Process (Bundle Warning)
-*(From 05-process-high-level.md)*
-
-> [!WARNING]
-> **Bundle / Free Item Promotion (Phase 2):** If the item is part of a bundle or free item promotion, the customer can keep bundled/free items at **50% of full website price**; the refund is adjusted accordingly.
->
-> **Technical Implementation Note:** Due to WooCommerce core limitations regarding bundle structures, this step requires **custom logic** to correctly identify bundled items and apply the 50% proration logic. Standard Claimlane/WooCommerce plugins do not support this out-of-the-box.
-
-**STATUS:** 🔄 Bundle keep-option deferred to Future Phase
-
----
+- If post-bundle value < $600: Auto-refund (WF-071-072)
+- If post-bundle value >= $600: Manual CX processing (WF-071-073)
 
 ### Scope Impact
-
-#### Removed from In-Scope
-
-*No explicit items removed. Bundle functionality was always marked as Phase 2 in warnings/notes.*
 
 #### Technical Constraints Added to Phase 1
 
@@ -624,7 +313,7 @@ Automatic refunds are strictly prohibited for any order containing bundles or fr
 
 ---
 
-### Dependencies 0026 Risks
+### Dependencies & Risks
 
 #### Dependencies
 - WooCommerce bundle data structure analysis and mapping
@@ -646,7 +335,7 @@ Automatic refunds are strictly prohibited for any order containing bundles or fr
 
 ### Rationale for Deferral
 
-The original requirement included a limit on the number of returns a customer could make for the same product type—both within a single request (max 2 units) and historically (lifetime limit). To reduce Phase 1 complexity and allow for broader return policies initially, this restriction has been moved to Future Phase. The system will currently allow customers to select items up to the purchased quantity without these specific blocks.
+The original requirement included a limit on the number of returns a customer could make for the same product type — both within a single request (max 2 units) and historically (lifetime limit). To reduce Phase 1 complexity and allow for broader return policies initially, this restriction has been moved to Future Phase. The system will currently allow customers to select items up to the purchased quantity without these specific blocks.
 
 ### Functional Requirements
 
@@ -664,16 +353,15 @@ The original requirement included a limit on the number of returns a customer co
 
 ### Business Rules
 
-#### BR-4 – Maximum Quantity
-- **Rule:** A maximum of two units per product type may be returned in a single request; selecting more triggers a soft warning and admin flag.
-- **STATUS:** 🔄 Deferred to Phase 2
+- **BR-4** — Maximum Quantity: A maximum of two units per product type may be returned in a single request; selecting more triggers a soft warning and admin flag. **STATUS:** Deferred to Phase 2.
 
 ---
 
 ## Appendices — Deferred Content
 
 ### Appendix D.4 — Bundles Eligibility Rules
-*(Moved from 16-appendices.md)*
+
+> Also documented in `16-appendices.md`, Section D.4.
 
 | Scenario | Eligibility | Notes |
 | :--- | :--- | :--- |
@@ -682,7 +370,7 @@ The original requirement included a limit on the number of returns a customer co
 | Returning duvet only | Eligible | Prorated refund |
 | Free sleep bundle gift | Must return gift | Or deduct gift value |
 
-**STATUS:** 🔄 Deferred to Future Phase
+**STATUS:** Deferred to Future Phase
 
 ---
 
@@ -696,24 +384,8 @@ Performed comprehensive "Deep Extraction" of Phase 2 features from active BRD do
 
 #### Features Moved to Phase 2 Backlog:
 1. **Vendors (Donation / Pickup Partners)** — Vendor portal access and pickup status updates
-2. **Third-Party Vendor Integration** — Complete TCS/EQ3/Costco workflow (WF-004→017)
-3. **Phase 2 Refund Logic** — Bundle impact calculations (WF-070→073)
-
-#### Files Modified:
-- **04-actors.md:** Moved Vendors actor, added Phase 2 note to Actor table
-- **06-functional-requirements.md:** Moved FR-9 (Bundles), added Phase 2 placeholders to FR-20, FR-23, FR-32
-- **08-business-rules.md:** Moved BR-15, updated BR-16 with Phase 1 workaround, kept BR-26 as constraint
-- **13-epics-user-stories.md:** Moved Epic 8 (Vendor & Logistics), US-4.1, US-4.2, US-8.1-8.4, updated US-11.1
-- **05-process-high-level.md:** Wrapped third-party vendor flow in Phase 2 markers, moved Phase 2 refund logic section
-- **03-scope.md:** No changes (vendor communication already in-scope for Phase 1 via manual process)
-- **15-changelog.md:** Added this extraction event
-- **15-phase-2-backlog.md:** ✨ **CREATED** — Comprehensive backlog document
-
-#### Extraction Method:
-- **Functional Items:** Cut FRs, User Stories, Business Rules → Paste to Backlog with placeholders
-- **Narrative:** Wrapped third-party flow sections with Phase 2 markers (not deleted to preserve context)
-- **Actors:** Added Phase 2 deferral note to Vendors actor
-- **Supporting Artifacts:** No changes to scope (manual workarounds in Phase 1)
+2. **Third-Party Vendor Integration** — Complete TCS/EQ3/Costco workflow (WF-004-017)
+3. **Phase 2 Refund Logic** — Bundle impact calculations (WF-070-073)
 
 #### Review Notes:
 - Self-donate fallback (WF-130) kept in Phase 1
@@ -725,7 +397,7 @@ Performed comprehensive "Deep Extraction" of Phase 2 features from active BRD do
 
 ## Discussion
 
-> 💬 **Comments for this page are available in Giscus.**  
+> Comments for this page are available in Giscus.
 > Once Giscus is configured, the discussion thread for this page will appear here.
 
 <div class="giscus-placeholder"></div>

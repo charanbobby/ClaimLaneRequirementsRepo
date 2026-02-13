@@ -276,15 +276,27 @@ This document outlines the high-level epics and user stories supporting the Clai
 
 ---
 
-### US-6.3 Accessories, Bedding & Bath: Mail-In Flow
+### US-6.3 Accessories, Bedding & Bath: Region-Specific Flow
 
-> *As a customer returning smaller items, I want a simple label-based process.*
+> *As a customer returning smaller items, I want a simple label-based process that accounts for my region.*
 
 **Acceptance Criteria**
 
-1. For Bedding / Bath / Accessories within their return window, portal collects reason and any required photos/measurements.
-2. System generates a return label and mail-in instructions.
-3. Shipment status is recorded and later linked to “Received” status in the portal.
+1. **Canada (CA):** For all accessories/bedding within return window:
+    - System collects reason and required photos/measurements.
+    - Generates return label and mail-in instructions immediately (WF-041→076A→077A).
+
+2. **United States (US) - Unopened Items:**
+    - System calculates shipping cost via carrier API (WF-116).
+    - If shipping cost > 1/3 of item value: Skip label, present Option 1 (keep for 50% refund).
+    - If shipping cost ≤ 1/3 of item value: Generate return label normally (WF-111).
+
+3. **United States (US) - Opened Items:**
+    - Present Option 1: Keep item for 50% refund, no proof required (WF-117).
+    - If rejected, present Option 2: Donate item for 100% refund, customer provides proof via CX contact (WF-119).
+    - If both options rejected: Decline return with clear explanation (WF-109).
+
+4. All customer decisions are logged in ticket.
 
 ---
 
@@ -296,6 +308,25 @@ This document outlines the high-level epics and user stories supporting the Clai
 
 1. The portal validates that the requested number of return labels does not exceed the number of labels/boxes in the original shipment.
 2. If the user requests more labels than the original order had, the system blocks generation and shows an error message explaining the limit.
+
+---
+
+### US-6.5 Furniture: Region-Specific Return Destinations
+
+> *As a customer returning furniture, I want the system to calculate shipping to the correct warehouse based on my region.*
+
+**Acceptance Criteria**
+
+1. After customer uploads items (Step 1), system determines customer region from order metadata.
+2. System calls WooCommerce API for live carrier rates:
+    - **Canada (CA):** API destination is always Caledonia warehouse address (WF-137).
+    - **United States (US):** API destination is the original order's shipping warehouse (LA or NJ) (WF-138).
+3. Customer is notified of shipping charges.
+    - *Note:* For disposal pickups, the charge is set to match the courier pickup rate.
+4. Customer **accepts charges** and provides pickup details.
+5. Customer submits ticket for **CX Review**.
+6. Upon CX Approval, label/instructions are **automatically generated**.
+7. This ensures US returns go back to origin, not to Canadian warehouse.
 
 ---
 
@@ -336,6 +367,21 @@ This document outlines the high-level epics and user stories supporting the Clai
 
 ---
 
+### US-7.4 Warranty Pickup Logistics Split
+
+> *As a customer with an approved warranty claim, I want to choose the appropriate pickup method.*
+
+**Acceptance Criteria**
+
+1. After CX approves warranty claim (WF-052C), system asks: "Do you need pickup assistance?" (WF-052F).
+2. If NO: Standard customer-initiated return flow proceeds.
+3. If YES: System presents two pickup options (WF-052H):
+    - **Courier Pickup:** CX provides coordination and guidance. System generates return label with text **(Defective)** or **(Defective - this will help warehouse to avoid inspection of that piece)** to signal warehouse to skip inspection (WF-052G).
+    - **Disposal Pickup:** Case is logged for Return Logistics Team to assign disposal vendor (WF-052I connects to shared logistics WF-059/065A).
+4. Pickup type selection is recorded in ticket.
+
+---
+
 ## Epic 8 — Vendor & Logistics Management
 
 ### US-8.1 Vendor Selection for Unboxed / Donation Flows
@@ -345,8 +391,15 @@ This document outlines the high-level epics and user stories supporting the Clai
 **Acceptance Criteria**
 
 1. System shows allowed vendors for the item type and location.
-2. Selection triggers emails to vendor and customer with instructions.
-3. Vendor receives portal access to mark items as “Picked.”
+2. Internal user (Return Logistics Team) can select a vendor.
+3. Selection triggers emails to vendor and customer with instructions.
+4. Vendor receives portal access to mark items as "Picked."
+5. **Self-Donate Option (WF-130):**
+    - If no vendor is available, the Return Logistics Team manually selects **"Self-Donation"** as the vendor/outcome.
+    - Customer receives instructions to donate item, take photo of donation, and contact CX (call/email).
+    - CX processes return manually in ClaimLane portal (WF-132).
+    - Case closes after CX confirms donation proof.
+6. The selection (Vendor vs. Self-Donate) is logged in ticket history.
 
 ---
 
@@ -368,8 +421,24 @@ This document outlines the high-level epics and user stories supporting the Clai
 
 **Acceptance Criteria**
 
-1. Vendor can update status to “Picked” for assigned items.
-2. Status change triggers transition to “Received” once warehouse confirms arrival, or to “In Transit” as configured.
+1. Vendor can update status to "Picked" for assigned items.
+2. Status change triggers transition to "Received" once warehouse confirms arrival, or to "In Transit" as configured.
+
+---
+
+### US-8.4 Third-Party Pickup Logistics Split
+
+> *As a customer with an approved third-party claim, I want to choose the appropriate pickup method.*
+
+**Acceptance Criteria**
+
+1. After vendor approves claim (WF-009) and customer indicates need for pickup assistance (WF-011), system presents two options (WF-011A):
+    - **Courier Pickup:** CX provides coordination and guidance. System generates return label (WF-012).
+    - **Disposal Pickup:** Case is logged for Return Logistics Team (WF-011B, connects to shared logistics flow).
+2. Pickup type is recorded in ticket.
+3. For courier: Pickup confirmation triggers item received status (WF-014→015).
+4. For disposal: Follows same vendor selection flow as unboxed mattresses (WF-059/065A).
+5. Both paths eventually route to warehouse delivery (R1 or R_US).
 
 ---
 
@@ -399,145 +468,7 @@ This document outlines the high-level epics and user stories supporting the Clai
 
 ---
 
-## Epic 10 — Refund & Case Finalization
-
-### US-10.1 Auto vs Manual Refund Thresholds
-
-> *As a system, I want refunds to be automated when safe and routed for manual review when required.*
-
-**Acceptance Criteria**
-
-1. Once an item is marked “Received,” the system calculates the **net return value** after:
-    * Bundle proration
-    * Gift-with-purchase deductions
-    * Any fees or shipping deductions.
-2. If net value is below the configured auto-refund threshold (e.g., <600), the portal triggers an automatic refund.
-3. If net value is at or above threshold, or flagged as exception, case goes to manual refund queue.
-4. Customer is notified whether refund is automatic or under review.
-
----
-
-### US-10.2 Apply Category-Specific Refund Notes
-
-> *As a system, I want category rules about refunds to be reflected correctly (e.g., furniture shipping deductions).*
-
-**Acceptance Criteria**
-
-1. Furniture returns show messaging that return shipping costs may be deducted unless escalated, and the deduction is shown in the refund breakdown.
-2. Other categories follow standard full-refund rules unless configured otherwise in the policy tables.
-
----
-
-### US-10.3 Close Case & Maintain Audit Trail
-
-> *As an internal user, I want each case to have a complete history and close cleanly.*
-
-**Acceptance Criteria**
-
-1. When refund or replacement is completed, the case moves to “Closed.”
-2. The case history shows key events: eligibility checks, documentation submissions, vendor selections, status changes, and refund decisions.
-3. Audit log is accessible to authorised internal users only.
-
----
-
----
-
-## Batch 2 Updates — Supporting Documentation Alignment
-
-### UPDATED: US-6.3 Accessories, Bedding & Bath: Region-Specific Flow
-
-> *Note: This story was updated to include region-specific US accessory return cost optimization logic.*
-
-**NEW Acceptance Criteria**
-
-1. **Canada (CA):** For all accessories/bedding within return window:
-    - System collects reason and required photos/measurements.
-    - Generates return label and mail-in instructions immediately (WF-041→076A→077A).
-
-2. **United States (US) - Unopened Items:**
-    - System calculates shipping cost via carrier API (WF-116).
-    - If shipping cost > 1/3 of item value: Skip label, present Option 1 (keep for 50% refund).
-    - If shipping cost ≤ 1/3 of item value: Generate return label normally (WF-111).
-
-3. **United States (US) - Opened Items:**
-    - Present Option 1: Keep item for 50% refund, no proof required (WF-117).
-    - If rejected, present Option 2: Donate item for 100% refund, customer provides proof via CX contact (WF-119).
-    - If both options rejected: Decline return with clear explanation (WF-109).
-
-4. All customer decisions are logged in ticket.
-
----
-
-### NEW: US-6.5 Furniture: Region-Specific Return Destinations
-
-> *As a customer returning furniture, I want the system to calculate shipping to the correct warehouse based on my region.*
-
-**Acceptance Criteria**
-
-1. After customer uploads items (Step 1), system determines customer region from order metadata.
-2. System calls WooCommerce API for live carrier rates:
-    - **Canada (CA):** API destination is always Caledonia warehouse address (WF-137).
-    - **United States (US):** API destination is the original order's shipping warehouse (LA or NJ) (WF-138).
-3. Customer is notified of shipping charges.
-    - *Note:* For disposal pickups, the charge is set to match the courier pickup rate.
-4. Customer **accepts charges** and provides pickup details.
-5. Customer submits ticket for **CX Review**.
-6. Upon CX Approval, label/instructions are **automatically generated**.
-7. This ensures US returns go back to origin, not to Canadian warehouse.
-
----
-
-### NEW: US-7.4 Warranty Pickup Logistics Split
-
-> *As a customer with an approved warranty claim, I want to choose the appropriate pickup method.*
-
-**Acceptance Criteria**
-
-1. After CX approves warranty claim (WF-052C), system asks: "Do you need pickup assistance?" (WF-052F).
-2. If NO: Standard customer-initiated return flow proceeds.
-3. If YES: System presents two pickup options (WF-052H):
-    - **Courier Pickup:** CX provides coordination and guidance. System generates return label with text **(Defective)** or **(Defective - this will help warehouse to avoid inspection of that piece)** to signal warehouse to skip inspection (WF-052G).
-    - **Disposal Pickup:** Case is logged for Return Logistics Team to assign disposal vendor (WF-052I connects to shared logistics WF-059/065A).
-4. Pickup type selection is recorded in ticket.
-
----
-
-### UPDATED: US-8.1 Vendor Selection for Unboxed / Donation Flows
-
-> *Note: This story was updated to include manual "Self-Donation" selection by Logistics Team.*
-
-**UPDATED Acceptance Criteria**
-
-1. System shows allowed vendors for the item type and location.
-2. Internal user (Return Logistics Team) can select a vendor.
-3. Selection triggers emails to vendor and customer with instructions.
-4. Vendor receives portal access to mark items as "Picked."
-5. **Self-Donate Option (WF-130):**
-    - If no vendor is available, the Return Logistics Team manually selects **"Self-Donation"** as the vendor/outcome.
-    - Customer receives instructions to donate item, take photo of donation, and contact CX (call/email).
-    - CX processes return manually in ClaimLane portal (WF-132).
-    - Case closes after CX confirms donation proof.
-6. The selection (Vendor vs. Self-Donate) is logged in ticket history.
-
----
-
-### NEW: US-8.4 Third-Party Pickup Logistics Split
-
-> *As a customer with an approved third-party claim, I want to choose the appropriate pickup method.*
-
-**Acceptance Criteria**
-
-1. After vendor approves claim (WF-009) and customer indicates need for pickup assistance (WF-011), system presents two options (WF-011A):
-    - **Courier Pickup:** CX provides coordination and guidance. System generates return label (WF-012).
-    - **Disposal Pickup:** Case is logged for Return Logistics Team (WF-011B, connects to shared logistics flow).
-2. Pickup type is recorded in ticket.
-3. For courier: Pickup confirmation triggers item received status (WF-014→015).
-4. For disposal: Follows same vendor selection flow as unboxed mattresses (WF-059/065A).
-5. Both paths eventually route to warehouse delivery (R1 or R_US).
-
----
-
-### NEW: US-9.3 US Warehouse Offline Status Updates
+### US-9.3 US Warehouse Offline Status Updates
 
 > *As Internal Ops, I want to manually update return statuses for US warehouse returns since they operate offline.*
 
@@ -554,11 +485,13 @@ This document outlines the high-level epics and user stories supporting the Clai
 
 ---
 
-### UPDATED: US-10.1 Auto vs Manual Refund Thresholds & Flow Routing
+## Epic 10 — Refund & Case Finalization
 
-> *Note: This story was updated to include RecRouter flow context logic and bundle exclusion constraints.*
+### US-10.1 Auto vs Manual Refund Thresholds & Flow Routing
 
-**UPDATED Acceptance Criteria**
+> *As a system, I want refunds to be automated when safe and routed for manual review when required.*
+
+**Acceptance Criteria**
 
 1. Once an item is marked "Received," system uses **Refund Context Routing** decision point to determine flow context (line 233 in diagram):
     - **Return:** Apply auto/manual refund logic below (WF-067→068/069).
@@ -593,6 +526,29 @@ This document outlines the high-level epics and user stories supporting the Clai
 
 ---
 
+### US-10.2 Apply Category-Specific Refund Notes
+
+> *As a system, I want category rules about refunds to be reflected correctly (e.g., furniture shipping deductions).*
+
+**Acceptance Criteria**
+
+1. Furniture returns show messaging that return shipping costs may be deducted unless escalated, and the deduction is shown in the refund breakdown.
+2. Other categories follow standard full-refund rules unless configured otherwise in the policy tables.
+
+---
+
+### US-10.3 Close Case & Maintain Audit Trail
+
+> *As an internal user, I want each case to have a complete history and close cleanly.*
+
+**Acceptance Criteria**
+
+1. When refund or replacement is completed, the case moves to “Closed.”
+2. The case history shows key events: eligibility checks, documentation submissions, vendor selections, status changes, and refund decisions.
+3. Audit log is accessible to authorised internal users only.
+
+---
+
 ## Epic 11 — Notifications & Communications
 
 ### US-11.1 Automated Email Triggers
@@ -613,9 +569,65 @@ This document outlines the high-level epics and user stories supporting the Clai
 
 ---
 
-## Discussion
+## Epic 12 — Product Onboarding & Removal
 
-> 💬 **Comments for this page are available in Giscus.**  
-> Once Giscus is configured, the discussion thread for this page will appear here.
+### US-12.1 Onboard New Products via Excel Upload
+
+> *As an admin, I want to upload an Excel file to onboard new products so they are available for returns and warranty claims without code changes.*
+
+**Acceptance Criteria**
+
+1. Admin uploads an Excel file with one row per product/variant containing: SKU, product name, category, subcategory (optional), final sale flag, fallback weight/dimensions (optional), warranty-only flag, and region.
+2. An optional second sheet defines replacement parts with parent SKU, part SKU, and part name.
+3. System validates all rows before committing: rejects unknown categories, duplicate SKUs, and missing required fields.
+4. Admin sees a preview screen with parsed rows and row-level errors highlighted in red.
+5. No data is saved until admin confirms the import.
+6. Upload event is logged with: admin identity, timestamp, file name, and row count.
+7. Newly onboarded products appear in eligibility checks for subsequent customer orders.
+
+---
+
+### US-12.2 Remove a Product
+
+> *As an admin, I want to remove a product from the portal so it no longer appears in customer flows.*
+
+**Acceptance Criteria**
+
+1. Admin requests product removal (MVP: via email to system administrator).
+2. Before deactivation, the system displays a warning showing the count of active/open tickets referencing the product.
+3. Removal is a soft-delete — the product is marked inactive, not permanently deleted.
+4. Deactivated products no longer appear as eligible in customer-facing item displays.
+5. Historical ticket data and reports continue to reference the deactivated product.
+6. Removal event is logged with admin identity and timestamp.
+
+---
+
+### US-12.3 View Onboarded Products
+
+> *As an admin, I want to see all onboarded products and their configuration so I can verify the current state.*
+
+**Acceptance Criteria**
+
+1. Admin can access a read-only listing of all products showing: SKU, name, category, region, final sale flag, warranty-only flag, and status (active/inactive).
+2. Listing supports search by SKU or product name.
+3. Listing supports filtering by category, region, or status.
+4. Inactive products are visually distinguished (e.g., greyed out or labelled).
+
+---
+
+### US-12.4 Future State — Direct System Sync
+
+> *As a system, I want product data to sync directly from WooCommerce and external catalogues so manual Excel uploads are no longer needed.*
+
+**Acceptance Criteria**
+
+1. System connects to WooCommerce product API to pull SKUs, names, categories, weights, and dimensions automatically.
+2. New products in WooCommerce appear in ClaimLane without manual intervention.
+3. Removed or discontinued products in WooCommerce are flagged for admin review (not auto-deactivated).
+4. **Deferred to future phase** — MVP uses Excel upload (US-12.1) and email-based removal (US-12.2).
+
+---
+
+## Discussion
 
 <div class="giscus-placeholder"></div>
