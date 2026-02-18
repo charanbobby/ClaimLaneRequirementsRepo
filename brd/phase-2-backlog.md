@@ -60,14 +60,14 @@ Due to WooCommerce core limitations regarding bundle structures, implementing au
 
 ### Functional Requirements
 
-> Canonical text for FR-9 and FR-23 lives in `06-functional-requirements.md`. Below are Phase 2-specific notes only.
+> Canonical text for FR-9 and FR-23 lives in `functional-requirements.md`. Below are Phase 2-specific notes only.
 
 - **FR-9** — Bundles Handling: Custom implementation to parse WooCommerce bundle data and calculate 50% proration. **STATUS:** Deferred to Phase 2.
 - **FR-23** — Refund Processing (Bundle Component): Bundle auto-refund capability requires WF-070-073 implementation. **STATUS:** Manual processing remains in Phase 1. Bundle auto-refund deferred to Phase 2.
 
 ### User Stories
 
-> Canonical versions of these stories live in `13-epics-user-stories.md` (Epic 4 and Epic 10). Below are Phase 2-specific status notes only.
+> Canonical versions of these stories live in `epics-user-stories.md` (Epic 4 and Epic 10). Below are Phase 2-specific status notes only.
 
 - **US-4.1** — Apply Bundle Eligibility Rules. **STATUS:** Deferred to Phase 2.
 - **US-4.2** — Free / Bundled Item "Keep at Discount" Option. **STATUS:** Deferred to Phase 2.
@@ -75,14 +75,14 @@ Due to WooCommerce core limitations regarding bundle structures, implementing au
 
 ### Business Rules
 
-> Canonical rule text lives in `08-business-rules.md`. Below are Phase 2-specific status notes only.
+> Canonical rule text lives in `business-rules.md`. Below are Phase 2-specific status notes only.
 
 - **BR-15** — Bundle / Free Item 50% Keep Rule. Requires custom WooCommerce integration. **STATUS:** Deferred to Phase 2.
 - **BR-26** — Auto-Refund Bundle Exclusion. **STATUS:** Kept in Phase 1 as a constraint. Auto-refund capability for bundles deferred to Phase 2.
 
 ### Process Narratives
 
-> Full narrative for Refund Processing lives in `05-process-high-level.md`, Section 13.
+> Full narrative for Refund Processing lives in `process-high-level.md`, Section 13.
 
 **Phase 2 addition — Bundle Impact Calculations (WF-070-073):**
 - System calculates bundle impacts and adjusted refundable amounts
@@ -148,7 +148,7 @@ The original requirement included a limit on the number of returns a customer co
 
 ### Appendix D.4 — Bundles Eligibility Rules
 
-> Also documented in `16-appendices.md`, Section D.4.
+> Also documented in `appendices.md`, Section D.4.
 
 | Scenario | Eligibility | Notes |
 | :--- | :--- | :--- |

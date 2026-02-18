@@ -14,28 +14,28 @@ markdown_extensions:
           format: !!python/name:pymdownx.superfences.fence_code_format
 
 nav:
-  - Home: 01-README.md
+  - Home: index.md
 
   - About:
-      - Overview & Purpose: 02-overview-purpose.md
-      - Scope: 03-scope.md
-      - Actors: 04-actors.md
+      - Overview & Purpose: overview-purpose.md
+      - Scope: scope.md
+      - Actors: actors.md
 
   - Process:
-      - High-Level Process Flow: 05-process-high-level.md
+      - High-Level Process Flow: process-high-level.md
 
   - Requirements:
-      - Functional: 06-functional-requirements.md
-      - Non-Functional: 07-non-functional-requirements.md
-      - Business Rules: 08-business-rules.md
-      - Changelog: 15-changelog.md
-      - Phase 2 Backlog: 15-phase-2-backlog.md
+      - Functional: functional-requirements.md
+      - Non-Functional: non-functional-requirements.md
+      - Business Rules: business-rules.md
+      - Changelog: changelog.md
+      - Phase 2 Backlog: phase-2-backlog.md
 
   - Stories:
-      - Epics & User Stories: 13-epics-user-stories.md
+      - Epics & User Stories: epics-user-stories.md
 
   - Reference:
-      - Appendices: 16-appendices.md
+      - Appendices: appendices.md
 
 extra_css:
   - css/giscus.css

@@ -114,7 +114,7 @@ This is essential for QA (validation of required fields) and Business (alignment
 | Measurements | Required when defect relates to size |
 | Tags | Required in almost every category |
 
-**See BR-5** in `08-business-rules.md`: A claim cannot be submitted unless 100% of required documentation is provided and validated at submission (except when CS overrides manually).
+**See BR-5** in `business-rules.md`: A claim cannot be submitted unless 100% of required documentation is provided and validated at submission (except when CS overrides manually).
 
 ---
 
@@ -143,6 +143,7 @@ This is essential for Testers verifying:
 | Quality (Cosmetics) | Quality |
 | Not as Expected/Advertised | Not as Expected |
 | Other / Change of Mind | Change of Mind |
+| Defective | Defective |
 | Chargeback | Chargeback |
 | Cancellation – Fraud | Fraud |
 

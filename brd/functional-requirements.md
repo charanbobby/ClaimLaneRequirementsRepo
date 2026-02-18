@@ -132,7 +132,6 @@ The following requirements describe what the portal must do. Each requirement is
 
     - **Courier Pickup:** CX provides pickup coordination and generates a return label (WF-012).
     - **Disposal Pickup:** Log the case for the Return Logistics Team (WF-011B connects to shared return logistics WF-059/065A).
-    - **Costco:** No pickup assistance — ticket created for tracking only.
 
 - **FR-37 – US Warehouse Offline Process:** For returns shipped to US warehouses (LA or NJ), implement an offline status update workflow:
     
@@ -241,7 +240,7 @@ The following requirements describe what the portal must do. Each requirement is
     - Photos of the item (condition documentation).
     - Contact information for pickup coordination.
 
-    Upon submission, create a ClaimLane ticket tagged with the third-party vendor name and route to standard pickup logistics (courier or disposal). **Costco exception:** Costco orders do not require pickup assistance — create a ticket for tracking purposes only and close the pickup flow.
+    Upon submission, create a ClaimLane ticket tagged with the third-party vendor name and route to standard pickup logistics (courier or disposal). 
 
 - **FR-49 – Third-Party Pickup Logistics:** For TSC and EQ3 orders requiring pickup assistance, the system follows standard pickup logistics after ticket creation:
 
