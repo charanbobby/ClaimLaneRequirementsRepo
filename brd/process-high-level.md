@@ -382,12 +382,6 @@ Once an item is marked as **"Received"** (WF-089), the refund logic is determine
 
 ---
 
-## Visual Process Flow
-
-![Process Flow](assets/WorkFlow.png)
-
----
-
 ## Discussion
 
 <div class="giscus-placeholder"></div>
