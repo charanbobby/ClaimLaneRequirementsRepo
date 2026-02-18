@@ -4,54 +4,54 @@ This repository contains the source code for the ClaimLane Requirements MkDocs s
 
 ## Prerequisites
 
-- [Python](https://www.python.org/downloads/) installed.
+- **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** installed and running.
 - [Git](https://git-scm.com/downloads) installed.
+- (Optional) [Python 3.10+](https://www.python.org/downloads/) for legacy local development.
 
-## Setup
+## Setup (Docker) - Recommended
 
-1.  **Clone the repository** (if you haven't already):
+The project is configured to run in Docker to ensure the environment is consistent across different machines and user profiles.
+
+1.  **Clone the repository**:
     ```sh
     git clone https://github.com/charanbobby/ClaimLaneRequirementsRepo.git
     cd ClaimLaneRequirementsRepo
     ```
 
-2.  **Create and activate a virtual environment**:
+2.  **Build the Docker environment**:
     ```sh
-    python -m venv venv
-    .\venv\Scripts\Activate
+    docker compose build
     ```
 
-3.  **Install dependencies**:
-    ```sh
-    pip install mkdocs mkdocs-material
-    ```
+## Local Development (Docker)
 
-## Local Development
-
-To review changes locally before deploying:
+To start the preview server locally:
 
 ```sh
-python custom_serve.py
+docker compose up
 ```
-*Note: We use `custom_serve.py` instead of the standard `mkdocs serve` to ensure file changes are detected correctly on Windows.*
-Then open [http://127.0.0.1:8000](http://127.0.0.1:8000) in your browser.
 
+Then open [http://localhost:8000](http://localhost:8000) in your browser. Changes to your markdown files will be automatically reflected.
 
-## Static Site Build
+## Portability: Moving Docker Storage to D:
 
-To generate a static version of the site (HTML/CSS/JS files) without running a server:
+If you are using an external drive (D:) and want to share your Docker images/containers across two laptops:
+
+1.  Open **Docker Desktop Settings**.
+2.  Go to **Resources** > **Advanced**.
+3.  Change **Disk image location** to `D:\DockerStorage`.
+4.  Apply and Restart.
+5.  Repeat this on the second laptop, pointing to the same folder on the drive.
+
+## Static Site Build (Docker)
+
+To generate the static HTML files in the `site/` folder:
 
 ```sh
-mkdocs build
+docker compose run --rm mkdocs build
 ```
-This creates a `site/` directory containing the full static website.
 
-**When is this necessary?**
-1.  **Debugging:** If you suspect an issue is due to the live reload server, the build output shows exactly what will be deployed.
-2.  **Hosting Elsewhere:** if you want to host the files on a standard web server (Apache/Nginx) instead of GitHub Pages.
-3.  **Verification:** To confirm that all files and navigation links are generated correctly before pushing code.
-
-## Deployment
+## Deployment to GitHub Pages
 
 To deploy changes to the live site:
 
@@ -62,45 +62,55 @@ To deploy changes to the live site:
     git push origin main
     ```
 
-2.  **Deploy to GitHub Pages**:
+2.  **Run the deployment command**:
     ```sh
-    mkdocs gh-deploy
+    docker compose run --rm mkdocs gh-deploy
     ```
-    (Or `.\venv\Scripts\mkdocs gh-deploy` if standard command fails).
 
 3.  **Verify**:
-    Visit [https://charanbobby.github.io/ClaimLaneRequirementsRepo/](https://charanbobby.github.io/ClaimLaneRequirementsRepo/).
-    *Note: It may take a minute for updates to appear.*
+    Visit [https://charanbobby.github.io/ClaimLaneRequirementsRepo/].
 
-## Troubleshooting
+---
 
-### 1. PowerShell Security Error (UnauthorizedAccess)
-If you see `...cannot be loaded because running scripts is disabled on this system`, run this command in PowerShell to allow the script:
-```powershell
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-```
-Or, skip activation and run `mkdocs` directly:
-```powershell
-.\venv\Scripts\mkdocs serve
-```
+## Alternative/Legacy Setup (Local Venv)
 
-### 2. "MkDocs not recognized"
-If `mkdocs` command fails, try running it via the full path:
-```powershell
-.\venv\Scripts\mkdocs build
-```
+If you cannot use Docker, you can still set up a local Python environment:
 
-### 3. Missing Pages / Content Not Updating
-If you edit files (e.g., adding `15-changelog.md`) but `mkdocs serve` is not showing them (or showing "404 Not Found" for new pages):
-1. **Check for stale processes**: You might have an old `mkdocs` running in the background listening on port 8000.
-    ```powershell
-    netstat -ano | findstr :8000 | findstr LISTENING
+1.  **Create and activate a virtual environment**:
+    ```sh
+    python -m venv venv
+    .\venv\Scripts\Activate
     ```
-2. **Kill the process**: Take the PID (number on the far right) and kill it.
-    ```powershell
-    taskkill /PID <PID> /F
+
+2.  **Install dependencies**:
+    ```sh
+    pip install -r requirements.txt
     ```
-3. **Restart Serve**:
-    ```powershell
+
+3.  **Local Serve**:
+    ```sh
     python custom_serve.py
     ```
+
+4.  **Local Build/Deploy**:
+    ```sh
+    mkdocs build
+    mkdocs gh-deploy
+    ```
+
+## Troubleshooting (Docker)
+
+### "Docker not recognized"
+Ensure Docker Desktop is running. You may need to restart your terminal after installing Docker.
+
+### Port 8000 is occupied
+If another process is using port 8000, you can stop the existing container:
+```sh
+docker compose down
+```
+
+### Site not updating
+Try rebuilding the image if you've added new dependencies:
+```sh
+docker compose build --no-cache
+```

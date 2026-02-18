@@ -15,8 +15,7 @@ This document outlines the high-level epics and user stories supporting the Clai
 1. Customer can pick from:
     * Silk & Snow Online (CA / US)
     * Retail Store (in-person)
-    * Third-Party Vendor.
-2. Selecting Third-Party Vendor is a Work-in-Progress (TDB).
+2. **Third-Party Vendor orders** do not use the channel selection screen — they enter via vendor-specific generic links (see US-1.5 and FR-46).
 3. Online and Retail selections proceed to store / order validation steps.
 
 ---
@@ -59,6 +58,27 @@ This document outlines the high-level epics and user stories supporting the Clai
 3. If opt-out IS checked, flow continues with standard return logistics.
 4. Decision is logged in ticket for audit purposes.
 5. Mapping to diagram: REASON_CHECK decision (WF-030) routes to WF-052 (Warranty).
+
+---
+
+### US-1.5 Third-Party Vendor Link Entry & Terms Acceptance
+
+> *As a customer directed by a third-party vendor (TSC, EQ3, Costco), I want to access ClaimLane via a link provided by the vendor so I can arrange pickup of my return item.*
+
+**Acceptance Criteria**
+
+1. Each third-party vendor (TSC, EQ3, Costco) has a **dedicated generic link** to ClaimLane that identifies the vendor.
+2. The link is **not unique to the customer** — the same link is shared with all customers of that vendor.
+3. When the customer opens the link, the system displays a **Terms & Conditions page** before any other action (security gate for non-unique links).
+4. T&C clearly states:
+    * No refund will be issued by Silk & Snow — the refund is the sole responsibility of the third-party vendor.
+    * The return is not authorized by the third-party partner — Silk & Snow facilitates pickup logistics only.
+5. Customer must **explicitly accept** T&C (checkbox + confirm button) to proceed.
+6. If customer declines T&C, flow ends with a message directing them back to the third-party vendor.
+7. After T&C acceptance, customer provides pickup details: address, access constraints, preferred dates, photos, and contact information.
+8. System creates a ClaimLane ticket tagged with the vendor name.
+9. **TSC / EQ3 orders:** Proceed to standard pickup logistics (courier or disposal — see US-8.4).
+10. **Costco orders:** Ticket created for tracking only — no pickup assistance required. Flow ends.
 
 ---
 
@@ -129,7 +149,7 @@ This document outlines the high-level epics and user stories supporting the Clai
 1. Web orders: fully supported in the portal.
 2. Retail orders fulfilled via Shopify: accepted in the portal if order ID matches.
 3. POS-only purchases: portal may provide guidance, but must force returns to be completed in store.
-4. Amazon / third-party vendors: portal blocks returns and directs the customer to the seller.
+4. Third-party vendors (TSC, EQ3, Costco): customers enter via vendor-specific link with T&C gate (see US-1.5). No refund from S&S — pickup logistics only.
 
 ---
 
@@ -261,7 +281,7 @@ This document outlines the high-level epics and user stories supporting the Clai
     - Customer uploads required photos and description.
     - System calls **WooCommerce API** for carrier rates with region-specific destinations:
         - **Canada:** Caledonia warehouse address (WF-137)
-        - **United States:** Original order shipping warehouse - LA or NJ (WF-138)
+        - **United States:** Closest return warehouse from **Fulfil API** — LA (JDLLA) or NJ (JDLNJ) (WF-138; see FR-45)
     - Customer is notified of shipping charges.
         - *Note:* If the pickup is for "Disposal", the system charges the same amount as a courier pickup.
     - Customer **accepts charges** and provides access constraints/pickup dates.
@@ -286,15 +306,13 @@ This document outlines the high-level epics and user stories supporting the Clai
     - System collects reason and required photos/measurements.
     - Generates return label and mail-in instructions immediately (WF-041→076A→077A).
 
-2. **United States (US) - Unopened Items:**
-    - System calculates shipping cost via carrier API (WF-116).
-    - If shipping cost > 1/3 of item value: Skip label, present Option 1 (keep for 50% refund).
-    - If shipping cost ≤ 1/3 of item value: Generate return label normally (WF-111).
+2. **United States (US) — Unopened Items:**
+    - Generate return label and mail-in instructions (WF-111). Standard flow.
 
-3. **United States (US) - Opened Items:**
+3. **United States (US) — Opened Items:**
     - Present Option 1: Keep item for 50% refund, no proof required (WF-117).
-    - If rejected, present Option 2: Donate item for 100% refund, customer provides proof via CX contact (WF-119).
-    - If both options rejected: Decline return with clear explanation (WF-109).
+    - If accepted: Process 50% refund — customer keeps the item and the return is complete.
+    - If rejected: Generate a **Customer Care ticket**. CX contacts customer offline to encourage Option 2 (donate for full refund).
 
 4. All customer decisions are logged in ticket.
 
@@ -318,15 +336,18 @@ This document outlines the high-level epics and user stories supporting the Clai
 **Acceptance Criteria**
 
 1. After customer uploads items (Step 1), system determines customer region from order metadata.
-2. System calls WooCommerce API for live carrier rates:
+2. System calls **Fulfil ERP API** with the WooCommerce order ID to determine the return warehouse destination (see FR-45):
+    - The API returns the originating warehouse for each SKU and the **closest return warehouse** for US orders.
+    - For orders shipped from **multiple warehouses**, the API calculates which US warehouse (LA – JDLLA or NJ – JDLNJ) is closest to the customer's shipping address via Google Maps geocoding.
+3. System calls WooCommerce API for live carrier rates:
     - **Canada (CA):** API destination is always Caledonia warehouse address (WF-137).
-    - **United States (US):** API destination is the original order's shipping warehouse (LA or NJ) (WF-138).
-3. Customer is notified of shipping charges.
+    - **United States (US):** API destination is the closest return warehouse from the Fulfil API response (WF-138).
+4. Customer is notified of shipping charges.
     - *Note:* For disposal pickups, the charge is set to match the courier pickup rate.
-4. Customer **accepts charges** and provides pickup details.
-5. Customer submits ticket for **CX Review**.
-6. Upon CX Approval, label/instructions are **automatically generated**.
-7. This ensures US returns go back to origin, not to Canadian warehouse.
+5. Customer **accepts charges** and provides pickup details.
+6. Customer submits ticket for **CX Review**.
+7. Upon CX Approval, label/instructions are **automatically generated**.
+8. This ensures US returns go to the correct US warehouse (origin or closest), not to Canadian warehouse.
 
 ---
 
@@ -426,19 +447,20 @@ This document outlines the high-level epics and user stories supporting the Clai
 
 ---
 
-### US-8.4 Third-Party Pickup Logistics Split
+### US-8.4 Third-Party Pickup Logistics (TSC / EQ3)
 
-> *As a customer with an approved third-party claim, I want to choose the appropriate pickup method.*
+> *As a customer who entered via a third-party vendor link and accepted T&C, I want pickup to be arranged for my return item.*
 
 **Acceptance Criteria**
 
-1. After vendor approves claim (WF-009) and customer indicates need for pickup assistance (WF-011), system presents two options (WF-011A):
+1. After customer submits pickup details via vendor link (US-1.5), system creates a ClaimLane ticket and routes **TSC / EQ3 orders** to pickup logistics (WF-011A):
     - **Courier Pickup:** CX provides coordination and guidance. System generates return label (WF-012).
-    - **Disposal Pickup:** Case is logged for Return Logistics Team (WF-011B, connects to shared logistics flow).
+    - **Disposal Pickup:** Case is logged for Return Logistics Team (WF-011B, connects to shared logistics flow WF-059/065A).
 2. Pickup type is recorded in ticket.
-3. For courier: Pickup confirmation triggers item received status (WF-014→015).
+3. For courier: Pickup confirmation triggers item collected status (WF-014→015). Vendor is notified.
 4. For disposal: Follows same vendor selection flow as unboxed mattresses (WF-059/065A).
-5. Both paths eventually route to warehouse delivery (R1 or R_US).
+5. **Costco orders** do not enter this flow — ticket is created for tracking only (no pickup assistance).
+6. **No refund is issued by Silk & Snow** — the refund is handled by the third-party vendor directly.
 
 ---
 
@@ -496,7 +518,7 @@ This document outlines the high-level epics and user stories supporting the Clai
 1. Once an item is marked "Received," system uses **Refund Context Routing** decision point to determine flow context (line 233 in diagram):
     - **Return:** Apply auto/manual refund logic below (WF-067→068/069).
     - **Warranty:** Trigger replacement order creation (WCX flow).
-    - **Third-Party:** Email vendor for refund processing (WF-016).
+    - **Third-Party:** Notify vendor that item has been collected — no S&S refund issued (see BR-1).
 
 2. For **Return flow**, system calculates **net return value** after:
     - Bundle proration.
@@ -522,7 +544,7 @@ This document outlines the high-level epics and user stories supporting the Clai
 
 9. **Warehouse Routing (Dest_Check):** After refund processing, system routes to appropriate warehouse using destination check (WF-239):
     - **CA Destinations:** Route to Caledonia workflow (R1→R2→R4→R5).
-    - **US Destinations:** Route to US warehouse offline workflow (R_US→R2_US→R4_US→R5_US).
+    - **US Destinations:** Route to US warehouse offline workflow (R_US→R2_US→R4_US→R5_US). Specific US warehouse (LA or NJ) determined by **Fulfil API** (see FR-45).
 
 ---
 
@@ -557,8 +579,8 @@ This document outlines the high-level epics and user stories supporting the Clai
 
 **Acceptance Criteria**
 
-1. Email sent when third-party vendor ticket is created (WF-008).
-2. Email sent to vendor when third-party refund approval is granted (WF-016).
+1. Email sent when third-party pickup ticket is created via vendor link (FR-48).
+2. Email sent to vendor when third-party item has been collected (pickup completed).
 3. Email sent to customer when warranty claim is declined by CX (WF-052D).
 4. Email sent when unboxed mattress vendor is assigned (existing feature).
 5. Email sent when unboxed mattress vendor is changed, notifying new vendor and customer (existing feature).

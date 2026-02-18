@@ -20,7 +20,7 @@
 
 | Actor                    | Description                                                                                                       |
 |--------------------------|-------------------------------------------------------------------------------------------------------------------|
-| Customer Service (CS) Agents | Review claims, validate documentation, perform manual refunds, manage exceptions, and override rules where permitted. |
+| Customer Experience (CX) Agents | Review claims, validate documentation, perform manual refunds, manage exceptions, and override rules where permitted. |
 | Internal Ops             | Processes US warehouse email notifications and manually updates return statuses in the portal for US returns (LA/NJ warehouses). Runs "Returned items" reports for US inventory reconciliation. |
 | Caledonia Warehouse Team | Canadian warehouse team receiving physical returns and updating item condition/status using a limited-access role in the portal. |
 | US Warehouse Team (LA / NJ) | US warehouse teams (Los Angeles and New Jersey) that receive physical returns and email status updates to Internal Ops. These teams do not have direct portal access; all status updates are processed offline via email. |
@@ -31,7 +31,8 @@
 
 | Actor                           | Description                                                                                                  |
 |---------------------------------|--------------------------------------------------------------------------------------------------------------|
-| Vendors (Donation / Pickup Partners) | External partners that collect unboxed mattresses, oversized items, or donations. **Phase 1:** Vendors handle physical logistics; Return Logistics Team updates status manually. **Phase 2:** Vendors will have portal access to update pickup status directly. *(Vendor portal access deferred to Phase 2)* |
+| Vendors (Donation / Pickup Partners) | External partners (6–10 vendors) that collect unboxed mattresses, oversized items, or donations. Vendors have portal access to mark items as "Picked" and update pickup status directly within ClaimLane. |
+| Third Party (EQ3/TSC/Costco) Partners | Third-party partners that sell Silk & Snow products through their own channels. Partners will have ability to share the link (to Claimlane) for clients to submit pickup requests. |
 
 ## Governance and Quality
 

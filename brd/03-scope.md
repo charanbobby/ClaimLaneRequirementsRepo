@@ -25,6 +25,7 @@
 - **Region-specific furniture return logistics (CA - Caledonia warehouse, US - Original shipping warehouse).**
 
 - **Warranty and third-party pickup logistics splits (courier vs. disposal).**
+- **Third-party vendor link-based entry (TSC, EQ3, Costco) with Terms & Conditions gate and pickup logistics coordination. No S&S refund — vendor handles refunds.**
 - **Product onboarding via Excel upload and product removal (MVP); future state: direct sync with WooCommerce and external catalogues.**
 
 ### Product Categories
@@ -52,7 +53,9 @@
 
 ### Systems / APIs
 
-- **WooCommerce API for calculating shipping rates and label generation (furniture, accessories).**
+- **WooCommerce API for calculating shipping rates.**
+- **EasyPost API for label generation (furniture, accessories).**
+- **Fulfil ERP API for determining origin warehouse per SKU and closest return warehouse for US orders.**
 
 ## Out of Scope
 

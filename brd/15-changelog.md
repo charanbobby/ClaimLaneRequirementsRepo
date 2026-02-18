@@ -2,6 +2,83 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2026-02-18 - US Accessories Scope Change (Opened Items Only)
+
+### Changed
+- **06-functional-requirements.md:** Rewrote FR-34 (US Accessory Return Handling) — removed multi-tier opened/unopened shipping cost logic. Unopened items now always receive a return label. Opened items receive Option 1 (keep for 50% refund); acceptance completes the return. Rejection generates a Customer Care ticket for offline Option 2 (donation).
+- **08-business-rules.md:** Updated BR-23 (scoped to opened items only, removed high-cost unopened qualifier), rewrote BR-24 (Option 2 now offline via CX ticket), superseded BR-25 (shipping cost threshold no longer applicable).
+- **05-process-high-level.md:** Rewrote Section 8C (US Accessories) — removed shipping cost decision for unopened items and direct Option 2 presentation; replaced with simplified flow.
+- **13-epics-user-stories.md:** Updated US-6.3 acceptance criteria — removed shipping cost threshold for unopened items and multi-step Option 1 → Option 2 → decline flow for opened items.
+
+### Context
+- The shipping cost decision logic (1/3 of item value threshold) for US accessories was too difficult to determine in practice.
+- Decision 1: Remove the 1/3 shipping cost threshold — unopened items always get a return label.
+- Decision 2: Remove direct Option 2 (donation) presentation from the portal — when a customer rejects Option 1, a Customer Care ticket is generated. CX contacts the customer offline to encourage Option 2 (donate for full refund).
+- If the customer accepts Option 1, they keep the item and receive a 50% refund (return complete).
+
+---
+
+## 2026-02-18 - Third-Party Vendor Integration Restored to Phase 1
+
+### Restored to Phase 1
+- **Third-Party Vendor Integration (TSC, EQ3, Costco):** Moved from Phase 2 backlog back to Phase 1 with a fundamentally simplified flow. Instead of the original vendor-approval workflow (which required a core architecture rebuild), the new approach uses **vendor-initiated generic links** with a **Terms & Conditions gate**.
+
+### Added
+- **06-functional-requirements.md:** Added FR-46 (Third-Party Vendor Link Entry), FR-47 (Terms & Conditions Gate), FR-48 (Pickup Details Collection), FR-49 (Third-Party Pickup Logistics).
+- **13-epics-user-stories.md:** Added US-1.5 (Third-Party Vendor Link Entry & Terms Acceptance).
+- **03-scope.md:** Added third-party vendor link-based entry to in-scope processes.
+
+### Changed
+- **08-business-rules.md:** Rewrote BR-1 (Third-Party Orders) — from "block portal entry" to vendor-specific link entry with T&C gate and pickup logistics.
+- **06-functional-requirements.md:** Updated FR-1 (Third-Party no longer uses channel selection), FR-32 (email triggers updated for new flow), FR-36 (superseded by FR-49), FR-39 (third-party refund context updated — no S&S refund).
+- **05-process-high-level.md:** Rewrote entire Section C (Third-Party Vendor Flow) — removed Phase 2 deferral warning, replaced vendor-approval workflow with link-based entry flow.
+- **13-epics-user-stories.md:** Updated US-1.1 (third-party removed from channel selection), US-3.3 (channel eligibility), US-8.4 (pickup logistics rewritten for new flow), US-10.1 (refund routing — no S&S refund for third-party), US-11.1 (email triggers updated).
+- **15-phase-2-backlog.md:** Removed entire Third-Party Vendor Integration section. Updated executive summary, feature counts, quick reference, and extraction log. Renumbered remaining sections.
+
+### Context
+- The original Phase 2 deferral was based on the assumption that a full vendor-approval workflow was needed, requiring a core architecture rebuild.
+- The new simplified approach: TSC/EQ3/Costco verify the customer's order externally, then share a generic ClaimLane link. The customer accepts T&C (no S&S refund, not authorized by vendor) and provides pickup details. ClaimLane handles pickup logistics only.
+- **Costco** orders do not require pickup assistance — ticket created for tracking only.
+- **TSC / EQ3** orders follow standard pickup logistics (courier or disposal).
+- The generic link is not unique to the customer — the T&C page serves as the security gate.
+
+---
+
+## 2026-02-18 - US Warehouse Routing via Fulfil ERP API
+
+### Added
+- **06-functional-requirements.md:** Added FR-45 (Fulfil API Warehouse Lookup) — new integration with Fulfil ERP API to determine origin warehouse per SKU and closest return warehouse for US orders. Includes warehouse codes (JDLLA, JDLNJ) and addresses.
+
+### Changed
+- **08-business-rules.md:** Updated BR-30 (Furniture Return Destinations) — US returns now routed via Fulfil API with closest-warehouse logic for multi-warehouse orders (Google Maps geocoding).
+- **06-functional-requirements.md:** Updated FR-20 (WF-138 destination) and FR-41 to reference Fulfil API instead of generic "order metadata."
+- **05-process-high-level.md:** Updated WF-138 US Furniture section to reference Fulfil API and closest warehouse logic.
+- **13-epics-user-stories.md:** Updated US-6.2 (furniture acceptance criteria), US-6.5 (region-specific destinations), and US-10.1 (warehouse routing) to reference Fulfil API.
+- **03-scope.md:** Clarified Fulfil ERP API description with origin warehouse per SKU and Google Maps geocoding.
+
+### Context
+- Original BRD assumed US returns would go to "original shipping warehouse from order metadata." The Fulfil ERP API (currently under development by internal team) replaces this with a dedicated endpoint that returns the originating warehouse for each SKU.
+- For orders shipped from multiple US warehouses, the API calculates the closest return warehouse to the customer's shipping address using Google Maps geocoding.
+- US warehouse locations: LA (JDLLA) — 6509 Kimball Ave, Chino, CA 91708; NJ (JDLNJ) — 55 Wildcat Way, Linden, NJ 07036.
+- Canada (CA) returns continue to route to Caledonia warehouse (unaffected by this change).
+
+## 2026-02-18 - Vendors (Donation/Pickup Partners) Restored to Phase 1
+
+### Restored to Phase 1
+- **Vendors (Donation / Pickup Partners):** Vendor portal access and pickup status updates moved back to Phase 1. With only 6–10 vendors, the scope is manageable and does not require the originally anticipated multi-tenant complexity.
+
+### Changed
+- **15-phase-2-backlog.md:** Removed entire Vendor section (Section 1). Updated executive summary, feature counts, quick reference, and implementation approach. Renumbered remaining sections.
+- **04-actors.md:** Updated Vendors actor description — removed Phase 2 deferral note, clarified vendors have portal access in Phase 1.
+- **08-business-rules.md:** Updated BR-16 to reflect vendor portal access as Phase 1 capability.
+
+### Context
+- The original deferral was based on concerns about multi-tenant authentication and data partitioning complexity for a large vendor network.
+- With only 6–10 vendors confirmed, the technical complexity is significantly reduced, making Phase 1 inclusion feasible.
+- Vendor functional requirements (FR-VENDOR-1 through FR-VENDOR-5) are now covered by existing Phase 1 FRs: FR-20, FR-32, FR-38.
+- User stories US-8.1, US-8.2, US-8.3 (Epic 8) already describe full vendor functionality and remain unchanged.
+- BR-16 (Vendor Pickup and Status Updates) is now a full Phase 1 business rule.
+
 ## 2026-02-13 - Product Onboarding & Removal Feature
 
 ### Added

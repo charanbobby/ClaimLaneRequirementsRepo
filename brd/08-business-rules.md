@@ -2,7 +2,7 @@
 
 The portal must enforce the following rules (numbered BR-1 through BR-12 plus appendix rules).
 
-- **BR-1 – Third-Party Orders:** Orders from third-party vendors never proceed through the Silk & Snow portal. The portal shows vendor instructions only.
+- **BR-1 – Third-Party Orders:** Third-party vendor orders (TSC, EQ3, Costco) enter ClaimLane via a **vendor-specific generic link** shared by the vendor with the customer. The link is not unique to the customer; to mitigate security concerns, the link MUST open a **Terms & Conditions page** before any action is taken. The T&C clearly states: (1) no refund will be issued by Silk & Snow — the refund is the responsibility of the third-party vendor, and (2) the return is not authorized by the third-party partner. After the customer accepts T&C and provides pickup details, ClaimLane creates a ticket and follows standard pickup logistics. **Costco orders do not require pickup assistance** — ticket is created for tracking only.
 
 - **BR-2 – Order Security:** No order details are displayed unless both the email and order number match the WooCommerce record exactly.
 
@@ -30,7 +30,7 @@ The portal must enforce the following rules (numbered BR-1 through BR-12 plus ap
 
 - **BR-15 – Bundle / Free Item 50% Keep Rule:** When a bundle item is returned and the customer keeps the bundled/free item, the customer pays **50% of the full website price** for the kept item. The refund is adjusted (prorated) to reflect this charge and the decision is recorded on the ticket. **Note:** This requires custom code integration to bridge the WooCommerce data structure with the portal.
 
-- **BR-16 – Vendor Pickup and Status Updates:** Vendors (or Logistics team) must update mattress status to "Picked" in the portal. This status update must transition the item to **"Received"** to trigger refund logic.
+- **BR-16 – Vendor Pickup and Status Updates:** Vendors (6–10 donation/pickup partners) must update mattress status to "Picked" in the portal via their vendor portal access. This status update must transition the item to **"Received"** to trigger refund logic.
 
 - **BR-17 – Furniture Return Process:** The system must calculate and present return shipping charges (via WooCommerce service) **before** ticket submission. The customer must agree to pay the charge (or have it deducted). **Note:** Disposal pickups use the same charge as the courier rate. Once the customer accepts and submits, the ticket enters **CX Review**. Only upon **CX Approval** (of photos + charge) does the system **automatically generate** labels and pickup instructions.
 
@@ -47,11 +47,11 @@ The portal must enforce the following rules (numbered BR-1 through BR-12 plus ap
 
 - **BR-22 – Return Label Limitation:** The number of return labels generated cannot exceed the number of boxes/labels in the original order.
 
-- **BR-23 – US Accessory Keep Offer:** For US opened accessories, the customer MUST be offered Option 1 (keep item for 50% refund, no proof required) before declining the return. This offer applies to both opened items and high-cost unopened items (shipping > 1/3 value).
+- **BR-23 – US Accessory Keep Offer:** For US opened accessories and bedding, the customer MUST be offered Option 1 (keep item for 50% refund, no proof required). This applies to opened items only. Unopened items follow the standard return label flow.
 
-- **BR-24 – US Accessory Donate Offer:** If the customer rejects Option 1 (50% keep), the system MUST present Option 2 (donate item for 100% refund with CX-verified proof via call/email). The return can only be declined if BOTH offers are rejected.
+- **BR-24 – US Accessory Donate Offer (Offline):** Option 2 (donate for 100% refund) is no longer presented directly in the portal. When a customer **accepts** Option 1, the 50% refund is processed and the return is complete (customer keeps item). When a customer **rejects** Option 1, the system generates a **Customer Care ticket**. CX contacts the customer offline to encourage Option 2 (donate item for full refund with CX-verified proof).
 
-- **BR-25 – Shipping Cost Threshold:** For US unopened accessories/bedding, if the calculated shipping cost exceeds 1/3 of the item value, the system MUST skip label generation and present the keep/donate offers instead.
+- **BR-25 – ~~Shipping Cost Threshold~~ (Superseded):** This rule has been superseded. The shipping cost threshold (1/3 of item value) is no longer used. All US unopened accessories/bedding receive a return label via standard flow.
 
 - **BR-26 – Auto-Refund Bundle Exclusion:** Automatic refunds are strictly prohibited for any order containing bundles or free items, regardless of refund value. All such orders MUST route to manual refund processing. This is a Phase 1 technical limitation due to the **custom implementation required** for bundle calculation (WF-070→073).
 
@@ -61,7 +61,9 @@ The portal must enforce the following rules (numbered BR-1 through BR-12 plus ap
 
 - **BR-29 – Self-Donate Selection:** When the Return Logistics Team cannot secure a vendor for unboxed mattress pickup, they MUST act to select the **"Self-Donation"** option in the vendor list. This provides the customer with self-donation instructions. The customer must then complete donation, provide photo proof, and contact CX for manual return processing.
 
-- **BR-30 – Furniture Return Destinations:** When calling the shipping API for furniture returns, the system must use region-specific destinations: **Canada (CA)** returns go to **Caledonia warehouse**; **United States (US)** returns go to the **original shipping warehouse (LA or NJ)**.
+- **BR-30 – Furniture Return Destinations:** When calling the shipping API for furniture returns, the system must use region-specific destinations:
+    - **Canada (CA):** Returns always go to **Caledonia warehouse**.
+    - **United States (US):** Returns go to the **origin warehouse** as determined by the **Fulfil ERP API**. The API returns the originating warehouse for each SKU in the order. When an order was shipped from **multiple warehouses**, the system must route the return to the **closest warehouse** to the customer's shipping address (calculated via Google Maps geocoding). US warehouses: **LA (JDLLA)** – 6509 Kimball Ave, Chino, CA 91708; **NJ (JDLNJ)** – 55 Wildcat Way, Linden, NJ 07036.
 
 ## Appendix Rules
 

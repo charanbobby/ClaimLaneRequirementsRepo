@@ -126,7 +126,7 @@ The return flow splits based on **item type** and **region**:
 **US Furniture (WF-040 → WF-138):**
 
 - Same process as CA furniture, except:
-  - **Destination**: **Original order shipping warehouse** (LA or NJ) (WF-138)
+  - **Destination**: Determined by the **Fulfil ERP API** (WF-138; see FR-45). The API returns the origin warehouse per SKU. For orders shipped from **multiple warehouses**, the system uses the **closest warehouse** to the customer's shipping address (LA – JDLLA or NJ – JDLNJ).
 
 #### **8C. Accessory & Bedding Returns**
 
@@ -137,23 +137,17 @@ The return flow splits based on **item type** and **region**:
 3. Customer ships item (WF-078A)
 4. Item marked as **"Received"** (WF-089)
 
-**US Accessories - Unopened (WF-115 → WF-116):**
+**US Accessories — Unopened (WF-115):**
 
-1. System checks if item is opened (WF-115)
-2. For **unopened** items, calculate shipping cost (WF-116)
-3. **Shipping Cost Decision:**
-    - If **cost < 1/3 item value**: Generate return label (WF-111) → Customer ships
-    - If **cost > 1/3 item value**: Skip label, present **Option 1** (see below)
+1. Generate return label (WF-111)
+2. Customer ships item
+3. Item marked as **"Received"** (WF-089)
 
-**US Accessories - Opened (WF-115 → WF-117):**
+**US Accessories — Opened (WF-115 → WF-117):**
 
-1. System detects item is opened (WF-115)
-2. Present **Option 1 (WF-117)**: *"Keep item for 50% refund (no proof required)"*
-    - If **accepted** (WF-118): Process 50% refund → End
-    - If **rejected**: Present **Option 2**
-3. Present **Option 2 (WF-119)**: *"Donate item for 100% refund (proof required)"*
-    - If **accepted** (WF-120): Customer donates item, takes photo, contacts CX via call/email → CX processes return in portal (WF-121) → End
-    - If **rejected**: **Return declined** (WF-109) → End
+1. Present **Option 1 (WF-117)**: *"Keep item for 50% refund (no proof required)"*
+    - If **accepted** (WF-118): Process 50% refund → Customer keeps item → **Return complete** → End
+    - If **rejected**: Generate **Customer Care ticket** → CX contacts customer offline to encourage Option 2 (donate for 100% refund) → End
 
 ---
 
@@ -248,61 +242,56 @@ For **unboxed mattresses**, **oversized items**, and items requiring **disposal 
 
 ## **C. THIRD-PARTY VENDOR FLOW** (WF-004 → WF-017)
 
-> [!CAUTION]
-> **DEFERRED TO PHASE 2:** The entire third-party vendor flow (TSC, EQ3, Costco) has been moved to Phase 2 backlog. The existing Claimlane architecture lacks the logic necessary to support these workflows. Implementing this feature would require a fundamental rebuild of core processes. See `15-phase-2-backlog.md` for complete details.
-
 ### 11. **Third-Party Vendor Returns (TSC, EQ3, Costco)**
 
-For items purchased from third-party vendors, the workflow requires vendor approval and coordination:
+Third-party vendor returns use a **vendor-initiated link-based flow**. The vendor verifies the customer's order externally, then shares a generic ClaimLane link with the customer to arrange pickup logistics. **No refund is issued by Silk & Snow** — the refund is the sole responsibility of the third-party vendor (see BR-1).
 
-#### **11A. Vendor Selection & Evidence (WF-005 → WF-007)**
+#### **11A. Vendor-Initiated Entry (WF-004 → WF-005)**
 
-1. **Select Third-Party Vendor (WF-005):**
-    - Customer chooses vendor: TSC, EQ3, or Costco
-2. **Collect Required Evidence (WF-006):**
-    - Receipt
-    - Photos
-    - Law tags
-    - Other vendor-specific documentation
+1. **Customer Contacts Third-Party Vendor:**
+    - Customer contacts TSC, EQ3, or Costco about a return
+    - Vendor verifies order details and eligibility externally (outside ClaimLane)
+2. **Vendor Shares ClaimLane Link (WF-004):**
+    - Vendor shares their **dedicated generic ClaimLane link** with the customer
+    - Each vendor (TSC, EQ3, Costco) has a unique link URL that identifies the vendor
+    - The link is **not unique to the customer** (same link shared with all customers of that vendor)
 
-    > [!NOTE]
-    > **WF-017:** Exact evidence requirements to be confirmed per vendor (TSC/EQ3).
+#### **11B. Terms & Conditions Gate (WF-005 → WF-006)**
 
-3. **Log Action Item (WF-007):**
-    - Create ticket in ClaimLane: *"Third-party vendor review required"*
+3. **Customer Opens Link — T&C Page (WF-005):**
+    - The link opens a **Terms & Conditions page** (security gate for non-unique links)
+    - T&C clearly states:
+        - No refund will be issued by Silk & Snow — refund is the responsibility of the third-party vendor
+        - The return is not authorized by the third-party partner — Silk & Snow facilitates pickup logistics only
+    - Customer must **explicitly accept** T&C (checkbox + confirm) to proceed
+    - If customer declines → flow ends with message directing them back to vendor
 
-#### **11B. Vendor Notification & Approval (WF-008 → WF-010)**
+#### **11C. Pickup Details & Ticket Creation (WF-006 → WF-008)**
 
-4. **Send Vendor Email Notification (WF-008):**
-    - System automatically emails vendor with ticket details
-5. **Vendor Approval Decision (WF-009):**
-    - **Vendor Declines (WF-010):**
-        - Communicate vendor decision and next steps to customer → End (WF-060)
-    - **Vendor Approves:**
-        - Proceed to pickup assistance check
+4. **Collect Pickup Details (WF-006):**
+    - Pickup address / location
+    - Access constraints (elevator, stairs, gate codes, etc.)
+    - Preferred pickup dates
+    - Photos of item (condition documentation)
+    - Contact information for pickup coordination
+5. **Create ClaimLane Ticket (WF-007 → WF-008):**
+    - Ticket tagged with third-party vendor name
+    - **Costco orders:** Ticket created for tracking only — no pickup assistance required. Flow ends (WF-060)
+    - **TSC / EQ3 orders:** Proceed to pickup logistics
 
-#### **11C. Pickup Assistance (WF-011 → WF-011B)**
+#### **11D. Pickup Logistics — TSC & EQ3 Only (WF-011 → WF-014)**
 
-6. **Pickup Assistance Check (WF-011):**
-    - Does customer need pickup assistance or defective item removal?
-        - **No (WF-013):** Customer proceeds with vendor's own instructions (no CX coordination)
-        - **Yes (WF-011A):** Determine pickup type
-7. **Pickup Type Selection (WF-011A):**
+6. **Pickup Type Selection (WF-011A):**
     - **Courier Pickup (WF-012):**
         - CX provides pickup assistance (coordination + guidance)
         - Generate return label
     - **Disposal Pickup (WF-011B):**
-        - Log for **Return Logistics Team** (routes to WF-059/065A)
-
-#### **11D. Confirmation & Processing (WF-014 → WF-016)**
-
-8. **Pickup Confirmed/Scheduled (WF-014):**
+        - Log for **Return Logistics Team** (routes to WF-059/065A vendor selection)
+7. **Pickup Confirmed/Scheduled (WF-014):**
     - Pickup arranged and confirmed with customer
-9. **Item Received (WF-015):**
-    - Confirm receipt of returned item
-10. **Vendor Refund Notification (WF-016):**
-    - Email vendor: *"Proceed with return / refund"*
-    - If item routed to Caledonia, warehouse team updates status (WF-090 → WF-093)
+8. **Item Collected (WF-015):**
+    - Confirm collection of item
+    - Notify vendor that item has been collected
     - Case closed (WF-060)
 
 ---

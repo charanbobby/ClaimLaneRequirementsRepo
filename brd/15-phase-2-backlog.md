@@ -2,49 +2,33 @@
 
 ## Executive Summary
 
-During **Discussions with ClaimLane & Internal Stakeholders**, three major feature sets were systematically extracted from the Phase 1 BRD and moved to this Phase 2 backlog. This strategic deferral allows the team to focus Phase 1 delivery on core return and warranty flows while preserving complete context for future implementation.
+During **Discussions with ClaimLane & Internal Stakeholders**, feature sets were systematically extracted from the Phase 1 BRD and moved to this Phase 2 backlog. This strategic deferral allows the team to focus Phase 1 delivery on core return and warranty flows while preserving complete context for future implementation.
 
 ### Deferred Features at a Glance
 
 | Feature | Scope | Business Impact | Technical Complexity |
 |---------|-------|-----------------|---------------------|
-| **Vendors (Donation/Pickup Partners)** | Portal access for external vendors to update pickup status | Medium - Vendors handle logistics in Phase 1 via manual workaround | High - Requires multi-tenant auth, RBAC, data partitioning |
-| **Third-Party Vendor Integration** | Complete workflow for TSC, EQ3, Costco returns | High - No third-party returns supported in Phase 1 | High - Fundamental architecture gap, requires core rebuild |
 | **Bundle Refund Logic (Future Phase)** | Automated bundle impact calculations and 50% keep option | Medium - Manual processing workaround in Phase 1 | High - WooCommerce limitations, custom API integration needed |
 | **Return Quantity Limits (Future Phase)** | Historical and per-request return limits | Low - No limits in Phase 1 | Low - Order history checks required |
 
 ### Why These Features Were Deferred
 
-**1. Vendors (Donation / Pickup Partners)**
-
-- **Rationale:** While vendors will handle physical logistics in Phase 1, portal access for status updates requires secure multi-tenant architecture and robust data partitioning
-- **Phase 1 Workaround:** Return Logistics Team manually updates pickup status on behalf of vendors
-- **Phase 2 Value:** Reduces internal team workload, improves real-time visibility, enables vendor accountability
-
-**2. Third-Party Vendor Integration (TCS, EQ3, Costco)**
-
-- **Rationale:** Existing Claimlane architecture lacks the logic necessary to support third-party vendor workflows - implementing this would require fundamental rebuild of core processes
-- **Phase 1 Workaround:** Third-party vendor returns handled completely outside portal
-- **Phase 2 Value:** Expands customer reach, supports retail partnerships, centralizes all return workflows
-
-**3. Refund Logic with Bundle Impact Calculations**
+**1. Refund Logic with Bundle Impact Calculations**
 
 - **Rationale:** WooCommerce core limitations prevent access to bundle data structures; custom logic required to parse bundle relationships and calculate 50% proration
 - **Phase 1 Workaround:** All orders with bundles/free items route to manual CX refund processing (BR-26)
-- **Phase 2 Value:** Reduces CX workload, improves customer experience, enables automated refunds for bundle orders <$600
+- **Future Phase Value:** Reduces CX workload, improves customer experience, enables automated refunds for bundle orders <$600
 
 ### Implementation Approach
 
 **Phase 1 Foundation (Current):**
 - Core return flows (mattresses, furniture, accessories)
 - Warranty claim processing
-- Manual vendor coordination by Return Logistics Team
+- Vendor portal access for donation/pickup partners (6–10 vendors) with secure authentication
+- Third-party vendor pickup logistics via vendor-specific links (TSC, EQ3, Costco)
 - Manual bundle refund processing by CX
-- Third-party returns redirected to vendor processes
 
-**Phase 2 Enhancements (This Backlog):**
-- Vendor portal with secure authentication
-- Third-party vendor approval workflows
+**Future Phase Enhancements (This Backlog):**
 - WooCommerce bundle API integration
 - Automated bundle proration engine
 
@@ -52,220 +36,23 @@ During **Discussions with ClaimLane & Internal Stakeholders**, three major featu
 
 All deferred features have **Phase 1 manual workarounds** to ensure zero disruption to customer service:
 
-- **Vendor Status Updates:** Return Logistics Team enters vendor confirmations manually
-- **Third-Party Returns:** Customers directed to vendor-specific return processes
 - **Bundle Refunds:** CX team manually calculates proration and processes refunds
 
 ### Quick Reference
 
-- **Total Features Deferred:** 4 (Phase 2: Vendors, Third-Party | Future Phase: Bundles, Limits)
-- **Functional Requirements:** 13 (FR-9, FR-VENDOR-1-5, FR-TP-1-5)
-- **User Stories:** 7 (from Epics 4, 8, 11)
-- **Business Rules:** 4 (BR-1, BR-15, BR-16, BR-26)
-- **Workflow Nodes:** 15+ (WF-004-017, WF-059/065A, WF-070-073)
+- **Total Features Deferred:** 2 (Future Phase: Bundles, Limits)
+- **Functional Requirements:** 3 (FR-9, FR-10, FR-HIST-1)
+- **User Stories:** 3 (from Epics 4)
+- **Business Rules:** 2 (BR-15, BR-26)
+- **Workflow Nodes:** 4+ (WF-070-073)
 
 > [!IMPORTANT]
-> **Last Updated:** 2026-02-13
+> **Last Updated:** 2026-02-18
 > All items below were systematically extracted from active BRD documents to focus Phase 1 delivery.
 
 ---
 
-## 1. Vendors (Donation / Pickup Partners)
-
-### Rationale for Deferral
-
-While vendor partners will handle physical logistics in Phase 1, the ability to update pickup status within the portal is scheduled for Phase 2. This phased approach allows for a more secure rollout of Claimlane access and ensures robust data partitioning across our vendor network.
-
-### Actors
-
-#### DEFERRED: External Partners
-
-| Actor                            | Description                                                                                          |
-|----------------------------------|------------------------------------------------------------------------------------------------------|
-| Vendors (Donation / Pickup Partners) | External entities tasked with the recovery of oversized items and donations. These partners collect unboxed mattresses, oversized items, or donations and update pickup status within the portal (Phase 2 capability). |
-
-### Functional Requirements
-
-#### FR-VENDOR-1 – Vendor Portal Access
-- **ID:** *(Extracted from FR-20, FR-32, FR-38 vendor components)*
-- **Description:** Provide vendors with portal access to mark items as "Picked" and update pickup status directly within ClaimLane.
-- **Priority:** Phase 2
-- **Dependencies:** Secure authentication, role-based access control, multi-vendor data partitioning
-
-#### FR-VENDOR-2 – Vendor Selection & Assignment
-- **ID:** *(Extracted from FR-20)*
-- **Description:** Enable Return Logistics Manager to manually select donation or pickup vendors for unboxed mattresses and oversized items. System must trigger automated email notifications to vendor and customer upon assignment.
-- **Priority:** Phase 2
-- **Dependencies:** Vendor database, email integration, notification templates
-
-#### FR-VENDOR-3 – Vendor Change Management
-- **ID:** *(Extracted from FR-20, FR-32)*
-- **Description:** Support vendor reassignment workflow. When vendor changes, system must:
-
-    - Send updated notification to new vendor
-    - Inform previous vendor of reassignment
-    - Notify customer with updated vendor details
-- **Priority:** Phase 2
-- **Dependencies:** FR-VENDOR-1, FR-VENDOR-2, workflow state management
-
-#### FR-VENDOR-4 – Vendor Pickup Confirmation
-- **ID:** *(Derived from BR-16)*
-- **Description:** Allow vendors to update status to "Picked" for assigned items. Status change must trigger transition to "Received" state to enable downstream refund processing.
-- **Priority:** Phase 2
-- **Dependencies:** FR-VENDOR-1, status workflow engine, refund trigger logic
-
-#### FR-VENDOR-5 – Vendor Email Triggers
-- **ID:** *(Extracted from FR-32)*
-- **Description:** Configure specific automated email triggers for vendor workflows:
-
-    - Unboxed Mattress Vendor Assignment
-    - Unboxed Mattress Vendor Change (notify new vendor and customer)
-- **Priority:** Phase 2
-- **Dependencies:** Email service, notification templates, event trigger engine
-
-### User Stories
-
-> Canonical versions of these stories live in `13-epics-user-stories.md` (Epic 8). Below are Phase 2-specific status notes only.
-
-- **US-8.1** — Vendor Selection for Unboxed / Donation Flows. **STATUS:** Self-donate fallback kept in Phase 1. Vendor portal access deferred to Phase 2.
-- **US-8.2** — Vendor Change Handling. **STATUS:** Deferred to Phase 2.
-- **US-8.3** — Vendor Pickup Confirmation. **STATUS:** Deferred to Phase 2.
-
-### Business Rules
-
-> Canonical rule text lives in `08-business-rules.md`. Below are Phase 2-specific status notes only.
-
-- **BR-16** — Vendor Pickup and Status Updates. **STATUS:** Deferred to Phase 2. Phase 1 uses manual status updates by Return Logistics Team.
-
-### Process Narratives
-
-> Full narrative for Return Logistics Management (WF-059/065A - WF-064/063A) lives in `05-process-high-level.md`, Section 9.
-
-**Phase 2 addition:** Vendor portal access replaces manual status updates. Vendors will mark items as "Picked" directly in portal instead of through Return Logistics Team intermediary.
-
-**Phase 1 Workaround:** Return Logistics Team manually updates pickup status on behalf of vendors.
-
----
-
-### Dependencies & Risks
-
-#### Dependencies
-- Secure multi-tenant authentication system
-- Role-based access control (RBAC) for vendor permissions
-- Email notification service integration
-- Vendor onboarding and training process
-- Data partitioning architecture for vendor isolation
-
-#### Risks
-- **Vendor Adoption:** External partners may resist using portal; requires change management
-- **Data Security:** Vendor access increases attack surface; requires security hardening
-- **Support Overhead:** Vendor user support may increase CS workload
-
----
-
-## 2. Third-Party Vendor Integration (TCS, EQ3, Costco)
-
-### Rationale for Deferral
-
-The existing Claimlane architecture lacks the logic necessary to support TCS and EQ3 workflows. Implementing these features would require a fundamental rebuild of core processes, representing a significant departure from the current product roadmap.
-
-### Actors
-
-#### DEFERRED: Third-Party Vendor Ecosystem
-
-*No specific actors were defined solely for third-party vendors. This feature relies on the general "Vendors" actor (see Section 1) plus third-party-specific business rules.*
-
-### Functional Requirements
-
-#### FR-TP-1 – Third-Party Channel Selection
-- **ID:** *(Extracted from FR-1)*
-- **Description:** When "Third-Party Vendor" is selected during channel selection, show vendor instructions and block further steps in the portal. Customer must be directed to vendor's own returns process.
-- **Priority:** Phase 2
-- **Dependencies:** Vendor partnership agreements, vendor-specific instruction content
-
-#### FR-TP-2 – Third-Party Vendor Selection
-- **ID:** *(Derived from Epic 11 process flow)*
-- **Description:** Customer selects third-party vendor: TSC, EQ3, or Costco.
-- **Priority:** Phase 2
-- **Dependencies:** Vendor catalog, vendor eligibility rules
-
-#### FR-TP-3 – Third-Party Evidence Collection
-- **ID:** *(Derived from Epic 11 process flow)*
-- **Description:** Collect vendor-specific evidence requirements:
-
-    - Receipt
-    - Photos
-    - Law tags
-    - Other vendor-specific documentation
-- **Priority:** Phase 2
-- **Dependencies:** Vendor-specific documentation requirements (WF-017)
-
-#### FR-TP-4 – Third-Party Vendor Notifications
-- **ID:** *(Extracted from FR-32)*
-- **Description:** Configure automated email triggers for third-party workflows:
-
-    - Third-Party Vendor Ticket Created (WF-008)
-    - Third-Party Refund Approval to Vendor (WF-016)
-- **Priority:** Phase 2
-- **Dependencies:** Email service, vendor email addresses, notification templates
-
-#### FR-TP-5 – Third-Party Pickup Logistics Split
-- **ID:** *(Extracted from FR-36)*
-- **Description:** When a third-party vendor approves a claim and customer needs pickup assistance (WF-011), offer two pickup types:
-
-    - **Courier Pickup:** CX provides pickup coordination and generates return label (WF-012)
-    - **Disposal Pickup:** Log case for Return Logistics Team (WF-011B connects to shared return logistics)
-- **Priority:** Phase 2
-- **Dependencies:** FR-VENDOR-2, courier integration, disposal vendor network
-
-### User Stories
-
-> Canonical versions of these stories live in `13-epics-user-stories.md`. Below are Phase 2-specific status notes only.
-
-- **US-1.1** — Select Purchase Channel (Third-Party component). **STATUS:** Third-Party component deferred to Phase 2.
-- **US-8.4** — Third-Party Pickup Logistics Split. **STATUS:** Deferred to Phase 2.
-- **US-11.1** — Automated Email Triggers (criteria 1-2 for third-party). **STATUS:** Criteria 1-2 deferred to Phase 2. Criteria 3-9 kept in Phase 1.
-
-### Business Rules
-
-- **BR-1** — Third-Party Orders: Orders from third-party vendors never proceed through the portal. **STATUS:** Deferred to Phase 2.
-- **BR-TP-1** — Third-Party Documentation Requirements: *(Extracted from FR-17)* Collect lot number and detailed description for all claims and require an invoice when the purchase was made through a third-party vendor. **STATUS:** Deferred to Phase 2.
-
-### Process Narratives
-
-> Full narrative for Third-Party Vendor Flow (WF-004 - WF-017) lives in `05-process-high-level.md`, Section C.
-
-**STATUS:** Entire Third-Party Vendor Flow (WF-004 - WF-017) deferred to Phase 2.
-
-### Scope Impact
-
-#### Added to Out-of-Scope
-
-- Third-party vendor claim processing (TSC, EQ3, Costco)
-- Third-party vendor approval workflows
-- Third-party vendor email notifications
-- Third-party pickup logistics coordination
-
----
-
-### Dependencies & Risks
-
-#### Dependencies
-- Vendor partnership agreements and SLAs
-- Vendor-specific evidence requirements documentation (WF-017)
-- Vendor email integration and notification system
-- Legal review of vendor data sharing agreements
-- Cross-platform authentication (if vendors use separate portals)
-
-#### Risks
-- **Vendor Cooperation:** Third-party vendors may not respond to system notifications
-- **Process Divergence:** Each vendor (TSC, EQ3, Costco) may have different requirements
-- **Customer Confusion:** Customers may not understand why portal flow stops for third-party vendors
-- **Legal Compliance:** Data sharing with third parties requires privacy impact assessment
-
----
-
-## 3. Future Phase Refund Logic (Bundle Impact Calculations)
+## 1. Future Phase Refund Logic (Bundle Impact Calculations)
 
 ### Rationale for Deferral
 
@@ -331,7 +118,7 @@ Due to WooCommerce core limitations regarding bundle structures, implementing au
 
 ---
 
-## 4. Return Quantity Limits (Historical & Per-Request)
+## 2. Return Quantity Limits (Historical & Per-Request)
 
 ### Rationale for Deferral
 
@@ -383,15 +170,15 @@ The original requirement included a limit on the number of returns a customer co
 Performed comprehensive "Deep Extraction" of Phase 2 features from active BRD documents:
 
 #### Features Moved to Phase 2 Backlog:
-1. **Vendors (Donation / Pickup Partners)** — Vendor portal access and pickup status updates
-2. **Third-Party Vendor Integration** — Complete TCS/EQ3/Costco workflow (WF-004-017)
+1. ~~**Vendors (Donation / Pickup Partners)**~~ — *Restored to Phase 1 on 2026-02-18 (only 6–10 vendors; manageable scope)*
+2. ~~**Third-Party Vendor Integration**~~ — *Restored to Phase 1 on 2026-02-18 (simplified link-based flow with T&C gate; no vendor approval workflow needed)*
 3. **Phase 2 Refund Logic** — Bundle impact calculations (WF-070-073)
 
 #### Review Notes:
 - Self-donate fallback (WF-130) kept in Phase 1
-- Manual vendor status updates kept in Phase 1 (Return Logistics Team workaround)
+- Vendor portal access restored to Phase 1 (2026-02-18) — limited vendor count (6–10) makes scope manageable
 - Bundle exclusion constraint (BR-26) kept in Phase 1 to force manual refunds
-- Third-party vendor flow preserved in narrative but marked as Phase 2
+- Third-party vendor integration restored to Phase 1 (2026-02-18) — simplified to vendor-initiated link-based flow with T&C gate, no vendor approval workflow needed
 
 ---
 
