@@ -4,8 +4,8 @@ FROM python:3.10-slim
 # Set working directory
 WORKDIR /docs
 
-# Install system dependencies if needed (e.g., for some mkdocs plugins)
-# RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+# Install system dependencies
+RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements file
 COPY requirements.txt .

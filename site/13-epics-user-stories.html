@@ -805,6 +805,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#us-15-third-party-vendor-link-entry-terms-acceptance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-1.5 Third-Party Vendor Link Entry &amp; Terms Acceptance
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1200,10 +1211,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#us-84-third-party-pickup-logistics-split" class="md-nav__link">
+  <a href="#us-84-third-party-pickup-logistics-tsc-eq3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        US-8.4 Third-Party Pickup Logistics Split
+        US-8.4 Third-Party Pickup Logistics (TSC / EQ3)
       
     </span>
   </a>
@@ -1595,6 +1606,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#us-15-third-party-vendor-link-entry-terms-acceptance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        US-1.5 Third-Party Vendor Link Entry &amp; Terms Acceptance
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1990,10 +2012,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#us-84-third-party-pickup-logistics-split" class="md-nav__link">
+  <a href="#us-84-third-party-pickup-logistics-tsc-eq3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        US-8.4 Third-Party Pickup Logistics Split
+        US-8.4 Third-Party Pickup Logistics (TSC / EQ3)
       
     </span>
   </a>
@@ -2235,10 +2257,9 @@
 <li>Customer can pick from:<ul>
 <li>Silk &amp; Snow Online (CA / US)</li>
 <li>Retail Store (in-person)</li>
-<li>Third-Party Vendor.</li>
 </ul>
 </li>
-<li>Selecting Third-Party Vendor is a Work-in-Progress (TDB).</li>
+<li><strong>Third-Party Vendor orders</strong> do not use the channel selection screen — they enter via vendor-specific generic links (see US-1.5 and FR-46).</li>
 <li>Online and Retail selections proceed to store / order validation steps.</li>
 </ol>
 <hr />
@@ -2280,6 +2301,28 @@
 <li>If opt-out IS checked, flow continues with standard return logistics.</li>
 <li>Decision is logged in ticket for audit purposes.</li>
 <li>Mapping to diagram: REASON_CHECK decision (WF-030) routes to WF-052 (Warranty).</li>
+</ol>
+<hr />
+<h3 id="us-15-third-party-vendor-link-entry-terms-acceptance">US-1.5 Third-Party Vendor Link Entry &amp; Terms Acceptance</h3>
+<blockquote>
+<p><em>As a customer directed by a third-party vendor (TSC, EQ3, Costco), I want to access ClaimLane via a link provided by the vendor so I can arrange pickup of my return item.</em></p>
+</blockquote>
+<p><strong>Acceptance Criteria</strong></p>
+<ol>
+<li>Each third-party vendor (TSC, EQ3, Costco) has a <strong>dedicated generic link</strong> to ClaimLane that identifies the vendor.</li>
+<li>The link is <strong>not unique to the customer</strong> — the same link is shared with all customers of that vendor.</li>
+<li>When the customer opens the link, the system displays a <strong>Terms &amp; Conditions page</strong> before any other action (security gate for non-unique links).</li>
+<li>T&amp;C clearly states:<ul>
+<li>No refund will be issued by Silk &amp; Snow — the refund is the sole responsibility of the third-party vendor.</li>
+<li>The return is not authorized by the third-party partner — Silk &amp; Snow facilitates pickup logistics only.</li>
+</ul>
+</li>
+<li>Customer must <strong>explicitly accept</strong> T&amp;C (checkbox + confirm button) to proceed.</li>
+<li>If customer declines T&amp;C, flow ends with a message directing them back to the third-party vendor.</li>
+<li>After T&amp;C acceptance, customer provides pickup details: address, access constraints, preferred dates, photos, and contact information.</li>
+<li>System creates a ClaimLane ticket tagged with the vendor name.</li>
+<li><strong>TSC / EQ3 orders:</strong> Proceed to standard pickup logistics (courier or disposal — see US-8.4).</li>
+<li><strong>Costco orders:</strong> Ticket created for tracking only — no pickup assistance required. Flow ends.</li>
 </ol>
 <hr />
 <h2 id="epic-2-order-lookup-validation">Epic 2 — Order Lookup &amp; Validation</h2>
@@ -2347,7 +2390,7 @@
 <li>Web orders: fully supported in the portal.</li>
 <li>Retail orders fulfilled via Shopify: accepted in the portal if order ID matches.</li>
 <li>POS-only purchases: portal may provide guidance, but must force returns to be completed in store.</li>
-<li>Amazon / third-party vendors: portal blocks returns and directs the customer to the seller.</li>
+<li>Third-party vendors (TSC, EQ3, Costco): customers enter via vendor-specific link with T&amp;C gate (see US-1.5). No refund from S&amp;S — pickup logistics only.</li>
 </ol>
 <hr />
 <h3 id="us-34-map-customer-return-reasons-to-woocommerce-reasons">US-3.4 Map Customer Return Reasons to WooCommerce Reasons</h3>
@@ -2468,7 +2511,7 @@
 <li>Customer uploads required photos and description.</li>
 <li>System calls <strong>WooCommerce API</strong> for carrier rates with region-specific destinations:<ul>
 <li><strong>Canada:</strong> Caledonia warehouse address (WF-137)</li>
-<li><strong>United States:</strong> Original order shipping warehouse - LA or NJ (WF-138)</li>
+<li><strong>United States:</strong> Closest return warehouse from <strong>Fulfil API</strong> — LA (JDLLA) or NJ (JDLNJ) (WF-138; see FR-45)</li>
 </ul>
 </li>
 <li>Customer is notified of shipping charges.<ul>
@@ -2508,19 +2551,17 @@
 </ul>
 </li>
 <li>
-<p><strong>United States (US) - Unopened Items:</strong></p>
+<p><strong>United States (US) — Unopened Items:</strong></p>
 <ul>
-<li>System calculates shipping cost via carrier API (WF-116).</li>
-<li>If shipping cost &gt; 1/3 of item value: Skip label, present Option 1 (keep for 50% refund).</li>
-<li>If shipping cost ≤ 1/3 of item value: Generate return label normally (WF-111).</li>
+<li>Generate return label and mail-in instructions (WF-111). Standard flow.</li>
 </ul>
 </li>
 <li>
-<p><strong>United States (US) - Opened Items:</strong></p>
+<p><strong>United States (US) — Opened Items:</strong></p>
 <ul>
 <li>Present Option 1: Keep item for 50% refund, no proof required (WF-117).</li>
-<li>If rejected, present Option 2: Donate item for 100% refund, customer provides proof via CX contact (WF-119).</li>
-<li>If both options rejected: Decline return with clear explanation (WF-109).</li>
+<li>If accepted: Process 50% refund — customer keeps the item and the return is complete.</li>
+<li>If rejected: Generate a <strong>Customer Care ticket</strong>. CX contacts customer offline to encourage Option 2 (donate for full refund).</li>
 </ul>
 </li>
 <li>
@@ -2545,9 +2586,14 @@
 <p><strong>Acceptance Criteria</strong></p>
 <ol>
 <li>After customer uploads items (Step 1), system determines customer region from order metadata.</li>
+<li>System calls <strong>Fulfil ERP API</strong> with the WooCommerce order ID to determine the return warehouse destination (see FR-45):<ul>
+<li>The API returns the originating warehouse for each SKU and the <strong>closest return warehouse</strong> for US orders.</li>
+<li>For orders shipped from <strong>multiple warehouses</strong>, the API calculates which US warehouse (LA – JDLLA or NJ – JDLNJ) is closest to the customer's shipping address via Google Maps geocoding.</li>
+</ul>
+</li>
 <li>System calls WooCommerce API for live carrier rates:<ul>
 <li><strong>Canada (CA):</strong> API destination is always Caledonia warehouse address (WF-137).</li>
-<li><strong>United States (US):</strong> API destination is the original order's shipping warehouse (LA or NJ) (WF-138).</li>
+<li><strong>United States (US):</strong> API destination is the closest return warehouse from the Fulfil API response (WF-138).</li>
 </ul>
 </li>
 <li>Customer is notified of shipping charges.<ul>
@@ -2557,7 +2603,7 @@
 <li>Customer <strong>accepts charges</strong> and provides pickup details.</li>
 <li>Customer submits ticket for <strong>CX Review</strong>.</li>
 <li>Upon CX Approval, label/instructions are <strong>automatically generated</strong>.</li>
-<li>This ensures US returns go back to origin, not to Canadian warehouse.</li>
+<li>This ensures US returns go to the correct US warehouse (origin or closest), not to Canadian warehouse.</li>
 </ol>
 <hr />
 <h2 id="epic-7-warranty-claims">Epic 7 — Warranty Claims</h2>
@@ -2651,21 +2697,22 @@
 <li>Status change triggers transition to "Received" once warehouse confirms arrival, or to "In Transit" as configured.</li>
 </ol>
 <hr />
-<h3 id="us-84-third-party-pickup-logistics-split">US-8.4 Third-Party Pickup Logistics Split</h3>
+<h3 id="us-84-third-party-pickup-logistics-tsc-eq3">US-8.4 Third-Party Pickup Logistics (TSC / EQ3)</h3>
 <blockquote>
-<p><em>As a customer with an approved third-party claim, I want to choose the appropriate pickup method.</em></p>
+<p><em>As a customer who entered via a third-party vendor link and accepted T&amp;C, I want pickup to be arranged for my return item.</em></p>
 </blockquote>
 <p><strong>Acceptance Criteria</strong></p>
 <ol>
-<li>After vendor approves claim (WF-009) and customer indicates need for pickup assistance (WF-011), system presents two options (WF-011A):<ul>
+<li>After customer submits pickup details via vendor link (US-1.5), system creates a ClaimLane ticket and routes <strong>TSC / EQ3 orders</strong> to pickup logistics (WF-011A):<ul>
 <li><strong>Courier Pickup:</strong> CX provides coordination and guidance. System generates return label (WF-012).</li>
-<li><strong>Disposal Pickup:</strong> Case is logged for Return Logistics Team (WF-011B, connects to shared logistics flow).</li>
+<li><strong>Disposal Pickup:</strong> Case is logged for Return Logistics Team (WF-011B, connects to shared logistics flow WF-059/065A).</li>
 </ul>
 </li>
 <li>Pickup type is recorded in ticket.</li>
-<li>For courier: Pickup confirmation triggers item received status (WF-014→015).</li>
+<li>For courier: Pickup confirmation triggers item collected status (WF-014→015). Vendor is notified.</li>
 <li>For disposal: Follows same vendor selection flow as unboxed mattresses (WF-059/065A).</li>
-<li>Both paths eventually route to warehouse delivery (R1 or R_US).</li>
+<li><strong>Costco orders</strong> do not enter this flow — ticket is created for tracking only (no pickup assistance).</li>
+<li><strong>No refund is issued by Silk &amp; Snow</strong> — the refund is handled by the third-party vendor directly.</li>
 </ol>
 <hr />
 <h2 id="epic-9-caledonia-warehouse-inventory">Epic 9 — Caledonia Warehouse &amp; Inventory</h2>
@@ -2723,7 +2770,7 @@
 <ul>
 <li><strong>Return:</strong> Apply auto/manual refund logic below (WF-067→068/069).</li>
 <li><strong>Warranty:</strong> Trigger replacement order creation (WCX flow).</li>
-<li><strong>Third-Party:</strong> Email vendor for refund processing (WF-016).</li>
+<li><strong>Third-Party:</strong> Notify vendor that item has been collected — no S&amp;S refund issued (see BR-1).</li>
 </ul>
 </li>
 <li>
@@ -2765,7 +2812,7 @@
 <p><strong>Warehouse Routing (Dest_Check):</strong> After refund processing, system routes to appropriate warehouse using destination check (WF-239):</p>
 <ul>
 <li><strong>CA Destinations:</strong> Route to Caledonia workflow (R1→R2→R4→R5).</li>
-<li><strong>US Destinations:</strong> Route to US warehouse offline workflow (R_US→R2_US→R4_US→R5_US).</li>
+<li><strong>US Destinations:</strong> Route to US warehouse offline workflow (R_US→R2_US→R4_US→R5_US). Specific US warehouse (LA or NJ) determined by <strong>Fulfil API</strong> (see FR-45).</li>
 </ul>
 </li>
 </ol>
@@ -2798,8 +2845,8 @@
 </blockquote>
 <p><strong>Acceptance Criteria</strong></p>
 <ol>
-<li>Email sent when third-party vendor ticket is created (WF-008).</li>
-<li>Email sent to vendor when third-party refund approval is granted (WF-016).</li>
+<li>Email sent when third-party pickup ticket is created via vendor link (FR-48).</li>
+<li>Email sent to vendor when third-party item has been collected (pickup completed).</li>
 <li>Email sent to customer when warranty claim is declined by CX (WF-052D).</li>
 <li>Email sent when unboxed mattress vendor is assigned (existing feature).</li>
 <li>Email sent when unboxed mattress vendor is changed, notifying new vendor and customer (existing feature).</li>

@@ -677,6 +677,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#warehouse-origin-lookup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Warehouse Origin Lookup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#third-party-vendor-entry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Third-Party Vendor Entry
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#discussion" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1127,6 +1149,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#warehouse-origin-lookup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Warehouse Origin Lookup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#third-party-vendor-entry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Third-Party Vendor Entry
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#discussion" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1165,7 +1209,7 @@
 <li>Silk &amp; Snow Retail Store (in-person)</li>
 <li>Third-Party Vendor</li>
 </ul>
-<p>When "Retail Store" is selected, the portal must perform a <strong>store lookup</strong>. If the store is <strong>Shopify POS</strong>, route to the standard Shopify order flow. If the store is <strong>STORIS (non-Shopify)</strong>, display a "returns must be handled in-person" message and block further steps. When "Third-Party Vendor" is selected, show vendor instructions and block steps.</p>
+<p>When "Retail Store" is selected, the portal must perform a <strong>store lookup</strong>. If the store is <strong>Shopify POS</strong>, route to the standard Shopify order flow. If the store is <strong>STORIS (non-Shopify)</strong>, display a "returns must be handled in-person" message and block further steps. <strong>Note:</strong> Third-party vendor orders do not use this channel selection screen — they enter via vendor-specific links (see FR-46).</p>
 </li>
 <li>
 <p><strong>FR-2 – Intent Selection:</strong> After channel selection, present options for "Return", "Warranty Claim", or other return type (configurable). The selection determines which subsequent screens and logic apply.</p>
@@ -1246,7 +1290,7 @@
 <li><strong>Mattress (Unboxed):</strong> Collect condition and donation eligibility. <strong>Do not send photos to the vendor.</strong> The <strong>Return Logistics Manager</strong> must manually select a donation or pickup vendor. Supporting <strong>Vendor Change</strong> functionality is required, which must trigger updated emails to the new vendor and customer. If no vendor is available, offer the customer a self-donation option (see FR-38).</li>
 <li><strong>Furniture:</strong> Implement a flow where:<ol>
 <li>Customer uploads photos/details.</li>
-<li>System calls <strong>WooCommerce API</strong> for live carrier rates (Destination: <strong>CA → Caledonia</strong> (WF-137), <strong>US → Original Warehouse LA/NJ from order metadata</strong> (WF-138)).</li>
+<li>System calls <strong>WooCommerce API</strong> for live carrier rates (Destination: <strong>CA → Caledonia</strong> (WF-137), <strong>US → Closest return warehouse from Fulfil API</strong> (WF-138); see FR-45).</li>
 <li><strong>Charge Logic:</strong> If the pickup is for disposal, apply the courier rate charge (standardized business decision).</li>
 <li>Customer <strong>accepts charges</strong> and provides pickup details to submit the ticket.</li>
 <li><strong>CX Review &amp; Approval:</strong> CX reviews the submitted ticket (photos + agreed charge).</li>
@@ -1310,8 +1354,8 @@
 <li>Unboxed Mattress Vendor Assignment.</li>
 <li>Unboxed Mattress Vendor Change (notify new vendor and customer).</li>
 <li>Furniture Return Approval/Decline by CX.</li>
-<li>Third-Party Vendor Ticket Created (WF-008).</li>
-<li>Third-Party Refund Approval to Vendor (WF-016).</li>
+<li>Third-Party Pickup Ticket Created (notify CX and vendor via FR-48).</li>
+<li>Third-Party Pickup Completed (notify vendor that item has been collected).</li>
 <li>Warranty Claim Declined by CX (WF-052D).</li>
 </ul>
 </li>
@@ -1319,10 +1363,10 @@
 <p><strong>FR-33 – Defective Reason Routing:</strong> When a customer selects items to return and chooses "Defective" as the reason, the system must check if the customer opted out of product replacement. If the customer did NOT opt out, redirect the flow to the Warranty claim process (WF-052) instead of standard return logistics. Provide a clear opt-out checkbox during reason selection.</p>
 </li>
 <li>
-<p><strong>FR-34 – US Accessory Return Cost Optimization:</strong> For US Accessories and Bedding returns, implement a multi-tier logic to optimize return costs where shipping exceeds the value of the return:</p>
+<p><strong>FR-34 – US Accessory Return Handling:</strong> For US Accessories and Bedding returns:</p>
 <ul>
-<li><strong>Unopened Items:</strong> Calculate shipping cost via carrier API. If shipping cost &gt; 1/3 of item value, skip label generation and present Option 1 (Keep Offer). Otherwise, generate return label (WF-111).</li>
-<li><strong>Opened Items:</strong> Present Option 1 first (Keep item for 50% refund, no proof required). If customer rejects, present Option 2 (Donate item for 100% refund with proof via CX contact). If both options are rejected, decline the return (WF-109).</li>
+<li><strong>Unopened Items:</strong> Generate return label and proceed with standard mail-in flow (WF-111).</li>
+<li><strong>Opened Items:</strong> Present Option 1 (Keep Offer: keep item for 50% refund, no proof required). If customer <strong>accepts</strong> Option 1: process 50% refund — customer keeps the item and the return is complete. If customer <strong>rejects</strong> Option 1: generate a <strong>Customer Care ticket</strong>. CX contacts the customer offline to encourage Option 2 (donate item for 100% refund with proof).</li>
 <li>All decisions and customer responses must be logged in the ticket.</li>
 </ul>
 </li>
@@ -1334,10 +1378,11 @@
 </ul>
 </li>
 <li>
-<p><strong>FR-36 – Third-Party Logistics Split:</strong> When a third-party vendor approves a claim and the customer needs pickup assistance (WF-011), offer two pickup types:</p>
+<p><strong>FR-36 – Third-Party Logistics Split:</strong> <em>(Superseded by FR-49.)</em> After a third-party customer submits pickup details via the vendor link (FR-48), the system routes TSC and EQ3 orders to standard pickup logistics:</p>
 <ul>
 <li><strong>Courier Pickup:</strong> CX provides pickup coordination and generates a return label (WF-012).</li>
-<li><strong>Disposal Pickup:</strong> Log the case for the Return Logistics Team (WF-011B connects to shared return logistics).</li>
+<li><strong>Disposal Pickup:</strong> Log the case for the Return Logistics Team (WF-011B connects to shared return logistics WF-059/065A).</li>
+<li><strong>Costco:</strong> No pickup assistance — ticket created for tracking only.</li>
 </ul>
 </li>
 <li>
@@ -1361,14 +1406,14 @@
 <p><strong>FR-39 – Flow Context Routing:</strong> Implement two critical routing decision points:</p>
 <ul>
 <li><strong>Intent-Based Routing (after validation):</strong> After customer login and order validation (WF-027/100/043), route to either Return flow (WF-029/102) or Warranty flow (WF-052) based on the customer's intent selection.</li>
-<li><strong>Refund Context Routing (after item received):</strong> After an item is marked "Received" (WF-089), route the refund logic based on the flow context: Return (apply auto/manual refund rules), Warranty (place replacement order), or Third-Party (email vendor for refund).</li>
+<li><strong>Refund Context Routing (after item received):</strong> After an item is marked "Received" (WF-089), route the refund logic based on the flow context: Return (apply auto/manual refund rules), Warranty (place replacement order), or Third-Party (notify vendor that item has been collected — no S&amp;S refund issued; see BR-1).</li>
 </ul>
 </li>
 <li>
 <p><strong>FR-41 – Destination-Based Warehouse Routing:</strong> After refund processing is complete, route the item to the appropriate warehouse workflow based on destination:</p>
 <ul>
 <li><strong>CA Destinations:</strong> Route to Caledonia warehouse workflow (WF-090→091→092→093).</li>
-<li><strong>US Destinations:</strong> Route to US warehouse offline workflow (WF-133→134→135→136).</li>
+<li><strong>US Destinations:</strong> Route to US warehouse offline workflow (WF-133→134→135→136). The specific US warehouse (LA or NJ) is determined by the <strong>Fulfil API</strong> (see FR-45).</li>
 </ul>
 </li>
 </ul>
@@ -1478,6 +1523,79 @@
 <li>
 <p><strong>FR-44 – Product Configuration Listing:</strong> Provide a read-only admin view listing all onboarded products with: SKU, name, category, region, final sale flag, warranty-only flag, and status (active/inactive). Support search by SKU or product name and filtering by category, region, or status.</p>
 <p><strong>Future State:</strong> Replace Excel upload and email-based removal with a direct real-time sync to WooCommerce and external product catalogue systems, eliminating manual file handling entirely.</p>
+</li>
+</ul>
+<h2 id="warehouse-origin-lookup">Warehouse Origin Lookup</h2>
+<ul>
+<li>
+<p><strong>FR-45 – Fulfil API Warehouse Lookup:</strong> Integrate with the <strong>Fulfil ERP API</strong> to determine the origin warehouse for each SKU in a return order. The system must call the API endpoint with the WooCommerce order ID and receive:</p>
+<ul>
+<li>The <strong>originating warehouse</strong> for each SKU in the order.</li>
+<li>The <strong>closest return warehouse</strong> for US orders (calculated by the API using Google Maps geocoding of the customer's shipping address against US warehouse locations).</li>
+</ul>
+<p><strong>US Warehouse Locations:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Warehouse Code</th>
+<th style="text-align: left;">Address</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">JDLLA</td>
+<td style="text-align: left;">6509 Kimball Ave, Chino, CA 91708</td>
+</tr>
+<tr>
+<td style="text-align: left;">JDLNJ</td>
+<td style="text-align: left;">55 Wildcat Way, Linden, NJ 07036</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Routing Logic:</strong></p>
+<ul>
+<li><strong>Single-warehouse orders:</strong> Return to the originating warehouse.</li>
+<li><strong>Multi-warehouse orders:</strong> Return to the warehouse closest to the customer's shipping address.</li>
+<li><strong>Canada (CA) orders:</strong> Always route to Caledonia warehouse (Fulfil API not used for CA destination).</li>
+</ul>
+</li>
+</ul>
+<h2 id="third-party-vendor-entry">Third-Party Vendor Entry</h2>
+<ul>
+<li>
+<p><strong>FR-46 – Third-Party Vendor Link Entry:</strong> Each third-party vendor (TSC, EQ3, Costco) must have a <strong>dedicated generic link</strong> to the ClaimLane portal. The link is not unique to individual customers — it identifies only the vendor. The vendor shares this link with the customer after verifying the order externally. When the customer opens the link, the system must:</p>
+<ol>
+<li>Identify the vendor from the link parameters.</li>
+<li>Present a <strong>Terms &amp; Conditions page</strong> (see FR-47) before any other action.</li>
+<li>After T&amp;C acceptance, route to the pickup details collection flow (see FR-48).</li>
+</ol>
+</li>
+<li>
+<p><strong>FR-47 – Third-Party Terms &amp; Conditions Gate:</strong> When a customer accesses the portal via a third-party vendor link, the system MUST display a Terms &amp; Conditions page before proceeding. The T&amp;C must clearly state:</p>
+<ol>
+<li><strong>No refund will be issued by Silk &amp; Snow</strong> — the refund is the sole responsibility of the third-party vendor.</li>
+<li><strong>The return is not authorized by the third-party partner</strong> — Silk &amp; Snow is facilitating pickup logistics only.</li>
+</ol>
+<p>The customer must explicitly accept the T&amp;C (checkbox + confirm button) before proceeding. If the customer declines, the flow ends with a message directing them back to the third-party vendor.</p>
+</li>
+<li>
+<p><strong>FR-48 – Third-Party Pickup Details Collection:</strong> After T&amp;C acceptance, collect the following from the customer:</p>
+<ul>
+<li>Pickup address / location.</li>
+<li>Access constraints (elevator, stairs, gate codes, etc.).</li>
+<li>Preferred pickup dates.</li>
+<li>Photos of the item (condition documentation).</li>
+<li>Contact information for pickup coordination.</li>
+</ul>
+<p>Upon submission, create a ClaimLane ticket tagged with the third-party vendor name and route to standard pickup logistics (courier or disposal). <strong>Costco exception:</strong> Costco orders do not require pickup assistance — create a ticket for tracking purposes only and close the pickup flow.</p>
+</li>
+<li>
+<p><strong>FR-49 – Third-Party Pickup Logistics:</strong> For TSC and EQ3 orders requiring pickup assistance, the system follows standard pickup logistics after ticket creation:</p>
+<ul>
+<li><strong>Courier Pickup:</strong> CX provides pickup coordination and guidance. Generate a return label (WF-012).</li>
+<li><strong>Disposal Pickup:</strong> Log the case for the Return Logistics Team to assign a disposal vendor (WF-011B, connects to shared return logistics WF-059/065A).</li>
+</ul>
+<p>For Costco orders, no pickup logistics are initiated — the ticket is created for tracking and the vendor handles returns independently.</p>
 </li>
 </ul>
 <hr />
