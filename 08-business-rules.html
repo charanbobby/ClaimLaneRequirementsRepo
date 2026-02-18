@@ -938,7 +938,7 @@
 <p>The portal must enforce the following rules (numbered BR-1 through BR-12 plus appendix rules).</p>
 <ul>
 <li>
-<p><strong>BR-1 – Third-Party Orders:</strong> Orders from third-party vendors never proceed through the Silk &amp; Snow portal. The portal shows vendor instructions only.</p>
+<p><strong>BR-1 – Third-Party Orders:</strong> Third-party vendor orders (TSC, EQ3, Costco) enter ClaimLane via a <strong>vendor-specific generic link</strong> shared by the vendor with the customer. The link is not unique to the customer; to mitigate security concerns, the link MUST open a <strong>Terms &amp; Conditions page</strong> before any action is taken. The T&amp;C clearly states: (1) no refund will be issued by Silk &amp; Snow — the refund is the responsibility of the third-party vendor, and (2) the return is not authorized by the third-party partner. After the customer accepts T&amp;C and provides pickup details, ClaimLane creates a ticket and follows standard pickup logistics. <strong>Costco orders do not require pickup assistance</strong> — ticket is created for tracking only.</p>
 </li>
 <li>
 <p><strong>BR-2 – Order Security:</strong> No order details are displayed unless both the email and order number match the WooCommerce record exactly.</p>
@@ -981,7 +981,7 @@
 <p><strong>BR-15 – Bundle / Free Item 50% Keep Rule:</strong> When a bundle item is returned and the customer keeps the bundled/free item, the customer pays <strong>50% of the full website price</strong> for the kept item. The refund is adjusted (prorated) to reflect this charge and the decision is recorded on the ticket. <strong>Note:</strong> This requires custom code integration to bridge the WooCommerce data structure with the portal.</p>
 </li>
 <li>
-<p><strong>BR-16 – Vendor Pickup and Status Updates:</strong> Vendors (or Logistics team) must update mattress status to "Picked" in the portal. This status update must transition the item to <strong>"Received"</strong> to trigger refund logic.</p>
+<p><strong>BR-16 – Vendor Pickup and Status Updates:</strong> Vendors (6–10 donation/pickup partners) must update mattress status to "Picked" in the portal via their vendor portal access. This status update must transition the item to <strong>"Received"</strong> to trigger refund logic.</p>
 </li>
 <li>
 <p><strong>BR-17 – Furniture Return Process:</strong> The system must calculate and present return shipping charges (via WooCommerce service) <strong>before</strong> ticket submission. The customer must agree to pay the charge (or have it deducted). <strong>Note:</strong> Disposal pickups use the same charge as the courier rate. Once the customer accepts and submits, the ticket enters <strong>CX Review</strong>. Only upon <strong>CX Approval</strong> (of photos + charge) does the system <strong>automatically generate</strong> labels and pickup instructions.</p>
@@ -1006,13 +1006,13 @@
 <p><strong>BR-22 – Return Label Limitation:</strong> The number of return labels generated cannot exceed the number of boxes/labels in the original order.</p>
 </li>
 <li>
-<p><strong>BR-23 – US Accessory Keep Offer:</strong> For US opened accessories, the customer MUST be offered Option 1 (keep item for 50% refund, no proof required) before declining the return. This offer applies to both opened items and high-cost unopened items (shipping &gt; 1/3 value).</p>
+<p><strong>BR-23 – US Accessory Keep Offer:</strong> For US opened accessories and bedding, the customer MUST be offered Option 1 (keep item for 50% refund, no proof required). This applies to opened items only. Unopened items follow the standard return label flow.</p>
 </li>
 <li>
-<p><strong>BR-24 – US Accessory Donate Offer:</strong> If the customer rejects Option 1 (50% keep), the system MUST present Option 2 (donate item for 100% refund with CX-verified proof via call/email). The return can only be declined if BOTH offers are rejected.</p>
+<p><strong>BR-24 – US Accessory Donate Offer (Offline):</strong> Option 2 (donate for 100% refund) is no longer presented directly in the portal. When a customer <strong>accepts</strong> Option 1, the 50% refund is processed and the return is complete (customer keeps item). When a customer <strong>rejects</strong> Option 1, the system generates a <strong>Customer Care ticket</strong>. CX contacts the customer offline to encourage Option 2 (donate item for full refund with CX-verified proof).</p>
 </li>
 <li>
-<p><strong>BR-25 – Shipping Cost Threshold:</strong> For US unopened accessories/bedding, if the calculated shipping cost exceeds 1/3 of the item value, the system MUST skip label generation and present the keep/donate offers instead.</p>
+<p><strong>BR-25 – ~~Shipping Cost Threshold~~ (Superseded):</strong> This rule has been superseded. The shipping cost threshold (1/3 of item value) is no longer used. All US unopened accessories/bedding receive a return label via standard flow.</p>
 </li>
 <li>
 <p><strong>BR-26 – Auto-Refund Bundle Exclusion:</strong> Automatic refunds are strictly prohibited for any order containing bundles or free items, regardless of refund value. All such orders MUST route to manual refund processing. This is a Phase 1 technical limitation due to the <strong>custom implementation required</strong> for bundle calculation (WF-070→073).</p>
@@ -1027,7 +1027,11 @@
 <p><strong>BR-29 – Self-Donate Selection:</strong> When the Return Logistics Team cannot secure a vendor for unboxed mattress pickup, they MUST act to select the <strong>"Self-Donation"</strong> option in the vendor list. This provides the customer with self-donation instructions. The customer must then complete donation, provide photo proof, and contact CX for manual return processing.</p>
 </li>
 <li>
-<p><strong>BR-30 – Furniture Return Destinations:</strong> When calling the shipping API for furniture returns, the system must use region-specific destinations: <strong>Canada (CA)</strong> returns go to <strong>Caledonia warehouse</strong>; <strong>United States (US)</strong> returns go to the <strong>original shipping warehouse (LA or NJ)</strong>.</p>
+<p><strong>BR-30 – Furniture Return Destinations:</strong> When calling the shipping API for furniture returns, the system must use region-specific destinations:</p>
+<ul>
+<li><strong>Canada (CA):</strong> Returns always go to <strong>Caledonia warehouse</strong>.</li>
+<li><strong>United States (US):</strong> Returns go to the <strong>origin warehouse</strong> as determined by the <strong>Fulfil ERP API</strong>. The API returns the originating warehouse for each SKU in the order. When an order was shipped from <strong>multiple warehouses</strong>, the system must route the return to the <strong>closest warehouse</strong> to the customer's shipping address (calculated via Google Maps geocoding). US warehouses: <strong>LA (JDLLA)</strong> – 6509 Kimball Ave, Chino, CA 91708; <strong>NJ (JDLNJ)</strong> – 55 Wildcat Way, Linden, NJ 07036.</li>
+</ul>
 </li>
 </ul>
 <h2 id="appendix-rules">Appendix Rules</h2>
