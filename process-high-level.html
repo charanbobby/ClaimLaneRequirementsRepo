@@ -1677,15 +1677,16 @@
 <p><strong>Purchase Channel Selection (WF-001)</strong> – Customer selects where they purchased:</p>
 <ul>
 <li><strong>Silk &amp; Snow Online – CA</strong> (WF-002) – WooCommerce online orders</li>
-<li><strong>Silk &amp; Snow Online – US</strong> (WF-094) – WooCommerce online orders</li>
+<li><strong>Silk &amp; Snow Online – US</strong> (WF-094) – WooCommerce online orders <em>(visible to US customers only, if possible)</em></li>
 <li><strong>Silk &amp; Snow Retail Store</strong> (WF-003) – In-person purchase</li>
+<li><strong>Sleep Country Retail Store</strong> – In-person purchase</li>
 <li><strong>Third-Party Vendor</strong> (WF-004) – TSC, EQ3, or Costco</li>
 </ul>
-<p><strong>Retail Store Backend Handling (WF-018 → WF-022)</strong></p>
-<p>For Retail Store selections, the portal performs a <strong>store lookup</strong> (WF-019) to determine whether the store backend is <strong>Shopify POS</strong> or <strong>STORIS (non-Shopify)</strong>:</p>
+<p><strong>Retail Store Routing (WF-018 → WF-022)</strong></p>
+<p>Channel selection determines routing directly — no backend store lookup is performed:</p>
 <ul>
-<li>If <strong>Shopify POS store</strong>: Routes customer into the same order flow as online orders (Shopify Online + Shopify POS orders).</li>
-<li>If <strong>STORIS (non-Shopify) store</strong>: Displays message (WF-021): <em>"This return cannot be processed through this portal. Please call the Sleep Country Customer Service team for further instructions."</em> Flow ends (WF-022).</li>
+<li><strong>Silk &amp; Snow Retail Store:</strong> Routes customer into the WooCommerce online order flow (WooCommerce Online + Shopify POS orders).</li>
+<li><strong>Sleep Country Retail Store:</strong> Displays message (WF-021): <em>"This return cannot be processed through this portal. Please call the Sleep Country Customer Service team for further instructions."</em> Flow ends (WF-022).</li>
 </ul>
 </li>
 <li>
@@ -1702,17 +1703,12 @@
 <p><strong>Validation Outcomes:</strong></p>
 <ul>
 <li><strong>Success</strong>: Proceed to display order items</li>
-<li><strong>Failure (WF-028/101/044)</strong>: Display error message with retry option:<ul>
-<li><em>"For orders purchased in store, an email may not have been provided."</em></li>
-<li><strong>Alternative</strong>: Allow retry with <strong>Order Number + Phone Number</strong> instead of email</li>
-<li>Option to contact support if validation continues to fail</li>
-</ul>
-</li>
+<li><strong>Failure (WF-028/101/044)</strong>: Display error message — <em>"For orders purchased in store, an email may not have been provided."</em> Customer may retry with corrected details.</li>
 </ul>
 </li>
 <li>
 <p><strong>Display Order Items &amp; Eligibility (WF-029/102)</strong> </p>
-<p>All items in the order are displayed with variant image, color, category, and <strong>eligibility status</strong>. Eligibility is computed using:</p>
+<p>All items in the order are displayed with variant image and <strong>eligibility status</strong>. Eligibility is computed using:</p>
 <ul>
 <li>Product category</li>
 <li>Return window</li>
@@ -1761,7 +1757,7 @@
 <p><strong>Boxed Mattresses (WF-039 → WF-062A → WF-077A):</strong></p>
 <ol>
 <li>Customer confirms mattress is boxed (WF-039)</li>
-<li>Collect photos and law tag (WF-061A)</li>
+<li>Collect photo of the box (WF-061A)</li>
 <li>Provide return label and drop-off instructions (WF-062A)</li>
 <li>Customer ships item</li>
 <li>Vendor picks up item; Status is auto-updated to <strong>"Picked"</strong> via Courier API (WF-064/063A)</li>
@@ -1902,7 +1898,6 @@
 <li><strong>Collect Additional Information (WF-054):</strong><ul>
 <li>Issue description</li>
 <li>Photos of defect</li>
-<li>Pickup assistance needed (Yes/No)</li>
 <li>Address confirmation</li>
 </ul>
 </li>
@@ -1915,6 +1910,7 @@
 <ol>
 <li><strong>CX Reviews Submission (WF-052B):</strong><ul>
 <li>CX team validates photos and part selection</li>
+<li>If the customer did not select a part, or selected an incorrect part, CX has the option to <strong>override the part selection</strong> before proceeding</li>
 </ul>
 </li>
 <li><strong>CX Approval Decision (WF-052C):</strong><ul>
@@ -1924,13 +1920,14 @@
 </li>
 </ol>
 <h4 id="10d-pickup-assistance-wf-052f-wf-052i"><strong>10D. Pickup Assistance (WF-052F → WF-052I)</strong></h4>
+<blockquote>
+<p>[!NOTE]
+Pickup assistance is <strong>not presented to the customer during submission</strong>. The CX team may add pickup assistance as a follow-on action if the customer calls in to request it.</p>
+</blockquote>
 <ol>
-<li><strong>Pickup Assistance Check (WF-052F):</strong><ul>
-<li>Does customer need pickup assistance?<ul>
-<li><strong>No</strong>: Skip to replacement order placement (WF-056)</li>
-<li><strong>Yes</strong>: Proceed to pickup type selection</li>
-</ul>
-</li>
+<li><strong>CX Pickup Assistance Decision (WF-052F):</strong><ul>
+<li>Default assumption: customer does <strong>not</strong> require pickup assistance → proceed to replacement order placement (WF-056)</li>
+<li>If customer calls CX to request assistance: CX adds pickup assistance to the case → proceed to pickup type selection</li>
 </ul>
 </li>
 <li><strong>Pickup Type Selection (WF-052H):</strong><ul>
@@ -2090,6 +2087,13 @@
 <li><strong>Caledonia Team Updates Status (WF-091):</strong><ul>
 <li>Team has <strong>limited-access portal role</strong></li>
 <li>Updates status directly in ClaimLane portal (WF-092)</li>
+<li>At <strong>Inspection Completed</strong> step, team selects an <strong>Inspection Grade</strong> from a mandatory dropdown:<ul>
+<li><strong>Grade A</strong> – Resalable</li>
+<li><strong>Grade B</strong> – Donatable</li>
+<li><strong>Grade C</strong> – Damaged</li>
+<li><em>Reason code is mandatory for all grades</em></li>
+</ul>
+</li>
 <li>Status transition: <strong>Delivered → Processing → Inspection Completed</strong></li>
 </ul>
 </li>

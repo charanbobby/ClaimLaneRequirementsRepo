@@ -1205,11 +1205,16 @@
 <li>
 <p><strong>FR-1 – Channel Selection UI:</strong> Provide a start screen where the customer selects:</p>
 <ul>
-<li>Silk &amp; Snow Online – CA / US (Shopify)</li>
+<li>Silk &amp; Snow Online – CA (WooCommerce)</li>
+<li>Silk &amp; Snow Online – US (WooCommerce) <em>(visible to US customers only, if possible)</em></li>
 <li>Silk &amp; Snow Retail Store (in-person)</li>
+<li>Sleep Country Retail Store (in-person)</li>
 <li>Third-Party Vendor</li>
 </ul>
-<p>When "Retail Store" is selected, the portal must perform a <strong>store lookup</strong>. If the store is <strong>Shopify POS</strong>, route to the standard Shopify order flow. If the store is <strong>STORIS (non-Shopify)</strong>, display a "returns must be handled in-person" message and block further steps. <strong>Note:</strong> Third-party vendor orders do not use this channel selection screen — they enter via vendor-specific links (see FR-46).</p>
+<p>No backend store lookup is performed. Channel selection determines routing directly:
+- <strong>Silk &amp; Snow Retail Store:</strong> Routes to the WooCommerce online order flow (shared with Shopify POS orders).
+- <strong>Sleep Country Retail Store:</strong> Displays an in-store return message — <em>"This return cannot be processed through this portal. Please call the Sleep Country Customer Service team for further instructions."</em> Flow ends.
+- <strong>Note:</strong> Third-party vendor orders do not use this channel selection screen — they enter via vendor-specific links (see FR-46).</p>
 </li>
 <li>
 <p><strong>FR-2 – Intent Selection:</strong> After channel selection, present options for "Return", "Warranty Claim", or other return type (configurable). The selection determines which subsequent screens and logic apply.</p>
@@ -1230,7 +1235,7 @@
 <h2 id="item-display-and-eligibility">Item Display and Eligibility</h2>
 <ul>
 <li>
-<p><strong>FR-6 – Display Items:</strong> Show all items on the order with their variant image, colour, size, category, quantity and status (e.g., "Eligible", "Trial Ended", "Final Sale", "Already Returned").</p>
+<p><strong>FR-6 – Display Items:</strong> Show all items on the order with their variant image, size, quantity and status (e.g., "Eligible", "Trial Ended", "Final Sale", "Already Returned").</p>
 </li>
 <li>
 <p><strong>FR-7 – Eligibility Calculation:</strong> Compute eligibility for each item using the delivered date plus return period (per category), final sale flags, trial windows, prior returns and channel restrictions. Items that are past the return window, final sale, already returned or from an incorrect channel must be marked "Not Eligible". Mattresses returned within 30 nights should trigger a soft warning but remain eligible; unboxed mattresses and furniture without packaging should be flagged as "Conditionally Eligible" requiring vendor approval or admin flags.</p>
@@ -1343,7 +1348,7 @@
 <h2 id="new-functionality">New Functionality</h2>
 <ul>
 <li>
-<p><strong>FR-30 – Caledonia Portal:</strong> Provide a limited access role/view for the <strong>Caledonia Warehouse Team</strong> to allow updating return status from <strong>Delivered → Processing / Inspection Completed</strong>. This status update must feed into the "Received" logic for refunds.</p>
+<p><strong>FR-30 – Caledonia Portal:</strong> Provide a limited access role/view for the <strong>Caledonia Warehouse Team</strong> to allow updating return status from <strong>Delivered → Processing / Inspection Completed</strong>. At the <strong>Inspection Completed</strong> step (WF-092), the team must select an <strong>Inspection Grade</strong> from a mandatory dropdown: <strong>Grade A (Resalable) | Grade B (Donatable) | Grade C (Damaged)</strong>. A reason code is mandatory for all grades. This status update must feed into the "Received" logic for refunds.</p>
 </li>
 <li>
 <p><strong>FR-31 – Reporting:</strong> Provide <strong>Store Operations</strong> with the ability to generate a "Returned items" report listing items that have reached "Inspection Completed" status for inventory updates.</p>
@@ -1371,7 +1376,7 @@
 </ul>
 </li>
 <li>
-<p><strong>FR-35 – Warranty Pickup Logistics:</strong> After CX approves a warranty claim (WF-052C), check if the customer needs pickup assistance (WF-052F). If yes, determine pickup type:</p>
+<p><strong>FR-35 – Warranty Pickup Logistics:</strong> After CX approves a warranty claim (WF-052C), the default assumption is that the customer does <strong>not</strong> require pickup assistance. Pickup assistance is <strong>not presented to the customer</strong> during submission — the CX team may add it as a follow-on action if the customer calls in to request it (WF-052F). If pickup assistance is added by CX, determine pickup type:</p>
 <ul>
 <li><strong>Courier Pickup:</strong> CX provides coordination and guidance. Generate a return label that includes the text <strong>(Defective - this will help warehouse to avoid inspection of that piece)</strong> to signal the warehouse team to bypass inspection (WF-052G).</li>
 <li><strong>Disposal Pickup:</strong> Log the case for the Return Logistics Team to assign a disposal vendor (WF-052I connects to shared return logistics WF-059/065A).</li>

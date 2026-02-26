@@ -971,10 +971,10 @@
 <p><strong>BR-12 – Duplicate Refunds:</strong> No duplicate refund attempts are allowed; the system must detect prior refunds before initiating a new one.</p>
 </li>
 <li>
-<p><strong>BR-13 – Retail Store Backend Detection:</strong> When a customer selects "Silk &amp; Snow Retail Store," the portal must lookup the backend:</p>
+<p><strong>BR-13 – Retail Store Channel Routing:</strong> Channel selection determines routing directly — no backend store lookup is performed:</p>
 <ul>
-<li><strong>Shopify POS:</strong> Route to standard Shopify flow.</li>
-<li><strong>STORIS:</strong> Block online return; show "In-store return only" message. No tickets, labels, or refunds are generated in the portal.</li>
+<li><strong>Silk &amp; Snow Retail Store:</strong> Route to the standard WooCommerce online order flow (shared with Shopify POS orders).</li>
+<li><strong>Sleep Country Retail Store:</strong> Display an in-store return message — <em>"This return cannot be processed through this portal. Please call the Sleep Country Customer Service team for further instructions."</em> No tickets, labels, or refunds are generated in the portal.</li>
 </ul>
 </li>
 <li>
@@ -990,7 +990,7 @@
 <p><strong>BR-18 – Accessory and Bedding Mail-In Flow:</strong> These items follow a single-step logistics flow: Reason/Photos -&gt; Label Generation -&gt; Mail-in.</p>
 </li>
 <li>
-<p><strong>BR-19 – Caledonia Limited Access Role:</strong> Caledonia team uses a limited role to update status: <strong>Delivered -&gt; Processing / Inspection Completed</strong>.</p>
+<p><strong>BR-19 – Caledonia Limited Access Role:</strong> Caledonia team uses a limited role to update status: <strong>Delivered → Processing → Inspection Completed</strong>. At the Inspection Completed step (WF-092), the team must select an <strong>Inspection Grade</strong> from a mandatory dropdown: <strong>Grade A (Resalable) | Grade B (Donatable) | Grade C (Damaged)</strong>. A reason code is mandatory for all grades.</p>
 </li>
 <li>
 <p><strong>BR-20 – Store Ops Returned Items Report:</strong> Store Ops must be able to generate a report of items in "Inspection Completed" status for inventory updates.</p>
