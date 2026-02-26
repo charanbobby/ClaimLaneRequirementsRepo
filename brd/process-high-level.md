@@ -5,16 +5,17 @@
 1. **Purchase Channel Selection (WF-001)** – Customer selects where they purchased:
 
     *   **Silk & Snow Online – CA** (WF-002) – WooCommerce online orders
-    *   **Silk & Snow Online – US** (WF-094) – WooCommerce online orders
+    *   **Silk & Snow Online – US** (WF-094) – WooCommerce online orders *(visible to US customers only, if possible)*
     *   **Silk & Snow Retail Store** (WF-003) – In-person purchase
+    *   **Sleep Country Retail Store** – In-person purchase
     *   **Third-Party Vendor** (WF-004) – TSC, EQ3, or Costco
 
-    **Retail Store Backend Handling (WF-018 → WF-022)**
+    **Retail Store Routing (WF-018 → WF-022)**
 
-    For Retail Store selections, the portal performs a **store lookup** (WF-019) to determine whether the store backend is **Shopify POS** or **STORIS (non-Shopify)**:
+    Channel selection determines routing directly — no backend store lookup is performed:
 
-    *   If **Shopify POS store**: Routes customer into the same order flow as online orders (Shopify Online + Shopify POS orders).
-    *   If **STORIS (non-Shopify) store**: Displays message (WF-021): *"This return cannot be processed through this portal. Please call the Sleep Country Customer Service team for further instructions."* Flow ends (WF-022).
+    *   **Silk & Snow Retail Store:** Routes customer into the WooCommerce online order flow (WooCommerce Online + Shopify POS orders).
+    *   **Sleep Country Retail Store:** Displays message (WF-021): *"This return cannot be processed through this portal. Please call the Sleep Country Customer Service team for further instructions."* Flow ends (WF-022).
 
 2. **Customer Intent Selection (WF-023/096)** – Customer chooses the type of assistance needed:
     *   **Return** (WF-024/097)
@@ -29,14 +30,11 @@
     **Validation Outcomes:**
 
     *   **Success**: Proceed to display order items
-    *   **Failure (WF-028/101/044)**: Display error message with retry option:
-        - *"For orders purchased in store, an email may not have been provided."*
-        - **Alternative**: Allow retry with **Order Number + Phone Number** instead of email
-        - Option to contact support if validation continues to fail
+    *   **Failure (WF-028/101/044)**: Display error message — *"For orders purchased in store, an email may not have been provided."* Customer may retry with corrected details.
 
 4. **Display Order Items & Eligibility (WF-029/102)** 
     
-    All items in the order are displayed with variant image, color, category, and **eligibility status**. Eligibility is computed using:
+    All items in the order are displayed with variant image and **eligibility status**. Eligibility is computed using:
     
     *   Product category
     *   Return window
@@ -90,7 +88,7 @@ The return flow splits based on **item type** and **region**:
 **Boxed Mattresses (WF-039 → WF-062A → WF-077A):**
 
 1. Customer confirms mattress is boxed (WF-039)
-2. Collect photos and law tag (WF-061A)
+2. Collect photo of the box (WF-061A)
 3. Provide return label and drop-off instructions (WF-062A)
 4. Customer ships item
 5. Vendor picks up item; Status is auto-updated to **"Picked"** via Courier API (WF-064/063A)
@@ -205,7 +203,6 @@ For **unboxed mattresses**, **oversized items**, and items requiring **disposal 
 3. **Collect Additional Information (WF-054):**
     - Issue description
     - Photos of defect
-    - Pickup assistance needed (Yes/No)
     - Address confirmation
 4. **Submit Warranty Case (WF-055):**
     - Case submitted to ClaimLane with selected part SKUs, evidence, and notes
@@ -214,16 +211,19 @@ For **unboxed mattresses**, **oversized items**, and items requiring **disposal 
 
 5. **CX Reviews Submission (WF-052B):**
     - CX team validates photos and part selection
+    - If the customer did not select a part, or selected an incorrect part, CX has the option to **override the part selection** before proceeding
 6. **CX Approval Decision (WF-052C):**
     - **Declined (WF-052D)**: Communicate decline and next steps to customer → End
     - **Approved**: Proceed to pickup logic
 
 #### **10D. Pickup Assistance (WF-052F → WF-052I)**
 
-7. **Pickup Assistance Check (WF-052F):**
-    - Does customer need pickup assistance?
-        - **No**: Skip to replacement order placement (WF-056)
-        - **Yes**: Proceed to pickup type selection
+> [!NOTE]
+> Pickup assistance is **not presented to the customer during submission**. The CX team may add pickup assistance as a follow-on action if the customer calls in to request it.
+
+7. **CX Pickup Assistance Decision (WF-052F):**
+    - Default assumption: customer does **not** require pickup assistance → proceed to replacement order placement (WF-056)
+    - If customer calls CX to request assistance: CX adds pickup assistance to the case → proceed to pickup type selection
 8. **Pickup Type Selection (WF-052H):**
     - **Courier Pickup (WF-052G):**
         - CX provides pickup assistance (coordination + guidance)
@@ -358,6 +358,11 @@ Once an item is marked as **"Received"** (WF-089), the refund logic is determine
 2. **Caledonia Team Updates Status (WF-091):**
     - Team has **limited-access portal role**
     - Updates status directly in ClaimLane portal (WF-092)
+    - At **Inspection Completed** step, team selects an **Inspection Grade** from a mandatory dropdown:
+        - **Grade A** – Resalable
+        - **Grade B** – Donatable
+        - **Grade C** – Damaged
+        - *Reason code is mandatory for all grades*
     - Status transition: **Delivered → Processing → Inspection Completed**
 3. **Store Ops Inventory Update (WF-093):**
     - Store Ops team runs **"Returned items" report** from portal

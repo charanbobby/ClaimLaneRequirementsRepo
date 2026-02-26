@@ -6,11 +6,16 @@ The following requirements describe what the portal must do. Each requirement is
 
 - **FR-1 – Channel Selection UI:** Provide a start screen where the customer selects:
 
-    - Silk & Snow Online – CA / US (Shopify)
+    - Silk & Snow Online – CA (WooCommerce)
+    - Silk & Snow Online – US (WooCommerce) *(visible to US customers only, if possible)*
     - Silk & Snow Retail Store (in-person)
+    - Sleep Country Retail Store (in-person)
     - Third-Party Vendor
 
-    When "Retail Store" is selected, the portal must perform a **store lookup**. If the store is **Shopify POS**, route to the standard Shopify order flow. If the store is **STORIS (non-Shopify)**, display a "returns must be handled in-person" message and block further steps. **Note:** Third-party vendor orders do not use this channel selection screen — they enter via vendor-specific links (see FR-46).
+    No backend store lookup is performed. Channel selection determines routing directly:
+    - **Silk & Snow Retail Store:** Routes to the WooCommerce online order flow (shared with Shopify POS orders).
+    - **Sleep Country Retail Store:** Displays an in-store return message — *"This return cannot be processed through this portal. Please call the Sleep Country Customer Service team for further instructions."* Flow ends.
+    - **Note:** Third-party vendor orders do not use this channel selection screen — they enter via vendor-specific links (see FR-46).
 
 - **FR-2 – Intent Selection:** After channel selection, present options for "Return", "Warranty Claim", or other return type (configurable). The selection determines which subsequent screens and logic apply.
 
@@ -24,7 +29,7 @@ The following requirements describe what the portal must do. Each requirement is
 
 ## Item Display and Eligibility
 
-- **FR-6 – Display Items:** Show all items on the order with their variant image, colour, size, category, quantity and status (e.g., "Eligible", "Trial Ended", "Final Sale", "Already Returned").
+- **FR-6 – Display Items:** Show all items on the order with their variant image, size, quantity and status (e.g., "Eligible", "Trial Ended", "Final Sale", "Already Returned").
 
 - **FR-7 – Eligibility Calculation:** Compute eligibility for each item using the delivered date plus return period (per category), final sale flags, trial windows, prior returns and channel restrictions. Items that are past the return window, final sale, already returned or from an incorrect channel must be marked "Not Eligible". Mattresses returned within 30 nights should trigger a soft warning but remain eligible; unboxed mattresses and furniture without packaging should be flagged as "Conditionally Eligible" requiring vendor approval or admin flags.
 
@@ -102,7 +107,7 @@ The following requirements describe what the portal must do. Each requirement is
 
 ## New Functionality
 
-- **FR-30 – Caledonia Portal:** Provide a limited access role/view for the **Caledonia Warehouse Team** to allow updating return status from **Delivered → Processing / Inspection Completed**. This status update must feed into the "Received" logic for refunds.
+- **FR-30 – Caledonia Portal:** Provide a limited access role/view for the **Caledonia Warehouse Team** to allow updating return status from **Delivered → Processing / Inspection Completed**. At the **Inspection Completed** step (WF-092), the team must select an **Inspection Grade** from a mandatory dropdown: **Grade A (Resalable) | Grade B (Donatable) | Grade C (Damaged)**. A reason code is mandatory for all grades. This status update must feed into the "Received" logic for refunds.
 
 - **FR-31 – Reporting:** Provide **Store Operations** with the ability to generate a "Returned items" report listing items that have reached "Inspection Completed" status for inventory updates.
 
@@ -123,7 +128,7 @@ The following requirements describe what the portal must do. Each requirement is
     - **Opened Items:** Present Option 1 (Keep Offer: keep item for 50% refund, no proof required). If customer **accepts** Option 1: process 50% refund — customer keeps the item and the return is complete. If customer **rejects** Option 1: generate a **Customer Care ticket**. CX contacts the customer offline to encourage Option 2 (donate item for 100% refund with proof).
     - All decisions and customer responses must be logged in the ticket.
 
-- **FR-35 – Warranty Pickup Logistics:** After CX approves a warranty claim (WF-052C), check if the customer needs pickup assistance (WF-052F). If yes, determine pickup type:
+- **FR-35 – Warranty Pickup Logistics:** After CX approves a warranty claim (WF-052C), the default assumption is that the customer does **not** require pickup assistance. Pickup assistance is **not presented to the customer** during submission — the CX team may add it as a follow-on action if the customer calls in to request it (WF-052F). If pickup assistance is added by CX, determine pickup type:
     
     - **Courier Pickup:** CX provides coordination and guidance. Generate a return label that includes the text **(Defective - this will help warehouse to avoid inspection of that piece)** to signal the warehouse team to bypass inspection (WF-052G).
     - **Disposal Pickup:** Log the case for the Return Logistics Team to assign a disposal vendor (WF-052I connects to shared return logistics WF-059/065A).

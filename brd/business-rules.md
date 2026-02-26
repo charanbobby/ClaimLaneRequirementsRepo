@@ -24,9 +24,9 @@ The portal must enforce the following rules (numbered BR-1 through BR-12 plus ap
 
 - **BR-12 – Duplicate Refunds:** No duplicate refund attempts are allowed; the system must detect prior refunds before initiating a new one.
 
-- **BR-13 – Retail Store Backend Detection:** When a customer selects "Silk & Snow Retail Store," the portal must lookup the backend:
-    - **Shopify POS:** Route to standard Shopify flow.
-    - **STORIS:** Block online return; show "In-store return only" message. No tickets, labels, or refunds are generated in the portal.
+- **BR-13 – Retail Store Channel Routing:** Channel selection determines routing directly — no backend store lookup is performed:
+    - **Silk & Snow Retail Store:** Route to the standard WooCommerce online order flow (shared with Shopify POS orders).
+    - **Sleep Country Retail Store:** Display an in-store return message — *"This return cannot be processed through this portal. Please call the Sleep Country Customer Service team for further instructions."* No tickets, labels, or refunds are generated in the portal.
 
 - **BR-15 – Bundle / Free Item 50% Keep Rule:** When a bundle item is returned and the customer keeps the bundled/free item, the customer pays **50% of the full website price** for the kept item. The refund is adjusted (prorated) to reflect this charge and the decision is recorded on the ticket. **Note:** This requires custom code integration to bridge the WooCommerce data structure with the portal.
 
@@ -36,7 +36,7 @@ The portal must enforce the following rules (numbered BR-1 through BR-12 plus ap
 
 - **BR-18 – Accessory and Bedding Mail-In Flow:** These items follow a single-step logistics flow: Reason/Photos -> Label Generation -> Mail-in.
 
-- **BR-19 – Caledonia Limited Access Role:** Caledonia team uses a limited role to update status: **Delivered -> Processing / Inspection Completed**.
+- **BR-19 – Caledonia Limited Access Role:** Caledonia team uses a limited role to update status: **Delivered → Processing → Inspection Completed**. At the Inspection Completed step (WF-092), the team must select an **Inspection Grade** from a mandatory dropdown: **Grade A (Resalable) | Grade B (Donatable) | Grade C (Damaged)**. A reason code is mandatory for all grades.
 
 - **BR-20 – Store Ops Returned Items Report:** Store Ops must be able to generate a report of items in "Inspection Completed" status for inventory updates.
 

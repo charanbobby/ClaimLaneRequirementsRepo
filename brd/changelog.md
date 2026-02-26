@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2026-02-26 – Workflow & Channel Corrections (9 Action Items)
+
+### Changed
+
+- **scope.md:** Clarified US accessory return cost optimization — 50% keep offer is automated via ClaimLane; 100% donate offer (with proof) remains a manual CX process. *(AI-1)*
+- **scope.md, process-high-level.md, functional-requirements.md (FR-1), business-rules.md (BR-13):** Added **Sleep Country Retail Store** as a distinct purchase channel. Removed STORIS backend store lookup entirely — channel selection now determines routing directly. Silk & Snow Retail routes to the WooCommerce online order flow; Sleep Country Retail directly displays the in-store return message directing customers to Sleep Country Customer Service. *(AI-5, AI-6)*
+- **process-high-level.md (8A. Boxed Mattresses):** Documentation requirement for boxed mattress returns reduced to **photo of the box only** (law tag no longer collected). *(AI-2)*
+- **process-high-level.md (10B, 10D), functional-requirements.md (FR-35):** Removed pickup assistance question from customer-facing warranty submission form. Pickup assistance is now a **CX-initiated add-on** — the default assumption is that the customer does not require assistance unless they call in to request it. *(AI-3)*
+- **process-high-level.md (WF-092), functional-requirements.md (FR-30), business-rules.md (BR-19):** Added **Inspection Grade dropdown** at the Inspection Completed step (WF-092). Caledonia team must select Grade A (Resalable), Grade B (Donatable), or Grade C (Damaged). Reason code is mandatory for all grades. *(AI-4)*
+- **process-high-level.md (Step 3), functional-requirements.md (FR-4):** Removed validation fallback options — the phone number retry alternative and the "contact support" escalation path are no longer offered. Customers may retry with corrected email and order number. *(AI-7)*
+- **process-high-level.md (Step 4), functional-requirements.md (FR-6):** Removed **colour** and **category** from the order item display. Items now show variant image, size, quantity, and eligibility status only. *(AI-8)*
+- **process-high-level.md (10C, WF-052B):** CX team can now **override part selection** when reviewing a warranty submission — applicable when the customer did not select a part or selected an incorrect part. *(AI-9)*
+
+### Context
+
+- AI-1: The scope description incorrectly implied both offer tiers were automated. Only the 50% keep offer runs through ClaimLane; the 100% donate path remains offline CX.
+- AI-2: Law tag is not required for boxed mattress returns; a photo of the box is sufficient.
+- AI-3: Proactively offering pickup assistance was expected to significantly increase uptake and warranty pickup costs. CX retains the ability to add it when a customer calls.
+- AI-4: Inspection grading gives warehouse data visibility into condition of returned goods for inventory and resale decisions.
+- AI-5/6: Sleep Country = STORIS. Exposing Sleep Country as a named channel eliminates the need for a backend store lookup that was not technically feasible. "Shopify Online" references corrected to "WooCommerce Online" throughout.
+- AI-7: Phone number retry alternative and support escalation were not implementable as designed.
+- AI-8: Colour and category were deemed unnecessary in the item display and removed to simplify the UI.
+- AI-9: CX requires the ability to correct part selection on behalf of customers who submit without selecting or with an incorrect part.
+
+---
+
 ## 2026-02-18 - US Accessories Scope Change (Opened Items Only)
 
 ### Changed

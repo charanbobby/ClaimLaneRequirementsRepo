@@ -16,7 +16,7 @@
 - Multi-language capability (French and English).
 - **Automatic defective reason routing to warranty flow with customer opt-out mechanism.**
 
-- **US accessory return cost optimization with multi-tier keep/donate offers (50% keep, 100% donate with proof).**
+- **US accessory return cost optimization: 50% keep offer automated via ClaimLane; 100% donate offer (with proof) handled manually by the CX team.**
 
 - **Self-donation fallback for unboxed mattresses when vendor unavailable.**
 
@@ -48,7 +48,7 @@
 
 - Web (.com and .ca).
 - Shopify POS store orders.
-- Storis POS store orders (notifications only) .
+- Sleep Country Retail Store orders (in-store return only; portal displays message directing customer to Sleep Country Customer Service).
 - Third-party channel orders.
 
 ### Systems / APIs
