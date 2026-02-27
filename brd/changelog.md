@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2026-02-27 – Requirements Refinement (10 Action Items)
+
+### Changed
+
+- **functional-requirements.md (FR-6):** Removed "Eligible" as a displayed status label — eligibility is the default state and shows no label. Items that have already been returned are labelled **"Already Returned"**. Items that are ineligible display a single fixed ineligibility message; the system no longer varies the message by reason (e.g. no distinction between trial-ended or final-sale wording). *(AI-1)*
+- **functional-requirements.md (FR-12):** Changed the "Other" reason text field from a conditionally required field to an **optional comment field** available on the reason screen for all selections; it cannot be made required based on reason choice. *(AI-3)*
+- **functional-requirements.md (FR-13):** Removed the opt-out mechanism for customers who selected "Defective" but prefer a standard return. Customers who want a standard return should select a different return reason. *(AI-4)*
+- **functional-requirements.md (FR-18):** Renamed to **FR-18 – Package Count**. Removed customer-facing box count input entirely. The required number of packages is now determined automatically by the shipping endpoint (internal dev) based on selected products. *(AI-5)*
+- **functional-requirements.md (FR-26):** Removed the "Start Over" button requirement — not a current ClaimLane capability. Session state preservation and double-submit handling requirements retained. *(AI-6)*
+- **functional-requirements.md (FR-33):** Removed opt-out checkbox from defective routing. Selecting "Defective" now automatically redirects to the Warranty claim process (WF-052) with no opt-out mechanism. *(AI-4)*
+- **functional-requirements.md (FR-42):** Removed two system bullets: row-level validation (reject unknown categories, duplicate SKUs, missing fields) and preview of parsed rows with highlighted errors. Updated audit log requirement — system now logs file name and timestamp only; the uploaded file is available for download. *(AI-7, AI-8)*
+- **functional-requirements.md (FR-43):** Rewrote as **FR-43 – Product Data Updates**. Removed soft-delete / deactivation model entirely — product data is updated by uploading a new Excel file. An upload with an existing SKU overwrites the previous configuration; omitting a SKU removes it from active availability. Historical ticket data is always retained unchanged. *(AI-9)*
+- **functional-requirements.md (FR-44):** Removed **warranty-only flag** and **status (active/inactive)** from the product listing fields and filters. Products are now organised as two separate CA and US datasets rather than a single region-filtered view. *(AI-10)*
+
+### Removed
+
+- **functional-requirements.md (FR-11 – Validate Selection):** Removed entirely. It is not possible to progress through the ClaimLane flow without a product selected; no explicit validation message is required. *(AI-2)*
+
+### Context
+
+- AI-1: "Eligible" as an explicit label adds noise — it is the default state. A single fixed ineligibility message avoids exposing internal business logic (trial windows, final sale flags) to customers.
+- AI-2: The platform prevents progression without a selection; the requirement was redundant.
+- AI-3: The vendor platform supports an optional comment field but cannot enforce it conditionally based on the selected reason.
+- AI-4: Building a systematic opt-out flow was determined to be too complex. Customers who want a standard return should select a different reason; this is sufficient guidance.
+- AI-5: Jason (Internal Dev) will deliver the package count via the shipping endpoint based on selected products; customer input is no longer needed.
+- AI-6: "Start Over" is not a current ClaimLane UI capability.
+- AI-7: Row-level validation preview is not something the vendor platform does.
+- AI-8: Vendor platform logs file name and timestamp only; the file itself is downloadable.
+- AI-9: The vendor platform does not support soft-delete or active/inactive product states. Product management is upload-based (overwrite or add).
+- AI-10: The vendor platform does not have active/inactive product states. The "warranty-only flag" concept is not supported. Region is represented as two separate datasets (CA / US), not a column filter.
+
+---
+
 ## 2026-02-26 – Workflow & Channel Corrections (9 Action Items)
 
 ### Changed

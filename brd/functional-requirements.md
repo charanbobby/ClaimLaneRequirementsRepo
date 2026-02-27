@@ -29,7 +29,7 @@ The following requirements describe what the portal must do. Each requirement is
 
 ## Item Display and Eligibility
 
-- **FR-6 – Display Items:** Show all items on the order with their variant image, size, quantity and status (e.g., "Eligible", "Trial Ended", "Final Sale", "Already Returned").
+- **FR-6 – Display Items:** Show all items on the order with their variant image, size, and quantity. Eligible items display no status label — eligibility is the default state and does not require a label. Items that have already been returned are labelled **"Already Returned"**. Items that are ineligible (out of return window or otherwise not available for return) display a single fixed ineligibility message; the system does not vary the message by reason (e.g. no distinction between trial-ended or final-sale wording).
 
 - **FR-7 – Eligibility Calculation:** Compute eligibility for each item using the delivered date plus return period (per category), final sale flags, trial windows, prior returns and channel restrictions. Items that are past the return window, final sale, already returned or from an incorrect channel must be marked "Not Eligible". Mattresses returned within 30 nights should trigger a soft warning but remain eligible; unboxed mattresses and furniture without packaging should be flagged as "Conditionally Eligible" requiring vendor approval or admin flags.
 
@@ -41,13 +41,11 @@ The following requirements describe what the portal must do. Each requirement is
 
 - **FR-10 – Item Selection:** Allow the customer to select one or more eligible items and specify quantities (up to the purchased quantity). **[RESTRICTION DEFERRED TO FUTURE PHASE]** *The constraint preventing selection of more than two units has been moved to the backlog.*
 
-- **FR-11 – Validate Selection:** Require at least one item to be selected before proceeding. If no item is selected, display a validation message.
-
 ## Reason Selection and Mapping
 
-- **FR-12 – Return Reasons:** Present a dropdown of customer-facing return reasons based on the product category and language. Include "Other/Change of Mind" for returns where permitted and hide it for warranty claims. If "Other" is selected, provide a text field for additional details. When "Defective" is selected as a return reason, trigger the defective routing logic (see FR-33).
+- **FR-12 – Return Reasons:** Present a dropdown of customer-facing return reasons based on the product category and language. Include "Other/Change of Mind" for returns where permitted and hide it for warranty claims. An optional comment field is available on the reason screen for customers to provide additional details; it cannot be made required based on the selected reason. When "Defective" is selected as a return reason, trigger the defective routing logic (see FR-33).
 
-- **FR-13 – Claim Reasons:** Provide a category-specific list of warranty claim reasons with business-approved wording. Do not allow "Other" or change-of-mind reasons for claims. Provide an opt-out mechanism for customers who selected "Defective" but prefer a return instead of warranty replacement.
+- **FR-13 – Claim Reasons:** Provide a category-specific list of warranty claim reasons with business-approved wording. Do not allow "Other" or change-of-mind reasons for claims.
 
 - **FR-14 – Reason Mapping:** Map each selected customer reason to the corresponding WooCommerce refund reason for reporting and refund processing.
 
@@ -61,7 +59,7 @@ The following requirements describe what the portal must do. Each requirement is
 
 ## Logistics and Label Generation
 
-- **FR-18 – Box Count Input:** When generating return labels, prompt the customer to enter the number of boxes (1–20) and validate the value. If no boxes are entered, require at least one box. **The input must be a valid, non-zero number and cannot exceed the total box count of the original shipment.**
+- **FR-18 – Package Count:** When generating return labels, the required number of packages is determined automatically by the shipping endpoint based on the selected products. No manual package count input is presented to the customer.
 
 - **FR-19 – Label Generation:** Integrate with the selected shipping carrier API to generate one label per box using the customer's shipping address, item weight and dimensions. Use fallback weights when master data is missing. Store tracking numbers and prevent duplicate labels on reprints.
 
@@ -97,7 +95,7 @@ The following requirements describe what the portal must do. Each requirement is
 
 ## User Experience and Messaging
 
-- **FR-26 – UX Navigation:** Provide a clear "Start Over" button after order lookup to allow customers to cancel and restart the process. Preserve session state when navigating back or refreshing pages and handle double submits gracefully (only one ticket/refund is created).
+- **FR-26 – UX Navigation:** Preserve session state when navigating back or refreshing pages and handle double submits gracefully (only one ticket/refund is created).
 
 - **FR-27 – Help & Support:** Include a "Help" page that only displays the Silk & Snow support email and a link to the Silk & Snow chatbot. Do not include telephone numbers or other channels unless explicitly approved.
 
@@ -120,7 +118,7 @@ The following requirements describe what the portal must do. Each requirement is
     - Third-Party Pickup Completed (notify vendor that item has been collected).
     - Warranty Claim Declined by CX (WF-052D).
 
-- **FR-33 – Defective Reason Routing:** When a customer selects items to return and chooses "Defective" as the reason, the system must check if the customer opted out of product replacement. If the customer did NOT opt out, redirect the flow to the Warranty claim process (WF-052) instead of standard return logistics. Provide a clear opt-out checkbox during reason selection.
+- **FR-33 – Defective Reason Routing:** When a customer selects items to return and chooses "Defective" as the reason, the system automatically redirects to the Warranty claim process (WF-052) instead of standard return logistics. Customers who prefer a standard return/refund should select a different return reason.
 
 - **FR-34 – US Accessory Return Handling:** For US Accessories and Bedding returns:
     
@@ -187,18 +185,12 @@ The following requirements describe what the portal must do. Each requirement is
 
     The system must:
 
-    - Validate all rows before committing: reject unknown categories, duplicate SKUs, missing required fields.
-    - Display a preview of parsed rows with row-level errors highlighted.
     - Require admin confirmation before saving to the product configuration store.
-    - Log the upload event (who, when, file name, row count) for audit.
+    - Log the upload event (file name and timestamp); the uploaded file is available for download.
 
-- **FR-43 – Product Removal:** Allow an admin to remove (deactivate) a product from the portal. In the MVP, removal may be initiated via email request to the system administrator. The administrator performs a soft-delete (marks the product inactive). Deactivated products must:
+- **FR-43 – Product Data Updates:** Product data in the portal is updated by uploading a new Excel file via the same mechanism as FR-42. An upload that includes an existing SKU overwrites the previous product configuration for that SKU. To remove a product from active availability, the admin omits the SKU from the new upload. Historical ticket data is unaffected — all product information recorded at the time of submission is always retained on existing tickets.
 
-    - No longer appear as eligible in customer-facing item displays.
-    - Remain visible in historical ticket data and reports.
-    - Trigger a warning showing the count of active/open tickets referencing the product before deactivation is confirmed.
-
-- **FR-44 – Product Configuration Listing:** Provide a read-only admin view listing all onboarded products with: SKU, name, category, region, final sale flag, warranty-only flag, and status (active/inactive). Support search by SKU or product name and filtering by category, region, or status.
+- **FR-44 – Product Configuration Listing:** Provide a read-only admin view listing all onboarded products with: SKU, name, category, and final sale flag. Products are organised as two separate datasets (CA and US). Support search by SKU or product name and filtering by category.
 
     **Future State:** Replace Excel upload and email-based removal with a direct real-time sync to WooCommerce and external product catalogue systems, eliminating manual file handling entirely.
 
