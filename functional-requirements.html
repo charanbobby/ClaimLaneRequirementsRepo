@@ -1235,7 +1235,7 @@
 <h2 id="item-display-and-eligibility">Item Display and Eligibility</h2>
 <ul>
 <li>
-<p><strong>FR-6 – Display Items:</strong> Show all items on the order with their variant image, size, quantity and status (e.g., "Eligible", "Trial Ended", "Final Sale", "Already Returned").</p>
+<p><strong>FR-6 – Display Items:</strong> Show all items on the order with their variant image, size, and quantity. Eligible items display no status label — eligibility is the default state and does not require a label. Items that have already been returned are labelled <strong>"Already Returned"</strong>. Items that are ineligible (out of return window or otherwise not available for return) display a single fixed ineligibility message; the system does not vary the message by reason (e.g. no distinction between trial-ended or final-sale wording).</p>
 </li>
 <li>
 <p><strong>FR-7 – Eligibility Calculation:</strong> Compute eligibility for each item using the delivered date plus return period (per category), final sale flags, trial windows, prior returns and channel restrictions. Items that are past the return window, final sale, already returned or from an incorrect channel must be marked "Not Eligible". Mattresses returned within 30 nights should trigger a soft warning but remain eligible; unboxed mattresses and furniture without packaging should be flagged as "Conditionally Eligible" requiring vendor approval or admin flags.</p>
@@ -1249,20 +1249,15 @@
 </ul>
 <h2 id="item-selection">Item Selection</h2>
 <ul>
-<li>
-<p><strong>FR-10 – Item Selection:</strong> Allow the customer to select one or more eligible items and specify quantities (up to the purchased quantity). <strong>[RESTRICTION DEFERRED TO FUTURE PHASE]</strong> <em>The constraint preventing selection of more than two units has been moved to the backlog.</em></p>
-</li>
-<li>
-<p><strong>FR-11 – Validate Selection:</strong> Require at least one item to be selected before proceeding. If no item is selected, display a validation message.</p>
-</li>
+<li><strong>FR-10 – Item Selection:</strong> Allow the customer to select one or more eligible items and specify quantities (up to the purchased quantity). <strong>[RESTRICTION DEFERRED TO FUTURE PHASE]</strong> <em>The constraint preventing selection of more than two units has been moved to the backlog.</em></li>
 </ul>
 <h2 id="reason-selection-and-mapping">Reason Selection and Mapping</h2>
 <ul>
 <li>
-<p><strong>FR-12 – Return Reasons:</strong> Present a dropdown of customer-facing return reasons based on the product category and language. Include "Other/Change of Mind" for returns where permitted and hide it for warranty claims. If "Other" is selected, provide a text field for additional details. When "Defective" is selected as a return reason, trigger the defective routing logic (see FR-33).</p>
+<p><strong>FR-12 – Return Reasons:</strong> Present a dropdown of customer-facing return reasons based on the product category and language. Include "Other/Change of Mind" for returns where permitted and hide it for warranty claims. An optional comment field is available on the reason screen for customers to provide additional details; it cannot be made required based on the selected reason. When "Defective" is selected as a return reason, trigger the defective routing logic (see FR-33).</p>
 </li>
 <li>
-<p><strong>FR-13 – Claim Reasons:</strong> Provide a category-specific list of warranty claim reasons with business-approved wording. Do not allow "Other" or change-of-mind reasons for claims. Provide an opt-out mechanism for customers who selected "Defective" but prefer a return instead of warranty replacement.</p>
+<p><strong>FR-13 – Claim Reasons:</strong> Provide a category-specific list of warranty claim reasons with business-approved wording. Do not allow "Other" or change-of-mind reasons for claims.</p>
 </li>
 <li>
 <p><strong>FR-14 – Reason Mapping:</strong> Map each selected customer reason to the corresponding WooCommerce refund reason for reporting and refund processing.</p>
@@ -1283,7 +1278,7 @@
 <h2 id="logistics-and-label-generation">Logistics and Label Generation</h2>
 <ul>
 <li>
-<p><strong>FR-18 – Box Count Input:</strong> When generating return labels, prompt the customer to enter the number of boxes (1–20) and validate the value. If no boxes are entered, require at least one box. <strong>The input must be a valid, non-zero number and cannot exceed the total box count of the original shipment.</strong></p>
+<p><strong>FR-18 – Package Count:</strong> When generating return labels, the required number of packages is determined automatically by the shipping endpoint based on the selected products. No manual package count input is presented to the customer.</p>
 </li>
 <li>
 <p><strong>FR-19 – Label Generation:</strong> Integrate with the selected shipping carrier API to generate one label per box using the customer's shipping address, item weight and dimensions. Use fallback weights when master data is missing. Store tracking numbers and prevent duplicate labels on reprints.</p>
@@ -1333,7 +1328,7 @@
 <h2 id="user-experience-and-messaging">User Experience and Messaging</h2>
 <ul>
 <li>
-<p><strong>FR-26 – UX Navigation:</strong> Provide a clear "Start Over" button after order lookup to allow customers to cancel and restart the process. Preserve session state when navigating back or refreshing pages and handle double submits gracefully (only one ticket/refund is created).</p>
+<p><strong>FR-26 – UX Navigation:</strong> Preserve session state when navigating back or refreshing pages and handle double submits gracefully (only one ticket/refund is created).</p>
 </li>
 <li>
 <p><strong>FR-27 – Help &amp; Support:</strong> Include a "Help" page that only displays the Silk &amp; Snow support email and a link to the Silk &amp; Snow chatbot. Do not include telephone numbers or other channels unless explicitly approved.</p>
@@ -1365,7 +1360,7 @@
 </ul>
 </li>
 <li>
-<p><strong>FR-33 – Defective Reason Routing:</strong> When a customer selects items to return and chooses "Defective" as the reason, the system must check if the customer opted out of product replacement. If the customer did NOT opt out, redirect the flow to the Warranty claim process (WF-052) instead of standard return logistics. Provide a clear opt-out checkbox during reason selection.</p>
+<p><strong>FR-33 – Defective Reason Routing:</strong> When a customer selects items to return and chooses "Defective" as the reason, the system automatically redirects to the Warranty claim process (WF-052) instead of standard return logistics. Customers who prefer a standard return/refund should select a different return reason.</p>
 </li>
 <li>
 <p><strong>FR-34 – US Accessory Return Handling:</strong> For US Accessories and Bedding returns:</p>
@@ -1510,22 +1505,15 @@
 </table>
 <p>The system must:</p>
 <ul>
-<li>Validate all rows before committing: reject unknown categories, duplicate SKUs, missing required fields.</li>
-<li>Display a preview of parsed rows with row-level errors highlighted.</li>
 <li>Require admin confirmation before saving to the product configuration store.</li>
-<li>Log the upload event (who, when, file name, row count) for audit.</li>
+<li>Log the upload event (file name and timestamp); the uploaded file is available for download.</li>
 </ul>
 </li>
 <li>
-<p><strong>FR-43 – Product Removal:</strong> Allow an admin to remove (deactivate) a product from the portal. In the MVP, removal may be initiated via email request to the system administrator. The administrator performs a soft-delete (marks the product inactive). Deactivated products must:</p>
-<ul>
-<li>No longer appear as eligible in customer-facing item displays.</li>
-<li>Remain visible in historical ticket data and reports.</li>
-<li>Trigger a warning showing the count of active/open tickets referencing the product before deactivation is confirmed.</li>
-</ul>
+<p><strong>FR-43 – Product Data Updates:</strong> Product data in the portal is updated by uploading a new Excel file via the same mechanism as FR-42. An upload that includes an existing SKU overwrites the previous product configuration for that SKU. To remove a product from active availability, the admin omits the SKU from the new upload. Historical ticket data is unaffected — all product information recorded at the time of submission is always retained on existing tickets.</p>
 </li>
 <li>
-<p><strong>FR-44 – Product Configuration Listing:</strong> Provide a read-only admin view listing all onboarded products with: SKU, name, category, region, final sale flag, warranty-only flag, and status (active/inactive). Support search by SKU or product name and filtering by category, region, or status.</p>
+<p><strong>FR-44 – Product Configuration Listing:</strong> Provide a read-only admin view listing all onboarded products with: SKU, name, category, and final sale flag. Products are organised as two separate datasets (CA and US). Support search by SKU or product name and filtering by category.</p>
 <p><strong>Future State:</strong> Replace Excel upload and email-based removal with a direct real-time sync to WooCommerce and external product catalogue systems, eliminating manual file handling entirely.</p>
 </li>
 </ul>
