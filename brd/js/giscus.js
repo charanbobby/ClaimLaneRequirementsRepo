@@ -10,7 +10,7 @@
     // CONFIGURATION END
 
     script.setAttribute('data-mapping', 'pathname');
-    script.setAttribute('data-strict', '0');
+    script.setAttribute('data-strict', '1');
     script.setAttribute('data-reactions-enabled', '1');
     script.setAttribute('data-emit-metadata', '0');
     script.setAttribute('data-input-position', 'bottom');
