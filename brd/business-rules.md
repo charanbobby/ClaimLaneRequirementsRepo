@@ -38,14 +38,14 @@ The portal must enforce the following rules (numbered BR-1 through BR-12 plus ap
 
 - **BR-19 – Caledonia Limited Access Role:** Caledonia team uses a limited role to update status: **Delivered → Processing → Inspection Completed**. At the Inspection Completed step (WF-092), the team must select an **Inspection Grade** from a mandatory dropdown: **Grade A (Resalable) | Grade B (Donatable) | Grade C (Damaged)**. A reason code is mandatory for all grades.
 
-- **BR-20 – Store Ops Returned Items Report:** Store Ops must be able to generate a report of items in "Inspection Completed" status for inventory updates.
+- **BR-20 – Store Ops Returned Items Report:** Store Ops (and Internal Ops for US warehouses) must be able to generate a report of items in "Inspection Completed" status for inventory updates. The report must contain: SKU, Description, Inspection Grade, Delivery Date (date return received at warehouse), Inspection Date, and QTY. Each row represents one SKU; when the same SKU has units in different conditions (different inspection grades), each condition must be a separate row.
 
 - **BR-21 – Automatic Refund Threshold (< 600):**
 
     - Net Refund Value < 600: **Auto-Refund** initiated (if gateway supported).
     - Net Refund Value >= 600: **Manual Refund** (routed to CX).
 
-- **BR-22 – Return Label Limitation:** The number of return labels generated cannot exceed the number of boxes/labels in the original order.
+- **BR-22 – Return Label Limitation:** The number of return labels generated cannot exceed the number of boxes/labels in the original order. **Implementation Note:** This limitation logic must reside in the **vendor's shipping endpoint** (Jason's endpoint), not in the portal itself. The portal fetches the allowed number of shipping labels from the endpoint, which enforces the cap.
 
 - **BR-23 – US Accessory Keep Offer:** For US opened accessories and bedding, the customer MUST be offered Option 1 (keep item for 50% refund, no proof required). This applies to opened items only. Unopened items follow the standard return label flow.
 

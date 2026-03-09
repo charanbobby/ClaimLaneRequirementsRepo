@@ -56,9 +56,9 @@
     
     Customer chooses a return reason for each selected item. Reasons map to WooCommerce refund categories.
 
-    **Defective Routing Logic:**
+    **Defective Reason Blocking:**
 
-    *   If customer selects **"Defective"** as reason AND **does not opt out** of product replacement → **Automatically redirect to Warranty claim workflow** (bypasses standard return logistics)
+    *   If customer selects **"Defective"** as reason → The system **blocks the customer from continuing** with the return flow and displays a message: *"This is a warranty claim. Please restart the process and select 'Warranty Claim' as your intent."* The customer cannot proceed from this point.
 
 7. **Documentation Upload** 
     
@@ -366,6 +366,8 @@ Once an item is marked as **"Received"** (WF-089), the refund logic is determine
     - Status transition: **Delivered → Processing → Inspection Completed**
 3. **Store Ops Inventory Update (WF-093):**
     - Store Ops team runs **"Returned items" report** from portal
+    - Report fields: SKU, Description, Inspection Grade, Delivery Date, Inspection Date, QTY
+    - Each row = 1 SKU; items with different inspection grades appear on separate rows
     - Report used to update inventory and reconcile returned goods
 
 #### **US Warehouse (LA / NJ) – Offline Email-Based Process (WF-133 → WF-136)**
@@ -380,6 +382,8 @@ Once an item is marked as **"Received"** (WF-089), the refund logic is determine
     - Status transition: **Delivered → Processing → Inspection Completed**
 4. **Internal Ops Inventory Update (WF-136):**
     - Internal Ops runs **"Returned items" report**
+    - Report fields: SKU, Description, Inspection Grade, Delivery Date, Inspection Date, QTY
+    - Each row = 1 SKU; items with different inspection grades appear on separate rows
     - Report used for US inventory reconciliation
 
 > [!IMPORTANT]

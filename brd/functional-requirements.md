@@ -43,7 +43,7 @@ The following requirements describe what the portal must do. Each requirement is
 
 ## Reason Selection and Mapping
 
-- **FR-12 – Return Reasons:** Present a dropdown of customer-facing return reasons based on the product category and language. Include "Other/Change of Mind" for returns where permitted and hide it for warranty claims. An optional comment field is available on the reason screen for customers to provide additional details; it cannot be made required based on the selected reason. When "Defective" is selected as a return reason, trigger the defective routing logic (see FR-33).
+- **FR-12 – Return Reasons:** Present a dropdown of customer-facing return reasons based on the product category and language. Include "Other/Change of Mind" for returns where permitted and hide it for warranty claims. An optional comment field is available on the reason screen for customers to provide additional details; it cannot be made required based on the selected reason. When "Defective" is selected as a return reason, trigger the defective blocking logic (see FR-33).
 
 - **FR-13 – Claim Reasons:** Provide a category-specific list of warranty claim reasons with business-approved wording. Do not allow "Other" or change-of-mind reasons for claims.
 
@@ -107,7 +107,18 @@ The following requirements describe what the portal must do. Each requirement is
 
 - **FR-30 – Caledonia Portal:** Provide a limited access role/view for the **Caledonia Warehouse Team** to allow updating return status from **Delivered → Processing / Inspection Completed**. At the **Inspection Completed** step (WF-092), the team must select an **Inspection Grade** from a mandatory dropdown: **Grade A (Resalable) | Grade B (Donatable) | Grade C (Damaged)**. A reason code is mandatory for all grades. This status update must feed into the "Received" logic for refunds.
 
-- **FR-31 – Reporting:** Provide **Store Operations** with the ability to generate a "Returned items" report listing items that have reached "Inspection Completed" status for inventory updates.
+- **FR-31 – Reporting:** Provide **Store Operations** and **Internal Ops** with the ability to generate a "Returned items" report listing items that have reached "Inspection Completed" status. The report must include the following fields per row:
+
+    | Field | Description |
+    | :--- | :--- |
+    | SKU | Product identifier |
+    | Description | Product description |
+    | Inspection Grade | Grade A (Resalable) / Grade B (Donatable) / Grade C (Damaged) |
+    | Delivery Date | Date the return was received at the warehouse |
+    | Inspection Date | Date the inspection was completed |
+    | QTY | Quantity of the SKU returned |
+
+    **Row Logic:** Each row represents **one SKU**. When multiple units of the same SKU are returned but have **different inspection grades** (e.g., one unit Grade A and another Grade C), each condition must appear on a **separate row**.
 
 - **FR-32 – Email Triggers:** Configure specific email triggers for:
 
@@ -118,7 +129,7 @@ The following requirements describe what the portal must do. Each requirement is
     - Third-Party Pickup Completed (notify vendor that item has been collected).
     - Warranty Claim Declined by CX (WF-052D).
 
-- **FR-33 – Defective Reason Routing:** When a customer selects items to return and chooses "Defective" as the reason, the system automatically redirects to the Warranty claim process (WF-052) instead of standard return logistics. Customers who prefer a standard return/refund should select a different return reason.
+- **FR-33 – Defective Reason Blocking:** When a customer selects items to return and chooses "Defective" as the reason, the system must **block the customer from continuing** with the standard return flow and display a message informing them that this is a **warranty claim**. The message must instruct the customer to **restart the process** and select the Warranty Claim intent instead. The customer cannot proceed with the return from this point. Customers who prefer a standard return/refund should select a different return reason.
 
 - **FR-34 – US Accessory Return Handling:** For US Accessories and Bedding returns:
     

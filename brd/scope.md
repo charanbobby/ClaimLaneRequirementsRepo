@@ -14,7 +14,7 @@
 - Return Logisitcs Vendor Communication.
 - Report Generation.
 - Multi-language capability (French and English).
-- **Automatic defective reason routing to warranty flow with customer opt-out mechanism.**
+- **Defective reason blocking: when customer selects "Defective" as a return reason, the system blocks the return flow and directs the customer to restart as a warranty claim.**
 
 - **US accessory return cost optimization: 50% keep offer automated via ClaimLane; 100% donate offer (with proof) handled manually by the CX team.**
 

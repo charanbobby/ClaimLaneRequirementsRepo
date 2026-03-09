@@ -47,17 +47,17 @@ This document outlines the high-level epics and user stories supporting the Clai
 
 ---
 
-### US-1.4 Defective Reason Auto-Routing to Warranty
+### US-1.4 Defective Reason Blocking
 
-> *As a customer who selects "Defective" as my return reason, I want the system to route me to warranty replacement unless I opt out.*
+> *As a customer who selects "Defective" as my return reason, I want the system to inform me that this is a warranty claim and direct me to restart the process.*
 
 **Acceptance Criteria**
 
-1. When "Defective" is selected during reason selection, system displays opt-out checkbox: "I prefer a return instead of warranty replacement."
-2. If opt-out is NOT checked, flow automatically redirects to Warranty claim process (Epic 7).
-3. If opt-out IS checked, flow continues with standard return logistics.
-4. Decision is logged in ticket for audit purposes.
-5. Mapping to diagram: REASON_CHECK decision (WF-030) routes to WF-052 (Warranty).
+1. When "Defective" is selected during reason selection, the system blocks the customer from continuing with the standard return flow.
+2. A message is displayed: *"This is a warranty claim. Please restart the process and select 'Warranty Claim' as your intent."*
+3. The customer cannot proceed with the return from this point.
+4. Customers who prefer a standard return/refund should select a different return reason.
+5. Mapping to diagram: REASON_CHECK decision (WF-030) blocks flow when "Defective" is selected.
 
 ---
 

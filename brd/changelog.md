@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2026-03-09 – Vendor Discussion Refinements (4 Action Items)
+
+### Changed
+
+- **functional-requirements.md (FR-31):** Expanded "Returned items" report specification with detailed fields: SKU, Description, Inspection Grade, Delivery Date, Inspection Date, and QTY. Added row logic — each row represents one SKU; items with different inspection grades appear on separate rows. *(AI-1)*
+- **business-rules.md (BR-20):** Updated with the same detailed report field requirements and row logic as FR-31. *(AI-1)*
+- **process-high-level.md (WF-093, WF-136):** Added report field details and row logic to both Caledonia and US warehouse report steps. *(AI-1)*
+- **functional-requirements.md (FR-33):** Renamed to **FR-33 – Defective Reason Blocking**. Automatic redirect to warranty workflow replaced with a **blocking message** — system blocks the customer from continuing and displays a message directing them to restart the process as a warranty claim. This change reflects a ClaimLane platform limitation that prevents automatic cross-flow redirection. *(AI-2)*
+- **functional-requirements.md (FR-12):** Updated defective routing reference to reflect blocking logic instead of redirect. *(AI-2)*
+- **scope.md:** Updated defective reason routing description — now describes blocking behaviour instead of auto-redirect with opt-out. *(AI-2)*
+- **process-high-level.md (Step 6):** Rewrote Defective Routing Logic section as **Defective Reason Blocking** — customer is blocked and shown a message instead of being redirected. *(AI-2)*
+- **epics-user-stories.md (US-1.4):** Renamed to **US-1.4 Defective Reason Blocking**. Rewrote acceptance criteria — removed opt-out checkbox, added blocking message and restart instruction. *(AI-2)*
+- **non-functional-requirements.md (NFR-8):** Removed monitoring alerts for delayed US warehouse status updates (>48 hours) — this was an internal operational note and not relevant to the ClaimLane portal. SLA requirement (24 business hours) retained. *(AI-3)*
+- **business-rules.md (BR-22):** Added implementation note clarifying that return label limitation logic must reside in the **vendor's shipping endpoint** (Jason's endpoint), not in the portal. The portal fetches the allowed number of labels from the endpoint. *(AI-4)*
+
+### Context
+
+- AI-1: Warehouse team (Melroy, Returns Logistics) specified inspection grades (A/B/C) and detailed report fields. Each row = 1 SKU with date and quantity; items in different conditions get separate rows. This data enables ERP inventory sync.
+- AI-2: Vendor (abm123asd) confirmed that automatic cross-flow redirection (return → warranty) is not feasible with current ClaimLane logic and would require a larger rework. Agreed alternative: block the customer and show a message directing them to restart as a warranty claim.
+- AI-3: charanbobby confirmed this was an internal operational note unrelated to ClaimLane. Removed to avoid confusion with portal requirements.
+- AI-4: Vendor (abm123asd) clarified that label count limitation logic lives in Jason's shipping endpoint — the portal fetches labels from that endpoint, so the cap must be enforced there.
+
+---
+
 ## 2026-02-27 – Requirements Refinement (10 Action Items)
 
 ### Changed
