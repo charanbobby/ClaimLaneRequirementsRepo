@@ -5,6 +5,7 @@ use_directory_urls: false
 
 theme:
   name: material
+  custom_dir: brd/overrides
 
 markdown_extensions:
   - pymdownx.superfences:
