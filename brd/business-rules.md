@@ -28,7 +28,7 @@ The portal must enforce the following rules (numbered BR-1 through BR-12 plus ap
     - **Silk & Snow Retail Store:** Route to the standard WooCommerce online order flow (shared with Shopify POS orders).
     - **Sleep Country Retail Store:** Display an in-store return message — *"This return cannot be processed through this portal. Please call the Sleep Country Customer Service team for further instructions."* No tickets, labels, or refunds are generated in the portal.
 
-- **BR-15 – Bundle / Free Item 50% Keep Rule:** When a bundle item is returned and the customer keeps the bundled/free item, the customer pays **50% of the full website price** for the kept item. The refund is adjusted (prorated) to reflect this charge and the decision is recorded on the ticket. **Note:** This requires custom code integration to bridge the WooCommerce data structure with the portal.
+- **BR-15 – Bundle / Free Item 50% Keep Rule:** **[DEFERRED TO FUTURE PHASE]** When a bundle item is returned and the customer keeps the bundled/free item, the customer pays **50% of the full website price** for the kept item. The refund is adjusted (prorated) to reflect this charge and the decision is recorded on the ticket. **Note:** This requires custom code integration to bridge the WooCommerce data structure with the portal.
 
 - **BR-16 – Vendor Pickup and Status Updates:** Vendors (6–10 donation/pickup partners) must update mattress status to "Picked" in the portal via their vendor portal access. This status update must transition the item to **"Received"** to trigger refund logic.
 

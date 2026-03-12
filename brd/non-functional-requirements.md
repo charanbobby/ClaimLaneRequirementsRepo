@@ -1,10 +1,10 @@
 # Non Functional Requirements
 
-- **NFR-1 – Security:** Enforce strict order lookup security so that a customer cannot access order details unless both email and order number match exactly. Sanitize all user inputs and store documentation securely.
+- **NFR-1 – Security:** Enforce strict order lookup security so that a customer cannot access order details unless both email and order number match exactly. Leading/trailing spaces are trimmed from the email field only; the order number field is not sanitized. Store documentation securely.
 
-- **NFR-2 – Availability & Reliability:** Maintain high availability of the portal and integrate retry logic for external API calls (labels, refunds, ticket creation). Gracefully handle carrier or gateway downtime with user messages and fallback instructions.
+- **NFR-2 – Availability & Reliability:** Maintain high availability of the portal. External API calls (label generation, refund processing) do **not** include automatic retry logic — errors are surfaced to the user with clear error messages. Ticket creation is not dependent on external API availability. Gracefully handle carrier or gateway downtime with user-facing error messages.
 
-- **NFR-3 – Performance:** Order lookup, item display and label generation should respond within acceptable user experience thresholds (e.g., < 2 seconds for lookups, < 5 seconds for labels) under normal load.
+- **NFR-3 – Performance:** Order lookup, item display and label generation should respond within acceptable user experience thresholds (target: < 2 seconds for lookups, < 5 seconds for labels) under normal load. **Note:** Actual performance is dependent on WooCommerce API response times, which may be a bottleneck. Performance will be monitored post-launch and WooCommerce optimizations applied if needed.
 
 - **NFR-4 – Compliance & Data Privacy:** Adhere to privacy regulations (e.g., PIPEDA, GDPR) by limiting data collection to necessary information and providing clear privacy notices. Retain documentation only for the duration needed to process claims.
 

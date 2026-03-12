@@ -2,6 +2,50 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2026-03-12 – Discussion-to-BRD Gap Audit (12 Changes)
+
+### Changed
+
+- **functional-requirements.md (FR-1):** Added **Portal Architecture** note — two separate customer-facing portals (CA and US) will be deployed, both leading to the same shared admin inbox/backend. Supports region-specific localization and Zowie chatbot training. *(Gap 3)*
+- **functional-requirements.md (FR-4):** Updated input trimming scope — leading/trailing spaces are trimmed from the **email field only**; the order number field is not sanitized. *(Gap 7)*
+- **functional-requirements.md (FR-7):** Removed 30-night mattress soft warning requirement. Mattresses within the first 30 nights are simply eligible with no special messaging. ClaimLane does not support timed, delivery-date-based soft warnings. *(Gap 8)*
+- **functional-requirements.md (FR-8):** Marked as **[REMOVED]**. Category filtering is no longer applied — the portal shows all items on the order regardless of category, and the flow adapts based on what the customer selects. *(Gap 9)*
+- **functional-requirements.md (FR-12):** Added verification note — the inclusion of "Other" as a return reason is pending final confirmation with the CX team. *(Gap 16)*
+- **functional-requirements.md (FR-16):** Added specific file validation limits: images blocked above **50 MB**, videos compressed above 50 MB and restricted to **.mov/.mp4** formats only. No image format restriction. *(Gap 10)*
+- **functional-requirements.md (FR-29):** Updated to prioritize **mobile responsiveness** over keyboard accessibility. Full keyboard-only navigation is not guaranteed due to ClaimLane platform constraints. *(Gap 6)*
+- **non-functional-requirements.md (NFR-1):** Removed "sanitize all user inputs." Updated to reflect that only the email field gets space trimming; order number is not sanitized. *(Gap 4)*
+- **non-functional-requirements.md (NFR-2):** Removed automatic retry logic for external API calls. Errors are surfaced directly to the user with clear messages. Ticket creation is not API-dependent. *(Gap 5)*
+- **non-functional-requirements.md (NFR-3):** Added performance caveat — actual response times are dependent on WooCommerce API response times, which may be a bottleneck. Thresholds are now targets, not guarantees. *(Gap 11)*
+- **business-rules.md (BR-15):** Added **[DEFERRED TO FUTURE PHASE]** tag for consistency with FR-9 and phase-2-backlog. *(Gap 14)*
+- **appendices.md (Appendix E):** Added **Email Notification Templates** — customer notification for unboxed mattress vendor assignment and vendor notification for pickup requests, based on templates provided in Discussion #6. *(Gap 13)*
+- **appendices.md (Appendix D.1):** Removed "<30 nights soft warning" from Mattress eligibility row. *(Gap 8)*
+
+### Test Case Changes
+
+- **e2e-test-cases.md (TC-CX01 Step 7):** Fixed boxed mattress photo requirement — changed from "base photo, full measurement photo, tag photo" to **"photo of the box"** only (law tag not required for boxed mattresses). *(Gap 1)*
+- **e2e-test-cases.md (TC-CX03):** Marked as **[REMOVED]** — 30-night soft warning test case removed; scenario is covered by TC-CX01. *(Gap 8)*
+- **e2e-test-cases.md (TC-CX32):** Marked as **[REMOVED]** — category filtering test case removed; FR-8 was dropped. *(Gap 9)*
+- **e2e-test-cases.md (TC-CX24):** Added Step 4 — verify that order number spaces are **not** trimmed (only email is trimmed per FR-4). *(Gap 7)*
+- **e2e-test-cases.md (TC-CX25):** Expanded from 4 to 6 steps with specific validation rules: 50 MB image limit, .mov/.mp4 video restriction, no image format restriction, video compression behavior. *(Gap 10)*
+- **e2e-test-cases.md:** Updated Quick Reference table and Requirements Traceability to reflect removed test cases.
+
+### Context
+
+- Gap 1: sarahlandry-sns (Discussion #6, #8) confirmed boxed mattresses require photo of box only — law tag is not visible until unboxed.
+- Gap 3: abm123asd (Discussion #6, Feb 27) confirmed two separate customer-facing portals (CA and US) leading to the same inbox.
+- Gap 4/7: abm123asd (Discussion #37, Mar 2) confirmed no input sanitization on order number; spaces removed from email only.
+- Gap 5: abm123asd (Discussion #37, Mar 2) confirmed no retry logic — errors are thrown directly.
+- Gap 6: abm123asd (Discussion #7, Feb 25) noted mouse is required for most ClaimLane actions; keyboard navigation not guaranteed.
+- Gap 8: abm123asd (Discussion #7, Mar 2) confirmed ClaimLane cannot do timed soft warnings; offered to block, but requirement removed entirely.
+- Gap 9: sarahlandry-sns (Discussion #7, Dec 18) stated category filtering is no longer relevant in the current flow.
+- Gap 10: abm123asd (Discussion #7, Mar 2) provided specific file validation limits (50MB, .mov/.mp4 video only).
+- Gap 11: abm123asd (Discussion #37, Mar 2) noted WooCommerce responds too slowly to meet stated performance targets.
+- Gap 13: charanbobby (Discussion #6, Mar 9) provided customer and vendor email templates.
+- Gap 14: abm123asd (Discussion #38, Mar 3) confirmed BR-15 is out of Phase 1 scope.
+- Gap 16: sarahlandry-sns (Discussion #7, Dec 18) suggested verifying "Other" reason inclusion with Daryna.
+
+---
+
 ## 2026-03-09 – Vendor Discussion Refinements (4 Action Items)
 
 ### Changed

@@ -12,6 +12,8 @@ The following requirements describe what the portal must do. Each requirement is
     - Sleep Country Retail Store (in-person)
     - Third-Party Vendor
 
+    **Portal Architecture:** Two separate customer-facing portals will be deployed — one for CA and one for US — each leading to the same shared admin inbox/backend. This supports region-specific localization and Zowie chatbot training while maintaining a single operational view for the CX team.
+
     No backend store lookup is performed. Channel selection determines routing directly:
     - **Silk & Snow Retail Store:** Routes to the WooCommerce online order flow (shared with Shopify POS orders).
     - **Sleep Country Retail Store:** Displays an in-store return message — *"This return cannot be processed through this portal. Please call the Sleep Country Customer Service team for further instructions."* Flow ends.
@@ -23,7 +25,7 @@ The following requirements describe what the portal must do. Each requirement is
 
 - **FR-3 – Order Lookup Fields:** For online orders, display fields for email and order number. Both are required and must exactly match a WooCommerce order before showing any order details.
 
-- **FR-4 – Input Validation:** Validate email format and trim leading/trailing spaces for both email and order number. Show clear error messages for missing or invalid fields.
+- **FR-4 – Input Validation:** Validate email format and trim leading/trailing spaces for the email field. Order number input is not sanitized or trimmed. Show clear error messages for missing or invalid fields.
 
 - **FR-5 – Order Retrieval:** When email and order number match, retrieve and display the corresponding order details. If no match is found, inform the customer without revealing any order information.
 
@@ -31,9 +33,9 @@ The following requirements describe what the portal must do. Each requirement is
 
 - **FR-6 – Display Items:** Show all items on the order with their variant image, size, and quantity. Eligible items display no status label — eligibility is the default state and does not require a label. Items that have already been returned are labelled **"Already Returned"**. Items that are ineligible (out of return window or otherwise not available for return) display a single fixed ineligibility message; the system does not vary the message by reason (e.g. no distinction between trial-ended or final-sale wording).
 
-- **FR-7 – Eligibility Calculation:** Compute eligibility for each item using the delivered date plus return period (per category), final sale flags, trial windows, prior returns and channel restrictions. Items that are past the return window, final sale, already returned or from an incorrect channel must be marked "Not Eligible". Mattresses returned within 30 nights should trigger a soft warning but remain eligible; unboxed mattresses and furniture without packaging should be flagged as "Conditionally Eligible" requiring vendor approval or admin flags.
+- **FR-7 – Eligibility Calculation:** Compute eligibility for each item using the delivered date plus return period (per category), final sale flags, trial windows, prior returns and channel restrictions. Items that are past the return window, final sale, already returned or from an incorrect channel must be marked "Not Eligible". Unboxed mattresses and furniture without packaging should be flagged as "Conditionally Eligible" requiring vendor approval or admin flags.
 
-- **FR-8 – Category Filtering:** Hide items that do not belong to the selected return type (e.g., returning accessories should not show mattresses).
+- **FR-8 – Category Filtering:** ~~Hide items that do not belong to the selected return type (e.g., returning accessories should not show mattresses).~~ **[REMOVED]** *Per stakeholder feedback, the portal shows all items on the order regardless of category. The flow adapts based on what the customer selects — no upfront category filtering is applied.*
 
 - **FR-9 – Bundles Handling:** Identify bundle items. When a main item is returned but the customer keeps a bundled/free item, the portal must offer the option to **keep the bundled/free item at 50% of the full website price** (not the bundle price) and adjust the refund amount accordingly. **[DEFERRED TO FUTURE PHASE]** **Technical Requirement:** This functionality requires custom implementation to parse WooCommerce bundle data and calculate proration via the API.
 
@@ -43,7 +45,7 @@ The following requirements describe what the portal must do. Each requirement is
 
 ## Reason Selection and Mapping
 
-- **FR-12 – Return Reasons:** Present a dropdown of customer-facing return reasons based on the product category and language. Include "Other/Change of Mind" for returns where permitted and hide it for warranty claims. An optional comment field is available on the reason screen for customers to provide additional details; it cannot be made required based on the selected reason. When "Defective" is selected as a return reason, trigger the defective blocking logic (see FR-33).
+- **FR-12 – Return Reasons:** Present a dropdown of customer-facing return reasons based on the product category and language. Include "Other/Change of Mind" for returns where permitted and hide it for warranty claims. *(Note: The inclusion of "Other" as a return reason is pending final verification with the CX team.)* An optional comment field is available on the reason screen for customers to provide additional details; it cannot be made required based on the selected reason. When "Defective" is selected as a return reason, trigger the defective blocking logic (see FR-33).
 
 - **FR-13 – Claim Reasons:** Provide a category-specific list of warranty claim reasons with business-approved wording. Do not allow "Other" or change-of-mind reasons for claims.
 
@@ -53,7 +55,7 @@ The following requirements describe what the portal must do. Each requirement is
 
 - **FR-15 – Documentation Requirements:** Based on the product category and claim reason, determine the required documentation (e.g., base photos, measurement photos, tag photos, lot number, invoice copy, description). Present upload fields accordingly.
 
-- **FR-16 – Upload Validation:** Enforce required documentation before submission. Validate file types, sizes and image clarity; provide user feedback when uploads fail and allow retry.
+- **FR-16 – Upload Validation:** Enforce required documentation before submission. Validate file types and sizes using ClaimLane's out-of-the-box functionality: images are blocked above **50 MB**; videos are compressed if above **50 MB** and limited to **.mov/.mp4** formats only. No image format restriction is enforced. Provide user feedback when uploads fail and allow retry.
 
 - **FR-17 – General Documentation:** Collect lot number and detailed description for all claims and require an invoice when the purchase was made through a retail store or third-party vendor.
 
@@ -101,7 +103,7 @@ The following requirements describe what the portal must do. Each requirement is
 
 - **FR-28 – Localization:** At launch the portal operates in English only; French copy is supported via translation tables but must be marketing-approved. Copy must be consistent across screens and reasons.
 
-- **FR-29 – Accessibility & Responsiveness:** Ensure that all key actions are accessible via keyboard only and that pages display correctly on mobile browsers.
+- **FR-29 – Accessibility & Responsiveness:** Ensure that all pages display correctly and are fully functional on mobile browsers. Full keyboard-only navigation is not guaranteed due to ClaimLane platform constraints (mouse interaction is required for most actions).
 
 ## New Functionality
 

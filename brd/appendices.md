@@ -271,7 +271,7 @@ This table is essential for QA test case coverage.
 
 | Category | < Return Window | > Return Window | Final Sale | Already Returned | Trial-Specific Rules |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| Mattress | Eligible; <30 nights soft warning | Not Eligible (>365) | Blocked | Blocked | <30 nights = warning; >365 = blocked |
+| Mattress | Eligible | Not Eligible (>365) | Blocked | Blocked | >365 = blocked |
 | Furniture | Eligible | Not Eligible (>30 days) | Blocked | Blocked | Must show shipping cost deduction notes |
 | Bedding | Eligible | Not Eligible (>100 nights) | Blocked | Blocked | Must confirm donatable condition |
 | Bath | Eligible | Not Eligible (>100 nights) | Blocked | Blocked | Standard |
@@ -305,6 +305,44 @@ This table is essential for QA test case coverage.
 | Returning single pillow (from bundle) | Eligible | Prorated refund |
 | Returning duvet only | Eligible | Prorated refund |
 | Free sleep bundle gift | Must return gift | Or deduct gift value |
+
+---
+
+## APPENDIX E — Email Notification Templates
+
+This appendix provides the agreed-upon email templates for key notification triggers.
+
+### E.1 Customer Notification — Unboxed Mattress Vendor Assignment
+
+> Hello {customer name},
+>
+> Thank you so much for your patience while our team coordinated the removal of your {size, model} mattress.
+>
+> At this time, I can confirm that our removal partner {partner} will be the team picking up your mattress!
+
+### E.2 Vendor Notification — Pickup Request
+
+**Subject:** Silk & Snow - Pick up Request Notification
+
+**Body fields:**
+
+| Field | Value |
+| :--- | :--- |
+| Date | {date} |
+| Order # | {order_number} |
+| Customer Name | {customer_name} |
+| Phone Number | {phone_number} |
+| Email | {email} |
+| City | {city} |
+| Address | {address} |
+| Postal Code | {postal_code} |
+| Province | {province} |
+| Country | {country} |
+| Mattress Type | {mattress_type} |
+| Size | {size} |
+| Quantity | {quantity} |
+
+**See FR-32** in `functional-requirements.md` for the complete list of email triggers.
 
 ---
 

@@ -152,7 +152,7 @@
 | 4 | Select the mattress. | Item selected. |
 | 5 | Choose a return reason (e.g., "Too Firm"). Confirm it is **not** "Defective." | Reason accepted. Proceeds to documentation. |
 | 6 | Confirm whether mattress is **boxed or unboxed**. Select **Boxed**. | Boxed mattress flow activates. |
-| 7 | Upload required photos: base photo, full measurement photo, tag photo. Enter lot number and description. | All uploads accepted. Lot number and description saved. |
+| 7 | Upload required photo: **photo of the box** (law tag is not required for boxed mattresses — it is only visible once unboxed). Enter lot number and description. | Upload accepted. Lot number and description saved. |
 | 8 | Submit the return request. | Shipping label generated (package count determined automatically by shipping endpoint). Drop-off instructions displayed. Ticket created. |
 | 9 | **CX Agent:** Check the admin portal for the new ticket. | Ticket visible with all details: item, reason, photos, lot number, tags (category + issue type). |
 | 10 | Mark item as **Received** in the system. | Refund auto-processes (value < $600, no bundles). Refund confirmation logged with audit trail. |
@@ -181,19 +181,9 @@
 
 ---
 
-### TC-CX03: Mattress Return Within 30 Nights — Soft Warning
+### ~~TC-CX03: Mattress Return Within 30 Nights — Soft Warning~~ **[REMOVED]**
 
-| Step | Action | Expected Result |
-|------|--------|-----------------|
-| 1 | Look up an order with a mattress delivered **less than 30 nights ago**. | Mattress displays as eligible. |
-| 2 | Select the mattress for return. | System shows a **soft warning** (e.g., "You are still within your trial period"). Item remains selectable — the warning does not block the return. |
-| 3 | Proceed with the return. | Return completes normally. |
-
-**Status:** `Not Built Yet`
-**Ready Since:** _______________
-**Result:** _______________
-**Tested By:** _______________
-**Notes:** _______________
+*This test case has been removed. The 30-night soft warning requirement was dropped per vendor platform constraints (ClaimLane does not support timed, delivery-date-based soft warnings). Mattresses within the first 30 nights are simply eligible for return with no special messaging. This scenario is already covered by TC-CX01.*
 
 ---
 
@@ -535,9 +525,10 @@
 |------|--------|-----------------|
 | 1 | Enter a **valid order number** with an **incorrect email**. | Lookup fails. Generic error message. No order details revealed. |
 | 2 | Enter an **invalid order number** with a valid email. | Same generic error. No details revealed. |
-| 3 | Enter an email with **leading/trailing spaces** and a valid order number. | System trims spaces. Order found and displays successfully (FR-4). |
-| 4 | Enter an **invalid email format** (e.g., "notanemail"). | Validation error shown before lookup attempt. |
-| 5 | Enter **both correct** (valid email + valid order number). | Order details display. |
+| 3 | Enter an email with **leading/trailing spaces** and a valid order number. | System trims email spaces. Order found and displays successfully (FR-4). |
+| 4 | Enter a valid email and an **order number with leading/trailing spaces**. | Lookup fails — order number is **not trimmed** (FR-4). Generic error message. |
+| 5 | Enter an **invalid email format** (e.g., "notanemail"). | Validation error shown before lookup attempt. |
+| 6 | Enter **both correct** (valid email + valid order number). | Order details display. |
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -552,9 +543,11 @@
 | Step | Action | Expected Result |
 |------|--------|-----------------|
 | 1 | During documentation upload, attempt to upload an **unsupported file type** (e.g., .exe, .zip). | Upload rejected with clear error: invalid file type. |
-| 2 | Attempt to upload a file that **exceeds the size limit**. | Upload rejected with clear error: file too large. |
-| 3 | Upload a valid photo in a supported format. | Upload accepted. Preview shown. |
-| 4 | Attempt to **submit without uploading all required documents**. | Submission blocked. Missing documents highlighted. |
+| 2 | Upload an image file **larger than 50 MB**. | Upload blocked with clear error: file too large (50 MB limit). |
+| 3 | Upload a video file in an **unsupported format** (e.g., .avi, .wmv). | Upload rejected. Only **.mov** and **.mp4** video formats are accepted. |
+| 4 | Upload a valid **.mov or .mp4** video file. | Upload accepted. Video compressed if above 50 MB. |
+| 5 | Upload a valid photo in **any image format** (e.g., .jpg, .png, .bmp, .webp). | Upload accepted — no image format restriction is enforced. Preview shown. |
+| 6 | Attempt to **submit without uploading all required documents**. | Submission blocked. Missing documents highlighted. |
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -660,18 +653,9 @@
 
 ---
 
-### TC-CX32: Category Filtering — Only Relevant Items Shown
+### ~~TC-CX32: Category Filtering — Only Relevant Items Shown~~ **[REMOVED]**
 
-| Step | Action | Expected Result |
-|------|--------|-----------------|
-| 1 | Look up an order that contains items from **multiple categories** (e.g., a mattress, furniture piece, and accessories). | All items displayed. |
-| 2 | When in the return flow for accessories, verify that **mattress and furniture items are hidden** (FR-8). | Only accessories/bedding items shown for selection. |
-
-**Status:** `Not Built Yet`
-**Ready Since:** _______________
-**Result:** _______________
-**Tested By:** _______________
-**Notes:** _______________
+*This test case has been removed. FR-8 (Category Filtering) was dropped per stakeholder feedback — the portal shows all items on the order regardless of category and the flow adapts based on what the customer selects.*
 
 ---
 
@@ -850,7 +834,7 @@
 | Product Onboarding & Excel Upload | TC-P01 to TC-P05 | Product | Not Built Yet |
 | Product Listing, Search & Filter | TC-P06 | Product | Not Built Yet |
 | Warranty-Only Products | TC-P07 | Product | Not Built Yet |
-| CA Mattress Returns (Boxed, Unboxed, 30-Night Warning) | TC-CX01 to TC-CX04 | CX | Not Built Yet |
+| CA Mattress Returns (Boxed, Unboxed) | TC-CX01, TC-CX02, TC-CX04 | CX | Not Built Yet |
 | Vendor Management (Assignment, Change, Self-Donate) | TC-CX05, TC-CX06 | CX | Not Built Yet |
 | CA Furniture Returns (CX Pre-Approval) | TC-CX07 | CX | Not Built Yet |
 | US Furniture Returns (Fulfil API Routing) | TC-CX08 | CX | Not Built Yet |
@@ -865,7 +849,7 @@
 | Security & Input Validation | TC-CX24, TC-CX25 | CX | Not Built Yet |
 | CX Overrides & Label Management | TC-CX26, TC-CX27, TC-CX28 | CX | Not Built Yet |
 | Session, Help Page, Email Notifications | TC-CX29, TC-CX30, TC-CX31 | CX | Not Built Yet |
-| Category Filtering | TC-CX32 | CX | Not Built Yet |
+| ~~Category Filtering~~ | ~~TC-CX32~~ | ~~CX~~ | Removed |
 | Caledonia Warehouse | TC-OP01 to TC-OP03, TC-OP06 | Operations | Not Built Yet |
 | US Warehouse (Offline) | TC-OP04, TC-OP05 | Operations | Not Built Yet |
 | Warehouse Routing | TC-OP07, TC-OP08 | Operations | Not Built Yet |
@@ -882,8 +866,8 @@
 | FR-2 (Intent Selection) | TC-CX01, TC-CX13 |
 | FR-3/4/5 (Order Lookup & Validation) | TC-CX24 |
 | FR-6 (Display Items) | TC-CX01, TC-CX22 |
-| FR-7 (Eligibility Calculation) | TC-CX03, TC-CX22, TC-CX23, TC-P07 |
-| FR-8 (Category Filtering) | TC-CX32 |
+| FR-7 (Eligibility Calculation) | TC-CX22, TC-CX23, TC-P07 |
+| ~~FR-8 (Category Filtering)~~ | ~~TC-CX32~~ — Removed |
 | FR-10 (Item Selection) | TC-CX01 |
 | FR-12/13/14 (Reasons & Mapping) | TC-CX01, TC-CX12, TC-CX13 |
 | FR-15/16/17 (Documentation) | TC-CX25, TC-CX26 |
