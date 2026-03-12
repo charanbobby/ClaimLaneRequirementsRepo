@@ -172,7 +172,7 @@ The following requirements describe what the portal must do. Each requirement is
 
 ## Product Onboarding & Removal
 
-- **FR-42 – Product Onboarding via Excel Upload:** Provide an admin-accessible interface for onboarding new products into the ClaimLane portal via Excel file upload. The Excel file must contain one row per product (or product variant) with the following fields:
+- **FR-42 – Product Onboarding via Excel Upload:** Provide an admin-accessible interface for onboarding new products into the ClaimLane portal via Excel file upload. The system uses **two separate Excel templates — one for CA products and one for US products** — to manage regional product availability. Each Excel file must contain one row per product (or product variant) with the following fields:
 
     | Field | Required | Description |
     | :--- | :--- | :--- |
@@ -184,7 +184,8 @@ The following requirements describe what the portal must do. Each requirement is
     | Fallback Weight (kg) | No | Used for label generation when WooCommerce master data is missing (FR-19) |
     | Fallback Dimensions (LxWxH cm) | No | Used for label generation when WooCommerce master data is missing |
     | Warranty Only | No | Yes/No — if Yes, product is not eligible for returns (e.g., Custom Hybrid Mattress) |
-    | Region | Yes | CA / US / BOTH |
+
+    Products available in both regions must be included in both the CA and US Excel files.
 
     **Replacement Parts Sheet (optional):** For products with warranty replacement parts (e.g., furniture sub-components), a second sheet may define parent-child relationships:
 

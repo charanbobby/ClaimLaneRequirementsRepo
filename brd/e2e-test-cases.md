@@ -18,17 +18,21 @@
 
 ## Team A — Product Team (Product Onboarding)
 
-### TC-P01: Onboard New Products via Excel Upload
+### TC-P01: Onboard New Products via Excel Upload (CA & US Templates)
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
 | 1 | Log in to the ClaimLane admin portal. | Dashboard loads. |
-| 2 | Navigate to **Product Onboarding**. | Upload screen appears. |
-| 3 | Download the Excel template. | Template downloads with columns: SKU, Product Name, Category, Subcategory, Final Sale (Yes/No), Fallback Weight (kg), Fallback Dimensions (LxWxH cm), Warranty Only (Yes/No), Region (CA/US/BOTH). |
-| 4 | Fill in **3 products**: one Mattress (Region: CA), one Furniture (Region: US, Final Sale = Yes), one Accessory (Region: BOTH). | File saves without errors. |
-| 5 | Upload the completed Excel file. System asks for **admin confirmation** before saving. Confirm. | System confirms upload. Shows success count: 3 products added. Upload event logged (file name + timestamp). |
-| 6 | Go to the **Product Listing** page. | All 3 products appear with correct values for every column. |
-| 7 | Verify the Furniture item shows **Final Sale = Yes** and Region = **US**. | Confirmed. |
+| 2 | Navigate to **Product Onboarding**. | Upload screen appears with **two separate upload areas: CA template and US template**. |
+| 3 | Download the **CA Excel template**. | Template downloads with columns: SKU, Product Name, Category, Subcategory, Final Sale (Yes/No), Fallback Weight (kg), Fallback Dimensions (LxWxH cm), Warranty Only (Yes/No). **No Region column** — region is determined by which template is used. |
+| 4 | Fill in the CA template with **2 products**: one Mattress and one Accessory. | File saves without errors. |
+| 5 | Upload the CA file. System asks for **admin confirmation** before saving. Confirm. | System confirms upload. Shows success count: 2 CA products added. Upload event logged (file name + timestamp). |
+| 6 | Download the **US Excel template**. | Same column structure as CA template. |
+| 7 | Fill in the US template with **2 products**: one Furniture (Final Sale = Yes) and the **same Accessory SKU** from Step 4 (product available in both regions). | File saves without errors. |
+| 8 | Upload the US file. Confirm when prompted. | System confirms upload. Shows success count: 2 US products added. |
+| 9 | Go to the **Product Listing** page. | Products organized into **two datasets: CA and US**. CA shows the Mattress and Accessory. US shows the Furniture and Accessory. |
+| 10 | Verify the US Furniture item shows **Final Sale = Yes**. | Confirmed. |
+| 11 | Verify the shared Accessory appears in **both** the CA and US datasets. | Confirmed — same SKU visible in both regions. |
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -42,8 +46,8 @@
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
-| 1 | Prepare an Excel file with a furniture product on Sheet 1, and a **Replacement Parts** sheet (Sheet 2) with Parent SKU, Part SKU, and Part Name (e.g., "Drawer – Top Left"). | File ready with both sheets. |
-| 2 | Upload the file. Confirm when prompted. | System confirms: 1 product added, replacement parts linked. |
+| 1 | Prepare a **CA or US Excel template** with a furniture product on Sheet 1, and a **Replacement Parts** sheet (Sheet 2) with Parent SKU, Part SKU, and Part Name (e.g., "Drawer – Top Left"). | File ready with both sheets. |
+| 2 | Upload the file to the corresponding region (CA or US). Confirm when prompted. | System confirms: 1 product added, replacement parts linked. |
 | 3 | Go to **Product Listing**. Find the furniture SKU. | Product shows with linked replacement parts visible. |
 
 **Status:** `Not Built Yet`
@@ -58,8 +62,8 @@
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
-| 1 | Prepare an Excel file with a **previously onboarded SKU**. Change the Weight to a new value. | File ready. |
-| 2 | Upload the file. Confirm when prompted. | System confirms update. Shows "1 product updated." |
+| 1 | Prepare a **CA or US Excel template** with a **previously onboarded SKU** for that region. Change the Weight to a new value. | File ready. |
+| 2 | Upload the file to the corresponding region. Confirm when prompted. | System confirms update. Shows "1 product updated." |
 | 3 | Go to **Product Listing** and find the SKU. | Weight reflects the new value. All other fields unchanged. |
 
 **Status:** `Not Built Yet`
@@ -74,8 +78,8 @@
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
-| 1 | Upload a new Excel file that **does not include** a previously onboarded SKU. Confirm when prompted. | System processes upload. The omitted SKU is removed from active availability. |
-| 2 | Go to **Product Listing**. Search for the omitted SKU. | SKU no longer appears in the active product list. |
+| 1 | Upload a new **CA Excel template** that **does not include** a previously onboarded CA SKU. Confirm when prompted. | System processes upload. The omitted SKU is removed from the **CA** product list. |
+| 2 | Go to **Product Listing**. Search for the omitted SKU in the **CA dataset**. | SKU no longer appears in the CA product list. If the same SKU exists in the US template, it remains in the US dataset. |
 | 3 | Check an existing ticket that previously referenced this SKU. | Ticket still shows the original product info (historical data preserved). |
 
 **Status:** `Not Built Yet`
@@ -90,7 +94,7 @@
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
-| 1 | Prepare an Excel file with: one row **missing the SKU field**, one row with an **invalid Category** (e.g., "Electronics"), one row with **missing Region**. | File ready. |
+| 1 | Prepare a CA or US Excel template with: one row **missing the SKU field**, one row with an **invalid Category** (e.g., "Electronics"), one row with **missing Category**. | File ready. |
 | 2 | Upload the file. | System rejects the file or flags the invalid rows with clear error messages per row. No partial import without confirmation. |
 
 **Status:** `Not Built Yet`
