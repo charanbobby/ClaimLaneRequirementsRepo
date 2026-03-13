@@ -13,12 +13,23 @@
 > | `FAIL` | One or more steps did not match expected results. See Notes. |
 >
 > **For the dev team:** When a feature is deployed and ready, update the Status field from `Not Built Yet` to `Ready for Testing` and note the date.
+>
+> **Priority levels:**
+>
+> | Priority | Meaning |
+> |----------|---------|
+> | `P0 — Critical` | Core happy paths. Nothing works without these. |
+> | `P1 — High` | Key business rules and major alternate flows. |
+> | `P2 — Medium` | Edge cases, validation, and secondary flows. |
+> | `P3 — Low` | Polish, UX, and operational verification. |
+>
+> **Testing model:** Each team is **self-sufficient**. CX testers play the customer role to submit returns/claims, then test CX agent actions. Operations testers play the customer role to create test data, then test warehouse, logistics, and vendor actions. No team depends on another team to set up test data.
 
 ---
 
 ## Team A — Product Team (Product Onboarding)
 
-### TC-P01: Onboard New Products via Excel Upload (CA & US Templates)
+### TC-P01: Onboard New Products via Excel Upload (CA & US Templates) — `P0`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
@@ -42,13 +53,16 @@
 
 ---
 
-### TC-P02: Upload Replacement Parts (Second Sheet)
+### TC-P02: Upload Replacement Parts (Second Sheet) — `P1`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
 | 1 | Prepare a **CA or US Excel template** with a furniture product on Sheet 1, and a **Replacement Parts** sheet (Sheet 2) with Parent SKU, Part SKU, and Part Name (e.g., "Drawer – Top Left"). | File ready with both sheets. |
 | 2 | Upload the file to the corresponding region (CA or US). Confirm when prompted. | System confirms: 1 product added, replacement parts linked. |
 | 3 | Go to **Product Listing**. Find the furniture SKU. | Product shows with linked replacement parts visible. |
+| 4 | On the product detail page, click **Upload Product Guide**. | A file upload dialog appears accepting image or PDF files. |
+| 5 | Upload a **product guide** (image or PDF) that shows which part comes from where (e.g., an annotated diagram labeling each replacement part on the product). | System confirms upload. The product guide is saved and displayed on the product detail page. |
+| 6 | Verify the product guide is visible and linked to the correct SKU. | Product guide thumbnail/link appears on the product detail page. Clicking it opens the full guide. |
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -58,7 +72,7 @@
 
 ---
 
-### TC-P03: Update an Existing Product via Excel Re-Upload
+### TC-P03: Update an Existing Product via Excel Re-Upload — `P1`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
@@ -74,7 +88,7 @@
 
 ---
 
-### TC-P04: Remove a Product by Omitting from Upload
+### TC-P04: Remove a Product by Omitting from Upload — `P2`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
@@ -90,7 +104,7 @@
 
 ---
 
-### TC-P05: Upload with Invalid / Missing Data
+### TC-P05: Upload with Invalid / Missing Data — `P2`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
@@ -105,7 +119,7 @@
 
 ---
 
-### TC-P06: View Product Listing — Read-Only, Search & Filter
+### TC-P06: View Product Listing — Read-Only, Search & Filter — `P1`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
@@ -124,7 +138,7 @@
 
 ---
 
-### TC-P07: Warranty-Only Product Cannot Be Returned
+### TC-P07: Warranty-Only Product Cannot Be Returned — `P1`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
@@ -142,7 +156,9 @@
 
 ## Team B — Customer Service (CX) Team
 
-### TC-CX01: Online CA Mattress Return — Auto-Refund (< $600)
+> **Scope:** CX testers cover the customer-facing portal flows and CX agent admin actions (approve/decline, manual refund, overrides). Play the **customer role** to set up test data. Warehouse receiving, vendor assignment, and logistics are tested by the Operations team — see cross-references at the end of each test case.
+
+### TC-CX01: Online CA Mattress Return — Auto-Refund (< $600) — `P0`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
@@ -154,8 +170,12 @@
 | 6 | Confirm whether mattress is **boxed or unboxed**. Select **Boxed**. | Boxed mattress flow activates. |
 | 7 | Upload required photo: **photo of the box** (law tag is not required for boxed mattresses — it is only visible once unboxed). Enter lot number and description. | Upload accepted. Lot number and description saved. |
 | 8 | Submit the return request. | Shipping label generated (package count determined automatically by shipping endpoint). Drop-off instructions displayed. Ticket created. |
-| 9 | **CX Agent:** Check the admin portal for the new ticket. | Ticket visible with all details: item, reason, photos, lot number, tags (category + issue type). |
-| 10 | Mark item as **Received** in the system. | Refund auto-processes (value < $600, no bundles). Refund confirmation logged with audit trail. |
+| 9 | **[CX Agent]** Check the admin portal for the new ticket. | Ticket visible with all details: item, reason, photos, lot number, tags (category + issue type). |
+| 10 | Customer drops off the package at the courier location (or courier picks up from customer). | Package in transit. **Auto-refund initiated** — system automatically triggers refund as soon as shipment is in transit (value < $600, no bundles) (BR-21, BR-26). |
+| 11 | **Verify** shipment tracking in the admin portal. | System auto-tracks via **EasyPost API**. Status auto-updates to **"Picked"** when courier confirms pickup. No manual action required. |
+| 12 | **[CX Agent]** Verify refund status in admin portal. | Refund already initiated at in-transit. Audit trail logged. No duplicate refund can be initiated (BR-12). |
+
+> **Ops continuation:** Warehouse receiving and inspection → TC-OP01.
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -165,13 +185,16 @@
 
 ---
 
-### TC-CX02: Online CA Mattress Return — Manual Refund (>= $600)
+### TC-CX02: Online CA Mattress Return — Manual Refund (>= $600) — `P0`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
 | 1 | Repeat TC-CX01 Steps 1–8 but use an order with mattress value **$600 or more**. | Ticket created. Label generated. |
-| 2 | Mark item as **Received**. | System flags for **manual CX refund** (does NOT auto-refund). |
-| 3 | CX agent manually processes the refund. | Refund completed. Audit trail logged. No duplicate refund can be initiated (BR-12). |
+| 2 | Customer drops off / courier picks up. **Verify** status tracking in admin portal. | System auto-tracks via **EasyPost API**. Status auto-updates to "Picked." No manual action required. |
+| 3 | Once package is in transit, **verify** system flags for **manual CX refund** (does NOT auto-refund because value ≥ $600). | Ticket routed to CX for manual refund. Refund flagged at in-transit (not after warehouse processing). |
+| 4 | **[CX Agent]** Manually process the refund. | Refund completed. Audit trail logged. No duplicate refund can be initiated (BR-12). |
+
+> **Ops continuation:** Warehouse receiving and inspection → TC-OP01.
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -187,16 +210,15 @@
 
 ---
 
-### TC-CX04: Online CA Unboxed Mattress Return (Vendor Pickup)
+### TC-CX04: Online CA Unboxed Mattress Return (Vendor Pickup) — `P0`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
 | 1 | Start a return for a CA mattress order. At the boxed/unboxed step, select **Unboxed**. | Unboxed mattress flow activates. |
-| 2 | Upload photos showing the mattress condition. Enter lot number and description. | Uploads accepted. |
-| 3 | Submit the return. | Ticket created. **No shipping label generated** (pickup required). |
-| 4 | **Return Logistics Manager:** Open the ticket. Select a **donation/pickup vendor** from the vendor list. Confirm that **photos are NOT sent to the vendor** (FR-20). | Vendor assigned. Vendor receives automated email notification (without customer photos). |
-| 5 | Verify the vendor can log in to the **Vendor Portal** and see the assigned pickup. | Vendor sees the pickup with address and details — no photos visible. |
-| 6 | Vendor marks the item as **"Picked"** in the Vendor Portal. | Status updates to **"Picked"** → triggers transition to **"Received"** → refund logic begins (BR-16). |
+| 2 | Upload photos showing the mattress condition, **law tag photo**, and condition details. Enter lot number and description. | Uploads accepted. Lot number and description saved. |
+| 3 | Submit the return. | Ticket created. **No shipping label generated** (unboxed mattresses require vendor pickup, not mail-in). Ticket routed to **Return Logistics Team**. |
+
+> **Ops continuation:** Vendor assignment and pickup → TC-OP11. Vendor portal confirmation → TC-OP09.
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -206,48 +228,30 @@
 
 ---
 
-### TC-CX05: Vendor Change After Assignment
+### ~~TC-CX05: Vendor Change After Assignment~~ **[MOVED → TC-OP12]**
 
-| Step | Action | Expected Result |
-|------|--------|-----------------|
-| 1 | From an existing ticket with a vendor assigned (use TC-CX04), change the vendor to a **different vendor**. | New vendor assigned. |
-| 2 | Verify: old vendor receives notification of removal, new vendor receives assignment notification, customer receives updated notification. | All three emails sent. |
-| 3 | New vendor logs in to Vendor Portal. | Sees the reassigned pickup. Old vendor no longer sees it. |
-
-**Status:** `Not Built Yet`
-**Ready Since:** _______________
-**Result:** _______________
-**Tested By:** _______________
-**Notes:** _______________
+*This test case has been moved to the Operations section as TC-OP12. Vendor assignment and change is an Operations (Return Logistics) responsibility.*
 
 ---
 
-### TC-CX06: Self-Donate — Full Customer Flow
+### ~~TC-CX06: Self-Donate — Full Customer Flow~~ **[MOVED → TC-OP13]**
 
-| Step | Action | Expected Result |
-|------|--------|-----------------|
-| 1 | **Return Logistics Manager:** For an unboxed mattress ticket, confirm no vendor is available. Select **"Self-Donation"** from the vendor list. | Self-donation option selected. Customer receives self-donation instruction email. |
-| 2 | Customer donates the item and takes a photo as proof. Customer contacts CX via call or email with the photo. | CX receives the proof. |
-| 3 | **CX Agent:** Manually processes the return in ClaimLane. Closes the case. | Return processed. Case closed with donation proof logged. |
-
-**Status:** `Not Built Yet`
-**Ready Since:** _______________
-**Result:** _______________
-**Tested By:** _______________
-**Notes:** _______________
+*This test case has been moved to the Operations section as TC-OP13. Self-donate is initiated by the Return Logistics Manager (Operations role).*
 
 ---
 
-### TC-CX07: Online CA Furniture Return (CX Pre-Approval + Charges)
+### TC-CX07: Online CA Furniture Return (CX Pre-Approval + Charges) — `P1`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
 | 1 | Start a return for a **CA Furniture** order (delivered within 30 days). | Items display. Furniture item selectable. |
 | 2 | Select the furniture item. Choose a return reason. Upload required photos (multiple angles, tag, assembly guide markup if missing parts). Enter lot number and description. | All accepted. |
-| 3 | System calls WooCommerce API for a **shipping/pickup charge quote**. Destination: **Caledonia warehouse**. | Quote amount displayed to customer. *(Disposal pickups use the same courier rate — standardized charge.)* |
-| 4 | Customer **accepts** the charge. Provides pickup details and access constraints. Submits. | Ticket created. Marked as **pending CX approval**. |
-| 5 | **CX Agent:** Review the ticket (photos + agreed charge). **Approve** the return. | Shipping label **auto-generates**. Destination: Caledonia warehouse. Customer receives approval email. |
-| 6 | Test the **decline** path: CX **declines** a different furniture return. | Customer receives decline email. No label generated. |
+| 3 | System calls WooCommerce API for a **shipping/pickup charge quote**. Destination: **Caledonia warehouse**. | Quote amount displayed to customer. *(Disposal pickups use the same courier rate — standardized charge per BR-17.)* |
+| 4 | Customer **accepts** the charge. Provides pickup details and access constraints. Submits. | Ticket created. Marked as **pending CX approval**. Charge agreed but **not finalized** until CX approves. |
+| 5 | **[CX Agent]** Review the ticket (photos + agreed charge). **Approve** the return. | Shipping label **auto-generates**. Destination: Caledonia warehouse. Charge finalized/processed. Customer receives approval email with label and pickup instructions. |
+| 6 | **[CX Agent]** Test the **decline** path: decline a different furniture return. | Customer receives decline email. No label generated. No charge processed. |
+
+> **Ops continuation:** Shipment tracking verification → TC-OP07. Warehouse receiving and inspection → TC-OP01.
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -257,13 +261,16 @@
 
 ---
 
-### TC-CX08: Online US Furniture Return (Fulfil API Routing)
+### TC-CX08: Online US Furniture Return (Fulfil API Routing) — `P1`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
-| 1 | Start a return for a **US Furniture** order. Complete documentation and CX approval (same as TC-CX07). | Ticket approved. |
-| 2 | System determines destination via **Fulfil ERP API** (origin warehouse or closest: LA or NJ). | Label generated with correct US warehouse destination. |
-| 3 | For an order shipped from **multiple warehouses**, verify the system routes to the **closest warehouse** to the customer's address (Google Maps geocoding). | Correct closest warehouse on the label. |
+| 1 | Start a return for a **US Furniture** order. Upload photos, enter details. System calls WooCommerce API for shipping charge. | Charge quote displayed. |
+| 2 | Customer accepts charge, provides pickup details, submits. | Ticket created as **pending CX approval**. Charge agreed but not finalized. |
+| 3 | **[CX Agent]** Approve the return. System determines destination via **Fulfil ERP API** — origin warehouse (LA or NJ). | Label **auto-generated** with correct US warehouse destination. Charge finalized. |
+| 4 | For an order shipped from **multiple warehouses**, verify the system routes to the **closest warehouse** to the customer's address (Google Maps geocoding). | Correct closest warehouse (LA – JDLLA or NJ – JDLNJ) on the label. |
+
+> **Ops continuation:** Shipment tracking verification → TC-OP08. US warehouse offline processing → TC-OP04.
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -273,13 +280,15 @@
 
 ---
 
-### TC-CX09: CA Accessories / Bedding Return
+### TC-CX09: CA Accessories / Bedding Return — `P1`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
 | 1 | Start a return. Channel: **Online Canada**. Select an **Accessory or Bedding** item (delivered within 100 nights). | Item selectable. |
 | 2 | Choose a return reason. Upload required photos and tag photos. Enter lot number and description. | All accepted. |
-| 3 | Submit. | **Mail-in return label** generated with instructions. Destination: Caledonia. |
+| 3 | Submit. | **Mail-in return label** generated with instructions. Destination: **Caledonia warehouse** (BR-18 single-step flow). |
+
+> **Ops continuation:** Shipment tracking → TC-OP07. Warehouse receiving and inspection → TC-OP01.
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -289,7 +298,7 @@
 
 ---
 
-### TC-CX10: US Accessories Return — Opened Item (50% Keep Offer)
+### TC-CX10: US Accessories Return — Opened Item (50% Keep Offer) — `P1`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
@@ -306,12 +315,14 @@
 
 ---
 
-### TC-CX11: US Accessories Return — Unopened Item
+### TC-CX11: US Accessories Return — Unopened Item — `P2`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
-| 1 | Start a return for a US Accessory that is **unopened**. | No 50% keep offer shown. |
+| 1 | Start a return for a US Accessory that is **unopened**. | No 50% keep offer shown (keep offer is for opened items only per BR-23). |
 | 2 | Complete documentation and submit. | Shipping label generated. Standard mail-in return flow. |
+
+> **Ops continuation:** Shipment tracking → TC-OP08. US warehouse offline processing → TC-OP04.
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -321,7 +332,7 @@
 
 ---
 
-### TC-CX12: Defective Reason — Blocked, Redirect to Warranty
+### TC-CX12: Defective Reason — Blocked, Redirect to Warranty — `P1`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
@@ -337,18 +348,19 @@
 
 ---
 
-### TC-CX13: Warranty Claim — Full Flow with Replacement
+### TC-CX13: Warranty Claim — Full Flow with Replacement — `P0`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
 | 1 | Open portal. Select channel. Select **Warranty Claim** as intent. | Warranty flow begins. |
 | 2 | Enter valid order number + email. | Items display with **replacement parts shown with product context** (e.g., Nara Dresser → Drawer – Top Left, Screw, etc.). Items within warranty period are selectable (even if return window is closed). |
-| 3 | Select the item. Choose the defective **part/component** (e.g., a specific drawer). | Part selected. |
-| 4 | Complete documentation: issue description, photos of defect, address confirmation. Enter lot number and description. | All accepted. |
-| 5 | Submit the warranty claim. | Ticket created with selected part SKUs, evidence, and notes. Marked as **pending CX review**. |
-| 6 | **CX Agent:** Review the claim. Validate photos. **Override the part selection** to a different part (test CX override capability). **Approve** the warranty claim. | Claim approved with overridden part SKU. |
-| 7 | CX places a **replacement order** via WooCommerce using the **approved replacement part SKUs**. | Replacement order created, status set to "Processing." Customer notified via WooCommerce. Order linked to the warranty ticket. |
-| 8 | Case closed. | Case marked complete after replacement order placed. |
+| 3 | Verify the **product guide** is displayed for the selected product (e.g., annotated diagram showing which part comes from where). | Product guide visible — helps customer identify the correct defective part before selecting. Guide was uploaded during product onboarding (see TC-P02). |
+| 4 | Select the item. Choose the defective **part/component** (e.g., a specific drawer). | Part selected. |
+| 5 | Complete documentation: issue description, photos of defect, address confirmation. Enter lot number and description. | All accepted. |
+| 6 | Submit the warranty claim. Verify **no pickup assistance option** is presented during submission (FR-35 — pickup is CX follow-on only). | Ticket created with selected part SKUs, evidence, and notes. Marked as **pending CX review**. No pickup fields shown to customer. |
+| 7 | **[CX Agent]** Review the claim. Validate photos. **Override the part selection** to a different part (test CX override capability). **Approve** the warranty claim. | Claim approved with overridden part SKU. Default assumption: customer does **not** need pickup assistance. |
+| 8 | **Verify** replacement order is automatically created via **WooCommerce API** using the approved replacement part SKUs. | System auto-creates the order using customer's billing/shipping details (FR-24). Order status set to "Processing." Customer notified via WooCommerce. Order linked to the warranty ticket. |
+| 9 | Case closed. | Case marked complete after replacement order placed. |
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -358,13 +370,13 @@
 
 ---
 
-### TC-CX14: Warranty Claim — Courier Pickup with "(Defective)" Label
+### TC-CX14: Warranty Claim — Courier Pickup with "(Defective)" Label — `P2`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
-| 1 | Complete and approve a warranty claim (TC-CX13 Steps 1–6). | Claim approved. |
-| 2 | Customer calls CX to request **pickup assistance**. CX adds pickup assistance to the case. | Pickup assistance added. |
-| 3 | CX selects **Courier Pickup** as the pickup type. | Return label generated. Label includes the text **"(Defective)"** to signal the warehouse to bypass inspection (BR-27). |
+| 1 | Complete and approve a warranty claim (TC-CX13 Steps 1–7). | Claim approved. |
+| 2 | **[Customer → CX Agent]** Customer calls CX to request **pickup assistance**. CX adds pickup assistance to the case. | Pickup assistance added. |
+| 3 | **[CX Agent]** Select **Courier Pickup** as the pickup type. | Return label generated. Label includes the text **"(Defective)"** to signal the warehouse to bypass inspection (BR-27). |
 | 4 | Verify the label text. | "(Defective)" text confirmed on label. |
 
 **Status:** `Not Built Yet`
@@ -375,12 +387,13 @@
 
 ---
 
-### TC-CX15: Warranty Claim — Disposal Pickup
+### TC-CX15: Warranty Claim — Disposal Pickup — `P2`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
-| 1 | From an approved warranty claim with pickup assistance, CX selects **Disposal Pickup**. | Case logged for **Return Logistics Team** to assign a disposal vendor. |
-| 2 | Return Logistics Team assigns a vendor. | Vendor assigned. Same vendor pickup flow as unboxed mattress (TC-CX04 Steps 5–6). |
+| 1 | **[CX Agent]** From an approved warranty claim with pickup assistance, select **Disposal Pickup**. | Case logged for **Return Logistics Team** to assign a disposal vendor. |
+
+> **Ops continuation:** Vendor assignment for disposal pickup → TC-OP14.
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -390,12 +403,12 @@
 
 ---
 
-### TC-CX16: Warranty Claim — Declined
+### TC-CX16: Warranty Claim — Declined — `P1`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
-| 1 | Submit a warranty claim (TC-CX13 Steps 1–5). | Ticket created. |
-| 2 | **CX Agent:** Review and **decline** the warranty claim. | Customer receives decline email with reason. No replacement order created. Ticket closed with decline reason logged. |
+| 1 | Submit a warranty claim (TC-CX13 Steps 1–6). | Ticket created. |
+| 2 | **[CX Agent]** Review and **decline** the warranty claim. | Customer receives decline email with reason. No replacement order created. Ticket closed with decline reason logged. |
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -405,19 +418,19 @@
 
 ---
 
-### TC-CX17: Third-Party Vendor Return — TSC / EQ3
+### TC-CX17: Third-Party Vendor Return — TSC / EQ3 — `P1`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
 | 1 | Open the **vendor-specific generic link** for TSC or EQ3 (link identifies vendor only, not customer-specific). | Third-party flow begins. |
-| 2 | **Terms & Conditions gate** appears. Verify it states: (1) No refund will be issued by Silk & Snow, (2) The return is not authorized by the third-party partner. | T&C page displayed with both disclosures. |
-| 3 | **Decline** the T&C. | Flow ends. Message directs customer back to the vendor. |
-| 4 | Re-open link. **Accept** T&C (checkbox + confirm button). | Proceeds to pickup details. |
-| 5 | Enter pickup details: address, access constraints, preferred dates, contact info. Upload photos. | All fields captured. |
-| 6 | Submit. | Ticket created, tagged with the third-party vendor name. |
-| 7 | **CX Agent:** Review. Select **Courier** pickup — generate return label. | Label generated. Pickup coordinated. |
-| 8 | **CX Agent:** For a separate ticket, select **Disposal** pickup — assign vendor. | Case logged for Return Logistics Team. Vendor assigned. |
-| 9 | Item collected. | Vendor notified that item has been collected. **No S&S refund issued** (refund is vendor's responsibility per BR-1). Case closed. |
+| 2 | **Terms & Conditions gate** appears. Verify it states: (1) No refund will be issued by Silk & Snow, (2) The return is not authorized by the third-party partner. | T&C page displayed with both disclosures. There is **no decline button** — customer either accepts or closes the page. |
+| 3 | **Accept** T&C (checkbox + confirm button). | Proceeds to pickup details. |
+| 4 | Enter pickup details: address, access constraints, preferred dates, contact info. Upload photos. | All fields captured. |
+| 5 | Submit. | Ticket created, tagged with the third-party vendor name (TSC or EQ3). |
+| 6 | **[CX Agent]** Review. Select **Courier** pickup — generate return label. | Label generated. Pickup coordinated. **No S&S refund issued** (refund is vendor's responsibility per BR-1). |
+| 7 | **[CX Agent]** For a separate ticket, select **Disposal** pickup. | Case logged for **Return Logistics Team** to assign a disposal vendor. |
+
+> **Ops continuation:** Third-party vendor assignment and pickup → TC-OP11, TC-OP14.
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -427,7 +440,7 @@
 
 ---
 
-### TC-CX18: Retail Store Return (Shopify POS)
+### TC-CX18: Retail Store Return (Shopify POS) — `P2`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
@@ -443,7 +456,7 @@
 
 ---
 
-### TC-CX19: Sleep Country Retail Store — Blocked
+### TC-CX19: Sleep Country Retail Store — Blocked — `P2`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
@@ -458,7 +471,7 @@
 
 ---
 
-### TC-CX20: Duplicate Return Prevention
+### TC-CX20: Duplicate Return Prevention — `P1`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
@@ -473,7 +486,7 @@
 
 ---
 
-### TC-CX21: Double Submit Prevention
+### TC-CX21: Double Submit Prevention — `P1`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
@@ -488,7 +501,7 @@
 
 ---
 
-### TC-CX22: Ineligible Item — Past Return Window
+### TC-CX22: Ineligible Item — Past Return Window — `P1`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
@@ -504,7 +517,7 @@
 
 ---
 
-### TC-CX23: Final Sale Item — Not Returnable
+### TC-CX23: Final Sale Item — Not Returnable — `P1`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
@@ -519,7 +532,7 @@
 
 ---
 
-### TC-CX24: Order Lookup — Security Validation
+### TC-CX24: Order Lookup — Security Validation — `P0`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
@@ -538,7 +551,7 @@
 
 ---
 
-### TC-CX25: Upload Validation — File Type and Size
+### TC-CX25: Upload Validation — File Type and Size — `P2`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
@@ -557,12 +570,12 @@
 
 ---
 
-### TC-CX26: CX Documentation Override
+### TC-CX26: CX Documentation Override — `P2`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
 | 1 | A customer submits a return/warranty claim but is missing a required document (e.g., no tag photo). | Submission blocked on the customer side. |
-| 2 | **CX Agent:** Manually override the documentation requirement for this ticket. | Override applied. CX can proceed with the ticket. Override action logged in audit trail. |
+| 2 | **[CX Agent]** Manually override the documentation requirement for this ticket. | Override applied. CX can proceed with the ticket. Override action logged in audit trail. |
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -572,7 +585,7 @@
 
 ---
 
-### TC-CX27: Label Reprint — No Duplicate Labels
+### TC-CX27: Label Reprint — No Duplicate Labels — `P3`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
@@ -587,7 +600,7 @@
 
 ---
 
-### TC-CX28: Return Label Count Cap
+### TC-CX28: Return Label Count Cap — `P2`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
@@ -602,7 +615,7 @@
 
 ---
 
-### TC-CX29: Session State Preservation
+### TC-CX29: Session State Preservation — `P3`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
@@ -617,7 +630,7 @@
 
 ---
 
-### TC-CX30: Help Page Content
+### TC-CX30: Help Page Content — `P3`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
@@ -633,17 +646,15 @@
 
 ---
 
-### TC-CX31: Email Notifications — All Triggers
+### TC-CX31: Email Notifications — All Triggers — `P2`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
-| 1 | Assign a vendor to an unboxed mattress pickup. | Vendor receives assignment email. |
-| 2 | Change the vendor. | Old vendor: removal email. New vendor: assignment email. Customer: updated notification. |
-| 3 | CX approves a furniture return. | Customer receives approval email. |
-| 4 | CX declines a furniture return. | Customer receives decline email. |
-| 5 | Third-party pickup ticket created (TSC/EQ3). | CX and vendor notified via email. |
-| 6 | Third-party pickup completed. | Vendor notified that item has been collected. |
-| 7 | CX declines a warranty claim. | Customer receives decline email with reason. |
+| 1 | CX approves a furniture return. | Customer receives approval email. |
+| 2 | CX declines a furniture return. | Customer receives decline email. |
+| 3 | CX declines a warranty claim. | Customer receives decline email with reason. |
+
+> **Note:** Vendor-related email notifications (assignment, change, pickup) are tested in Operations: TC-OP11, TC-OP12, TC-OP15.
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -661,17 +672,21 @@
 
 ## Team C — Operations Team
 
-### TC-OP01: Caledonia Warehouse — Update Return Status
+> **Scope:** Operations testers cover warehouse processing (Caledonia & US), vendor/logistics management (Return Logistics Manager), and the Vendor Portal. Play the **customer role** to create test data when needed (submit returns via the portal to generate tickets). Roles tested: Caledonia Team, Return Logistics Manager, Internal Ops, Vendor.
+
+### TC-OP01: Caledonia Warehouse — Receive & Inspect Return — `P0`
+
+**Prerequisites:** Submit a CA return via the customer portal (e.g., follow TC-CX01 Steps 1–8 as the customer) and have the package delivered to Caledonia warehouse.
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
 | 1 | Log in to ClaimLane with **Caledonia warehouse role** (limited access). | Only warehouse-relevant screens visible. No access to CX functions, refunds, or product onboarding. |
-| 2 | Find a return that has been physically received at Caledonia. | Return record visible with item details. |
+| 2 | Find the return that has been physically received at Caledonia. | Return record visible with item details. |
 | 3 | Update status from **Delivered → Processing**. | Status updates. Timestamp logged. |
 | 4 | Update status from **Processing → Inspection Completed**. | System prompts for **Inspection Grade**. |
 | 5 | Select **Grade A (Resalable)**. Enter a mandatory reason/note. | Grade and reason saved. Status is now "Inspection Completed." |
 | 6 | Repeat with **Grade B (Donatable)** and **Grade C (Damaged)** on separate items. | All grades accepted with mandatory reasons. |
-| 7 | Verify this status update feeds into the **"Received" logic** for refunds. | Refund processing triggered after inspection completed. |
+| 7 | Verify this status update triggers the **"Received" logic** (WF-089). | Status transitions to "Received." Note: refund is already initiated at **in-transit** (not at warehouse receiving). Warehouse receiving confirms physical receipt and completes the inspection record. |
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -681,7 +696,7 @@
 
 ---
 
-### TC-OP02: Caledonia — Inspection Grade Requires Reason
+### TC-OP02: Caledonia — Inspection Grade Requires Reason — `P2`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
@@ -696,7 +711,7 @@
 
 ---
 
-### TC-OP03: Returned Items Report — Caledonia
+### TC-OP03: Returned Items Report — Caledonia — `P2`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
@@ -713,14 +728,17 @@
 
 ---
 
-### TC-OP04: US Warehouse — Offline Status Update (LA/NJ)
+### TC-OP04: US Warehouse — Offline Status Update (LA/NJ) — `P2`
+
+**Prerequisites:** Submit a US return via the customer portal (e.g., follow TC-CX08 or TC-CX11 as the customer) and have the package delivered to the US warehouse.
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
 | 1 | Simulate: a return arrives at LA or NJ warehouse. Warehouse staff sends an **email to Internal Ops** with item status. | Email received by Internal Ops. |
-| 2 | **Internal Ops** logs into ClaimLane and manually updates the return status: **Delivered → Processing → Inspection Completed** (with grade and reason). | Status updated in the portal. Audit trail logged. |
-| 3 | Verify the update appears in the **Returned Items Report**. | Item shows with correct SKU, grade, dates, and quantity. |
-| 4 | Verify Internal Ops has **no Caledonia-specific access** (US portal only). | Confirmed — access scoped to US warehouse operations. |
+| 2 | **[Internal Ops]** Log into ClaimLane and manually update the return status: **Delivered → Processing → Inspection Completed** (with grade and reason). | Status updated in the portal. Audit trail logged. |
+| 3 | Verify the update triggers the **"Received" logic** (WF-089) and refund processing begins. | Refund auto-processes if value < $600 and no bundles. Flags for manual CX refund if ≥ $600 or bundles. |
+| 4 | Verify the update appears in the **Returned Items Report**. | Item shows with correct SKU, grade, dates, and quantity. |
+| 5 | Verify Internal Ops has **no Caledonia-specific access** (US portal only). | Confirmed — access scoped to US warehouse operations. |
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -730,22 +748,7 @@
 
 ---
 
-### TC-OP05: US Warehouse — SLA Compliance (24 Business Hours)
-
-| Step | Action | Expected Result |
-|------|--------|-----------------|
-| 1 | Note the timestamp when a US warehouse email is received by Internal Ops. | Timestamp recorded. |
-| 2 | Verify the portal update is completed within **24 business hours**. | Update completed within SLA. |
-
-**Status:** `Not Built Yet`
-**Ready Since:** _______________
-**Result:** _______________
-**Tested By:** _______________
-**Notes:** _______________
-
----
-
-### TC-OP06: Caledonia Role — Access Restriction
+### TC-OP06: Caledonia Role — Access Restriction — `P2`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
@@ -763,12 +766,15 @@
 
 ---
 
-### TC-OP07: Warehouse Routing — CA Returns to Caledonia
+### TC-OP07: Warehouse Routing — CA Returns to Caledonia — `P1`
+
+**Prerequisites:** Submit a CA return via the customer portal (any category).
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
 | 1 | Complete a CA return (any category). | Shipping label generated. |
 | 2 | Verify the label destination is **Caledonia warehouse**. | Confirmed. |
+| 3 | **Verify** shipment tracking in the admin portal. | System auto-tracks via **EasyPost API**. Status auto-updates to **"Picked"** when courier confirms pickup. No manual action required. |
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -778,7 +784,9 @@
 
 ---
 
-### TC-OP08: Warehouse Routing — US Returns via Fulfil API
+### TC-OP08: Warehouse Routing — US Returns via Fulfil API — `P1`
+
+**Prerequisites:** Submit a US return via the customer portal.
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
@@ -786,6 +794,7 @@
 | 2 | Verify the label destination is the **origin warehouse** (LA or NJ). | Correct warehouse on the label. |
 | 3 | Complete a US return for an order shipped from **multiple warehouses** (split shipment). | System calls Fulfil ERP API + Google Maps geocoding. |
 | 4 | Verify the label destination is the **closest warehouse** to the customer's shipping address. | Correct closest warehouse (LA – JDLLA or NJ – JDLNJ) on the label. |
+| 5 | **Verify** shipment tracking in the admin portal. | System auto-tracks via **EasyPost API**. Status auto-updates to **"Picked"** when courier confirms pickup. No manual action required. |
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -795,13 +804,15 @@
 
 ---
 
-### TC-OP09: Vendor Portal — Pickup Confirmation
+### TC-OP09: Vendor Portal — Pickup Confirmation — `P1`
+
+**Prerequisites:** An unboxed mattress return has been submitted and a vendor has been assigned (see TC-OP11).
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
 | 1 | Log in as a **donation/pickup vendor**. | Vendor portal loads. Only assigned pickups visible. No access to other tickets or admin functions. |
-| 2 | Find an assigned pickup. View details: address, access constraints, available dates. Confirm **no customer photos** are visible (for unboxed mattress pickups). | Details visible. Photos not shown. |
-| 3 | Mark the item as **"Picked"**. | Status updates to "Picked." Change reflected in the CX admin portal. Triggers "Received" transition for refund logic. |
+| 2 | Find an assigned pickup. View details: address, access constraints, available dates. Confirm **no customer photos** are visible (for unboxed mattress pickups — FR-20). | Details visible. Photos not shown. |
+| 3 | Mark the item as **"Picked"**. | Status auto-transitions: **"Picked" → "Received"** (BR-16). Change reflected in the admin portal. Refund logic triggers based on order value (auto if < $600, manual if ≥ $600). |
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -811,7 +822,7 @@
 
 ---
 
-### TC-OP10: Audit Trail Verification
+### TC-OP10: Audit Trail Verification — `P3`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
@@ -827,34 +838,142 @@
 
 ---
 
+### TC-OP11: Unboxed Mattress — Vendor Assignment & Pickup — `P0`
+
+**Prerequisites:** Submit an unboxed mattress return via the customer portal (follow TC-CX04 Steps 1–3 as the customer). Ticket is routed to Return Logistics Team.
+
+| Step | Action | Expected Result |
+|------|--------|-----------------|
+| 1 | **[Return Logistics Manager]** Open the ticket. Select a **donation/pickup vendor** from the vendor list. | Vendor assigned. |
+| 2 | Confirm that **photos are NOT sent to the vendor** (FR-20). | Vendor receives automated email notification (without customer photos). Customer receives notification with pickup details. |
+| 3 | **[Vendor]** Log in to the **Vendor Portal**. Find the assigned pickup. | Vendor sees the pickup with address, access constraints, and available dates — **no customer photos visible**. |
+| 4 | **[Vendor]** Pick up the mattress. Mark the item as **"Picked"** in the Vendor Portal. | Status auto-transitions: **"Picked" → "Received"** (BR-16). Refund logic triggers based on order value (auto if < $600, manual if ≥ $600). |
+
+**Status:** `Not Built Yet`
+**Ready Since:** _______________
+**Result:** _______________
+**Tested By:** _______________
+**Notes:** _______________
+
+---
+
+### TC-OP12: Vendor Change After Assignment — `P2`
+
+**Prerequisites:** An unboxed mattress return has a vendor assigned (use TC-OP11).
+
+| Step | Action | Expected Result |
+|------|--------|-----------------|
+| 1 | **[Return Logistics Manager]** Change the vendor to a **different vendor**. | New vendor assigned. |
+| 2 | Verify: old vendor receives notification of removal, new vendor receives assignment notification, customer receives updated notification. | All three emails sent. |
+| 3 | **[Vendor]** New vendor logs in to Vendor Portal. | Sees the reassigned pickup. Old vendor no longer sees it. |
+
+**Status:** `Not Built Yet`
+**Ready Since:** _______________
+**Result:** _______________
+**Tested By:** _______________
+**Notes:** _______________
+
+---
+
+### TC-OP13: Self-Donate — Return Logistics Flow — `P2`
+
+**Prerequisites:** An unboxed mattress return has been submitted (follow TC-CX04 Steps 1–3 as the customer). Ticket is routed to Return Logistics Team.
+
+| Step | Action | Expected Result |
+|------|--------|-----------------|
+| 1 | **[Return Logistics Manager]** Confirm no vendor is available. Select **"Self-Donation"** from the vendor list. | Self-donation option selected. Customer receives self-donation instruction email. |
+| 2 | **[Customer]** Donates the item, takes a photo as proof, and contacts CX via call or email with the photo. | CX receives the proof. |
+| 3 | **[CX Agent]** Manually process the return in ClaimLane. Close the case. | Return processed. Case closed with donation proof logged. |
+
+**Status:** `Not Built Yet`
+**Ready Since:** _______________
+**Result:** _______________
+**Tested By:** _______________
+**Notes:** _______________
+
+---
+
+### TC-OP14: Warranty Disposal — Vendor Assignment — `P2`
+
+**Prerequisites:** A warranty claim has been approved with disposal pickup selected by CX (see TC-CX15).
+
+| Step | Action | Expected Result |
+|------|--------|-----------------|
+| 1 | **[Return Logistics Manager]** Open the disposal case. Assign a **disposal vendor**. | Vendor assigned. Customer receives notification with pickup details. |
+| 2 | **[Vendor]** Log in to the **Vendor Portal**. Find the assigned disposal pickup. | Vendor sees the pickup with address, access constraints, and available dates. |
+| 3 | **[Vendor]** Pick up the item. Mark as **"Picked"** in the Vendor Portal. | Status auto-transitions: **"Picked" → "Received"** (BR-16). |
+
+**Status:** `Not Built Yet`
+**Ready Since:** _______________
+**Result:** _______________
+**Tested By:** _______________
+**Notes:** _______________
+
+---
+
+### TC-OP15: Email Notifications — Operations Triggers — `P2`
+
+| Step | Action | Expected Result |
+|------|--------|-----------------|
+| 1 | Assign a vendor to an unboxed mattress pickup. | Vendor receives assignment email. Customer receives pickup notification. |
+| 2 | Change the vendor. | Old vendor: removal email. New vendor: assignment email. Customer: updated notification. |
+| 3 | Third-party pickup ticket created (TSC/EQ3). Assign vendor. | Vendor receives assignment email. |
+| 4 | Vendor completes a third-party pickup. | Vendor notified that item has been collected. |
+| 5 | Select self-donation for a ticket. | Customer receives self-donation instruction email. |
+
+**Status:** `Not Built Yet`
+**Ready Since:** _______________
+**Result:** _______________
+**Tested By:** _______________
+**Notes:** _______________
+
+---
+
+## Open Q&A — Testing Questions
+
+| # | Question | Status | Answer / Resolution |
+|---|----------|--------|---------------------|
+| Q1 | Once a label gets generated, how do we simulate **"Picked Up"** status in testing? This status triggers downstream processes (auto-refund at in-transit, EasyPost tracking, warehouse receiving). Do we need an EasyPost sandbox/test mode, or a manual override in the admin portal? | **Open** | _Needs technical input_ |
+| Q2 | For TC-CX08 (US Furniture Return), we need to test shipments routed to **different US warehouse locations (LA vs. New Jersey)** via Fulfil ERP API. How do we set up test data / SKUs that route to each location? CX team needs guidance on this. | **Open** | _Needs technical input_ |
+| Q3 | Technical team needs to provide test data: (1) an order with a **mattress delivered more than 365 days ago** (to test return window expiry / eligibility rejection — TC-CX22), and (2) an order with an item marked as **final sale** (to test final sale blocking — TC-CX23). | **Open** | _Needs technical input_ |
+
+---
+
 ## Quick Reference — Test Coverage Map
 
-| Area | Test Cases | Primary Team | Status |
-|------|-----------|--------------|--------|
-| Product Onboarding & Excel Upload | TC-P01 to TC-P05 | Product | Not Built Yet |
-| Product Listing, Search & Filter | TC-P06 | Product | Not Built Yet |
-| Warranty-Only Products | TC-P07 | Product | Not Built Yet |
-| CA Mattress Returns (Boxed, Unboxed) | TC-CX01, TC-CX02, TC-CX04 | CX | Not Built Yet |
-| Vendor Management (Assignment, Change, Self-Donate) | TC-CX05, TC-CX06 | CX | Not Built Yet |
-| CA Furniture Returns (CX Pre-Approval) | TC-CX07 | CX | Not Built Yet |
-| US Furniture Returns (Fulfil API Routing) | TC-CX08 | CX | Not Built Yet |
-| CA Accessories / Bedding Returns | TC-CX09 | CX | Not Built Yet |
-| US Accessories Returns (50% Keep, Unopened) | TC-CX10, TC-CX11 | CX | Not Built Yet |
-| Defective Reason Blocking | TC-CX12 | CX | Not Built Yet |
-| Warranty Claims (Full Flow, Courier, Disposal, Decline) | TC-CX13 to TC-CX16 | CX | Not Built Yet |
-| Third-Party Returns (TSC, EQ3) | TC-CX17 | CX | Not Built Yet |
-| Retail & Sleep Country Channel Routing | TC-CX18, TC-CX19 | CX | Not Built Yet |
-| Duplicate / Double-Submit Prevention | TC-CX20, TC-CX21 | CX | Not Built Yet |
-| Eligibility (Return Window, Final Sale) | TC-CX22, TC-CX23 | CX | Not Built Yet |
-| Security & Input Validation | TC-CX24, TC-CX25 | CX | Not Built Yet |
-| CX Overrides & Label Management | TC-CX26, TC-CX27, TC-CX28 | CX | Not Built Yet |
-| Session, Help Page, Email Notifications | TC-CX29, TC-CX30, TC-CX31 | CX | Not Built Yet |
-| ~~Category Filtering~~ | ~~TC-CX32~~ | ~~CX~~ | Removed |
-| Caledonia Warehouse | TC-OP01 to TC-OP03, TC-OP06 | Operations | Not Built Yet |
-| US Warehouse (Offline) | TC-OP04, TC-OP05 | Operations | Not Built Yet |
-| Warehouse Routing | TC-OP07, TC-OP08 | Operations | Not Built Yet |
-| Vendor Portal | TC-OP09 | Operations | Not Built Yet |
-| Audit Trail | TC-OP10 | Operations | Not Built Yet |
+| Area | Test Cases | Primary Team | Priority | Status |
+|------|-----------|--------------|----------|--------|
+| Product Onboarding & Excel Upload | TC-P01 to TC-P05 | Product | P0–P2 | Not Built Yet |
+| Product Listing, Search & Filter | TC-P06 | Product | P1 | Not Built Yet |
+| Warranty-Only Products | TC-P07 | Product | P1 | Not Built Yet |
+| CA Mattress Returns (Boxed) | TC-CX01, TC-CX02 | CX | P0 | Not Built Yet |
+| CA Mattress Returns (Unboxed — Customer Portal) | TC-CX04 | CX | P0 | Not Built Yet |
+| CA Furniture Returns (CX Pre-Approval) | TC-CX07 | CX | P1 | Not Built Yet |
+| US Furniture Returns (CX Approval + Fulfil Routing) | TC-CX08 | CX | P1 | Not Built Yet |
+| CA Accessories / Bedding Returns | TC-CX09 | CX | P1 | Not Built Yet |
+| US Accessories Returns (50% Keep, Unopened) | TC-CX10, TC-CX11 | CX | P1–P2 | Not Built Yet |
+| Defective Reason Blocking | TC-CX12 | CX | P1 | Not Built Yet |
+| Warranty Claims (Full Flow, Courier, Disposal, Decline) | TC-CX13 to TC-CX16 | CX | P0–P2 | Not Built Yet |
+| Third-Party Returns (TSC, EQ3) | TC-CX17 | CX | P1 | Not Built Yet |
+| Retail & Sleep Country Channel Routing | TC-CX18, TC-CX19 | CX | P2 | Not Built Yet |
+| Duplicate / Double-Submit Prevention | TC-CX20, TC-CX21 | CX | P1 | Not Built Yet |
+| Eligibility (Return Window, Final Sale) | TC-CX22, TC-CX23 | CX | P1 | Not Built Yet |
+| Security & Input Validation | TC-CX24, TC-CX25 | CX | P0–P2 | Not Built Yet |
+| CX Overrides & Label Management | TC-CX26, TC-CX27, TC-CX28 | CX | P2–P3 | Not Built Yet |
+| Session, Help Page | TC-CX29, TC-CX30 | CX | P3 | Not Built Yet |
+| CX Email Notifications | TC-CX31 | CX | P2 | Not Built Yet |
+| ~~Category Filtering~~ | ~~TC-CX32~~ | ~~CX~~ | — | Removed |
+| Caledonia Warehouse (Receive & Inspect) | TC-OP01, TC-OP02, TC-OP03 | Operations | P0–P2 | Not Built Yet |
+| Caledonia Role Access | TC-OP06 | Operations | P2 | Not Built Yet |
+| US Warehouse (Offline Processing) | TC-OP04 | Operations | P2 | Not Built Yet |
+| Warehouse Routing (CA & US) | TC-OP07, TC-OP08 | Operations | P1 | Not Built Yet |
+| Vendor Portal (Pickup Confirmation) | TC-OP09 | Operations | P1 | Not Built Yet |
+| Vendor Assignment & Pickup (Unboxed Mattress) | TC-OP11 | Operations | P0 | Not Built Yet |
+| Vendor Change After Assignment | TC-OP12 | Operations | P2 | Not Built Yet |
+| Self-Donate Flow | TC-OP13 | Operations | P2 | Not Built Yet |
+| Warranty Disposal — Vendor Assignment | TC-OP14 | Operations | P2 | Not Built Yet |
+| Operations Email Notifications | TC-OP15 | Operations | P2 | Not Built Yet |
+| Audit Trail | TC-OP10 | Operations | P3 | Not Built Yet |
 
 ---
 
@@ -873,22 +992,22 @@
 | FR-15/16/17 (Documentation) | TC-CX25, TC-CX26 |
 | FR-18 (Package Count) | TC-CX01 |
 | FR-19 (Label Generation) | TC-CX01, TC-CX28 |
-| FR-20 (Pickup & Freight) | TC-CX04, TC-CX07, TC-CX08 |
+| FR-20 (Pickup & Freight) | TC-CX04, TC-CX07, TC-CX08, TC-OP11 |
 | FR-21 (Label Reprint) | TC-CX27 |
 | FR-22 (Ticket Creation) | TC-CX01, TC-CX20 |
-| FR-23 (Refund Processing) | TC-CX01, TC-CX02 |
+| FR-23 (Refund Processing) | TC-CX02, TC-OP01 |
 | FR-24 (Replacement Order) | TC-CX13 |
 | FR-26 (Session / Double Submit) | TC-CX29, TC-CX21 |
 | FR-27 (Help Page) | TC-CX30 |
 | FR-30 (Caledonia Portal) | TC-OP01, TC-OP02 |
 | FR-31 (Reporting) | TC-OP03 |
-| FR-32 (Email Triggers) | TC-CX31 |
+| FR-32 (Email Triggers) | TC-CX31, TC-OP15 |
 | FR-33 (Defective Blocking) | TC-CX12 |
 | FR-34 (US Accessory Handling) | TC-CX10, TC-CX11 |
-| FR-35 (Warranty Pickup) | TC-CX14, TC-CX15 |
-| FR-36/49 (Third-Party Logistics) | TC-CX17 |
+| FR-35 (Warranty Pickup) | TC-CX14, TC-CX15, TC-OP14 |
+| FR-36/49 (Third-Party Logistics) | TC-CX17, TC-OP11 |
 | FR-37 (US Warehouse Offline) | TC-OP04 |
-| FR-38 (Self-Donate) | TC-CX06 |
+| FR-38 (Self-Donate) | TC-OP13 |
 | FR-39 (Flow Context Routing) | TC-CX01, TC-CX13, TC-CX17 |
 | FR-41 (Warehouse Routing) | TC-OP07, TC-OP08 |
 | FR-42 (Product Onboarding) | TC-P01, TC-P02 |
@@ -902,13 +1021,13 @@
 | BR-6 (CX Pre-Approval) | TC-CX07 |
 | BR-7 (Duplicate Prevention) | TC-CX20 |
 | BR-12 (Duplicate Refund Prevention) | TC-CX02 |
-| BR-16 (Vendor Pickup → Received) | TC-CX04, TC-OP09 |
+| BR-16 (Vendor Pickup → Received) | TC-OP09, TC-OP11 |
 | BR-19 (Caledonia Role) | TC-OP01, TC-OP06 |
-| BR-21 (Auto-Refund Threshold) | TC-CX01, TC-CX02 |
+| BR-21 (Auto-Refund Threshold) | TC-OP01, TC-CX02 |
 | BR-22 (Label Count Cap) | TC-CX28 |
 | BR-27 (Warranty "(Defective)" Label) | TC-CX14 |
 | BR-28 (US Warehouse Offline) | TC-OP04 |
-| BR-29 (Self-Donate) | TC-CX06 |
+| BR-29 (Self-Donate) | TC-OP13 |
 | BR-30 (Furniture Destinations) | TC-CX07, TC-CX08 |
 | NFR-6 (Audit Logging) | TC-OP10 |
-| NFR-8 (US Offline 24h SLA) | TC-OP05 |
+| ~~NFR-8 (US Offline 24h SLA)~~ | ~~TC-OP05~~ — Removed |
