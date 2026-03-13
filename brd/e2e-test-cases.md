@@ -1031,3 +1031,5 @@
 | BR-30 (Furniture Destinations) | TC-CX07, TC-CX08 |
 | NFR-6 (Audit Logging) | TC-OP10 |
 | ~~NFR-8 (US Offline 24h SLA)~~ | ~~TC-OP05~~ — Removed |
+
+<div class="giscus-placeholder"></div>
