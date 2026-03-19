@@ -1,0 +1,4799 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://charanbobby.github.io/ClaimLaneRequirementsRepo/e2e-test-cases.html">
+      
+      
+        <link rel="prev" href="epics-user-stories.html">
+      
+      
+        <link rel="next" href="appendices.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>E2E Test Cases - Claimlane Returns, Refunds & Warranty Portal BRD</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="css/giscus.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#end-to-end-test-cases-claimlane-portal" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="Claimlane Returns, Refunds &amp; Warranty Portal BRD" class="md-header__button md-logo" aria-label="Claimlane Returns, Refunds & Warranty Portal BRD" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Claimlane Returns, Refunds & Warranty Portal BRD
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              E2E Test Cases
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="Claimlane Returns, Refunds &amp; Warranty Portal BRD" class="md-nav__button md-logo" aria-label="Claimlane Returns, Refunds & Warranty Portal BRD" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Claimlane Returns, Refunds & Warranty Portal BRD
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    About
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="overview-purpose.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview & Purpose
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="scope.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scope
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="actors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Actors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Process
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Process
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="process-high-level.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    High-Level Process Flow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requirements
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Requirements
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="functional-requirements.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Functional
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="non-functional-requirements.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Non-Functional
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="business-rules.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Business Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="changelog.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="phase-2-backlog.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 2 Backlog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Stories
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Stories
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="epics-user-stories.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Epics & User Stories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Testing
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    E2E Test Cases
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="e2e-test-cases.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    E2E Test Cases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#team-a-product-team-product-onboarding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Team A — Product Team (Product Onboarding)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Team A — Product Team (Product Onboarding)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tc-p01-onboard-new-products-via-excel-upload-ca-us-templates-p0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-P01: Onboard New Products via Excel Upload (CA &amp; US Templates) — P0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-p02-upload-replacement-parts-second-sheet-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-P02: Upload Replacement Parts (Second Sheet) — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-p03-update-an-existing-product-via-excel-re-upload-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-P03: Update an Existing Product via Excel Re-Upload — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-p04-remove-a-product-by-omitting-from-upload-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-P04: Remove a Product by Omitting from Upload — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-p05-upload-with-invalid-missing-data-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ~~TC-P05: Upload with Invalid / Missing Data~~ [REMOVED]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-p06-view-product-listing-search-by-sku-name-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-P06: View Product Listing — Search by SKU &amp; Name — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-p07-warranty-only-product-cannot-be-returned-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-P07: Warranty-Only Product Cannot Be Returned — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#team-b-customer-service-cx-team" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Team B — Customer Service (CX) Team
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Team B — Customer Service (CX) Team">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx01-online-ca-mattress-return-auto-refund-600-p0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX01: Online CA Mattress Return — Auto-Refund (&lt; $600) — P0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx02-online-ca-mattress-return-manual-refund-600-p0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX02: Online CA Mattress Return — Manual Refund (&gt;= $600) — P0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx03-mattress-return-within-30-nights-soft-warning-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ~~TC-CX03: Mattress Return Within 30 Nights — Soft Warning~~ [REMOVED]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx04-online-ca-unboxed-mattress-return-vendor-pickup-p0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX04: Online CA Unboxed Mattress Return (Vendor Pickup) — P0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx05-vendor-change-after-assignment-moved-tc-op12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ~~TC-CX05: Vendor Change After Assignment~~ [MOVED → TC-OP12]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx06-self-donate-full-customer-flow-moved-tc-op13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ~~TC-CX06: Self-Donate — Full Customer Flow~~ [MOVED → TC-OP13]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx07-online-ca-furniture-return-cx-pre-approval-charges-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX07: Online CA Furniture Return (CX Pre-Approval + Charges) — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx08-online-us-furniture-return-fulfil-api-routing-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX08: Online US Furniture Return (Fulfil API Routing) — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx09-ca-accessories-bedding-return-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX09: CA Accessories / Bedding Return — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx10-us-accessories-return-opened-item-50-keep-offer-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX10: US Accessories Return — Opened Item (50% Keep Offer) — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx11-us-accessories-return-unopened-item-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX11: US Accessories Return — Unopened Item — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx12-defective-reason-blocked-redirect-to-warranty-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX12: Defective Reason — Blocked, Redirect to Warranty — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx13-warranty-claim-full-flow-with-replacement-p0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX13: Warranty Claim — Full Flow with Replacement — P0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx14-warranty-claim-courier-pickup-with-defective-label-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX14: Warranty Claim — Courier Pickup with "(Defective)" Label — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx15-warranty-claim-disposal-pickup-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX15: Warranty Claim — Disposal Pickup — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx16-warranty-claim-declined-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX16: Warranty Claim — Declined — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx17-third-party-vendor-return-tsc-eq3-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX17: Third-Party Vendor Return — TSC / EQ3 — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx18-retail-store-return-shopify-pos-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX18: Retail Store Return (Shopify POS) — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx19-sleep-country-retail-store-blocked-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX19: Sleep Country Retail Store — Blocked — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx20-duplicate-return-prevention-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX20: Duplicate Return Prevention — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx21-double-submit-prevention-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX21: Double Submit Prevention — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx22-ineligible-item-past-return-window-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX22: Ineligible Item — Past Return Window — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx23-final-sale-item-not-returnable-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX23: Final Sale Item — Not Returnable — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx24-order-lookup-security-validation-p0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX24: Order Lookup — Security Validation — P0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx25-upload-validation-file-type-and-size-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX25: Upload Validation — File Type and Size — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx26-cx-documentation-override-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX26: CX Documentation Override — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx27-label-reprint-no-duplicate-labels-p3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX27: Label Reprint — No Duplicate Labels — P3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx28-return-label-count-cap-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX28: Return Label Count Cap — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx29-session-state-preservation-p3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX29: Session State Preservation — P3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx30-help-link-chatbot-redirect-p3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX30: Help Link — Chatbot Redirect — P3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx31-email-notifications-all-triggers-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX31: Email Notifications — All Triggers — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx32-category-filtering-only-relevant-items-shown-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ~~TC-CX32: Category Filtering — Only Relevant Items Shown~~ [REMOVED]
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#team-c-operations-team" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Team C — Operations Team
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Team C — Operations Team">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tc-op01-caledonia-warehouse-receive-inspect-return-p0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-OP01: Caledonia Warehouse — Receive &amp; Inspect Return — P0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-op02-caledonia-inspection-grade-requires-reason-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-OP02: Caledonia — Inspection Grade Requires Reason — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-op03-returned-items-report-caledonia-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-OP03: Returned Items Report — Caledonia — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-op04-us-warehouse-offline-status-update-lanj-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-OP04: US Warehouse — Offline Status Update (LA/NJ) — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-op06-caledonia-role-access-restriction-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-OP06: Caledonia Role — Access Restriction — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-op07-warehouse-routing-ca-returns-to-caledonia-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-OP07: Warehouse Routing — CA Returns to Caledonia — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-op08-warehouse-routing-us-returns-via-fulfil-api-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-OP08: Warehouse Routing — US Returns via Fulfil API — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-op09-vendor-portal-pickup-confirmation-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-OP09: Vendor Portal — Pickup Confirmation — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-op10-audit-trail-verification-p3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-OP10: Audit Trail Verification — P3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-op11-unboxed-mattress-vendor-assignment-pickup-p0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-OP11: Unboxed Mattress — Vendor Assignment &amp; Pickup — P0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-op12-vendor-change-after-assignment-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-OP12: Vendor Change After Assignment — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-op13-self-donate-return-logistics-flow-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-OP13: Self-Donate — Return Logistics Flow — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-op14-warranty-disposal-vendor-assignment-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-OP14: Warranty Disposal — Vendor Assignment — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-op15-email-notifications-operations-triggers-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-OP15: Email Notifications — Operations Triggers — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#open-qa-testing-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Open Q&amp;A — Testing Questions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference-test-coverage-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Reference — Test Coverage Map
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements-traceability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requirements Traceability
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="appendices.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#team-a-product-team-product-onboarding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Team A — Product Team (Product Onboarding)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Team A — Product Team (Product Onboarding)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tc-p01-onboard-new-products-via-excel-upload-ca-us-templates-p0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-P01: Onboard New Products via Excel Upload (CA &amp; US Templates) — P0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-p02-upload-replacement-parts-second-sheet-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-P02: Upload Replacement Parts (Second Sheet) — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-p03-update-an-existing-product-via-excel-re-upload-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-P03: Update an Existing Product via Excel Re-Upload — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-p04-remove-a-product-by-omitting-from-upload-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-P04: Remove a Product by Omitting from Upload — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-p05-upload-with-invalid-missing-data-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ~~TC-P05: Upload with Invalid / Missing Data~~ [REMOVED]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-p06-view-product-listing-search-by-sku-name-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-P06: View Product Listing — Search by SKU &amp; Name — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-p07-warranty-only-product-cannot-be-returned-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-P07: Warranty-Only Product Cannot Be Returned — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#team-b-customer-service-cx-team" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Team B — Customer Service (CX) Team
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Team B — Customer Service (CX) Team">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx01-online-ca-mattress-return-auto-refund-600-p0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX01: Online CA Mattress Return — Auto-Refund (&lt; $600) — P0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx02-online-ca-mattress-return-manual-refund-600-p0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX02: Online CA Mattress Return — Manual Refund (&gt;= $600) — P0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx03-mattress-return-within-30-nights-soft-warning-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ~~TC-CX03: Mattress Return Within 30 Nights — Soft Warning~~ [REMOVED]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx04-online-ca-unboxed-mattress-return-vendor-pickup-p0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX04: Online CA Unboxed Mattress Return (Vendor Pickup) — P0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx05-vendor-change-after-assignment-moved-tc-op12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ~~TC-CX05: Vendor Change After Assignment~~ [MOVED → TC-OP12]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx06-self-donate-full-customer-flow-moved-tc-op13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ~~TC-CX06: Self-Donate — Full Customer Flow~~ [MOVED → TC-OP13]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx07-online-ca-furniture-return-cx-pre-approval-charges-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX07: Online CA Furniture Return (CX Pre-Approval + Charges) — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx08-online-us-furniture-return-fulfil-api-routing-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX08: Online US Furniture Return (Fulfil API Routing) — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx09-ca-accessories-bedding-return-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX09: CA Accessories / Bedding Return — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx10-us-accessories-return-opened-item-50-keep-offer-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX10: US Accessories Return — Opened Item (50% Keep Offer) — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx11-us-accessories-return-unopened-item-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX11: US Accessories Return — Unopened Item — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx12-defective-reason-blocked-redirect-to-warranty-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX12: Defective Reason — Blocked, Redirect to Warranty — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx13-warranty-claim-full-flow-with-replacement-p0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX13: Warranty Claim — Full Flow with Replacement — P0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx14-warranty-claim-courier-pickup-with-defective-label-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX14: Warranty Claim — Courier Pickup with "(Defective)" Label — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx15-warranty-claim-disposal-pickup-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX15: Warranty Claim — Disposal Pickup — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx16-warranty-claim-declined-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX16: Warranty Claim — Declined — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx17-third-party-vendor-return-tsc-eq3-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX17: Third-Party Vendor Return — TSC / EQ3 — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx18-retail-store-return-shopify-pos-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX18: Retail Store Return (Shopify POS) — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx19-sleep-country-retail-store-blocked-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX19: Sleep Country Retail Store — Blocked — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx20-duplicate-return-prevention-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX20: Duplicate Return Prevention — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx21-double-submit-prevention-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX21: Double Submit Prevention — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx22-ineligible-item-past-return-window-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX22: Ineligible Item — Past Return Window — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx23-final-sale-item-not-returnable-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX23: Final Sale Item — Not Returnable — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx24-order-lookup-security-validation-p0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX24: Order Lookup — Security Validation — P0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx25-upload-validation-file-type-and-size-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX25: Upload Validation — File Type and Size — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx26-cx-documentation-override-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX26: CX Documentation Override — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx27-label-reprint-no-duplicate-labels-p3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX27: Label Reprint — No Duplicate Labels — P3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx28-return-label-count-cap-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX28: Return Label Count Cap — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx29-session-state-preservation-p3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX29: Session State Preservation — P3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx30-help-link-chatbot-redirect-p3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX30: Help Link — Chatbot Redirect — P3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx31-email-notifications-all-triggers-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-CX31: Email Notifications — All Triggers — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-cx32-category-filtering-only-relevant-items-shown-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ~~TC-CX32: Category Filtering — Only Relevant Items Shown~~ [REMOVED]
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#team-c-operations-team" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Team C — Operations Team
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Team C — Operations Team">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tc-op01-caledonia-warehouse-receive-inspect-return-p0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-OP01: Caledonia Warehouse — Receive &amp; Inspect Return — P0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-op02-caledonia-inspection-grade-requires-reason-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-OP02: Caledonia — Inspection Grade Requires Reason — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-op03-returned-items-report-caledonia-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-OP03: Returned Items Report — Caledonia — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-op04-us-warehouse-offline-status-update-lanj-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-OP04: US Warehouse — Offline Status Update (LA/NJ) — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-op06-caledonia-role-access-restriction-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-OP06: Caledonia Role — Access Restriction — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-op07-warehouse-routing-ca-returns-to-caledonia-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-OP07: Warehouse Routing — CA Returns to Caledonia — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-op08-warehouse-routing-us-returns-via-fulfil-api-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-OP08: Warehouse Routing — US Returns via Fulfil API — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-op09-vendor-portal-pickup-confirmation-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-OP09: Vendor Portal — Pickup Confirmation — P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-op10-audit-trail-verification-p3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-OP10: Audit Trail Verification — P3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-op11-unboxed-mattress-vendor-assignment-pickup-p0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-OP11: Unboxed Mattress — Vendor Assignment &amp; Pickup — P0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-op12-vendor-change-after-assignment-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-OP12: Vendor Change After Assignment — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-op13-self-donate-return-logistics-flow-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-OP13: Self-Donate — Return Logistics Flow — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-op14-warranty-disposal-vendor-assignment-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-OP14: Warranty Disposal — Vendor Assignment — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tc-op15-email-notifications-operations-triggers-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TC-OP15: Email Notifications — Operations Triggers — P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#open-qa-testing-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Open Q&amp;A — Testing Questions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference-test-coverage-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Reference — Test Coverage Map
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements-traceability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requirements Traceability
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="end-to-end-test-cases-claimlane-portal">End-to-End Test Cases — ClaimLane Portal</h1>
+<blockquote>
+<p><strong>Version:</strong> 2.0 (2026-03-19) — Discussion #41 audit: 11 action items applied. See <a href="changelog.html#2026-03-19--e2e-test-cases-discussion-audit-discussion-41--11-action-items">changelog</a>.</p>
+<p><strong>Previous versions:</strong> v1.0 (2026-03-12) — Initial test cases with Discussion-to-BRD gap audit applied.</p>
+<p><strong>How to use this document:</strong> Find your team section below. Each test case is numbered and self-contained. Follow the steps exactly as written. Only test cases marked <strong>Ready for Testing</strong> should be executed.</p>
+<p><strong>Status values:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Not Built Yet</code></td>
+<td>Feature is not yet developed. <strong>Do not test.</strong></td>
+</tr>
+<tr>
+<td><code>Ready for Testing</code></td>
+<td>Dev team has deployed this feature. <strong>Go ahead and test.</strong></td>
+</tr>
+<tr>
+<td><code>In Progress</code></td>
+<td>Tester is currently executing this test case.</td>
+</tr>
+<tr>
+<td><code>PASS</code></td>
+<td>All steps passed as expected.</td>
+</tr>
+<tr>
+<td><code>FAIL</code></td>
+<td>One or more steps did not match expected results. See Notes.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>For the dev team:</strong> When a feature is deployed and ready, update the Status field from <code>Not Built Yet</code> to <code>Ready for Testing</code> and note the date.</p>
+<p><strong>Priority levels:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Priority</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>P0 — Critical</code></td>
+<td>Core happy paths. Nothing works without these.</td>
+</tr>
+<tr>
+<td><code>P1 — High</code></td>
+<td>Key business rules and major alternate flows.</td>
+</tr>
+<tr>
+<td><code>P2 — Medium</code></td>
+<td>Edge cases, validation, and secondary flows.</td>
+</tr>
+<tr>
+<td><code>P3 — Low</code></td>
+<td>Polish, UX, and operational verification.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Testing model:</strong> Each team is <strong>self-sufficient</strong>. CX testers play the customer role to submit returns/claims, then test CX agent actions. Operations testers play the customer role to create test data, then test warehouse, logistics, and vendor actions. No team depends on another team to set up test data.</p>
+</blockquote>
+<hr />
+<h2 id="team-a-product-team-product-onboarding">Team A — Product Team (Product Onboarding)</h2>
+<h3 id="tc-p01-onboard-new-products-via-excel-upload-ca-us-templates-p0">TC-P01: Onboard New Products via Excel Upload (CA &amp; US Templates) — <code>P0</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Log in to the ClaimLane admin portal.</td>
+<td>Dashboard loads.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Navigate to <strong>Product Onboarding</strong>.</td>
+<td>Upload screen appears with <strong>two separate upload areas: CA template and US template</strong>.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Download the <strong>CA Excel template</strong>.</td>
+<td>Template downloads with columns: SKU, Product Name, Category, Subcategory, Final Sale (Yes/No), Fallback Weight (kg), Fallback Dimensions (LxWxH cm), Warranty Only (Yes/No). <strong>No Region column</strong> — region is determined by which template is used.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Fill in the CA template with <strong>2 products</strong>: one Mattress and one Accessory.</td>
+<td>File saves without errors.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Upload the CA file.</td>
+<td>System confirms upload. Upload event logged (file name + timestamp). <strong>Note:</strong> Upload is not gated by admin-level confirmation — access control is managed at the company settings level.</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Download the <strong>US Excel template</strong>.</td>
+<td>Same column structure as CA template.</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Fill in the US template with <strong>2 products</strong>: one Furniture (Final Sale = Yes) and the <strong>same Accessory SKU</strong> from Step 4 (product available in both regions).</td>
+<td>File saves without errors.</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Upload the US file. <strong>Test both modes:</strong> (a) <strong>Full overwrite</strong> — re-upload replaces all existing US products. (b) <strong>Add to existing</strong> — upload appends new products to the current list.</td>
+<td>System confirms upload. Both upload modes function correctly.</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Go to the <strong>Product Listing</strong> page.</td>
+<td>Products organized into <strong>two datasets: CA and US</strong>. CA shows the Mattress and Accessory. US shows the Furniture and Accessory.</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Verify the US Furniture item shows <strong>Final Sale = Yes</strong>.</td>
+<td>Confirmed.</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Verify the shared Accessory appears in <strong>both</strong> the CA and US datasets.</td>
+<td>Confirmed — same SKU visible in both regions.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-p02-upload-replacement-parts-second-sheet-p1">TC-P02: Upload Replacement Parts (Second Sheet) — <code>P1</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Prepare a <strong>CA or US Excel template</strong> with a furniture product on Sheet 1, and a <strong>Replacement Parts</strong> sheet (Sheet 2) with Parent SKU, Part SKU, and Part Name (e.g., "Drawer – Top Left").</td>
+<td>File ready with both sheets.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Upload the file to the corresponding region (CA or US). Confirm when prompted.</td>
+<td>System confirms: 1 product added, replacement parts linked.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Go to <strong>Product Listing</strong>. Find the furniture SKU.</td>
+<td>Product shows with linked replacement parts visible.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Verify the <strong>product guide URL</strong> column in the Excel sheet is populated for this product (URL points to an image or PDF showing which part comes from where).</td>
+<td>URL is stored as a column value in the Excel template — not uploaded via a separate UI action.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Go to <strong>Product Listing</strong>. Find the furniture SKU. Verify the product guide link is accessible.</td>
+<td>Product guide link appears on the product detail page. Clicking it opens the guide from the URL provided in the Excel sheet.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-p03-update-an-existing-product-via-excel-re-upload-p1">TC-P03: Update an Existing Product via Excel Re-Upload — <code>P1</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Prepare a <strong>complete CA or US Excel template</strong> that includes all existing products for that region. Change the Weight to a new value for one <strong>previously onboarded SKU</strong>.</td>
+<td>File ready. <strong>Note:</strong> The entire Excel sheet must be re-uploaded to overwrite current products — individual field edits are not supported.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Upload the file (full overwrite mode).</td>
+<td>System processes the full re-upload. All products in the file are updated/overwritten.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Go to <strong>Product Listing</strong> and find the SKU.</td>
+<td>Weight reflects the new value. All other fields unchanged. All other products in the region remain intact (because they were included in the re-upload).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-p04-remove-a-product-by-omitting-from-upload-p2">TC-P04: Remove a Product by Omitting from Upload — <code>P2</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Upload a new <strong>CA Excel template</strong> that <strong>does not include</strong> a previously onboarded CA SKU. Confirm when prompted.</td>
+<td>System processes upload. The omitted SKU is removed from the <strong>CA</strong> product list.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Go to <strong>Product Listing</strong>. Search for the omitted SKU in the <strong>CA dataset</strong>.</td>
+<td>SKU no longer appears in the CA product list. If the same SKU exists in the US template, it remains in the US dataset.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Check an existing ticket that previously referenced this SKU.</td>
+<td>Ticket still shows the original product info (historical data preserved).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-p05-upload-with-invalid-missing-data-removed">~~TC-P05: Upload with Invalid / Missing Data~~ <strong>[REMOVED]</strong></h3>
+<p><em>This test case has been removed. ClaimLane does not enforce category validation or mandatory SKU fields on upload. The platform does not expect a certain list of categories, nor requires all SKUs to be filled. Any S&amp;S-specific validation (e.g., ensuring all SKUs are present) must happen in the Excel template itself before upload, not in the system.</em></p>
+<hr />
+<h3 id="tc-p06-view-product-listing-search-by-sku-name-p1">TC-P06: View Product Listing — Search by SKU &amp; Name — <code>P1</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Navigate to <strong>Product Listing</strong>.</td>
+<td>All onboarded products display. Products are organized into <strong>two datasets: CA and US</strong>.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Confirm columns: SKU, Name, Category, Final Sale flag.</td>
+<td>All columns present and populated.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Search</strong> by SKU.</td>
+<td>Correct product found.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Search</strong> by Product Name.</td>
+<td>Correct product found.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Confirm that <strong>no filtering by specific field values</strong> (e.g., category) is available — search is limited to product name and SKU.</td>
+<td>Confirmed — for detailed review, the Excel file remains the source of truth.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-p07-warranty-only-product-cannot-be-returned-p1">TC-P07: Warranty-Only Product Cannot Be Returned — <code>P1</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Onboard a product with <strong>Warranty Only = Yes</strong> (e.g., Custom Hybrid Mattress).</td>
+<td>Product added.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>On the customer portal, look up an order containing this product. Start a <strong>Return</strong>.</td>
+<td>Item displays as <strong>not eligible</strong> for return. Cannot be selected.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Switch to <strong>Warranty Claim</strong>.</td>
+<td>Item <strong>is selectable</strong> for a warranty claim (if within warranty period).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h2 id="team-b-customer-service-cx-team">Team B — Customer Service (CX) Team</h2>
+<blockquote>
+<p><strong>Scope:</strong> CX testers cover the customer-facing portal flows and CX agent admin actions (approve/decline, manual refund, overrides). Play the <strong>customer role</strong> to set up test data. Warehouse receiving, vendor assignment, and logistics are tested by the Operations team — see cross-references at the end of each test case.</p>
+</blockquote>
+<h3 id="tc-cx01-online-ca-mattress-return-auto-refund-600-p0">TC-CX01: Online CA Mattress Return — Auto-Refund (&lt; $600) — <code>P0</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Open the customer-facing portal. Select <strong>Online Canada</strong> as channel.</td>
+<td>Channel selected.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Select <strong>Return</strong> as intent.</td>
+<td>Return flow begins.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Enter a valid <strong>order number + email</strong> for a CA order with a mattress delivered within the last 365 nights, total value <strong>under $600</strong>, no bundles.</td>
+<td>Items from the order display. Eligible items show as selectable (no status label on eligible items).</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Select the mattress.</td>
+<td>Item selected.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Choose a return reason (e.g., "Too Firm"). Confirm it is <strong>not</strong> "Defective."</td>
+<td>Reason accepted. Proceeds to documentation.</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Confirm whether mattress is <strong>boxed or unboxed</strong>. Select <strong>Boxed</strong>.</td>
+<td>Boxed mattress flow activates.</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Upload required photo: <strong>photo of the box</strong> (law tag is not required for boxed mattresses — it is only visible once unboxed). Enter lot number and description.</td>
+<td>Upload accepted. Lot number and description saved.</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Submit the return request.</td>
+<td>Shipping label generated (package count determined automatically by shipping endpoint). Drop-off instructions displayed. Ticket created.</td>
+</tr>
+<tr>
+<td>9</td>
+<td><strong>[CX Agent]</strong> Check the admin portal for the new ticket.</td>
+<td>Ticket visible with all details: item, reason, photos, lot number, tags (category + issue type).</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Customer drops off the package at the parcel shop / courier location.</td>
+<td>Parcel scanned at drop-off. Status auto-updates to <strong>"Received"</strong> when parcel is handed in at the parcel shop (drop-off scan via <strong>EasyPost API</strong>). <strong>Auto-refund initiated</strong> — system triggers refund at this point (value &lt; $600, no bundles) (BR-21, BR-26).</td>
+</tr>
+<tr>
+<td>11</td>
+<td><strong>Verify</strong> shipment tracking in the admin portal.</td>
+<td>System auto-tracks via <strong>EasyPost API</strong>. Status = <strong>"Received"</strong> (triggered by parcel shop drop-off scan, not courier collection). No manual action required.</td>
+</tr>
+<tr>
+<td>12</td>
+<td><strong>[CX Agent]</strong> Verify refund status in admin portal.</td>
+<td>Refund already initiated at drop-off. Audit trail logged. No duplicate refund can be initiated (BR-12).</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Ops continuation:</strong> Warehouse receiving and inspection → TC-OP01.</p>
+</blockquote>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-cx02-online-ca-mattress-return-manual-refund-600-p0">TC-CX02: Online CA Mattress Return — Manual Refund (&gt;= $600) — <code>P0</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Repeat TC-CX01 Steps 1–8 but use an order with mattress value <strong>$600 or more</strong>.</td>
+<td>Ticket created. Label generated.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Customer drops off at parcel shop. <strong>Verify</strong> status tracking in admin portal.</td>
+<td>System auto-tracks via <strong>EasyPost API</strong>. Status auto-updates to <strong>"Received"</strong> when parcel is scanned at drop-off. No manual action required.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Once status = "Received", <strong>verify</strong> system flags for <strong>manual CX refund</strong> (does NOT auto-refund because value ≥ $600).</td>
+<td>Ticket routed to CX for manual refund. Refund flagged at "Received" (not after warehouse processing).</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>[CX Agent]</strong> Manually process the refund.</td>
+<td>Refund completed. Audit trail logged. No duplicate refund can be initiated (BR-12).</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Ops continuation:</strong> Warehouse receiving and inspection → TC-OP01.</p>
+</blockquote>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-cx03-mattress-return-within-30-nights-soft-warning-removed">~~TC-CX03: Mattress Return Within 30 Nights — Soft Warning~~ <strong>[REMOVED]</strong></h3>
+<p><em>This test case has been removed. The 30-night soft warning requirement was dropped per vendor platform constraints (ClaimLane does not support timed, delivery-date-based soft warnings). Mattresses within the first 30 nights are simply eligible for return with no special messaging. This scenario is already covered by TC-CX01.</em></p>
+<hr />
+<h3 id="tc-cx04-online-ca-unboxed-mattress-return-vendor-pickup-p0">TC-CX04: Online CA Unboxed Mattress Return (Vendor Pickup) — <code>P0</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Start a return for a CA mattress order. At the boxed/unboxed step, select <strong>Unboxed</strong>.</td>
+<td>Unboxed mattress flow activates.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Upload photos showing the mattress condition, <strong>law tag photo</strong>, and condition details. Enter lot number and description.</td>
+<td>Uploads accepted. Lot number and description saved.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Submit the return.</td>
+<td>Ticket created. <strong>No shipping label generated</strong> (unboxed mattresses require vendor pickup, not mail-in). Ticket routed to <strong>Return Logistics Team</strong>.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Ops continuation:</strong> Vendor assignment and pickup → TC-OP11. Vendor portal confirmation → TC-OP09.</p>
+</blockquote>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-cx05-vendor-change-after-assignment-moved-tc-op12">~~TC-CX05: Vendor Change After Assignment~~ <strong>[MOVED → TC-OP12]</strong></h3>
+<p><em>This test case has been moved to the Operations section as TC-OP12. Vendor assignment and change is an Operations (Return Logistics) responsibility.</em></p>
+<hr />
+<h3 id="tc-cx06-self-donate-full-customer-flow-moved-tc-op13">~~TC-CX06: Self-Donate — Full Customer Flow~~ <strong>[MOVED → TC-OP13]</strong></h3>
+<p><em>This test case has been moved to the Operations section as TC-OP13. Self-donate is initiated by the Return Logistics Manager (Operations role).</em></p>
+<hr />
+<h3 id="tc-cx07-online-ca-furniture-return-cx-pre-approval-charges-p1">TC-CX07: Online CA Furniture Return (CX Pre-Approval + Charges) — <code>P1</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Start a return for a <strong>CA Furniture</strong> order (delivered within 30 days).</td>
+<td>Items display. Furniture item selectable.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Select the furniture item. Choose a return reason. Upload required photos (multiple angles, tag, assembly guide markup if missing parts). Enter lot number and description.</td>
+<td>All accepted.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>System calls WooCommerce API for a <strong>shipping/pickup charge quote</strong>. Destination: <strong>Caledonia warehouse</strong>.</td>
+<td>Quote amount displayed to customer. <em>(Disposal pickups use the same courier rate — standardized charge per BR-17.)</em></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Customer <strong>accepts</strong> the charge. Provides pickup details and access constraints. Submits.</td>
+<td>Ticket created. Marked as <strong>pending CX approval</strong>. Charge agreed but <strong>not finalized</strong> until CX approves.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>[CX Agent]</strong> Review the ticket (photos + agreed charge). <strong>Approve</strong> the return.</td>
+<td>Shipping label <strong>auto-generates</strong>. Destination: Caledonia warehouse. Charge finalized/processed. Customer receives approval email with label and pickup instructions.</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>[CX Agent]</strong> Test the <strong>decline</strong> path: decline a different furniture return.</td>
+<td>Customer receives decline email. No label generated. No charge processed.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Ops continuation:</strong> Shipment tracking verification → TC-OP07. Warehouse receiving and inspection → TC-OP01.</p>
+</blockquote>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-cx08-online-us-furniture-return-fulfil-api-routing-p1">TC-CX08: Online US Furniture Return (Fulfil API Routing) — <code>P1</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Start a return for a <strong>US Furniture</strong> order. Upload photos, enter details. System calls WooCommerce API for shipping charge.</td>
+<td>Charge quote displayed.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Customer accepts charge, provides pickup details, submits.</td>
+<td>Ticket created as <strong>pending CX approval</strong>. Charge agreed but not finalized.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>[CX Agent]</strong> Approve the return. System determines destination via <strong>Fulfil ERP API</strong> — origin warehouse (LA or NJ).</td>
+<td>Label <strong>auto-generated</strong> with correct US warehouse destination. Charge finalized.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>For an order shipped from <strong>multiple warehouses</strong>, verify the system routes to the <strong>closest warehouse</strong> to the customer's address (Google Maps geocoding).</td>
+<td>Correct closest warehouse (LA – JDLLA or NJ – JDLNJ) on the label.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Ops continuation:</strong> Shipment tracking verification → TC-OP08. US warehouse offline processing → TC-OP04.</p>
+</blockquote>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-cx09-ca-accessories-bedding-return-p1">TC-CX09: CA Accessories / Bedding Return — <code>P1</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Start a return. Channel: <strong>Online Canada</strong>. Select an <strong>Accessory or Bedding</strong> item (delivered within 100 nights).</td>
+<td>Item selectable.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Choose a return reason. Upload required photos and tag photos. Enter lot number and description.</td>
+<td>All accepted.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Submit.</td>
+<td><strong>Mail-in return label</strong> generated with instructions. Destination: <strong>Caledonia warehouse</strong> (BR-18 single-step flow).</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Ops continuation:</strong> Shipment tracking → TC-OP07. Warehouse receiving and inspection → TC-OP01.</p>
+</blockquote>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-cx10-us-accessories-return-opened-item-50-keep-offer-p1">TC-CX10: US Accessories Return — Opened Item (50% Keep Offer) — <code>P1</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Start a return. Channel: <strong>Online US</strong>. Select an <strong>Accessory/Bedding</strong> item (delivered within 100 nights).</td>
+<td>Item selectable.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Indicate the item is <strong>opened/used</strong>.</td>
+<td>System presents <strong>Option 1: Keep the item at 50% of full website price</strong> (no proof required).</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Customer <strong>accepts</strong> the 50% keep offer.</td>
+<td>50% refund processed. No return label generated. Customer keeps the item. Ticket created with "50% keep" resolution. Decision logged.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Repeat — customer <strong>rejects</strong> the 50% keep offer.</td>
+<td><strong>Customer Care ticket</strong> created. CX contacts the customer offline to encourage Option 2 (donate for 100% refund with CX-verified proof). Rejection logged on ticket.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-cx11-us-accessories-return-unopened-item-p2">TC-CX11: US Accessories Return — Unopened Item — <code>P2</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Start a return for a US Accessory that is <strong>unopened</strong>.</td>
+<td>No 50% keep offer shown (keep offer is for opened items only per BR-23).</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Complete documentation and submit.</td>
+<td>Shipping label generated. Standard mail-in return flow.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Ops continuation:</strong> Shipment tracking → TC-OP08. US warehouse offline processing → TC-OP04.</p>
+</blockquote>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-cx12-defective-reason-blocked-redirect-to-warranty-p1">TC-CX12: Defective Reason — Blocked, Redirect to Warranty — <code>P1</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Start a <strong>Return</strong> flow. Select any item.</td>
+<td>Item selected.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Choose <strong>"Defective"</strong> as the return reason.</td>
+<td>System <strong>blocks</strong> the return. Displays message: <em>"This is a warranty claim. Please restart the process and select 'Warranty Claim' as your intent."</em></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Confirm the customer cannot proceed with the return from this point.</td>
+<td>Blocked. No ticket created. No "Next" or "Continue" button available.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-cx13-warranty-claim-full-flow-with-replacement-p0">TC-CX13: Warranty Claim — Full Flow with Replacement — <code>P0</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Open portal. Select channel. Select <strong>Warranty Claim</strong> as intent.</td>
+<td>Warranty flow begins.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Enter valid order number + email.</td>
+<td>Items display with <strong>replacement parts shown with product context</strong> (e.g., Nara Dresser → Drawer – Top Left, Screw, etc.). Items within warranty period are selectable (even if return window is closed).</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Verify the <strong>product guide</strong> is displayed for the selected product (e.g., annotated diagram showing which part comes from where).</td>
+<td>Product guide visible — helps customer identify the correct defective part before selecting. Guide was uploaded during product onboarding (see TC-P02).</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Select the item. Choose the defective <strong>part/component</strong> (e.g., a specific drawer).</td>
+<td>Part selected.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Complete documentation: issue description, photos of defect, address confirmation. Enter lot number and description.</td>
+<td>All accepted.</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Submit the warranty claim. Verify <strong>no pickup assistance option</strong> is presented during submission (FR-35 — pickup is CX follow-on only).</td>
+<td>Ticket created with selected part SKUs, evidence, and notes. Marked as <strong>pending CX review</strong>. No pickup fields shown to customer.</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>[CX Agent]</strong> Review the claim. Validate photos. <strong>Override the part selection</strong> to a different part (test CX override capability). <strong>Approve</strong> the warranty claim.</td>
+<td>Claim approved with overridden part SKU. Default assumption: customer does <strong>not</strong> need pickup assistance.</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>[CX Agent]</strong> Click the <strong>"Replacement Action"</strong> button in the portal to trigger the replacement order.</td>
+<td>CX clicking the replacement action creates a $0 replacement order via <strong>WooCommerce API</strong> using the approved replacement part SKUs and customer's billing/shipping details (FR-24). Order status set to "Processing." Customer notified via WooCommerce. Order linked to the warranty ticket. <strong>Note:</strong> The replacement is CX-initiated (manual action), not automatic.</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Case closed.</td>
+<td>Case marked complete after replacement order placed.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-cx14-warranty-claim-courier-pickup-with-defective-label-p2">TC-CX14: Warranty Claim — Courier Pickup with "(Defective)" Label — <code>P2</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Complete and approve a warranty claim (TC-CX13 Steps 1–7).</td>
+<td>Claim approved.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>[Customer → CX Agent]</strong> Customer calls CX to request <strong>pickup assistance</strong>. CX adds pickup assistance to the case.</td>
+<td>Pickup assistance added.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>[CX Agent]</strong> Select <strong>Courier Pickup</strong> as the pickup type.</td>
+<td>Return label generated. Label includes the text <strong>"(Defective)"</strong> to signal the warehouse to bypass inspection (BR-27).</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Verify the label text.</td>
+<td>"(Defective)" text confirmed on label.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-cx15-warranty-claim-disposal-pickup-p2">TC-CX15: Warranty Claim — Disposal Pickup — <code>P2</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>[CX Agent]</strong> From an approved warranty claim with pickup assistance, select <strong>Disposal Pickup</strong>.</td>
+<td>Case logged for <strong>Return Logistics Team</strong> to assign a disposal vendor.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Ops continuation:</strong> Vendor assignment for disposal pickup → TC-OP14.</p>
+</blockquote>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-cx16-warranty-claim-declined-p1">TC-CX16: Warranty Claim — Declined — <code>P1</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Submit a warranty claim (TC-CX13 Steps 1–6).</td>
+<td>Ticket created.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>[CX Agent]</strong> Review and <strong>decline</strong> the warranty claim.</td>
+<td>Customer receives decline email with reason. No replacement order created. Ticket closed with decline reason logged.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-cx17-third-party-vendor-return-tsc-eq3-p1">TC-CX17: Third-Party Vendor Return — TSC / EQ3 — <code>P1</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Open the <strong>vendor-specific generic link</strong> for TSC or EQ3 (link identifies vendor only, not customer-specific).</td>
+<td>Third-party flow begins.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Terms &amp; Conditions gate</strong> appears. Verify it states: (1) No refund will be issued by Silk &amp; Snow, (2) The return is not authorized by the third-party partner.</td>
+<td>T&amp;C page displayed with both disclosures. There is <strong>no decline button</strong> — customer either accepts or closes the page.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Accept</strong> T&amp;C (checkbox + confirm button).</td>
+<td>Proceeds to pickup details.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Enter pickup details: address, access constraints, contact info. Upload photos.</td>
+<td>All fields captured. <strong>Note:</strong> Preferred dates are no longer collected.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Submit.</td>
+<td>Ticket created, tagged with the third-party vendor name (TSC or EQ3).</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>[CX Agent]</strong> Review. Select <strong>Courier</strong> pickup — generate return label.</td>
+<td>Label generated. Pickup coordinated. <strong>No S&amp;S refund issued</strong> (refund is vendor's responsibility per BR-1).</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>[CX Agent]</strong> For a separate ticket, select <strong>Disposal</strong> pickup.</td>
+<td>Case logged for <strong>Return Logistics Team</strong> to assign a disposal vendor.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Ops continuation:</strong> Third-party vendor assignment and pickup → TC-OP11, TC-OP14.</p>
+</blockquote>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-cx18-retail-store-return-shopify-pos-p2">TC-CX18: Retail Store Return (Shopify POS) — <code>P2</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Select <strong>Silk &amp; Snow Retail Store</strong> as channel.</td>
+<td>Routes to WooCommerce online order flow (shared with Shopify POS orders).</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Enter order number + email.</td>
+<td>Order validated against WooCommerce/Shopify POS data.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Complete return flow for an eligible item.</td>
+<td>Ticket created with retail channel context. Routing follows standard rules.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-cx19-sleep-country-retail-store-blocked-p2">TC-CX19: Sleep Country Retail Store — Blocked — <code>P2</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Select <strong>Sleep Country Retail Store</strong> as channel.</td>
+<td>System displays message: <em>"This return cannot be processed through this portal. Please call the Sleep Country Customer Service team for further instructions."</em></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Confirm the flow ends. No order lookup, no ticket, no label.</td>
+<td>Flow ends completely. No further actions available.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-cx20-duplicate-return-prevention-p1">TC-CX20: Duplicate Return Prevention — <code>P1</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Complete a return for an item (use any previous test case).</td>
+<td>Ticket created.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Attempt to start <strong>another return for the same item</strong> on the same order.</td>
+<td>System blocks the duplicate. Item shows as <strong>"Already Returned."</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-cx21-double-submit-prevention-p1">TC-CX21: Double Submit Prevention — <code>P1</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Complete a return flow up to the final Submit step.</td>
+<td>Ready to submit.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Click <strong>Submit</strong> rapidly <strong>twice</strong> (or refresh and re-submit).</td>
+<td>Only <strong>one</strong> ticket is created. Only <strong>one</strong> refund is initiated. No duplicates.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-cx22-ineligible-item-past-return-window-p1">TC-CX22: Ineligible Item — Past Return Window — <code>P1</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Look up an order with a mattress delivered <strong>more than 365 nights ago</strong>.</td>
+<td>Item displays as <strong>ineligible</strong> with a fixed ineligibility message (no specific reason shown).</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Confirm the item <strong>cannot be selected</strong> for return.</td>
+<td>Item is greyed out or blocked.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Switch to <strong>Warranty Claim</strong>. Mattress is within 15-year warranty period.</td>
+<td>Item <strong>is selectable</strong> for warranty.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-cx23-final-sale-item-not-returnable-p1">TC-CX23: Final Sale Item — Not Returnable — <code>P1</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Look up an order containing a <strong>Final Sale</strong> item (the one onboarded with Final Sale = Yes in TC-P01).</td>
+<td>Item displays as <strong>ineligible</strong>.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Confirm it cannot be selected for return.</td>
+<td>Blocked.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-cx24-order-lookup-security-validation-p0">TC-CX24: Order Lookup — Security Validation — <code>P0</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Enter a <strong>valid order number</strong> with an <strong>incorrect email</strong>.</td>
+<td>Lookup fails. Generic error message. No order details revealed.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Enter an <strong>invalid order number</strong> with a valid email.</td>
+<td>Same generic error. No details revealed.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Enter an email with <strong>leading/trailing spaces</strong> and a valid order number.</td>
+<td>System trims email spaces. Order found and displays successfully (FR-4).</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Enter a valid email and an <strong>order number with leading/trailing spaces</strong>.</td>
+<td>Lookup fails — order number is <strong>not trimmed</strong> (FR-4). Generic error message.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Enter an <strong>invalid email format</strong> (e.g., "notanemail").</td>
+<td>Validation error shown before lookup attempt.</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Enter <strong>both correct</strong> (valid email + valid order number).</td>
+<td>Order details display.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-cx25-upload-validation-file-type-and-size-p2">TC-CX25: Upload Validation — File Type and Size — <code>P2</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>During documentation upload, attempt to upload an <strong>unsupported file type</strong> (e.g., .exe, .zip).</td>
+<td>Upload rejected with clear error: invalid file type.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Upload an image file <strong>larger than 50 MB</strong>.</td>
+<td>Upload blocked with clear error: file too large (50 MB limit).</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Upload a video file in an <strong>unsupported format</strong> (e.g., .avi, .wmv).</td>
+<td>Upload rejected. Only <strong>.mov</strong> and <strong>.mp4</strong> video formats are accepted.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Upload a valid <strong>.mov or .mp4</strong> video file.</td>
+<td>Upload accepted. Video compressed if above 50 MB.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Upload a valid photo in <strong>any image format</strong> (e.g., .jpg, .png, .bmp, .webp).</td>
+<td>Upload accepted — no image format restriction is enforced. Preview shown.</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Attempt to <strong>submit without uploading all required documents</strong>.</td>
+<td>Submission blocked. Missing documents highlighted.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-cx26-cx-documentation-override-p2">TC-CX26: CX Documentation Override — <code>P2</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>A customer submits a return/warranty claim but is missing a required document (e.g., no tag photo).</td>
+<td>Submission blocked on the customer side.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>[CX Agent]</strong> Manually override the documentation requirement for this ticket.</td>
+<td>Override applied. CX can proceed with the ticket. Override action logged in audit trail.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-cx27-label-reprint-no-duplicate-labels-p3">TC-CX27: Label Reprint — No Duplicate Labels — <code>P3</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Complete a return where a shipping label was generated.</td>
+<td>Label visible with tracking number.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Click <strong>Reprint Label</strong>.</td>
+<td>Same label reprints. <strong>No new label created.</strong> Same tracking number. No extra charges.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-cx28-return-label-count-cap-p2">TC-CX28: Return Label Count Cap — <code>P2</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Complete a return for an order that originally shipped in <strong>2 boxes</strong>.</td>
+<td>System calls the shipping endpoint.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Verify the number of return labels generated does <strong>not exceed 2</strong> (the original box count).</td>
+<td>Labels capped at original order's box count (BR-22).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-cx29-session-state-preservation-p3">TC-CX29: Session State Preservation — <code>P3</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Start a return. Complete order lookup and item selection.</td>
+<td>Progress saved.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Close the browser tab or navigate away. Reopen / return to the portal.</td>
+<td>Session resumes from where the customer left off. No data lost.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-cx30-help-link-chatbot-redirect-p3">TC-CX30: Help Link — Chatbot Redirect — <code>P3</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Click the <strong>Help</strong> link/button from any screen.</td>
+<td>User is redirected to the <strong>Silk &amp; Snow chatbot</strong> (external URL). No static help page is displayed within the portal.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Verify the chatbot loads and is functional.</td>
+<td>Chatbot is accessible. <strong>Note:</strong> The chatbot is trained internally by S&amp;S to point to the Claimlane site — no implementation needed from Claimlane, but verify the redirect works.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Verify <strong>no telephone numbers</strong> or other support channels are displayed anywhere in the portal.</td>
+<td>Confirmed — only chatbot redirect.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-cx31-email-notifications-all-triggers-p2">TC-CX31: Email Notifications — All Triggers — <code>P2</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>CX approves a furniture return.</td>
+<td>Customer receives approval email.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>CX declines a furniture return.</td>
+<td>Customer receives decline email.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>CX declines a warranty claim.</td>
+<td>Customer receives decline email with reason.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note:</strong> Vendor-related email notifications (assignment, change, pickup) are tested in Operations: TC-OP11, TC-OP12, TC-OP15.</p>
+</blockquote>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-cx32-category-filtering-only-relevant-items-shown-removed">~~TC-CX32: Category Filtering — Only Relevant Items Shown~~ <strong>[REMOVED]</strong></h3>
+<p><em>This test case has been removed. FR-8 (Category Filtering) was dropped per stakeholder feedback — the portal shows all items on the order regardless of category and the flow adapts based on what the customer selects.</em></p>
+<hr />
+<h2 id="team-c-operations-team">Team C — Operations Team</h2>
+<blockquote>
+<p><strong>Scope:</strong> Operations testers cover warehouse processing (Caledonia &amp; US), vendor/logistics management (Return Logistics Manager), and the Vendor Portal. Play the <strong>customer role</strong> to create test data when needed (submit returns via the portal to generate tickets). Roles tested: Caledonia Team, Return Logistics Manager, Internal Ops, Vendor.</p>
+</blockquote>
+<h3 id="tc-op01-caledonia-warehouse-receive-inspect-return-p0">TC-OP01: Caledonia Warehouse — Receive &amp; Inspect Return — <code>P0</code></h3>
+<p><strong>Prerequisites:</strong> Submit a CA return via the customer portal (e.g., follow TC-CX01 Steps 1–8 as the customer) and have the package delivered to Caledonia warehouse.</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Log in to ClaimLane with <strong>Caledonia warehouse role</strong> (limited access).</td>
+<td>Only warehouse-relevant screens visible. No access to CX functions, refunds, or product onboarding.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Find the return that has been physically received at Caledonia.</td>
+<td>Return record visible with item details.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Update status from <strong>Delivered → Processing</strong>.</td>
+<td>Status updates. Timestamp logged.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Update status from <strong>Processing → Inspection Completed</strong>.</td>
+<td>System prompts for <strong>Inspection Grade</strong>.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Select <strong>Grade A (Resalable)</strong>. Enter a mandatory reason/note.</td>
+<td>Grade and reason saved. Status is now "Inspection Completed."</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Repeat with <strong>Grade B (Donatable)</strong> and <strong>Grade C (Damaged)</strong> on separate items.</td>
+<td>All grades accepted with mandatory reasons.</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Verify warehouse processing <strong>does NOT re-trigger refund logic</strong>.</td>
+<td><strong>Status lifecycle:</strong> The item is already in <strong>"Received"</strong> status (set when parcel was handed in at parcel shop — see TC-CX01 Step 10). Refund was already initiated at that point. The warehouse team's role is to confirm physical receipt and complete the inspection. After grading, status moves from <strong>"Received" → "Inspection Completed"</strong>.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-op02-caledonia-inspection-grade-requires-reason-p2">TC-OP02: Caledonia — Inspection Grade Requires Reason — <code>P2</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>During inspection, select a grade but <strong>leave the reason blank</strong>.</td>
+<td>System prevents saving. Error: "Reason is required."</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Try to skip the grade dropdown (leave it unselected) and save.</td>
+<td>System prevents saving. Grade selection is mandatory.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-op03-returned-items-report-caledonia-p2">TC-OP03: Returned Items Report — Caledonia — <code>P2</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Navigate to <strong>Returned Items Report</strong>.</td>
+<td>Report loads.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Verify report columns: <strong>SKU, Description, Inspection Grade (A/B/C), Delivery Date, Inspection Date, Quantity</strong>.</td>
+<td>All columns present and populated.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Find an item that has <strong>multiple units with different grades</strong> (e.g., 2 units of same SKU — one Grade A, one Grade B).</td>
+<td>Each grade shows as a <strong>separate row</strong> with correct quantity per row.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Verify <strong>Delivery Date</strong> = date the return was received at the warehouse. Verify <strong>Inspection Date</strong> = date the inspection grade was assigned.</td>
+<td>Both dates correct and distinct.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-op04-us-warehouse-offline-status-update-lanj-p2">TC-OP04: US Warehouse — Offline Status Update (LA/NJ) — <code>P2</code></h3>
+<p><strong>Prerequisites:</strong> Submit a US return via the customer portal (e.g., follow TC-CX08 or TC-CX11 as the customer) and have the package delivered to the US warehouse.</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Simulate: a return arrives at LA or NJ warehouse. Warehouse staff sends an <strong>email to Internal Ops</strong> with item status.</td>
+<td>Email received by Internal Ops.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>[Internal Ops]</strong> Log into ClaimLane and manually update the return status: <strong>Delivered → Processing → Inspection Completed</strong> (with grade and reason).</td>
+<td>Status updated in the portal. Audit trail logged.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Verify the status update is recorded.</td>
+<td><strong>No automatic refund</strong> — US warehouse tickets are handled manually end-to-end, including refund initiation. The ticket is flagged for <strong>manual refund processing</strong> by Internal Ops / CX.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Verify the update appears in the <strong>Returned Items Report</strong>.</td>
+<td>Item shows with correct SKU, grade, dates, and quantity.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Verify Internal Ops has <strong>no Caledonia-specific access</strong> (US portal only).</td>
+<td>Confirmed — access scoped to US warehouse operations.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-op06-caledonia-role-access-restriction-p2">TC-OP06: Caledonia Role — Access Restriction — <code>P2</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Log in with Caledonia warehouse credentials.</td>
+<td>Limited dashboard loads.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Attempt to access <strong>CX ticket management</strong>.</td>
+<td>Access denied or menu not visible.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Attempt to access <strong>Refund processing</strong>.</td>
+<td>Access denied or menu not visible.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Attempt to access <strong>Product Onboarding</strong>.</td>
+<td>Access denied or menu not visible.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Confirm the only available actions are: <strong>update return status, select inspection grade, view returned items report</strong>.</td>
+<td>Confirmed — no other functionality accessible.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-op07-warehouse-routing-ca-returns-to-caledonia-p1">TC-OP07: Warehouse Routing — CA Returns to Caledonia — <code>P1</code></h3>
+<p><strong>Prerequisites:</strong> Submit a CA return via the customer portal (any category).</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Complete a CA return (any category).</td>
+<td>Shipping label generated.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Verify the label destination is <strong>Caledonia warehouse</strong>.</td>
+<td>Confirmed.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Verify</strong> shipment tracking in the admin portal.</td>
+<td>System auto-tracks via <strong>EasyPost API</strong>. Status auto-updates to <strong>"Received"</strong> when parcel is scanned at the parcel shop (drop-off scan, not courier collection). No manual action required.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-op08-warehouse-routing-us-returns-via-fulfil-api-p1">TC-OP08: Warehouse Routing — US Returns via Fulfil API — <code>P1</code></h3>
+<p><strong>Prerequisites:</strong> Submit a US return via the customer portal.</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Complete a US return for an item shipped from a <strong>single warehouse</strong>.</td>
+<td>System calls Fulfil ERP API.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Verify the label destination is the <strong>origin warehouse</strong> (LA or NJ).</td>
+<td>Correct warehouse on the label.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Complete a US return for an order shipped from <strong>multiple warehouses</strong> (split shipment).</td>
+<td>System calls Fulfil ERP API + Google Maps geocoding.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Verify the label destination is the <strong>closest warehouse</strong> to the customer's shipping address.</td>
+<td>Correct closest warehouse (LA – JDLLA or NJ – JDLNJ) on the label.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Verify</strong> shipment tracking in the admin portal.</td>
+<td>System auto-tracks via <strong>EasyPost API</strong>. Status auto-updates to <strong>"Received"</strong> when parcel is scanned at the parcel shop (drop-off scan, not courier collection). No manual action required.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-op09-vendor-portal-pickup-confirmation-p1">TC-OP09: Vendor Portal — Pickup Confirmation — <code>P1</code></h3>
+<p><strong>Prerequisites:</strong> An unboxed mattress return has been submitted and a vendor has been assigned (see TC-OP11).</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Log in as a <strong>donation/pickup vendor</strong>.</td>
+<td>Vendor portal loads. Only assigned pickups visible. No access to other tickets or admin functions.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Find an assigned pickup. View details: address, access constraints. Confirm <strong>no customer photos</strong> are visible (for unboxed mattress pickups — FR-20).</td>
+<td>Details visible. Photos not shown. <strong>Note:</strong> Available dates are no longer captured.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>After collecting the item, return to the Vendor Portal and update the status to <strong>"Received"</strong>.</td>
+<td>Vendor manually updates status from <strong>"Pickup" → "Received"</strong> (BR-16). This is a <strong>manual vendor action</strong>, not an automatic transition. Change reflected in the admin portal. <strong>"Received" status triggers refund logic</strong> — routed to CX for manual processing (mattresses are ≥ $600).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-op10-audit-trail-verification-p3">TC-OP10: Audit Trail Verification — <code>P3</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Perform several actions across the system: create a ticket, assign a vendor, process a refund, update warehouse status.</td>
+<td>All actions complete.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Review the <strong>audit trail</strong> for each action.</td>
+<td>Every action logged with: <strong>who</strong> performed it, <strong>what</strong> was done, and <strong>timestamp</strong>.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Verify failed API calls (label generation, refund) are logged with error details.</td>
+<td>Failures logged with clear guidance for resolution.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-op11-unboxed-mattress-vendor-assignment-pickup-p0">TC-OP11: Unboxed Mattress — Vendor Assignment &amp; Pickup — <code>P0</code></h3>
+<p><strong>Prerequisites:</strong> Submit an unboxed mattress return via the customer portal (follow TC-CX04 Steps 1–3 as the customer). Ticket is routed to Return Logistics Team.</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>[Return Logistics Manager]</strong> Open the ticket. Select a <strong>donation/pickup vendor</strong> from the vendor list.</td>
+<td>Vendor assigned.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Confirm that <strong>photos are NOT sent to the vendor</strong> (FR-20).</td>
+<td>Vendor receives automated email notification (without customer photos). Customer receives notification with pickup details.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>[Vendor]</strong> Log in to the <strong>Vendor Portal</strong>. Find the assigned pickup.</td>
+<td>Vendor sees the pickup with address and access constraints — <strong>no customer photos visible</strong>. <strong>Note:</strong> Available dates are no longer captured.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>[Vendor]</strong> Pick up the mattress. Return to the Vendor Portal and update the status to <strong>"Received"</strong>.</td>
+<td>Vendor manually updates status from <strong>"Pickup" → "Received"</strong> (BR-16). This is a <strong>manual vendor action</strong>, not automatic. <strong>"Received" triggers refund logic</strong> — routed to CX for manual processing (mattresses are ≥ $600).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-op12-vendor-change-after-assignment-p2">TC-OP12: Vendor Change After Assignment — <code>P2</code></h3>
+<p><strong>Prerequisites:</strong> An unboxed mattress return has a vendor assigned (use TC-OP11).</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>[Return Logistics Manager]</strong> Change the vendor to a <strong>different vendor</strong>.</td>
+<td>New vendor assigned.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Verify: old vendor receives notification of removal, new vendor receives assignment notification, customer receives updated notification.</td>
+<td>All three emails sent.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>[Vendor]</strong> New vendor logs in to Vendor Portal.</td>
+<td>Sees the reassigned pickup. Old vendor no longer sees it.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-op13-self-donate-return-logistics-flow-p2">TC-OP13: Self-Donate — Return Logistics Flow — <code>P2</code></h3>
+<p><strong>Prerequisites:</strong> An unboxed mattress return has been submitted (follow TC-CX04 Steps 1–3 as the customer). Ticket is routed to Return Logistics Team.</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>[Return Logistics Manager]</strong> Confirm no vendor is available. Select <strong>"Self-Donation"</strong> from the vendor list.</td>
+<td>Self-donation option selected. Customer receives self-donation instruction email.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>[Customer]</strong> Donates the item, takes a photo as proof, and contacts CX via call or email with the photo.</td>
+<td>CX receives the proof.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>[CX Agent]</strong> Manually process the return in ClaimLane. Close the case.</td>
+<td>Return processed. Case closed with donation proof logged.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-op14-warranty-disposal-vendor-assignment-p2">TC-OP14: Warranty Disposal — Vendor Assignment — <code>P2</code></h3>
+<p><strong>Prerequisites:</strong> A warranty claim has been approved with disposal pickup selected by CX (see TC-CX15).</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>[Return Logistics Manager]</strong> Open the disposal case. Assign a <strong>disposal vendor</strong>.</td>
+<td>Vendor assigned. Customer receives notification with pickup details.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>[Vendor]</strong> Log in to the <strong>Vendor Portal</strong>. Find the assigned disposal pickup.</td>
+<td>Vendor sees the pickup with address and access constraints. <strong>Note:</strong> Available dates are no longer captured.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>[Vendor]</strong> Pick up the item. Return to the Vendor Portal and update the status to <strong>"Received"</strong>.</td>
+<td>Vendor manually updates status from <strong>"Pickup" → "Received"</strong> (BR-16). This is a <strong>manual vendor action</strong>, not automatic.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h3 id="tc-op15-email-notifications-operations-triggers-p2">TC-OP15: Email Notifications — Operations Triggers — <code>P2</code></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Assign a vendor to an unboxed mattress pickup.</td>
+<td>Vendor receives assignment email. Customer receives pickup notification.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Change the vendor.</td>
+<td>Old vendor: removal email. New vendor: assignment email. Customer: updated notification.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Third-party pickup ticket created (TSC/EQ3). Assign vendor.</td>
+<td>Vendor receives assignment email.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Vendor completes a third-party pickup.</td>
+<td>Vendor notified that item has been collected.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Select self-donation for a ticket.</td>
+<td>Customer receives self-donation instruction email.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> <code>Not Built Yet</code>
+<strong>Ready Since:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Result:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em>
+<strong>Tested By:</strong> <strong><em>_</em></strong><strong><em>_</em></strong><em>
+<strong>Notes:</strong> <strong><em>_</em></strong><strong><em>_</em></strong></em></p>
+<hr />
+<h2 id="open-qa-testing-questions">Open Q&amp;A — Testing Questions</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Question</th>
+<th>Status</th>
+<th>Answer / Resolution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q1</td>
+<td>Once a label gets generated, how do we simulate <strong>"Picked Up"</strong> status in testing? This status triggers downstream processes (auto-refund at in-transit, EasyPost tracking, warehouse receiving). Do we need an EasyPost sandbox/test mode, or a manual override in the admin portal?</td>
+<td><strong>Open</strong></td>
+<td><em>Needs technical input</em></td>
+</tr>
+<tr>
+<td>Q2</td>
+<td>For TC-CX08 (US Furniture Return), we need to test shipments routed to <strong>different US warehouse locations (LA vs. New Jersey)</strong> via Fulfil ERP API. How do we set up test data / SKUs that route to each location? CX team needs guidance on this.</td>
+<td><strong>Open</strong></td>
+<td><em>Needs technical input</em></td>
+</tr>
+<tr>
+<td>Q3</td>
+<td>Technical team needs to provide test data: (1) an order with a <strong>mattress delivered more than 365 days ago</strong> (to test return window expiry / eligibility rejection — TC-CX22), and (2) an order with an item marked as <strong>final sale</strong> (to test final sale blocking — TC-CX23).</td>
+<td><strong>Open</strong></td>
+<td><em>Needs technical input</em></td>
+</tr>
+<tr>
+<td>Q4</td>
+<td><strong>TC-OP08 (Warehouse Routing — US Returns via Fulfil API):</strong> This test case includes API call verification. Melroy needs Sri's help to execute the Fulfil API check steps.</td>
+<td><strong>Open</strong></td>
+<td><em>Sri to pair with Melroy on API testing</em></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="quick-reference-test-coverage-map">Quick Reference — Test Coverage Map</h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Test Cases</th>
+<th>Primary Team</th>
+<th>Priority</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Product Onboarding &amp; Excel Upload</td>
+<td>TC-P01 to TC-P04</td>
+<td>Product</td>
+<td>P0–P2</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>~~Upload Validation~~</td>
+<td>~~TC-P05~~</td>
+<td>~~Product~~</td>
+<td>—</td>
+<td>Removed</td>
+</tr>
+<tr>
+<td>Product Listing, Search by SKU &amp; Name</td>
+<td>TC-P06</td>
+<td>Product</td>
+<td>P1</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>Warranty-Only Products</td>
+<td>TC-P07</td>
+<td>Product</td>
+<td>P1</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>CA Mattress Returns (Boxed)</td>
+<td>TC-CX01, TC-CX02</td>
+<td>CX</td>
+<td>P0</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>CA Mattress Returns (Unboxed — Customer Portal)</td>
+<td>TC-CX04</td>
+<td>CX</td>
+<td>P0</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>CA Furniture Returns (CX Pre-Approval)</td>
+<td>TC-CX07</td>
+<td>CX</td>
+<td>P1</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>US Furniture Returns (CX Approval + Fulfil Routing)</td>
+<td>TC-CX08</td>
+<td>CX</td>
+<td>P1</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>CA Accessories / Bedding Returns</td>
+<td>TC-CX09</td>
+<td>CX</td>
+<td>P1</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>US Accessories Returns (50% Keep, Unopened)</td>
+<td>TC-CX10, TC-CX11</td>
+<td>CX</td>
+<td>P1–P2</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>Defective Reason Blocking</td>
+<td>TC-CX12</td>
+<td>CX</td>
+<td>P1</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>Warranty Claims (Full Flow, Courier, Disposal, Decline)</td>
+<td>TC-CX13 to TC-CX16</td>
+<td>CX</td>
+<td>P0–P2</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>Third-Party Returns (TSC, EQ3)</td>
+<td>TC-CX17</td>
+<td>CX</td>
+<td>P1</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>Retail &amp; Sleep Country Channel Routing</td>
+<td>TC-CX18, TC-CX19</td>
+<td>CX</td>
+<td>P2</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>Duplicate / Double-Submit Prevention</td>
+<td>TC-CX20, TC-CX21</td>
+<td>CX</td>
+<td>P1</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>Eligibility (Return Window, Final Sale)</td>
+<td>TC-CX22, TC-CX23</td>
+<td>CX</td>
+<td>P1</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>Security &amp; Input Validation</td>
+<td>TC-CX24, TC-CX25</td>
+<td>CX</td>
+<td>P0–P2</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>CX Overrides &amp; Label Management</td>
+<td>TC-CX26, TC-CX27, TC-CX28</td>
+<td>CX</td>
+<td>P2–P3</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>Session, Help (Chatbot Redirect)</td>
+<td>TC-CX29, TC-CX30</td>
+<td>CX</td>
+<td>P3</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>CX Email Notifications</td>
+<td>TC-CX31</td>
+<td>CX</td>
+<td>P2</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>~~Category Filtering~~</td>
+<td>~~TC-CX32~~</td>
+<td>~~CX~~</td>
+<td>—</td>
+<td>Removed</td>
+</tr>
+<tr>
+<td>Caledonia Warehouse (Receive &amp; Inspect)</td>
+<td>TC-OP01, TC-OP02, TC-OP03</td>
+<td>Operations</td>
+<td>P0–P2</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>Caledonia Role Access</td>
+<td>TC-OP06</td>
+<td>Operations</td>
+<td>P2</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>US Warehouse (Offline Processing)</td>
+<td>TC-OP04</td>
+<td>Operations</td>
+<td>P2</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>Warehouse Routing (CA &amp; US)</td>
+<td>TC-OP07, TC-OP08</td>
+<td>Operations</td>
+<td>P1</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>Vendor Portal (Pickup Confirmation)</td>
+<td>TC-OP09</td>
+<td>Operations</td>
+<td>P1</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>Vendor Assignment &amp; Pickup (Unboxed Mattress)</td>
+<td>TC-OP11</td>
+<td>Operations</td>
+<td>P0</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>Vendor Change After Assignment</td>
+<td>TC-OP12</td>
+<td>Operations</td>
+<td>P2</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>Self-Donate Flow</td>
+<td>TC-OP13</td>
+<td>Operations</td>
+<td>P2</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>Warranty Disposal — Vendor Assignment</td>
+<td>TC-OP14</td>
+<td>Operations</td>
+<td>P2</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>Operations Email Notifications</td>
+<td>TC-OP15</td>
+<td>Operations</td>
+<td>P2</td>
+<td>Not Built Yet</td>
+</tr>
+<tr>
+<td>Audit Trail</td>
+<td>TC-OP10</td>
+<td>Operations</td>
+<td>P3</td>
+<td>Not Built Yet</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="requirements-traceability">Requirements Traceability</h2>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Covered By</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FR-1 (Channel Selection)</td>
+<td>TC-CX01, TC-CX18, TC-CX19</td>
+</tr>
+<tr>
+<td>FR-2 (Intent Selection)</td>
+<td>TC-CX01, TC-CX13</td>
+</tr>
+<tr>
+<td>FR-3/4/5 (Order Lookup &amp; Validation)</td>
+<td>TC-CX24</td>
+</tr>
+<tr>
+<td>FR-6 (Display Items)</td>
+<td>TC-CX01, TC-CX22</td>
+</tr>
+<tr>
+<td>FR-7 (Eligibility Calculation)</td>
+<td>TC-CX22, TC-CX23, TC-P07</td>
+</tr>
+<tr>
+<td>~~FR-8 (Category Filtering)~~</td>
+<td>~~TC-CX32~~ — Removed</td>
+</tr>
+<tr>
+<td>FR-10 (Item Selection)</td>
+<td>TC-CX01</td>
+</tr>
+<tr>
+<td>FR-12/13/14 (Reasons &amp; Mapping)</td>
+<td>TC-CX01, TC-CX12, TC-CX13</td>
+</tr>
+<tr>
+<td>FR-15/16/17 (Documentation)</td>
+<td>TC-CX25, TC-CX26</td>
+</tr>
+<tr>
+<td>FR-18 (Package Count)</td>
+<td>TC-CX01</td>
+</tr>
+<tr>
+<td>FR-19 (Label Generation)</td>
+<td>TC-CX01, TC-CX28</td>
+</tr>
+<tr>
+<td>FR-20 (Pickup &amp; Freight)</td>
+<td>TC-CX04, TC-CX07, TC-CX08, TC-OP11</td>
+</tr>
+<tr>
+<td>FR-21 (Label Reprint)</td>
+<td>TC-CX27</td>
+</tr>
+<tr>
+<td>FR-22 (Ticket Creation)</td>
+<td>TC-CX01, TC-CX20</td>
+</tr>
+<tr>
+<td>FR-23 (Refund Processing)</td>
+<td>TC-CX02, TC-OP01</td>
+</tr>
+<tr>
+<td>FR-24 (Replacement Order)</td>
+<td>TC-CX13</td>
+</tr>
+<tr>
+<td>FR-26 (Session / Double Submit)</td>
+<td>TC-CX29, TC-CX21</td>
+</tr>
+<tr>
+<td>FR-27 (Help Page)</td>
+<td>TC-CX30</td>
+</tr>
+<tr>
+<td>FR-30 (Caledonia Portal)</td>
+<td>TC-OP01, TC-OP02</td>
+</tr>
+<tr>
+<td>FR-31 (Reporting)</td>
+<td>TC-OP03</td>
+</tr>
+<tr>
+<td>FR-32 (Email Triggers)</td>
+<td>TC-CX31, TC-OP15</td>
+</tr>
+<tr>
+<td>FR-33 (Defective Blocking)</td>
+<td>TC-CX12</td>
+</tr>
+<tr>
+<td>FR-34 (US Accessory Handling)</td>
+<td>TC-CX10, TC-CX11</td>
+</tr>
+<tr>
+<td>FR-35 (Warranty Pickup)</td>
+<td>TC-CX14, TC-CX15, TC-OP14</td>
+</tr>
+<tr>
+<td>FR-36/49 (Third-Party Logistics)</td>
+<td>TC-CX17, TC-OP11</td>
+</tr>
+<tr>
+<td>FR-37 (US Warehouse Offline)</td>
+<td>TC-OP04</td>
+</tr>
+<tr>
+<td>FR-38 (Self-Donate)</td>
+<td>TC-OP13</td>
+</tr>
+<tr>
+<td>FR-39 (Flow Context Routing)</td>
+<td>TC-CX01, TC-CX13, TC-CX17</td>
+</tr>
+<tr>
+<td>FR-41 (Warehouse Routing)</td>
+<td>TC-OP07, TC-OP08</td>
+</tr>
+<tr>
+<td>FR-42 (Product Onboarding)</td>
+<td>TC-P01, TC-P02</td>
+</tr>
+<tr>
+<td>FR-43 (Product Updates/Removal)</td>
+<td>TC-P03, TC-P04</td>
+</tr>
+<tr>
+<td>FR-44 (Product Listing)</td>
+<td>TC-P06</td>
+</tr>
+<tr>
+<td>FR-45 (Fulfil API)</td>
+<td>TC-CX08, TC-OP08</td>
+</tr>
+<tr>
+<td>FR-46/47/48 (Third-Party Entry)</td>
+<td>TC-CX17</td>
+</tr>
+<tr>
+<td>BR-1 (Third-Party No S&amp;S Refund)</td>
+<td>TC-CX17</td>
+</tr>
+<tr>
+<td>BR-2 (Order Security)</td>
+<td>TC-CX24</td>
+</tr>
+<tr>
+<td>BR-5 (Complete Documentation + Override)</td>
+<td>TC-CX25, TC-CX26</td>
+</tr>
+<tr>
+<td>BR-6 (CX Pre-Approval)</td>
+<td>TC-CX07</td>
+</tr>
+<tr>
+<td>BR-7 (Duplicate Prevention)</td>
+<td>TC-CX20</td>
+</tr>
+<tr>
+<td>BR-12 (Duplicate Refund Prevention)</td>
+<td>TC-CX02</td>
+</tr>
+<tr>
+<td>BR-16 (Vendor Pickup → Received)</td>
+<td>TC-OP09, TC-OP11</td>
+</tr>
+<tr>
+<td>BR-19 (Caledonia Role)</td>
+<td>TC-OP01, TC-OP06</td>
+</tr>
+<tr>
+<td>BR-21 (Auto-Refund Threshold)</td>
+<td>TC-OP01, TC-CX02</td>
+</tr>
+<tr>
+<td>BR-22 (Label Count Cap)</td>
+<td>TC-CX28</td>
+</tr>
+<tr>
+<td>BR-27 (Warranty "(Defective)" Label)</td>
+<td>TC-CX14</td>
+</tr>
+<tr>
+<td>BR-28 (US Warehouse Offline)</td>
+<td>TC-OP04</td>
+</tr>
+<tr>
+<td>BR-29 (Self-Donate)</td>
+<td>TC-OP13</td>
+</tr>
+<tr>
+<td>BR-30 (Furniture Destinations)</td>
+<td>TC-CX07, TC-CX08</td>
+</tr>
+<tr>
+<td>NFR-6 (Audit Logging)</td>
+<td>TC-OP10</td>
+</tr>
+<tr>
+<td>~~NFR-8 (US Offline 24h SLA)~~</td>
+<td>~~TC-OP05~~ — Removed</td>
+</tr>
+</tbody>
+</table>
+<div class="giscus-placeholder"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": [], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="js/giscus.js"></script>
+      
+    
+  </body>
+</html>
