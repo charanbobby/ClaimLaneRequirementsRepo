@@ -1,5 +1,9 @@
 # End-to-End Test Cases — ClaimLane Portal
 
+> **Version:** 2.0 (2026-03-19) — Discussion #41 audit: 11 action items applied. See [changelog](changelog.md#2026-03-19--e2e-test-cases-discussion-audit-discussion-41--11-action-items).
+>
+> **Previous versions:** v1.0 (2026-03-12) — Initial test cases with Discussion-to-BRD gap audit applied.
+
 > **How to use this document:** Find your team section below. Each test case is numbered and self-contained. Follow the steps exactly as written. Only test cases marked **Ready for Testing** should be executed.
 >
 > **Status values:**
@@ -37,10 +41,10 @@
 | 2 | Navigate to **Product Onboarding**. | Upload screen appears with **two separate upload areas: CA template and US template**. |
 | 3 | Download the **CA Excel template**. | Template downloads with columns: SKU, Product Name, Category, Subcategory, Final Sale (Yes/No), Fallback Weight (kg), Fallback Dimensions (LxWxH cm), Warranty Only (Yes/No). **No Region column** — region is determined by which template is used. |
 | 4 | Fill in the CA template with **2 products**: one Mattress and one Accessory. | File saves without errors. |
-| 5 | Upload the CA file. System asks for **admin confirmation** before saving. Confirm. | System confirms upload. Shows success count: 2 CA products added. Upload event logged (file name + timestamp). |
+| 5 | Upload the CA file. | System confirms upload. Upload event logged (file name + timestamp). **Note:** Upload is not gated by admin-level confirmation — access control is managed at the company settings level. |
 | 6 | Download the **US Excel template**. | Same column structure as CA template. |
 | 7 | Fill in the US template with **2 products**: one Furniture (Final Sale = Yes) and the **same Accessory SKU** from Step 4 (product available in both regions). | File saves without errors. |
-| 8 | Upload the US file. Confirm when prompted. | System confirms upload. Shows success count: 2 US products added. |
+| 8 | Upload the US file. **Test both modes:** (a) **Full overwrite** — re-upload replaces all existing US products. (b) **Add to existing** — upload appends new products to the current list. | System confirms upload. Both upload modes function correctly. |
 | 9 | Go to the **Product Listing** page. | Products organized into **two datasets: CA and US**. CA shows the Mattress and Accessory. US shows the Furniture and Accessory. |
 | 10 | Verify the US Furniture item shows **Final Sale = Yes**. | Confirmed. |
 | 11 | Verify the shared Accessory appears in **both** the CA and US datasets. | Confirmed — same SKU visible in both regions. |
@@ -60,9 +64,8 @@
 | 1 | Prepare a **CA or US Excel template** with a furniture product on Sheet 1, and a **Replacement Parts** sheet (Sheet 2) with Parent SKU, Part SKU, and Part Name (e.g., "Drawer – Top Left"). | File ready with both sheets. |
 | 2 | Upload the file to the corresponding region (CA or US). Confirm when prompted. | System confirms: 1 product added, replacement parts linked. |
 | 3 | Go to **Product Listing**. Find the furniture SKU. | Product shows with linked replacement parts visible. |
-| 4 | On the product detail page, click **Upload Product Guide**. | A file upload dialog appears accepting image or PDF files. |
-| 5 | Upload a **product guide** (image or PDF) that shows which part comes from where (e.g., an annotated diagram labeling each replacement part on the product). | System confirms upload. The product guide is saved and displayed on the product detail page. |
-| 6 | Verify the product guide is visible and linked to the correct SKU. | Product guide thumbnail/link appears on the product detail page. Clicking it opens the full guide. |
+| 4 | Verify the **product guide URL** column in the Excel sheet is populated for this product (URL points to an image or PDF showing which part comes from where). | URL is stored as a column value in the Excel template — not uploaded via a separate UI action. |
+| 5 | Go to **Product Listing**. Find the furniture SKU. Verify the product guide link is accessible. | Product guide link appears on the product detail page. Clicking it opens the guide from the URL provided in the Excel sheet. |
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -76,9 +79,9 @@
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
-| 1 | Prepare a **CA or US Excel template** with a **previously onboarded SKU** for that region. Change the Weight to a new value. | File ready. |
-| 2 | Upload the file to the corresponding region. Confirm when prompted. | System confirms update. Shows "1 product updated." |
-| 3 | Go to **Product Listing** and find the SKU. | Weight reflects the new value. All other fields unchanged. |
+| 1 | Prepare a **complete CA or US Excel template** that includes all existing products for that region. Change the Weight to a new value for one **previously onboarded SKU**. | File ready. **Note:** The entire Excel sheet must be re-uploaded to overwrite current products — individual field edits are not supported. |
+| 2 | Upload the file (full overwrite mode). | System processes the full re-upload. All products in the file are updated/overwritten. |
+| 3 | Go to **Product Listing** and find the SKU. | Weight reflects the new value. All other fields unchanged. All other products in the region remain intact (because they were included in the re-upload). |
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -104,22 +107,13 @@
 
 ---
 
-### TC-P05: Upload with Invalid / Missing Data — `P2`
+### ~~TC-P05: Upload with Invalid / Missing Data~~ **[REMOVED]**
 
-| Step | Action | Expected Result |
-|------|--------|-----------------|
-| 1 | Prepare a CA or US Excel template with: one row **missing the SKU field**, one row with an **invalid Category** (e.g., "Electronics"), one row with **missing Category**. | File ready. |
-| 2 | Upload the file. | System rejects the file or flags the invalid rows with clear error messages per row. No partial import without confirmation. |
-
-**Status:** `Not Built Yet`
-**Ready Since:** _______________
-**Result:** _______________
-**Tested By:** _______________
-**Notes:** _______________
+*This test case has been removed. ClaimLane does not enforce category validation or mandatory SKU fields on upload. The platform does not expect a certain list of categories, nor requires all SKUs to be filled. Any S&S-specific validation (e.g., ensuring all SKUs are present) must happen in the Excel template itself before upload, not in the system.*
 
 ---
 
-### TC-P06: View Product Listing — Read-Only, Search & Filter — `P1`
+### TC-P06: View Product Listing — Search by SKU & Name — `P1`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
@@ -127,8 +121,7 @@
 | 2 | Confirm columns: SKU, Name, Category, Final Sale flag. | All columns present and populated. |
 | 3 | **Search** by SKU. | Correct product found. |
 | 4 | **Search** by Product Name. | Correct product found. |
-| 5 | **Filter** by Category (e.g., "Mattress"). | Only mattress products shown. |
-| 6 | Attempt to edit a product directly from this screen. | No inline editing available (read-only). |
+| 5 | Confirm that **no filtering by specific field values** (e.g., category) is available — search is limited to product name and SKU. | Confirmed — for detailed review, the Excel file remains the source of truth. |
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -171,9 +164,9 @@
 | 7 | Upload required photo: **photo of the box** (law tag is not required for boxed mattresses — it is only visible once unboxed). Enter lot number and description. | Upload accepted. Lot number and description saved. |
 | 8 | Submit the return request. | Shipping label generated (package count determined automatically by shipping endpoint). Drop-off instructions displayed. Ticket created. |
 | 9 | **[CX Agent]** Check the admin portal for the new ticket. | Ticket visible with all details: item, reason, photos, lot number, tags (category + issue type). |
-| 10 | Customer drops off the package at the courier location (or courier picks up from customer). | Package in transit. **Auto-refund initiated** — system automatically triggers refund as soon as shipment is in transit (value < $600, no bundles) (BR-21, BR-26). |
-| 11 | **Verify** shipment tracking in the admin portal. | System auto-tracks via **EasyPost API**. Status auto-updates to **"Picked"** when courier confirms pickup. No manual action required. |
-| 12 | **[CX Agent]** Verify refund status in admin portal. | Refund already initiated at in-transit. Audit trail logged. No duplicate refund can be initiated (BR-12). |
+| 10 | Customer drops off the package at the parcel shop / courier location. | Parcel scanned at drop-off. Status auto-updates to **"Received"** when parcel is handed in at the parcel shop (drop-off scan via **EasyPost API**). **Auto-refund initiated** — system triggers refund at this point (value < $600, no bundles) (BR-21, BR-26). |
+| 11 | **Verify** shipment tracking in the admin portal. | System auto-tracks via **EasyPost API**. Status = **"Received"** (triggered by parcel shop drop-off scan, not courier collection). No manual action required. |
+| 12 | **[CX Agent]** Verify refund status in admin portal. | Refund already initiated at drop-off. Audit trail logged. No duplicate refund can be initiated (BR-12). |
 
 > **Ops continuation:** Warehouse receiving and inspection → TC-OP01.
 
@@ -190,8 +183,8 @@
 | Step | Action | Expected Result |
 |------|--------|-----------------|
 | 1 | Repeat TC-CX01 Steps 1–8 but use an order with mattress value **$600 or more**. | Ticket created. Label generated. |
-| 2 | Customer drops off / courier picks up. **Verify** status tracking in admin portal. | System auto-tracks via **EasyPost API**. Status auto-updates to "Picked." No manual action required. |
-| 3 | Once package is in transit, **verify** system flags for **manual CX refund** (does NOT auto-refund because value ≥ $600). | Ticket routed to CX for manual refund. Refund flagged at in-transit (not after warehouse processing). |
+| 2 | Customer drops off at parcel shop. **Verify** status tracking in admin portal. | System auto-tracks via **EasyPost API**. Status auto-updates to **"Received"** when parcel is scanned at drop-off. No manual action required. |
+| 3 | Once status = "Received", **verify** system flags for **manual CX refund** (does NOT auto-refund because value ≥ $600). | Ticket routed to CX for manual refund. Refund flagged at "Received" (not after warehouse processing). |
 | 4 | **[CX Agent]** Manually process the refund. | Refund completed. Audit trail logged. No duplicate refund can be initiated (BR-12). |
 
 > **Ops continuation:** Warehouse receiving and inspection → TC-OP01.
@@ -359,7 +352,7 @@
 | 5 | Complete documentation: issue description, photos of defect, address confirmation. Enter lot number and description. | All accepted. |
 | 6 | Submit the warranty claim. Verify **no pickup assistance option** is presented during submission (FR-35 — pickup is CX follow-on only). | Ticket created with selected part SKUs, evidence, and notes. Marked as **pending CX review**. No pickup fields shown to customer. |
 | 7 | **[CX Agent]** Review the claim. Validate photos. **Override the part selection** to a different part (test CX override capability). **Approve** the warranty claim. | Claim approved with overridden part SKU. Default assumption: customer does **not** need pickup assistance. |
-| 8 | **Verify** replacement order is automatically created via **WooCommerce API** using the approved replacement part SKUs. | System auto-creates the order using customer's billing/shipping details (FR-24). Order status set to "Processing." Customer notified via WooCommerce. Order linked to the warranty ticket. |
+| 8 | **[CX Agent]** Click the **"Replacement Action"** button in the portal to trigger the replacement order. | CX clicking the replacement action creates a $0 replacement order via **WooCommerce API** using the approved replacement part SKUs and customer's billing/shipping details (FR-24). Order status set to "Processing." Customer notified via WooCommerce. Order linked to the warranty ticket. **Note:** The replacement is CX-initiated (manual action), not automatic. |
 | 9 | Case closed. | Case marked complete after replacement order placed. |
 
 **Status:** `Not Built Yet`
@@ -425,7 +418,7 @@
 | 1 | Open the **vendor-specific generic link** for TSC or EQ3 (link identifies vendor only, not customer-specific). | Third-party flow begins. |
 | 2 | **Terms & Conditions gate** appears. Verify it states: (1) No refund will be issued by Silk & Snow, (2) The return is not authorized by the third-party partner. | T&C page displayed with both disclosures. There is **no decline button** — customer either accepts or closes the page. |
 | 3 | **Accept** T&C (checkbox + confirm button). | Proceeds to pickup details. |
-| 4 | Enter pickup details: address, access constraints, preferred dates, contact info. Upload photos. | All fields captured. |
+| 4 | Enter pickup details: address, access constraints, contact info. Upload photos. | All fields captured. **Note:** Preferred dates are no longer collected. |
 | 5 | Submit. | Ticket created, tagged with the third-party vendor name (TSC or EQ3). |
 | 6 | **[CX Agent]** Review. Select **Courier** pickup — generate return label. | Label generated. Pickup coordinated. **No S&S refund issued** (refund is vendor's responsibility per BR-1). |
 | 7 | **[CX Agent]** For a separate ticket, select **Disposal** pickup. | Case logged for **Return Logistics Team** to assign a disposal vendor. |
@@ -630,13 +623,13 @@
 
 ---
 
-### TC-CX30: Help Page Content — `P3`
+### TC-CX30: Help Link — Chatbot Redirect — `P3`
 
 | Step | Action | Expected Result |
 |------|--------|-----------------|
-| 1 | Navigate to the **Help** page from any screen. | Help page loads. |
-| 2 | Verify the page shows: **Silk & Snow support email** and **chatbot link**. | Both present. |
-| 3 | Verify **no telephone numbers** or other support channels are listed. | Confirmed — only email and chatbot. |
+| 1 | Click the **Help** link/button from any screen. | User is redirected to the **Silk & Snow chatbot** (external URL). No static help page is displayed within the portal. |
+| 2 | Verify the chatbot loads and is functional. | Chatbot is accessible. **Note:** The chatbot is trained internally by S&S to point to the Claimlane site — no implementation needed from Claimlane, but verify the redirect works. |
+| 3 | Verify **no telephone numbers** or other support channels are displayed anywhere in the portal. | Confirmed — only chatbot redirect. |
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -686,7 +679,7 @@
 | 4 | Update status from **Processing → Inspection Completed**. | System prompts for **Inspection Grade**. |
 | 5 | Select **Grade A (Resalable)**. Enter a mandatory reason/note. | Grade and reason saved. Status is now "Inspection Completed." |
 | 6 | Repeat with **Grade B (Donatable)** and **Grade C (Damaged)** on separate items. | All grades accepted with mandatory reasons. |
-| 7 | Verify this status update triggers the **"Received" logic** (WF-089). | Status transitions to "Received." Note: refund is already initiated at **in-transit** (not at warehouse receiving). Warehouse receiving confirms physical receipt and completes the inspection record. |
+| 7 | Verify warehouse processing **does NOT re-trigger refund logic**. | **Status lifecycle:** The item is already in **"Received"** status (set when parcel was handed in at parcel shop — see TC-CX01 Step 10). Refund was already initiated at that point. The warehouse team's role is to confirm physical receipt and complete the inspection. After grading, status moves from **"Received" → "Inspection Completed"**. |
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -736,7 +729,7 @@
 |------|--------|-----------------|
 | 1 | Simulate: a return arrives at LA or NJ warehouse. Warehouse staff sends an **email to Internal Ops** with item status. | Email received by Internal Ops. |
 | 2 | **[Internal Ops]** Log into ClaimLane and manually update the return status: **Delivered → Processing → Inspection Completed** (with grade and reason). | Status updated in the portal. Audit trail logged. |
-| 3 | Verify the update triggers the **"Received" logic** (WF-089) and refund processing begins. | Refund auto-processes if value < $600 and no bundles. Flags for manual CX refund if ≥ $600 or bundles. |
+| 3 | Verify the status update is recorded. | **No automatic refund** — US warehouse tickets are handled manually end-to-end, including refund initiation. The ticket is flagged for **manual refund processing** by Internal Ops / CX. |
 | 4 | Verify the update appears in the **Returned Items Report**. | Item shows with correct SKU, grade, dates, and quantity. |
 | 5 | Verify Internal Ops has **no Caledonia-specific access** (US portal only). | Confirmed — access scoped to US warehouse operations. |
 
@@ -774,7 +767,7 @@
 |------|--------|-----------------|
 | 1 | Complete a CA return (any category). | Shipping label generated. |
 | 2 | Verify the label destination is **Caledonia warehouse**. | Confirmed. |
-| 3 | **Verify** shipment tracking in the admin portal. | System auto-tracks via **EasyPost API**. Status auto-updates to **"Picked"** when courier confirms pickup. No manual action required. |
+| 3 | **Verify** shipment tracking in the admin portal. | System auto-tracks via **EasyPost API**. Status auto-updates to **"Received"** when parcel is scanned at the parcel shop (drop-off scan, not courier collection). No manual action required. |
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -794,7 +787,7 @@
 | 2 | Verify the label destination is the **origin warehouse** (LA or NJ). | Correct warehouse on the label. |
 | 3 | Complete a US return for an order shipped from **multiple warehouses** (split shipment). | System calls Fulfil ERP API + Google Maps geocoding. |
 | 4 | Verify the label destination is the **closest warehouse** to the customer's shipping address. | Correct closest warehouse (LA – JDLLA or NJ – JDLNJ) on the label. |
-| 5 | **Verify** shipment tracking in the admin portal. | System auto-tracks via **EasyPost API**. Status auto-updates to **"Picked"** when courier confirms pickup. No manual action required. |
+| 5 | **Verify** shipment tracking in the admin portal. | System auto-tracks via **EasyPost API**. Status auto-updates to **"Received"** when parcel is scanned at the parcel shop (drop-off scan, not courier collection). No manual action required. |
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -811,8 +804,8 @@
 | Step | Action | Expected Result |
 |------|--------|-----------------|
 | 1 | Log in as a **donation/pickup vendor**. | Vendor portal loads. Only assigned pickups visible. No access to other tickets or admin functions. |
-| 2 | Find an assigned pickup. View details: address, access constraints, available dates. Confirm **no customer photos** are visible (for unboxed mattress pickups — FR-20). | Details visible. Photos not shown. |
-| 3 | Mark the item as **"Picked"**. | Status auto-transitions: **"Picked" → "Received"** (BR-16). Change reflected in the admin portal. Refund logic triggers based on order value (auto if < $600, manual if ≥ $600). |
+| 2 | Find an assigned pickup. View details: address, access constraints. Confirm **no customer photos** are visible (for unboxed mattress pickups — FR-20). | Details visible. Photos not shown. **Note:** Available dates are no longer captured. |
+| 3 | After collecting the item, return to the Vendor Portal and update the status to **"Received"**. | Vendor manually updates status from **"Pickup" → "Received"** (BR-16). This is a **manual vendor action**, not an automatic transition. Change reflected in the admin portal. **"Received" status triggers refund logic** — routed to CX for manual processing (mattresses are ≥ $600). |
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -846,8 +839,8 @@
 |------|--------|-----------------|
 | 1 | **[Return Logistics Manager]** Open the ticket. Select a **donation/pickup vendor** from the vendor list. | Vendor assigned. |
 | 2 | Confirm that **photos are NOT sent to the vendor** (FR-20). | Vendor receives automated email notification (without customer photos). Customer receives notification with pickup details. |
-| 3 | **[Vendor]** Log in to the **Vendor Portal**. Find the assigned pickup. | Vendor sees the pickup with address, access constraints, and available dates — **no customer photos visible**. |
-| 4 | **[Vendor]** Pick up the mattress. Mark the item as **"Picked"** in the Vendor Portal. | Status auto-transitions: **"Picked" → "Received"** (BR-16). Refund logic triggers based on order value (auto if < $600, manual if ≥ $600). |
+| 3 | **[Vendor]** Log in to the **Vendor Portal**. Find the assigned pickup. | Vendor sees the pickup with address and access constraints — **no customer photos visible**. **Note:** Available dates are no longer captured. |
+| 4 | **[Vendor]** Pick up the mattress. Return to the Vendor Portal and update the status to **"Received"**. | Vendor manually updates status from **"Pickup" → "Received"** (BR-16). This is a **manual vendor action**, not automatic. **"Received" triggers refund logic** — routed to CX for manual processing (mattresses are ≥ $600). |
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -900,8 +893,8 @@
 | Step | Action | Expected Result |
 |------|--------|-----------------|
 | 1 | **[Return Logistics Manager]** Open the disposal case. Assign a **disposal vendor**. | Vendor assigned. Customer receives notification with pickup details. |
-| 2 | **[Vendor]** Log in to the **Vendor Portal**. Find the assigned disposal pickup. | Vendor sees the pickup with address, access constraints, and available dates. |
-| 3 | **[Vendor]** Pick up the item. Mark as **"Picked"** in the Vendor Portal. | Status auto-transitions: **"Picked" → "Received"** (BR-16). |
+| 2 | **[Vendor]** Log in to the **Vendor Portal**. Find the assigned disposal pickup. | Vendor sees the pickup with address and access constraints. **Note:** Available dates are no longer captured. |
+| 3 | **[Vendor]** Pick up the item. Return to the Vendor Portal and update the status to **"Received"**. | Vendor manually updates status from **"Pickup" → "Received"** (BR-16). This is a **manual vendor action**, not automatic. |
 
 **Status:** `Not Built Yet`
 **Ready Since:** _______________
@@ -936,6 +929,7 @@
 | Q1 | Once a label gets generated, how do we simulate **"Picked Up"** status in testing? This status triggers downstream processes (auto-refund at in-transit, EasyPost tracking, warehouse receiving). Do we need an EasyPost sandbox/test mode, or a manual override in the admin portal? | **Open** | _Needs technical input_ |
 | Q2 | For TC-CX08 (US Furniture Return), we need to test shipments routed to **different US warehouse locations (LA vs. New Jersey)** via Fulfil ERP API. How do we set up test data / SKUs that route to each location? CX team needs guidance on this. | **Open** | _Needs technical input_ |
 | Q3 | Technical team needs to provide test data: (1) an order with a **mattress delivered more than 365 days ago** (to test return window expiry / eligibility rejection — TC-CX22), and (2) an order with an item marked as **final sale** (to test final sale blocking — TC-CX23). | **Open** | _Needs technical input_ |
+| Q4 | **TC-OP08 (Warehouse Routing — US Returns via Fulfil API):** This test case includes API call verification. Melroy needs Sri's help to execute the Fulfil API check steps. | **Open** | _Sri to pair with Melroy on API testing_ |
 
 ---
 
@@ -943,8 +937,9 @@
 
 | Area | Test Cases | Primary Team | Priority | Status |
 |------|-----------|--------------|----------|--------|
-| Product Onboarding & Excel Upload | TC-P01 to TC-P05 | Product | P0–P2 | Not Built Yet |
-| Product Listing, Search & Filter | TC-P06 | Product | P1 | Not Built Yet |
+| Product Onboarding & Excel Upload | TC-P01 to TC-P04 | Product | P0–P2 | Not Built Yet |
+| ~~Upload Validation~~ | ~~TC-P05~~ | ~~Product~~ | — | Removed |
+| Product Listing, Search by SKU & Name | TC-P06 | Product | P1 | Not Built Yet |
 | Warranty-Only Products | TC-P07 | Product | P1 | Not Built Yet |
 | CA Mattress Returns (Boxed) | TC-CX01, TC-CX02 | CX | P0 | Not Built Yet |
 | CA Mattress Returns (Unboxed — Customer Portal) | TC-CX04 | CX | P0 | Not Built Yet |
@@ -960,7 +955,7 @@
 | Eligibility (Return Window, Final Sale) | TC-CX22, TC-CX23 | CX | P1 | Not Built Yet |
 | Security & Input Validation | TC-CX24, TC-CX25 | CX | P0–P2 | Not Built Yet |
 | CX Overrides & Label Management | TC-CX26, TC-CX27, TC-CX28 | CX | P2–P3 | Not Built Yet |
-| Session, Help Page | TC-CX29, TC-CX30 | CX | P3 | Not Built Yet |
+| Session, Help (Chatbot Redirect) | TC-CX29, TC-CX30 | CX | P3 | Not Built Yet |
 | CX Email Notifications | TC-CX31 | CX | P2 | Not Built Yet |
 | ~~Category Filtering~~ | ~~TC-CX32~~ | ~~CX~~ | — | Removed |
 | Caledonia Warehouse (Receive & Inspect) | TC-OP01, TC-OP02, TC-OP03 | Operations | P0–P2 | Not Built Yet |

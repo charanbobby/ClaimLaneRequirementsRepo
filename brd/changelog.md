@@ -2,6 +2,50 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2026-03-19 – E2E Test Cases Discussion Audit (Discussion #41 — 11 Action Items)
+
+### Changed
+
+- **functional-requirements.md (FR-42):** Removed admin confirmation gate from product upload. Upload is not gated per-upload — access control is at the company settings level. Added two upload modes: full overwrite and add to existing. *(AI-1, AI-2)*
+- **functional-requirements.md (FR-44):** Removed "read-only" designation and category filtering. Search limited to product name and SKU only. Excel file remains source of truth for detailed review. *(AI-7)*
+- **functional-requirements.md (FR-24):** Clarified replacement order is CX-initiated via "Replacement Action" button, not automatic. CX click triggers $0 WooCommerce order. *(Discussion #41, abm123asd)*
+- **functional-requirements.md (FR-27):** Changed from static help page to **chatbot redirect**. Help link redirects customer to S&S chatbot (external URL). No Claimlane implementation needed beyond redirect. *(AI-8)*
+- **functional-requirements.md (FR-48):** Removed "Preferred pickup dates" from third-party pickup details collection. *(AI-11)*
+- **business-rules.md (BR-16):** Rewrote vendor status flow. Status lifecycle: "Pickup" → vendor manually updates to "Received" (not auto-transition from "Picked"). "Received" triggers refund. *(AI-10)*
+
+### Test Case Changes
+
+- **e2e-test-cases.md (TC-P01):** Removed admin confirmation gate (Step 5), removed upload success count message (Steps 5, 8), added two upload modes (Step 8). *(AI-1, AI-2, AI-3)*
+- **e2e-test-cases.md (TC-P02):** Rewrote Steps 4–6 — product guide URL is a column in the Excel template, not a separate UI upload action. *(AI-4)*
+- **e2e-test-cases.md (TC-P03):** Rewrote to clarify full Excel re-upload is required — individual field edits not supported. *(AI-5)*
+- **e2e-test-cases.md (TC-P05):** Marked as **[REMOVED]** — ClaimLane does not enforce upload validation (no category or SKU enforcement). *(AI-6)*
+- **e2e-test-cases.md (TC-P06):** Renamed to "Search by SKU & Name." Removed read-only expectation, removed category filter step, added note that Excel is source of truth. *(AI-7)*
+- **e2e-test-cases.md (TC-CX01, TC-CX02, TC-OP07, TC-OP08):** Updated tracking trigger — status updates to "Received" on **parcel shop drop-off scan** (not courier pickup). Refund triggers at this point. *(Discussion #41, abm123asd confirmed parcel shop handoff)*
+- **e2e-test-cases.md (TC-CX13 Step 8):** Changed from "automatically created" to CX clicking "Replacement Action" button — manual CX action, not automatic. *(Discussion #41, abm123asd)*
+- **e2e-test-cases.md (TC-CX30):** Rewritten from "Help Page Content" to "Help Link — Chatbot Redirect." No static help page. *(AI-8)*
+- **e2e-test-cases.md (TC-OP01 Step 7):** Clarified status lifecycle — "Received" is already set at parcel handoff, not by warehouse. Warehouse moves status to "Inspection Completed." *(Discussion #41, sricharansunkara status lifecycle clarification)*
+- **e2e-test-cases.md (TC-OP04 Step 3):** Removed auto-refund expectation for US warehouse — manual processing only. *(Discussion #41, abm123asd confirmed no auto-refund for US)*
+- **e2e-test-cases.md (TC-OP09, TC-OP11, TC-OP14):** Rewrote vendor status flow — "Pickup" → vendor manually updates to "Received" (not "Picked" → auto "Received"). Removed "available dates" from all vendor pickup steps. *(AI-10, AI-11)*
+- **e2e-test-cases.md (TC-CX17 Step 4):** Removed "preferred dates" from third-party pickup details. *(AI-11)*
+- **e2e-test-cases.md (Open Q&A):** Added Q4 — TC-OP08 requires Sri to pair with Melroy on Fulfil API testing. *(AI-9)*
+- **e2e-test-cases.md (Quick Reference):** Updated TC-P05 as Removed, renamed TC-P06 row, updated Help row.
+
+### Context
+
+- AI-1: abm123asd (Discussion #41, Mar 18) confirmed product upload is not gated by admin-level access — access control is at company settings level.
+- AI-2: abm123asd (Discussion #41, Mar 18) confirmed two upload modes: full overwrite or add to existing list.
+- AI-3: abm123asd (Discussion #41, Mar 18) confirmed no success count message exists; sricharansunkara agreed to remove the requirement.
+- AI-4: abm123asd (Discussion #41, Mar 18) confirmed product guide URL is a column in the Excel sheet, not a UI upload.
+- AI-5: abm123asd (Discussion #41, Mar 18) confirmed entire Excel sheet must be re-uploaded for updates.
+- AI-6: abm123asd (Discussion #41, Mar 18) confirmed ClaimLane does not enforce category validation or SKU requirements on upload.
+- AI-7: abm123asd (Discussion #41, Mar 18) confirmed no read-only view, search by name/SKU only, no category filtering.
+- AI-8: abm123asd (Discussion #41, Mar 18) confirmed preference for chatbot redirect over static help page; sricharansunkara confirmed S&S will train the bot internally.
+- AI-9: melroyfernandes-lab (Discussion #41, Mar 18) flagged TC-OP08 requires API call verification support.
+- AI-10: sricharansunkara (Discussion #41, Mar 19) clarified vendor status lifecycle: "Pickup" → vendor manually marks "Received" (triggers refund). Not "Picked" → auto "Received."
+- AI-11: sricharansunkara (Discussion #41, Mar 19) confirmed available dates are no longer captured per business decision.
+
+---
+
 ## 2026-03-12 – Discussion-to-BRD Gap Audit (12 Changes)
 
 ### Changed

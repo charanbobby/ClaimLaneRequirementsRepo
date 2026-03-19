@@ -91,7 +91,7 @@ The following requirements describe what the portal must do. Each requirement is
     - For partial refunds, adjust only the line item amount and leave inventory unchanged. If the gateway or currency does not support automated refunds, mark the ticket for manual refund.
     - **Future Phase:** Bundle impact calculations (WF-070→073) will enable adjusted auto-refunds for qualifying bundled orders. Until then, all orders with bundles require manual processing.
 
-- **FR-24 – Replacement Order Creation:** For approved warranty claims, create a WooCommerce order for replacement items using the customer's billing/shipping details, set the order status to "Processing" and notify the customer via WooCommerce.
+- **FR-24 – Replacement Order Creation:** For approved warranty claims, the CX agent clicks the **"Replacement Action"** button in the portal. This action triggers the creation of a $0 WooCommerce replacement order using the approved replacement part SKUs and the customer's billing/shipping details, sets the order status to "Processing" and notifies the customer via WooCommerce. **Note:** The replacement is CX-initiated (manual action), not automatic — the CX agent's click of the replacement action serves as the approval method.
 
 - **FR-25 – Exception Handling:** Support exception flows, including manual POS returns, vendor review required (e.g., unboxed mattresses, furniture without packaging), manual refunds due to gateway issues and customer service overrides. Maintain logs and alerts for any failures during API calls (ticket creation, label generation, refund processing) with clear guidance to the customer.
 
@@ -99,7 +99,7 @@ The following requirements describe what the portal must do. Each requirement is
 
 - **FR-26 – UX Navigation:** Preserve session state when navigating back or refreshing pages and handle double submits gracefully (only one ticket/refund is created).
 
-- **FR-27 – Help & Support:** Include a "Help" page that only displays the Silk & Snow support email and a link to the Silk & Snow chatbot. Do not include telephone numbers or other channels unless explicitly approved.
+- **FR-27 – Help & Support:** The "Help" link/button in the portal must redirect the customer directly to the **Silk & Snow chatbot** (external URL). No static help page is displayed within the portal. The chatbot is trained internally by S&S to point to the Claimlane site — no implementation is needed from Claimlane beyond the redirect. Do not include telephone numbers or other channels unless explicitly approved.
 
 - **FR-28 – Localization:** At launch the portal operates in English only; French copy is supported via translation tables but must be marketing-approved. Copy must be consistent across screens and reasons.
 
@@ -199,12 +199,12 @@ The following requirements describe what the portal must do. Each requirement is
 
     The system must:
 
-    - Require admin confirmation before saving to the product configuration store.
     - Log the upload event (file name and timestamp); the uploaded file is available for download.
+    - **Note:** Upload is not gated by admin-level confirmation per upload. Access control is managed at the company settings level (who can access the product upload area). Two upload modes are supported: **full overwrite** (replaces all existing products) and **add to existing** (appends new products to the current list).
 
 - **FR-43 – Product Data Updates:** Product data in the portal is updated by uploading a new Excel file via the same mechanism as FR-42. An upload that includes an existing SKU overwrites the previous product configuration for that SKU. To remove a product from active availability, the admin omits the SKU from the new upload. Historical ticket data is unaffected — all product information recorded at the time of submission is always retained on existing tickets.
 
-- **FR-44 – Product Configuration Listing:** Provide a read-only admin view listing all onboarded products with: SKU, name, category, and final sale flag. Products are organised as two separate datasets (CA and US). Support search by SKU or product name and filtering by category.
+- **FR-44 – Product Configuration Listing:** Provide an admin view listing all onboarded products with: SKU, name, category, and final sale flag. Products are organised as two separate datasets (CA and US). Support search by SKU or product name. **Note:** No filtering by specific field values (e.g., category) is available — for detailed review, the Excel file remains the source of truth. There is no read-only access mode; access to the product upload area is controlled at the company settings level.
 
     **Future State:** Replace Excel upload and email-based removal with a direct real-time sync to WooCommerce and external product catalogue systems, eliminating manual file handling entirely.
 
@@ -247,7 +247,6 @@ The following requirements describe what the portal must do. Each requirement is
 
     - Pickup address / location.
     - Access constraints (elevator, stairs, gate codes, etc.).
-    - Preferred pickup dates.
     - Photos of the item (condition documentation).
     - Contact information for pickup coordination.
 
