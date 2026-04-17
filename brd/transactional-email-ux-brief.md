@@ -1,4 +1,4 @@
-# ClaimLane Transactional Email UX Brief
+# ClaimLane Transactional Email Brief
 
 Every outbound email the ClaimLane system produces, split by audience.
 

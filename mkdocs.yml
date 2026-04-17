@@ -40,7 +40,7 @@ nav:
 
   - Reference:
       - Appendices: appendices.md
-      - ClaimLane Transactional Email UX Brief: transactional-email-ux-brief.md
+      - ClaimLane Transactional Email Brief: transactional-email-ux-brief.md
 
 extra_css:
   - css/giscus.css
