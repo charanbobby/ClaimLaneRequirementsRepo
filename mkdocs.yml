@@ -40,6 +40,7 @@ nav:
 
   - Reference:
       - Appendices: appendices.md
+      - Transactional Email UX Brief: transactional-email-ux-brief.md
 
 extra_css:
   - css/giscus.css
