@@ -1,16 +1,16 @@
 # ClaimLane Transactional Email UX Brief
 
-Every outbound email the ClaimLane system produces, split by audience so UX scoping is obvious.
+Every outbound email the ClaimLane system produces, split by audience.
 
 Client-facing emails are the priority. They carry the brand, set the customer's expectations, and are what most recipients judge the product by. Vendor-facing emails are operational: they need correct data and clean layout but do not require the same depth of copy and design investment.
 
-Internal CX notifications are deliberately excluded from this list. CX operates inside the ClaimLane portal and should not receive system-triggered emails. See the "Deliberately excluded" section below for the gap this creates against FR-32.
+Internal CX notifications are deliberately excluded from this list. CX operates inside the ClaimLane portal and should not receive system-triggered emails.
 
 ---
 
-## Client-facing emails, HIGH UX priority (8 confirmed)
+## Client-facing emails (8 confirmed)
 
-These go to the end customer. Full design-system and copywriting treatment expected.
+These go to the end customer.
 
 C0 is the first thing the customer sees after submitting a request, so it has outsized impact on trust and perceived responsiveness.
 
@@ -37,7 +37,7 @@ The return label is a FedEx PNG attachment. Whether it is attached depends on th
 | Unboxed mattress | No. Donation partner handles pickup; no customer-printed label. | No. |
 | Third-party pickup (TSC, EQ3) | No. Vendor handles pickup; no customer-printed label. | No. |
 
-UX implications:
+Implications:
 
 - C0 needs **two variants**: with label block and without. When the label is attached, the email body should reference it explicitly and give next-step instructions (print, attach to package, drop off). When the label is not attached, the body should set expectations ("we'll send your next steps once our team has reviewed").
 - C3 always has a label and needs clear print-and-ship instructions in the body.
@@ -45,11 +45,9 @@ UX implications:
 
 ---
 
-## Vendor-facing emails, LOW UX priority (5 confirmed)
+## Vendor-facing emails (5 confirmed)
 
 These go to **donation-pickup partners** (unboxed mattress network) or **third-party logistics vendors** (TSC, EQ3). Content is operational: order details, address, instructions to act.
-
-Recommendation: reuse the design system header and footer, keep the body as a clean data table, skip the full copywriting pass. A ClaimLane dev team template from a shared skeleton is probably sufficient.
 
 | # | Template | Recipient type | Must contain | Primary CTA | Source |
 |---|----------|----------------|--------------|-------------|--------|
@@ -61,7 +59,7 @@ Recommendation: reuse the design system header and footer, keep the body as a cl
 
 ---
 
-## Out of scope for ClaimLane UX, system-of-record is elsewhere (1 decision)
+## Out of scope, system-of-record is elsewhere (1 decision)
 
 | # | Template | Why out of scope | Scoping question for PM |
 |---|----------|------------------|-------------------------|
