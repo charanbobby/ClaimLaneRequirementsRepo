@@ -69,18 +69,6 @@ Recommendation: reuse the design system header and footer, keep the body as a cl
 
 ---
 
-## Deliberately excluded (for reference, and one BRD gap to patch)
-
-So the UX team does not chase these:
-
-- **CX internal "new ticket" alerts** (FR-32 currently reads "notify CX and vendor via FR-48" for third-party pickup): CX operates entirely inside the ClaimLane portal, so internal notifications should be in-portal alerts or queue entries, not email. **Gap to patch: FR-32 needs rewording so "notify CX" is unambiguously in-portal, not an email trigger.** The vendor half of that same FR-32 trigger stays as email (captured as V3 above).
-- **In-flow UI notifications** (e.g., "customer is notified of shipping charges," WF-073A, US-4.1): these render in the portal during the return flow, not in email.
-- **US warehouse to Internal Ops emails** (WF-134, FR-37, BR-28): warehouse staff manually email Internal Ops. Not system-generated. No template.
-- **Admin product-removal email** (US-12.2): manual email from admin to sysadmin. No template.
-- **SMS, push, in-app**: not supported today.
-
----
-
 ## Discussion
 
 <div class="giscus-placeholder"></div>
