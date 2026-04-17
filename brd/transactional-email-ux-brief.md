@@ -14,7 +14,7 @@ C0 is the first thing the customer sees after submitting a request, so it has ou
 
 | # | Template | Trigger | Must contain | Primary CTA | Source |
 |---|----------|---------|--------------|-------------|--------|
-| C0 | Request received (receipt) | Customer submits any new ticket (return, warranty, third-party pickup) | Customer name, request #, SLA ("we aim to respond within 2 business days"), link back to the request, support contact | View request, reply to add details | Current production email. **Not listed in FR-32; BRD gap to patch.** |
+| C0 | Request received (receipt) | Customer submits any new ticket (return, warranty, third-party pickup) | Customer name, request #, SLA ("we aim to respond within 2 business days"), link back to the request, support contact | View request, reply to add details | [Current production email](https://drive.google.com/file/d/1WLOa-qNfAxrVVXyguOKCF6x_x6VNkIzv/view?usp=sharing). **Not listed in FR-32; BRD gap to patch.** |
 | C1 | Unboxed mattress: vendor assigned | Logistics Manager assigns donation-pickup partner | Customer name, mattress model and size, partner name, pickup window | Await pickup | FR-32, Appendix E.1, TC-OP11 |
 | C2 | Unboxed mattress: vendor changed | Logistics Manager reassigns to a different donation-pickup partner | New vendor name, updated pickup window | Confirm receipt | FR-32, US-11.1 #5, TC-OP12 |
 | C3 | Furniture return: approved | CX approves furniture return after photo and charge review | Order #, approved charges, return label, pickup or drop-off instructions, destination warehouse (Caledonia or US) | Print label, schedule pickup | FR-32, US-11.1 #6, TC-CX01, TC-CX02 |
