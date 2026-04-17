@@ -4,8 +4,6 @@ Every outbound email the ClaimLane system produces, split by audience.
 
 Client-facing emails are the priority. They carry the brand, set the customer's expectations, and are what most recipients judge the product by. Vendor-facing emails are operational: they need correct data and clean layout but do not require the same depth of copy and design investment.
 
-Internal CX notifications are deliberately excluded from this list. CX operates inside the ClaimLane portal and should not receive system-triggered emails.
-
 ---
 
 ## Client-facing emails (8 confirmed)
