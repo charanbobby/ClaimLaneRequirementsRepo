@@ -1,12 +1,14 @@
 # ClaimLane Transactional Email Brief
 
-Every outbound email the ClaimLane system produces, split by audience.
+Every outbound customer or vendor message the ClaimLane system produces, split by audience and channel.
 
 Client-facing emails are the priority. They carry the brand, set the customer's expectations, and are what most recipients judge the product by. Vendor-facing emails are operational: they need correct data and clean layout but do not require the same depth of copy and design investment.
 
+Two client-facing communications (C4, C5) are delivered as chat macros inside the CL ticket inbox, not as email. They are listed below in their own section because the copy requirement is the same even though the channel is different.
+
 ---
 
-## Client-facing emails (8 confirmed)
+## Client-facing emails (6 confirmed)
 
 These go to the end customer.
 
@@ -18,8 +20,6 @@ C0 is the first thing the customer sees after submitting a request, so it has ou
 | C1 | Unboxed mattress: vendor assigned | Logistics Manager assigns donation-pickup partner | Customer name, mattress model and size, partner name, pickup window | Await pickup | FR-32, Appendix E.1, TC-OP11 |
 | C2 | Unboxed mattress: vendor changed | Logistics Manager reassigns to a different donation-pickup partner | New vendor name, updated pickup window | Confirm receipt | FR-32, US-11.1 #5, TC-OP12 |
 | C3 | Furniture return: approved | CX approves furniture return after photo and charge review | Order #, approved charges, return label, pickup or drop-off instructions, destination warehouse (Caledonia or US) | Print label, schedule pickup | FR-32, US-11.1 #6, TC-CX01, TC-CX02 |
-| C4 | Furniture return: declined | CX declines furniture return | Reason for decline, how to dispute | Contact CX | FR-32, US-11.1 #6, TC-CX02 |
-| C5 | Warranty claim: declined | CX declines warranty claim | Claim ID, reason, warranty period, next steps | Contact CX if disputed | FR-32, US-11.1 #3, WF-052D, TC-CX05 |
 | C6 | Self-donation instructions | Logistics Manager selects "Self-Donation" (no donation partner available) | Donation instructions, CX contact, proof-of-donation photo requirement | Donate, photograph, contact CX | FR-38, WF-130, TC-OP15 |
 | C7 | Refund outcome notification | Item received, refund decision made (auto or manual-review) | Refund amount, order #, method, expected timeline | Watch bank account | US-10.1 #7, WF-089, BR-21 |
 
@@ -40,6 +40,17 @@ Implications:
 - C0 needs **two variants**: with label block and without. When the label is attached, the email body should reference it explicitly and give next-step instructions (print, attach to package, drop off). When the label is not attached, the body should set expectations ("we'll send your next steps once our team has reviewed").
 - C3 always has a label and needs clear print-and-ship instructions in the body.
 - Consider embedding the label as an inline preview image in the body (in addition to the PNG attachment) so mobile users do not miss it.
+
+---
+
+## Client-facing chat macros (2 confirmed)
+
+These CX decisions are delivered in the customer's existing CL ticket chat thread, not by email. They will be set up as standard macros in the ticket inbox. Copy is still required; the delivery channel is chat, not a transactional email.
+
+| # | Template | Trigger | Must contain | Primary CTA | Source |
+|---|----------|---------|--------------|-------------|--------|
+| C4 | Furniture return: declined | CX declines furniture return | Reason for decline, how to dispute | Contact CX | FR-32, US-11.1 #6, TC-CX02 |
+| C5 | Warranty claim: declined | CX declines warranty claim | Claim ID, reason, warranty period, next steps | Contact CX if disputed | FR-32, US-11.1 #3, WF-052D, TC-CX05 |
 
 ---
 
