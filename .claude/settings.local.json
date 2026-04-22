@@ -4,7 +4,17 @@
       "Bash(gh api:*)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:charanbobby.github.io)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(docker compose run:*)",
+      "Bash(mkdocs gh-deploy:*)",
+      "Bash(pip install:*)",
+      "Bash(wc -l \"d:/Python Applications/ClaimLane/WorkFlow/brd\"/*.md)",
+      "Bash(find 'd:\\\\Python Applications\\\\ClaimLane\\\\WorkFlow' -type f -name *.json -o -name *.yaml -o -name *.yml)",
+      "Bash(ls -la \"d:\\\\Python Applications\\\\ClaimLane\\\\WorkFlow\\\\brd\"\" 2>/dev/null | grep -E \".md)",
+      "Bash(.html \")"
     ]
   }
 }

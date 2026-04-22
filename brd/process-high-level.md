@@ -271,7 +271,6 @@ Third-party vendor returns use a **vendor-initiated link-based flow**. The vendo
 4. **Collect Pickup Details (WF-006):**
     - Pickup address / location
     - Access constraints (elevator, stairs, gate codes, etc.)
-    - Preferred pickup dates
     - Photos of item (condition documentation)
     - Contact information for pickup coordination
 5. **Create ClaimLane Ticket (WF-007 → WF-008):**
